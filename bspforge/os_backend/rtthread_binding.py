@@ -34,7 +34,14 @@ rt_uint32_t bspforge_clock_frequency(rt_uint32_t clock)
     },
     "interrupt": {
         "headers": ["plic.h"],
-        "symbols": ["plic_init", "plic_irq_enable", "plic_irq_disable", "plic_irq_register", "plic_irq_unregister", "plic_irq_claim"],
+        "symbols": [
+            "plic_init",
+            "plic_irq_enable",
+            "plic_irq_disable",
+            "plic_irq_register",
+            "plic_irq_unregister",
+            "plic_irq_claim",
+        ],
         "declarations": [
             "typedef int (*bspforge_irq_handler_t)(void *context);",
             "void bspforge_irq_initialize(void);",
@@ -80,18 +87,47 @@ rt_uint32_t bspforge_irq_claim(void)
         "headers": ["uart.h"],
         "symbols": ["uart_init", "uart_configure", "uart_send_data", "uart_receive_data"],
         "declarations": [
-            "rt_err_t bspforge_uart_configure(rt_uint32_t channel, rt_uint32_t baud_rate);",
+            "rt_err_t bspforge_uart_configure(rt_uint32_t channel, rt_uint32_t baud_rate, rt_uint8_t data_bits, rt_uint8_t stop_bits, rt_uint8_t parity);",
             "rt_ssize_t bspforge_uart_write(rt_uint32_t channel, const void *buffer, rt_size_t size);",
             "rt_ssize_t bspforge_uart_read(rt_uint32_t channel, void *buffer, rt_size_t size);",
         ],
         "definitions": r"""
-rt_err_t bspforge_uart_configure(rt_uint32_t channel, rt_uint32_t baud_rate)
+rt_err_t bspforge_uart_configure(rt_uint32_t channel, rt_uint32_t baud_rate,
+                                 rt_uint8_t data_bits, rt_uint8_t stop_bits,
+                                 rt_uint8_t parity)
 {
-    if (channel >= (rt_uint32_t)UART_DEVICE_MAX || baud_rate == 0)
+    uart_stopbit_t sdk_stop_bits;
+    uart_parity_t sdk_parity;
+
+    if (channel >= (rt_uint32_t)UART_DEVICE_MAX || baud_rate == 0 ||
+        data_bits < 5 || data_bits > 8)
         return -RT_EINVAL;
+
+    if (stop_bits == 1)
+        sdk_stop_bits = UART_STOP_1;
+    else if (stop_bits == 2)
+        sdk_stop_bits = UART_STOP_2;
+    else
+        return -RT_EINVAL;
+
+    switch (parity)
+    {
+    case 0:
+        sdk_parity = UART_PARITY_NONE;
+        break;
+    case 1:
+        sdk_parity = UART_PARITY_ODD;
+        break;
+    case 2:
+        sdk_parity = UART_PARITY_EVEN;
+        break;
+    default:
+        return -RT_EINVAL;
+    }
+
     uart_init((uart_device_number_t)channel);
     uart_configure((uart_device_number_t)channel, baud_rate,
-                   UART_BITWIDTH_8BIT, UART_STOP_1, UART_PARITY_NONE);
+                   (uart_bitwidth_t)data_bits, sdk_stop_bits, sdk_parity);
     return RT_EOK;
 }
 
@@ -114,63 +150,176 @@ rt_ssize_t bspforge_uart_read(rt_uint32_t channel, void *buffer, rt_size_t size)
     },
     "gpio": {
         "headers": ["gpiohs.h"],
-        "symbols": ["gpiohs_set_drive_mode", "gpiohs_get_pin", "gpiohs_set_pin", "gpiohs_set_pin_edge"],
+        "symbols": [
+            "gpiohs_set_drive_mode",
+            "gpiohs_get_pin",
+            "gpiohs_set_pin",
+            "gpiohs_set_pin_edge",
+            "gpiohs_irq_register",
+            "gpiohs_irq_unregister",
+        ],
         "declarations": [
-            "void bspforge_gpio_mode(rt_uint8_t pin, rt_uint32_t mode);",
-            "void bspforge_gpio_write(rt_uint8_t pin, rt_uint8_t value);",
+            "typedef int (*bspforge_gpio_irq_handler_t)(void *context);",
+            "#define BSPFORGE_GPIO_PIN_COUNT 32U",
+            "enum bspforge_gpio_mode { BSPFORGE_GPIO_INPUT, BSPFORGE_GPIO_INPUT_PULL_DOWN, BSPFORGE_GPIO_INPUT_PULL_UP, BSPFORGE_GPIO_OUTPUT };",
+            "enum bspforge_gpio_edge { BSPFORGE_GPIO_RISING, BSPFORGE_GPIO_FALLING, BSPFORGE_GPIO_BOTH, BSPFORGE_GPIO_LOW_LEVEL, BSPFORGE_GPIO_HIGH_LEVEL };",
+            "rt_err_t bspforge_gpio_mode(rt_uint8_t pin, rt_uint8_t mode);",
+            "rt_err_t bspforge_gpio_write(rt_uint8_t pin, rt_uint8_t value);",
             "rt_int32_t bspforge_gpio_read(rt_uint8_t pin);",
-            "void bspforge_gpio_edge(rt_uint8_t pin, rt_uint32_t edge);",
+            "rt_err_t bspforge_gpio_irq_register(rt_uint8_t pin, rt_uint8_t edge, bspforge_gpio_irq_handler_t handler, void *context);",
+            "void bspforge_gpio_irq_unregister(rt_uint8_t pin);",
         ],
         "definitions": r"""
-void bspforge_gpio_mode(rt_uint8_t pin, rt_uint32_t mode)
+rt_err_t bspforge_gpio_mode(rt_uint8_t pin, rt_uint8_t mode)
 {
-    gpiohs_set_drive_mode(pin, (gpio_drive_mode_t)mode);
+    gpio_drive_mode_t sdk_mode;
+    if (pin >= BSPFORGE_GPIO_PIN_COUNT)
+        return -RT_EINVAL;
+    switch (mode)
+    {
+    case BSPFORGE_GPIO_INPUT:
+        sdk_mode = GPIO_DM_INPUT;
+        break;
+    case BSPFORGE_GPIO_INPUT_PULL_DOWN:
+        sdk_mode = GPIO_DM_INPUT_PULL_DOWN;
+        break;
+    case BSPFORGE_GPIO_INPUT_PULL_UP:
+        sdk_mode = GPIO_DM_INPUT_PULL_UP;
+        break;
+    case BSPFORGE_GPIO_OUTPUT:
+        sdk_mode = GPIO_DM_OUTPUT;
+        break;
+    default:
+        return -RT_EINVAL;
+    }
+    gpiohs_set_drive_mode(pin, sdk_mode);
+    return RT_EOK;
 }
 
-void bspforge_gpio_write(rt_uint8_t pin, rt_uint8_t value)
+rt_err_t bspforge_gpio_write(rt_uint8_t pin, rt_uint8_t value)
 {
+    if (pin >= BSPFORGE_GPIO_PIN_COUNT)
+        return -RT_EINVAL;
     gpiohs_set_pin(pin, value ? GPIO_PV_HIGH : GPIO_PV_LOW);
+    return RT_EOK;
 }
 
 rt_int32_t bspforge_gpio_read(rt_uint8_t pin)
 {
+    if (pin >= BSPFORGE_GPIO_PIN_COUNT)
+        return -RT_EINVAL;
     return gpiohs_get_pin(pin) == GPIO_PV_HIGH ? 1 : 0;
 }
 
-void bspforge_gpio_edge(rt_uint8_t pin, rt_uint32_t edge)
+rt_err_t bspforge_gpio_irq_register(rt_uint8_t pin, rt_uint8_t edge,
+                                    bspforge_gpio_irq_handler_t handler,
+                                    void *context)
 {
-    gpiohs_set_pin_edge(pin, (gpio_pin_edge_t)edge);
+    gpio_pin_edge_t sdk_edge;
+    if (pin >= BSPFORGE_GPIO_PIN_COUNT || handler == RT_NULL)
+        return -RT_EINVAL;
+    switch (edge)
+    {
+    case BSPFORGE_GPIO_RISING:
+        sdk_edge = GPIO_PE_RISING;
+        break;
+    case BSPFORGE_GPIO_FALLING:
+        sdk_edge = GPIO_PE_FALLING;
+        break;
+    case BSPFORGE_GPIO_BOTH:
+        sdk_edge = GPIO_PE_BOTH;
+        break;
+    case BSPFORGE_GPIO_LOW_LEVEL:
+        sdk_edge = GPIO_PE_LOW;
+        break;
+    case BSPFORGE_GPIO_HIGH_LEVEL:
+        sdk_edge = GPIO_PE_HIGH;
+        break;
+    default:
+        return -RT_EINVAL;
+    }
+    gpiohs_set_pin_edge(pin, sdk_edge);
+    gpiohs_irq_register(pin, 1, (plic_irq_callback_t)handler, context);
+    return RT_EOK;
+}
+
+void bspforge_gpio_irq_unregister(rt_uint8_t pin)
+{
+    if (pin < BSPFORGE_GPIO_PIN_COUNT)
+        gpiohs_irq_unregister(pin);
 }
 """,
     },
     "timer": {
-        "headers": ["clint.h"],
-        "symbols": ["clint_timer_init", "clint_timer_start", "clint_timer_stop", "clint_timer_set_interval"],
+        "headers": ["timer.h"],
+        "data_contracts": [
+            {"symbol": "timer", "header": "timer.h", "usage": "read current_value register"},
+        ],
+        "symbols": [
+            "timer_init",
+            "timer_set_interval",
+            "timer_set_enable",
+            "timer_irq_register",
+            "timer_irq_unregister",
+        ],
         "declarations": [
-            "rt_err_t bspforge_timer_initialize(void);",
-            "rt_err_t bspforge_timer_start(rt_uint64_t interval, rt_bool_t single_shot);",
-            "rt_err_t bspforge_timer_stop(void);",
-            "rt_err_t bspforge_timer_set_interval(rt_uint64_t interval);",
+            "typedef int (*bspforge_timer_handler_t)(void *context);",
+            "rt_err_t bspforge_timer_initialize(rt_uint32_t device);",
+            "rt_err_t bspforge_timer_start(rt_uint32_t device, rt_uint32_t channel, rt_uint64_t interval_ns, rt_bool_t single_shot, bspforge_timer_handler_t handler, void *context);",
+            "rt_err_t bspforge_timer_stop(rt_uint32_t device, rt_uint32_t channel);",
+            "rt_uint32_t bspforge_timer_count(rt_uint32_t device, rt_uint32_t channel);",
         ],
         "definitions": r"""
-rt_err_t bspforge_timer_initialize(void)
+rt_err_t bspforge_timer_initialize(rt_uint32_t device)
 {
-    return clint_timer_init() == 0 ? RT_EOK : -RT_ERROR;
+    if (device >= (rt_uint32_t)TIMER_DEVICE_MAX)
+        return -RT_EINVAL;
+    timer_init((timer_device_number_t)device);
+    return RT_EOK;
 }
 
-rt_err_t bspforge_timer_start(rt_uint64_t interval, rt_bool_t single_shot)
+rt_err_t bspforge_timer_start(rt_uint32_t device, rt_uint32_t channel,
+                              rt_uint64_t interval_ns, rt_bool_t single_shot,
+                              bspforge_timer_handler_t handler, void *context)
 {
-    return clint_timer_start((uint64_t)interval, single_shot ? 1 : 0) == 0 ? RT_EOK : -RT_ERROR;
+    size_t applied;
+    if (device >= (rt_uint32_t)TIMER_DEVICE_MAX ||
+        channel >= (rt_uint32_t)TIMER_CHANNEL_MAX || interval_ns == 0 ||
+        handler == RT_NULL)
+        return -RT_EINVAL;
+    applied = timer_set_interval((timer_device_number_t)device,
+                                 (timer_channel_number_t)channel,
+                                 (size_t)interval_ns);
+    if (applied == 0)
+        return -RT_ERROR;
+    if (timer_irq_register((timer_device_number_t)device,
+                           (timer_channel_number_t)channel,
+                           single_shot ? 1 : 0, 1,
+                           (timer_callback_t)handler, context) != 0)
+        return -RT_ERROR;
+    timer_set_enable((timer_device_number_t)device,
+                     (timer_channel_number_t)channel, 1);
+    return RT_EOK;
 }
 
-rt_err_t bspforge_timer_stop(void)
+rt_err_t bspforge_timer_stop(rt_uint32_t device, rt_uint32_t channel)
 {
-    return clint_timer_stop() == 0 ? RT_EOK : -RT_ERROR;
+    if (device >= (rt_uint32_t)TIMER_DEVICE_MAX ||
+        channel >= (rt_uint32_t)TIMER_CHANNEL_MAX)
+        return -RT_EINVAL;
+    timer_set_enable((timer_device_number_t)device,
+                     (timer_channel_number_t)channel, 0);
+    return timer_irq_unregister((timer_device_number_t)device,
+                                (timer_channel_number_t)channel) == 0
+               ? RT_EOK : -RT_ERROR;
 }
 
-rt_err_t bspforge_timer_set_interval(rt_uint64_t interval)
+rt_uint32_t bspforge_timer_count(rt_uint32_t device, rt_uint32_t channel)
 {
-    return clint_timer_set_interval((uint64_t)interval) == 0 ? RT_EOK : -RT_ERROR;
+    if (device >= (rt_uint32_t)TIMER_DEVICE_MAX ||
+        channel >= (rt_uint32_t)TIMER_CHANNEL_MAX)
+        return 0;
+    return timer[device]->channel[channel].current_value;
 }
 """,
     },
@@ -189,6 +338,9 @@ class RTThreadBindingGenerator:
         function_index: dict[str, list[dict[str, Any]]] = {}
         for function in ir["functions"]:
             function_index.setdefault(function["name"], []).append(function)
+        files_by_name: dict[str, list[dict[str, Any]]] = {}
+        for item in ir["files"]:
+            files_by_name.setdefault(Path(item["path"]).name, []).append(item)
 
         resolved = {
             item["capability"]
@@ -206,6 +358,7 @@ class RTThreadBindingGenerator:
             if capability not in resolved:
                 continue
             symbol_evidence: list[dict[str, Any]] = []
+            data_evidence: list[dict[str, Any]] = []
             capability_missing: list[str] = []
             for symbol in specification["symbols"]:
                 matches = function_index.get(symbol, [])
@@ -220,9 +373,20 @@ class RTThreadBindingGenerator:
                     "entity_id": entity["id"],
                     "source": entity["evidence"],
                     "signature": entity["signature"],
+                    "selection_method": "backend-contract-exact-symbol",
                 })
             if capability_missing:
                 continue
+            for contract in specification.get("data_contracts", []):
+                headers_with_contract = files_by_name.get(contract["header"], [])
+                if headers_with_contract:
+                    header = min(headers_with_contract, key=lambda item: len(Path(item["path"]).parts))
+                    data_evidence.append({
+                        **contract,
+                        "entity_id": header["id"],
+                        "source": {"path": header["path"], "line": 1, "kind": "header-contract"},
+                        "selection_method": "backend-contract-exported-data",
+                    })
             headers.extend(specification["headers"])
             declarations.extend(specification["declarations"])
             definitions.append(specification["definitions"].strip())
@@ -230,9 +394,10 @@ class RTThreadBindingGenerator:
                 "capability": capability,
                 "status": "generated",
                 "sdk_symbols": symbol_evidence,
+                "sdk_data_contracts": data_evidence,
                 "wrapper_count": sum(
                     1 for item in specification["declarations"]
-                    if item.endswith(";") and not item.startswith("typedef")
+                    if item.endswith(";") and not item.startswith(("typedef", "enum"))
                 ),
             })
 
@@ -241,7 +406,7 @@ class RTThreadBindingGenerator:
         header_path.write_text(self._header(declarations), encoding="utf-8")
         source_path.write_text(self._source(headers, definitions), encoding="utf-8")
         return {
-            "schema_version": "1.0",
+            "schema_version": "1.1",
             "created_at": utc_now(),
             "backend": "rtthread",
             "source": str(source_path),
@@ -256,13 +421,16 @@ class RTThreadBindingGenerator:
                 "wrappers": sum(item["wrapper_count"] for item in bindings),
                 "required_sources": len(required_sources),
                 "missing_symbols": len(missing),
+                "data_contracts": sum(
+                    len(item["sdk_data_contracts"]) for item in bindings
+                ),
             },
         }
 
     @staticmethod
     def _header(declarations: list[str]) -> str:
         body = "\n".join(declarations)
-        return f"""/* 由 BSPForge 自动生成；请勿手工修改。 */
+        return f"""/* Generated by BSPForge. Do not edit manually. */
 #ifndef BSPFORGE_BINDINGS_H
 #define BSPFORGE_BINDINGS_H
 
@@ -285,7 +453,7 @@ extern \"C\" {{
     def _source(headers: list[str], definitions: list[str]) -> str:
         includes = "\n".join(f'#include <{header}>' for header in sorted(set(headers)))
         body = "\n\n".join(definitions)
-        return f"""/* 由 BSPForge 根据 SDK IR 和 RT-Thread 契约自动生成。 */
+        return f"""/* Generated from SDK IR and the RT-Thread backend contract. */
 #include \"bspforge_bindings.h\"
 {includes}
 

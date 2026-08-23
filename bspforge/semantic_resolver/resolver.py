@@ -33,6 +33,16 @@ DEFAULT_CAPABILITIES = {
     },
 }
 
+DEFAULT_EVIDENCE_WEIGHTS = {
+    "name-capability": 0.30,
+    "name-action": 0.16,
+    "path": 0.16,
+    "signature": 0.10,
+    "include": 0.10,
+    "call-context": 0.10,
+    "macro-context": 0.08,
+}
+
 
 class SemanticResolver:
     """Rank SDK functions using independent, auditable static evidence."""
@@ -43,14 +53,24 @@ class SemanticResolver:
         capability_names: list[str] | None = None,
         threshold: float = 0.42,
         top_k: int = 8,
+        evidence_weights: dict[str, float] | None = None,
     ) -> dict[str, Any]:
+        weights = {**DEFAULT_EVIDENCE_WEIGHTS, **(evidence_weights or {})}
+        unknown = set(weights).difference(DEFAULT_EVIDENCE_WEIGHTS)
+        if unknown:
+            raise ValueError(f"Unknown evidence types: {sorted(unknown)}")
+        if any(value < 0 for value in weights.values()):
+            raise ValueError("Evidence weights must be non-negative")
         capabilities = capability_names or list(DEFAULT_CAPABILITIES)
         mappings: list[dict[str, Any]] = []
         for capability in capabilities:
             spec = DEFAULT_CAPABILITIES.get(capability)
             if spec is None:
                 raise ValueError(f"Unknown capability: {capability}")
-            candidates = [self._candidate(capability, spec, function) for function in ir["functions"]]
+            candidates = [
+                self._candidate(capability, spec, function, weights)
+                for function in ir["functions"]
+            ]
             candidates = [item for item in candidates if item["score"] > 0]
             candidates.sort(key=lambda item: (-item["score"], item["entity_id"]))
             accepted = self._operation_cover(candidates[:top_k], threshold)
@@ -69,6 +89,7 @@ class SemanticResolver:
             "sdk_id": ir["sdk"]["id"],
             "sdk_digest": ir["sdk"]["digest"],
             "method": "weighted-multi-evidence-static-resolution",
+            "evidence_weights": weights,
             "mappings": mappings,
             "summary": {
                 "requested": len(mappings),
@@ -92,7 +113,12 @@ class SemanticResolver:
         return accepted
 
     @staticmethod
-    def _candidate(capability: str, spec: dict[str, Any], function: dict[str, Any]) -> dict[str, Any]:
+    def _candidate(
+        capability: str,
+        spec: dict[str, Any],
+        function: dict[str, Any],
+        weights: dict[str, float],
+    ) -> dict[str, Any]:
         name = function["name"].lower()
         path = function["file"].lower()
         signature = function["signature"].lower()
@@ -111,13 +137,25 @@ class SemanticResolver:
                 score += weight
                 evidence.append({"kind": kind, "weight": weight, "matches": sorted(set(matches))})
 
-        add("name-capability", 0.30, [term for term in terms if term in name])
-        add("name-action", 0.16, [term for term in actions if term in name])
-        add("path", 0.16, [term for term in terms if term in path])
-        add("signature", 0.10, [term for term in terms if term in signature])
-        add("include", 0.10, [term for term in terms if term in includes])
-        add("call-context", 0.10, [term for term in terms if term in calls])
-        add("macro-context", 0.08, [term for term in terms if term in macros])
+        name_terms = [term for term in terms if term in name]
+        action_terms = [term for term in actions if term in name]
+        canonical_bonus = 0.0
+        for term in name_terms:
+            for action in action_terms:
+                prefix = f"{term}_{action}"
+                if name == prefix or name.startswith(f"{prefix}_"):
+                    suffix_parts = max(0, name.count("_") - prefix.count("_"))
+                    canonical_bonus = max(
+                        canonical_bonus,
+                        weights["name-action"] * 0.5 / (1 + suffix_parts),
+                    )
+        add("name-capability", weights["name-capability"], name_terms)
+        add("name-action", weights["name-action"] + canonical_bonus, action_terms)
+        add("path", weights["path"], [term for term in terms if term in path])
+        add("signature", weights["signature"], [term for term in terms if term in signature])
+        add("include", weights["include"], [term for term in terms if term in includes])
+        add("call-context", weights["call-context"], [term for term in terms if term in calls])
+        add("macro-context", weights["macro-context"], [term for term in terms if term in macros])
         return {
             "entity_id": function["id"],
             "symbol": function["name"],

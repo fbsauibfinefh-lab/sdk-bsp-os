@@ -7,8 +7,11 @@ from pathlib import Path
 from bspforge.build_diagnoser import BuildDiagnoser
 from bspforge.closure_solver import ClosureSolver
 from bspforge.common import write_json
+from bspforge.evaluation import ExperimentEvaluator
 from bspforge.ir_store import IRStore
 from bspforge.os_backend import RTThreadBackend
+from bspforge.os_backend.artifact_verifier import FirmwareArtifactVerifier
+from bspforge.os_backend.rtthread_device import RTThreadDeviceModelGenerator
 from bspforge.sdk_ingestor import SDKIngestor
 from bspforge.semantic_resolver import SemanticResolver
 
@@ -72,6 +75,34 @@ class ModuleTests(unittest.TestCase):
         categories = {item["category"] for item in value["diagnostics"]}
         self.assertEqual(categories, {"missing-header", "undefined-symbol"})
 
+    def test_all_supported_build_failure_categories_are_structured(self) -> None:
+        log = "\n".join([
+            "ld: multiple definition of `duplicate_symbol'",
+            "ld: can't link double-float modules with soft-float modules",
+            "ld: region `SRAM' overflowed by 128 bytes",
+            "ld: cannot find -lmissing",
+            "source.c:7:3: error: incompatible declaration",
+        ])
+        categories = {
+            item["category"] for item in BuildDiagnoser().diagnose(log, 1)["diagnostics"]
+        }
+        self.assertEqual(categories, {
+            "multiple-definition",
+            "abi-mismatch",
+            "region-overflow",
+            "missing-library",
+            "compile-error",
+        })
+
+    def test_warning_summary_is_stable_and_categorized(self) -> None:
+        log = (
+            "a.c:1: warning: implicit declaration of function 'foo'\n"
+            "b.c:2: warning: unused variable 'value'\n"
+        )
+        summary = BuildDiagnoser.summarize_warnings(log)
+        self.assertEqual(summary["count"], 2)
+        self.assertEqual(summary["categories"], {"implicit-declaration": 1, "unused": 1})
+
     def test_diagnostics_add_provider_source_to_closure(self) -> None:
         ir = SDKIngestor().ingest(self.sdk, "fixture-sdk")
         resolution = SemanticResolver().resolve(ir, ["uart"], threshold=0.4)
@@ -103,6 +134,9 @@ class ModuleTests(unittest.TestCase):
         (bsp / "rtconfig.py").write_text(
             "import os\nPREFIX = 'riscv-none-embed-'\n", encoding="utf-8"
         )
+        (bsp / "rtconfig.h").write_text(
+            "/* Device Drivers */\n#define RT_USING_SERIAL\n", encoding="utf-8"
+        )
         (bsp / "SConstruct").write_text("# fixture\n", encoding="utf-8")
         ir = SDKIngestor().ingest(self.sdk, "fixture-sdk")
         resolution = SemanticResolver().resolve(ir, ["uart"], threshold=0.4)
@@ -116,9 +150,102 @@ class ModuleTests(unittest.TestCase):
         self.assertEqual(binding["summary"]["capabilities"], 1)
         generated_binding = output / binding["source"]
         self.assertIn("uart_send_data", generated_binding.read_text(encoding="utf-8"))
+        device_model = manifest["device_model"]
+        self.assertEqual(device_model["summary"]["serial"], 1)
+        generated_devices = output / device_model["sources"][0]
+        self.assertIn("bspforge_uart_ops", generated_devices.read_text(encoding="utf-8"))
         self.assertIn("riscv-none-embed-", (bsp / "rtconfig.py").read_text(encoding="utf-8"))
         generated_config = (Path(manifest["bsp_path"]) / "rtconfig.py").read_text(encoding="utf-8")
         self.assertIn("BSPFORGE_TOOLCHAIN_PREFIX", generated_config)
+
+    def test_native_rtthread_device_models_are_generated_from_config(self) -> None:
+        bsp = self.root / "native-bsp"
+        (bsp / "board").mkdir(parents=True)
+        (bsp / "drivers").mkdir()
+        binding_manifest = {
+            "bindings": [
+                {"capability": "uart"},
+                {"capability": "gpio"},
+                {"capability": "timer"},
+            ]
+        }
+        manifest = RTThreadDeviceModelGenerator().generate(
+            bsp,
+            binding_manifest,
+            {
+                "uart": [{"name": "testuart", "channel": 1, "baud_rate": 9600}],
+                "pin": {"name": "testpin", "max_pins": 16},
+                "hwtimer": [
+                    {"name": "testtim", "device": 1, "channel": 2, "frequency": 1000}
+                ],
+            },
+        )
+        self.assertEqual(manifest["summary"]["devices"], 3)
+        self.assertEqual(
+            set(manifest["operation_tables"]),
+            {"bspforge_uart_ops", "bspforge_pin_ops", "bspforge_hwtimer_ops"},
+        )
+        board_source = (bsp / "board" / "bspforge_devices.c").read_text(encoding="utf-8")
+        timer_source = (bsp / "drivers" / "drv_hw_timer.c").read_text(encoding="utf-8")
+        self.assertIn('rt_hw_serial_register(&bspforge_uart_devices[0], "testuart"', board_source)
+        self.assertIn('rt_device_pin_register("testpin"', board_source)
+        self.assertIn('rt_device_hwtimer_register(&bspforge_hwtimers[0], "testtim"', timer_source)
+
+    def test_device_configuration_rejects_duplicate_names(self) -> None:
+        bsp = self.root / "duplicate-bsp"
+        (bsp / "board").mkdir(parents=True)
+        (bsp / "drivers").mkdir()
+        with self.assertRaisesRegex(ValueError, "Duplicate RT-Thread device name"):
+            RTThreadDeviceModelGenerator().generate(
+                bsp,
+                {"bindings": [{"capability": "uart"}, {"capability": "gpio"}]},
+                {
+                    "uart": [{"name": "same", "channel": 0}],
+                    "pin": {"name": "same", "max_pins": 8},
+                    "hwtimer": [],
+                },
+            )
+
+    def test_experiment_metrics_cover_semantics_bindings_and_devices(self) -> None:
+        ir = SDKIngestor().ingest(self.sdk, "fixture-sdk")
+        resolution = SemanticResolver().resolve(ir, ["uart"], threshold=0.4)
+        ground_truth = {
+            "id": "fixture-truth",
+            "capabilities": {
+                "uart": {
+                    "semantic_symbols": ["uart_init", "uart_configure"],
+                    "binding_symbols": ["uart_init", "uart_configure"],
+                    "device_operations": ["configure", "putc", "getc"],
+                }
+            },
+        }
+        bindings = {
+            "bindings": [{
+                "capability": "uart",
+                "sdk_symbols": [{"symbol": "uart_init"}, {"symbol": "uart_configure"}],
+            }]
+        }
+        devices = {
+            "devices": [{
+                "class": "serial",
+                "operations": ["configure", "putc", "getc"],
+            }]
+        }
+        metrics = ExperimentEvaluator().evaluate(resolution, bindings, devices, ground_truth)
+        self.assertEqual(metrics["summary"]["binding_macro_recall"], 1.0)
+        self.assertEqual(metrics["summary"]["device_operation_macro_recall"], 1.0)
+        ablations = ExperimentEvaluator().ablate(ir, ground_truth, threshold=0.4, top_k=8)
+        self.assertEqual(len(ablations["experiments"]), 8)
+
+    def test_artifact_output_parsers(self) -> None:
+        header = FirmwareArtifactVerifier._parse_elf_header(
+            "  Class: ELF64\n  Machine: RISC-V\n  Entry point address: 0x80000000\n"
+        )
+        size = FirmwareArtifactVerifier._parse_size(
+            "text data bss dec hex filename\n10 2 3 15 f rtthread.elf\n"
+        )
+        self.assertEqual(header["Machine"], "RISC-V")
+        self.assertEqual(size, {"text": 10, "data": 2, "bss": 3, "dec": 15})
 
 
 if __name__ == "__main__":

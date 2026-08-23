@@ -1,0 +1,32 @@
+{
+  "schema_version": "1.0",
+  "id": "k210-sdk-0.5.6-rtthread-device-contract-v1",
+  "description": "K210 SDK 0.5.6 到 RT-Thread 设备契约的人工核验真值集",
+  "capabilities": {
+    "clock": {
+      "semantic_symbols": ["sysctl_clock_enable", "sysctl_clock_disable", "sysctl_clock_get_freq"],
+      "binding_symbols": ["sysctl_clock_enable", "sysctl_clock_disable", "sysctl_clock_get_freq"],
+      "device_operations": []
+    },
+    "interrupt": {
+      "semantic_symbols": ["plic_init", "plic_irq_enable", "plic_irq_disable", "plic_irq_register", "plic_irq_unregister", "plic_irq_claim"],
+      "binding_symbols": ["plic_init", "plic_irq_enable", "plic_irq_disable", "plic_irq_register", "plic_irq_unregister", "plic_irq_claim"],
+      "device_operations": []
+    },
+    "uart": {
+      "semantic_symbols": ["uart_init", "uart_configure", "uart_send_data", "uart_receive_data"],
+      "binding_symbols": ["uart_init", "uart_configure", "uart_send_data", "uart_receive_data"],
+      "device_operations": ["configure", "control", "putc", "getc"]
+    },
+    "gpio": {
+      "semantic_symbols": ["gpiohs_set_drive_mode", "gpiohs_get_pin", "gpiohs_set_pin", "gpiohs_set_pin_edge", "gpiohs_irq_register", "gpiohs_irq_unregister"],
+      "binding_symbols": ["gpiohs_set_drive_mode", "gpiohs_get_pin", "gpiohs_set_pin", "gpiohs_set_pin_edge", "gpiohs_irq_register", "gpiohs_irq_unregister"],
+      "device_operations": ["pin_mode", "pin_write", "pin_read", "pin_attach_irq", "pin_detach_irq", "pin_irq_enable"]
+    },
+    "timer": {
+      "semantic_symbols": ["timer_init", "timer_set_interval", "timer_set_enable", "timer_irq_register", "timer_irq_unregister"],
+      "binding_symbols": ["timer_init", "timer_set_interval", "timer_set_enable", "timer_irq_register", "timer_irq_unregister"],
+      "device_operations": ["init", "start", "stop", "count_get", "control"]
+    }
+  }
+}

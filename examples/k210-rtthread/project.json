@@ -20,10 +20,24 @@
     "type": "rtthread",
     "board": "k210",
     "rtthread_root": "third_party/rt-thread",
-    "output": "workspace/generated/k210-rtthread"
+    "output": "workspace/generated/k210-rtthread",
+    "devices": {
+      "uart": [
+        {"name": "bspuart1", "channel": 0, "baud_rate": 115200},
+        {"name": "bspuart2", "channel": 1, "baud_rate": 115200}
+      ],
+      "pin": {"name": "bsppin", "max_pins": 32},
+      "hwtimer": [
+        {"name": "bsptim0", "device": 0, "channel": 0, "frequency": 1000000}
+      ]
+    }
   },
   "build": {
     "jobs": 8,
     "max_iterations": 3
+  },
+  "evaluation": {
+    "ground_truth": "experiments/k210-ground-truth.json",
+    "run_ablations": true
   }
 }

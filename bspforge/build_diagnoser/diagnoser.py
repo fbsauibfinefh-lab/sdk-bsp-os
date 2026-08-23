@@ -17,6 +17,14 @@ PATTERNS = [
     ("compile-error", re.compile(r"([^:\n]+):(\d+)(?::\d+)?: error: (.+)"), "inspect source/configuration evidence at the reported location"),
 ]
 
+WARNING_CATEGORIES = [
+    ("implicit-declaration", re.compile(r"implicit declaration", re.I)),
+    ("incompatible-pointer", re.compile(r"incompatible pointer|pointer type", re.I)),
+    ("multichar-literal", re.compile(r"multi-character character constant", re.I)),
+    ("unused", re.compile(r"unused (?:variable|function|parameter)", re.I)),
+    ("conversion", re.compile(r"conversion|changes value|different size", re.I)),
+]
+
 
 class BuildDiagnoser:
     """Map raw GCC/binutils diagnostics to feedback constraints."""
@@ -146,4 +154,25 @@ class BuildDiagnoser:
                 "actionable": len(actionable),
                 "unresolved": len(unresolved),
             },
+        }
+
+    @staticmethod
+    def summarize_warnings(output: str) -> dict[str, Any]:
+        warnings = [line.strip() for line in output.splitlines() if "warning:" in line.lower()]
+        categories: dict[str, int] = {}
+        samples: dict[str, list[str]] = {}
+        for line in warnings:
+            category = "other"
+            for name, pattern in WARNING_CATEGORIES:
+                if pattern.search(line):
+                    category = name
+                    break
+            categories[category] = categories.get(category, 0) + 1
+            samples.setdefault(category, [])
+            if len(samples[category]) < 3:
+                samples[category].append(line)
+        return {
+            "count": len(warnings),
+            "categories": dict(sorted(categories.items())),
+            "samples": samples,
         }

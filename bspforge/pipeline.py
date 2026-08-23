@@ -5,11 +5,13 @@ import platform
 import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
+from time import perf_counter
 from typing import Any
 
 from bspforge.build_diagnoser import BuildDiagnoser
 from bspforge.closure_solver import ClosureSolver
 from bspforge.common import read_json, write_json
+from bspforge.evaluation import ExperimentEvaluator
 from bspforge.ir_store import IRStore
 from bspforge.os_backend import RTThreadBackend
 from bspforge.sdk_ingestor import SDKIngestor
@@ -21,34 +23,44 @@ class Pipeline:
         self.repository_root = repository_root.resolve()
 
     def run(self, config_path: Path, build: bool = True) -> dict[str, Any]:
+        run_started = perf_counter()
+        timings: dict[str, Any] = {}
         config = read_json(config_path.resolve())
         run_id = config.get("run_id") or datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
         run_root = self._path(config.get("workspace", "workspace")) / "runs" / run_id
         run_root.mkdir(parents=True, exist_ok=True)
 
+        stage_started = perf_counter()
         sdk_root = self._path(config["sdk"]["path"])
         ir = SDKIngestor().ingest(sdk_root, config["sdk"]["id"])
         store = IRStore(self._path(config.get("ir_store", "workspace/ir")))
         ir_path = store.put(ir)
         write_json(run_root / "01-sdk-ir.json", ir)
+        timings["sdk_ingest_seconds"] = round(perf_counter() - stage_started, 6)
 
+        stage_started = perf_counter()
         resolver_config = config.get("resolver", {})
         resolution = SemanticResolver().resolve(
             ir,
             capability_names=resolver_config.get("capabilities"),
             threshold=float(resolver_config.get("threshold", 0.42)),
             top_k=int(resolver_config.get("top_k", 8)),
+            evidence_weights=resolver_config.get("weights"),
         )
         write_json(run_root / "02-semantic-resolution.json", resolution)
+        timings["semantic_resolution_seconds"] = round(perf_counter() - stage_started, 6)
 
+        stage_started = perf_counter()
         closure = ClosureSolver().solve(ir, resolution)
         write_json(run_root / "03-build-closure.json", closure)
+        timings["closure_solver_seconds"] = round(perf_counter() - stage_started, 6)
 
         backend_config = config["backend"]
         if backend_config["type"] != "rtthread":
             raise ValueError(f"Unsupported backend: {backend_config['type']}")
         backend = RTThreadBackend()
         generated_root = self._path(backend_config.get("output", f"workspace/generated/{run_id}"))
+        stage_started = perf_counter()
         generation = backend.generate(
             self._path(backend_config["rtthread_root"]),
             backend_config["board"],
@@ -56,8 +68,10 @@ class Pipeline:
             ir,
             resolution,
             closure,
+            backend_config,
         )
         write_json(run_root / "04-generation.json", generation)
+        timings["initial_generation_seconds"] = round(perf_counter() - stage_started, 6)
 
         build_result: dict[str, Any] = {"skipped": True}
         if build:
@@ -73,10 +87,15 @@ class Pipeline:
             returncode = 1
             output = ""
             diagnosis: dict[str, Any] = {}
+            build_seconds = 0.0
+            regeneration_seconds = 0.0
 
             for iteration in range(1, max_iterations + 1):
                 metadata_dir = Path(generation["bsp_path"]) / "bspforge"
+                iteration_started = perf_counter()
                 returncode, output = backend.build(metadata_dir, toolchain_bin, jobs=jobs)
+                iteration_seconds = round(perf_counter() - iteration_started, 6)
+                build_seconds += iteration_seconds
                 iteration_log = run_root / f"05-build-iteration-{iteration:02d}.log"
                 iteration_log.write_text(output, encoding="utf-8")
                 diagnosis = diagnoser.diagnose(output, returncode)
@@ -89,6 +108,7 @@ class Pipeline:
                     "diagnosis": diagnosis,
                     "repair_proposal": repair_proposal,
                     "closure_id": closure["id"],
+                    "duration_seconds": iteration_seconds,
                 }
                 iterations.append(iteration_record)
                 write_json(run_root / f"06-diagnosis-iteration-{iteration:02d}.json", iteration_record)
@@ -106,6 +126,7 @@ class Pipeline:
                     break
                 repairs_applied += len(closure["repair_history"][-1]["applied"])
                 write_json(run_root / f"03-build-closure-iteration-{iteration + 1:02d}.json", closure)
+                regeneration_started = perf_counter()
                 generation = backend.generate(
                     self._path(backend_config["rtthread_root"]),
                     backend_config["board"],
@@ -113,12 +134,29 @@ class Pipeline:
                     ir,
                     resolution,
                     closure,
+                    backend_config,
                 )
+                regeneration_seconds += perf_counter() - regeneration_started
                 write_json(run_root / f"04-generation-iteration-{iteration + 1:02d}.json", generation)
 
             log_path = run_root / "05-build.log"
             log_path.write_text(output, encoding="utf-8")
             write_json(run_root / "06-build-diagnosis.json", diagnosis)
+            write_json(run_root / "03-build-closure.json", closure)
+            write_json(run_root / "04-generation.json", generation)
+            bsp_path = Path(generation["bsp_path"])
+            verification = (
+                backend.verify(bsp_path / "bspforge", toolchain_bin)
+                if returncode == 0
+                else {"success": False, "skipped": True, "reason": "link-failed"}
+            )
+            write_json(run_root / "08-artifact-verification.json", verification)
+            artifacts = [
+                str(path) for path in (bsp_path / "rtthread.elf", bsp_path / "rtthread.bin") if path.exists()
+            ]
+            verified_success = returncode == 0 and verification["success"]
+            if returncode == 0 and not verification["success"]:
+                stop_reason = "artifact-verification-failed"
             write_json(run_root / "07-build-iterations.json", {
                 "max_iterations": max_iterations,
                 "attempts": len(iterations),
@@ -126,26 +164,58 @@ class Pipeline:
                 "repairs_applied": repairs_applied,
                 "iterations": iterations,
             })
-            write_json(run_root / "03-build-closure.json", closure)
-            write_json(run_root / "04-generation.json", generation)
-            bsp_path = Path(generation["bsp_path"])
-            artifacts = [
-                str(path) for path in (bsp_path / "rtthread.elf", bsp_path / "rtthread.bin") if path.exists()
-            ]
             build_result = {
                 "skipped": False,
                 "returncode": returncode,
-                "success": returncode == 0,
+                "success": verified_success,
                 "log": str(log_path),
                 "diagnosis": diagnosis,
+                "warnings": diagnoser.summarize_warnings(output),
                 "artifacts": artifacts,
+                "artifact_verification": verification,
                 "attempts": len(iterations),
                 "max_iterations": max_iterations,
                 "stop_reason": stop_reason,
                 "repairs_applied": repairs_applied,
                 "iterations": iterations,
             }
+            timings["build_seconds"] = round(build_seconds, 6)
+            timings["diagnostic_regeneration_seconds"] = round(regeneration_seconds, 6)
 
+        evaluation_result: dict[str, Any] = {"skipped": True}
+        evaluation_config = config.get("evaluation", {})
+        if evaluation_config.get("ground_truth"):
+            evaluation_started = perf_counter()
+            evaluator = ExperimentEvaluator()
+            ground_truth = read_json(self._path(evaluation_config["ground_truth"]))
+            metadata = Path(generation["bsp_path"]) / "bspforge"
+            metrics = evaluator.evaluate(
+                resolution,
+                read_json(metadata / "functional-bindings.json"),
+                read_json(metadata / "device-model.json"),
+                ground_truth,
+            )
+            metrics_path = run_root / "09-method-evaluation.json"
+            write_json(metrics_path, metrics)
+            evaluation_result = {
+                "skipped": False,
+                "ground_truth_id": ground_truth.get("id", "unknown"),
+                "metrics": str(metrics_path),
+                "summary": metrics["summary"],
+            }
+            if evaluation_config.get("run_ablations", False):
+                ablations = evaluator.ablate(
+                    ir,
+                    ground_truth,
+                    threshold=float(resolver_config.get("threshold", 0.42)),
+                    top_k=int(resolver_config.get("top_k", 8)),
+                )
+                ablation_path = run_root / "10-evidence-ablations.json"
+                write_json(ablation_path, ablations)
+                evaluation_result["ablations"] = str(ablation_path)
+            timings["evaluation_seconds"] = round(perf_counter() - evaluation_started, 6)
+
+        timings["total_seconds"] = round(perf_counter() - run_started, 6)
         report = {
             "run_id": run_id,
             "config": str(config_path.resolve()),
@@ -157,6 +227,8 @@ class Pipeline:
             "resolution": resolution["summary"],
             "closure": closure["summary"],
             "build": build_result,
+            "evaluation": evaluation_result,
+            "timings": timings,
         }
         write_json(run_root / "report.json", report)
         return report

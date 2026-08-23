@@ -10,7 +10,9 @@ from typing import Any
 
 from bspforge.common import copytree_filtered, file_sha256, utc_now, write_json
 from bspforge.os_backend.base import OSBackend
+from bspforge.os_backend.artifact_verifier import FirmwareArtifactVerifier
 from bspforge.os_backend.rtthread_binding import RTThreadBindingGenerator
+from bspforge.os_backend.rtthread_device import RTThreadDeviceModelGenerator
 
 
 class RTThreadBackend(OSBackend):
@@ -24,6 +26,7 @@ class RTThreadBackend(OSBackend):
         ir: dict[str, Any],
         resolution: dict[str, Any],
         closure: dict[str, Any],
+        options: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         rtthread_root = rtthread_root.resolve()
         source_bsp = rtthread_root / "bsp" / board
@@ -37,6 +40,11 @@ class RTThreadBackend(OSBackend):
         binding_manifest = RTThreadBindingGenerator().generate(
             generated_bsp / "board", ir, resolution
         )
+        device_manifest = RTThreadDeviceModelGenerator().generate(
+            generated_bsp,
+            binding_manifest,
+            (options or {}).get("devices"),
+        )
         sdk_package = self._install_sdk_input(
             generated_bsp,
             Path(ir["sdk"]["root"]),
@@ -47,10 +55,15 @@ class RTThreadBackend(OSBackend):
         write_json(metadata / "semantic-resolution.json", resolution)
         write_json(metadata / "build-closure.json", closure)
         write_json(metadata / "functional-bindings.json", binding_manifest)
+        write_json(metadata / "device-model.json", device_manifest)
 
         adapter = generated_bsp / "board" / "bspforge_sdk_adapter.c"
         adapter.write_text(self._adapter_source(resolution), encoding="utf-8")
         self._make_prefix_configurable(generated_bsp / "rtconfig.py")
+        self._enable_rtthread_features(
+            generated_bsp / "rtconfig.h",
+            device_manifest["required_rtthread_features"],
+        )
 
         manifest = {
             "schema_version": "1.0",
@@ -68,6 +81,16 @@ class RTThreadBackend(OSBackend):
                 "header": str(Path(binding_manifest["header"]).relative_to(output)),
                 "manifest": str((metadata / "functional-bindings.json").relative_to(output)),
                 "summary": binding_manifest["summary"],
+            },
+            "device_model": {
+                "manifest": str((metadata / "device-model.json").relative_to(output)),
+                "sources": [
+                    str(Path(path).relative_to(output))
+                    for path in device_manifest["sources"]
+                ],
+                "operation_tables": device_manifest["operation_tables"],
+                "registration_symbols": device_manifest["registration_symbols"],
+                "summary": device_manifest["summary"],
             },
             "sdk_package": str(sdk_package.relative_to(output)),
             "sdk_digest": ir["sdk"]["digest"],
@@ -191,6 +214,19 @@ class RTThreadBackend(OSBackend):
         )
         return process.returncode, process.stdout
 
+    def verify(self, project: Path, toolchain_bin: Path) -> dict[str, Any]:
+        manifest = json.loads((project / "generation-manifest.json").read_text(encoding="utf-8"))
+        expected = [
+            *manifest["device_model"]["operation_tables"],
+            *manifest["device_model"]["registration_symbols"],
+        ]
+        return FirmwareArtifactVerifier().verify(
+            Path(manifest["bsp_path"]),
+            toolchain_bin,
+            self._detect_prefix(toolchain_bin),
+            expected,
+        )
+
     @staticmethod
     def _adapter_source(resolution: dict[str, Any]) -> str:
         rows: list[str] = []
@@ -228,6 +264,20 @@ int bspforge_mapping_count(void)
         text, count = re.subn(r"PREFIX\s*=\s*['\"][^'\"]+['\"]", replacement, text, count=1)
         if count != 1:
             raise RuntimeError(f"Could not locate toolchain PREFIX in {path}")
+        path.write_text(text, encoding="utf-8")
+
+    @staticmethod
+    def _enable_rtthread_features(path: Path, features: list[str]) -> None:
+        text = path.read_text(encoding="utf-8", errors="replace")
+        missing = [feature for feature in features if f"#define {feature}" not in text]
+        if not missing:
+            return
+        marker = "/* Device Drivers */"
+        declarations = "\n".join(f"#define {feature}" for feature in missing)
+        if marker in text:
+            text = text.replace(marker, f"{marker}\n\n{declarations}", 1)
+        else:
+            text = f"{text.rstrip()}\n\n{declarations}\n"
         path.write_text(text, encoding="utf-8")
 
     @staticmethod

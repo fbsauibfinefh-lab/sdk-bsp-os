@@ -15,10 +15,10 @@ class OSBackend(ABC):
         ir: dict[str, Any],
         resolution: dict[str, Any],
         closure: dict[str, Any],
+        options: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         raise NotImplementedError
 
     @abstractmethod
     def build(self, project: Path, toolchain_bin: Path, jobs: int = 1) -> tuple[int, str]:
         raise NotImplementedError
-

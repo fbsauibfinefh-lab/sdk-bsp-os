@@ -8,6 +8,7 @@ from pathlib import Path
 from bspforge.build_diagnoser import BuildDiagnoser
 from bspforge.closure_solver import ClosureSolver
 from bspforge.common import read_json, write_json
+from bspforge.evaluation import ExperimentEvaluator
 from bspforge.ir_store import IRStore
 from bspforge.pipeline import Pipeline
 from bspforge.sdk_ingestor import SDKIngestor
@@ -43,6 +44,13 @@ def parser() -> argparse.ArgumentParser:
     diagnose.add_argument("--log", type=Path, required=True)
     diagnose.add_argument("--returncode", type=int, default=1)
     diagnose.add_argument("--out", type=Path, required=True)
+
+    evaluate = commands.add_parser("evaluate", help="evaluate mappings, bindings, and devices")
+    evaluate.add_argument("--resolution", type=Path, required=True)
+    evaluate.add_argument("--bindings", type=Path, required=True)
+    evaluate.add_argument("--devices", type=Path, required=True)
+    evaluate.add_argument("--ground-truth", type=Path, required=True)
+    evaluate.add_argument("--out", type=Path, required=True)
     return root
 
 
@@ -77,9 +85,18 @@ def main(argv: list[str] | None = None) -> int:
         write_json(args.out, value)
         print(args.out)
         return 0
+    if args.command == "evaluate":
+        value = ExperimentEvaluator().evaluate(
+            read_json(args.resolution),
+            read_json(args.bindings),
+            read_json(args.devices),
+            read_json(args.ground_truth),
+        )
+        write_json(args.out, value)
+        print(args.out)
+        return 0
     return 1
 
 
 if __name__ == "__main__":
     sys.exit(main())
-

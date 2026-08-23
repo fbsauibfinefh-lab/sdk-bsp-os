@@ -22,7 +22,7 @@
 
 ## 增加 OS 后端
 
-实现 `OSBackend.generate()` 和 `OSBackend.build()`。后端负责目标 OS 的设备模型、工程结构、配置机制、构建规则和产物检查；通用 IR、语义恢复和闭包层不得依赖 K210 路径。
+实现 `OSBackend.generate(..., options=None)` 和 `OSBackend.build()`，并提供与 RT-Thread 后端等价的产物验证入口。后端负责目标 OS 的设备模型、工程结构、配置机制、构建规则和产物检查；通用 IR、语义恢复和闭包层不得依赖 K210 路径。
 
 论文中的第二后端应具备明显不同的设备模型和构建系统。Zephyr（devicetree/Kconfig/CMake）或 NuttX（Kconfig/Make）比另一个 SCons RTOS 更有区分度。
 
@@ -30,3 +30,6 @@
 
 在 `build_diagnoser` 中新增精确模式、分类和约束，并使用真实日志增加测试。只有“加入源码”和“加入包含目录”等增量、可回溯操作可以默认自动执行；删除实现、修改 ABI、调整链接脚本或内存布局需要显式策略和独立验证。
 
+## 增加真值集与实验
+
+在 `experiments/` 中增加一个版本化 JSON，分别标注 `semantic_symbols`、`binding_symbols` 和 `device_operations`。项目配置引用该文件后，流水线自动输出方法指标和七类证据消融。新增样本不应复制评估代码，只增加输入配置和人工核验数据。
