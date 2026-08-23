@@ -13,7 +13,7 @@ from bspforge.closure_solver import ClosureSolver
 from bspforge.common import read_json, write_json
 from bspforge.evaluation import ExperimentEvaluator
 from bspforge.ir_store import IRStore
-from bspforge.os_backend import RTThreadBackend
+from bspforge.os_backend import RTThreadBackend, ZephyrBackend
 from bspforge.sdk_ingestor import SDKIngestor
 from bspforge.semantic_resolver import SemanticResolver
 
@@ -55,14 +55,22 @@ class Pipeline:
         write_json(run_root / "03-build-closure.json", closure)
         timings["closure_solver_seconds"] = round(perf_counter() - stage_started, 6)
 
-        backend_config = config["backend"]
-        if backend_config["type"] != "rtthread":
+        backend_config = dict(config["backend"])
+        for key in ("project_template", "libraries_root", "libs_root", "board_port"):
+            if backend_config.get(key):
+                backend_config[key] = str(self._path(backend_config[key]))
+        if backend_config["type"] == "rtthread":
+            backend = RTThreadBackend()
+            os_root = self._path(backend_config["rtthread_root"])
+        elif backend_config["type"] == "zephyr":
+            backend = ZephyrBackend()
+            os_root = self._path(backend_config["zephyr_root"])
+        else:
             raise ValueError(f"Unsupported backend: {backend_config['type']}")
-        backend = RTThreadBackend()
         generated_root = self._path(backend_config.get("output", f"workspace/generated/{run_id}"))
         stage_started = perf_counter()
         generation = backend.generate(
-            self._path(backend_config["rtthread_root"]),
+            os_root,
             backend_config["board"],
             generated_root,
             ir,
@@ -128,7 +136,7 @@ class Pipeline:
                 write_json(run_root / f"03-build-closure-iteration-{iteration + 1:02d}.json", closure)
                 regeneration_started = perf_counter()
                 generation = backend.generate(
-                    self._path(backend_config["rtthread_root"]),
+                    os_root,
                     backend_config["board"],
                     generated_root,
                     ir,
@@ -151,9 +159,7 @@ class Pipeline:
                 else {"success": False, "skipped": True, "reason": "link-failed"}
             )
             write_json(run_root / "08-artifact-verification.json", verification)
-            artifacts = [
-                str(path) for path in (bsp_path / "rtthread.elf", bsp_path / "rtthread.bin") if path.exists()
-            ]
+            artifacts = [item["path"] for item in verification.get("artifacts", [])]
             verified_success = returncode == 0 and verification["success"]
             if returncode == 0 and not verification["success"]:
                 stop_reason = "artifact-verification-failed"

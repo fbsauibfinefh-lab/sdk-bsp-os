@@ -1,0 +1,36 @@
+{
+  "run_id": "k210-zephyr-v0.4",
+  "workspace": "workspace",
+  "ir_store": "workspace/ir",
+  "sdk": {
+    "id": "kendryte-k210-standalone-sdk-0.5.6",
+    "path": "sdk/k210/source"
+  },
+  "resolver": {
+    "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
+    "threshold": 0.42,
+    "top_k": 8
+  },
+  "toolchain": {
+    "architecture": "riscv64",
+    "abi": "lp64",
+    "bin": "toolchains/xpack-riscv-none-elf-gcc-14.2.0-3/bin"
+  },
+  "backend": {
+    "type": "zephyr",
+    "board": "k210",
+    "sdk_profile": "k210",
+    "zephyr_root": "third_party/zephyr",
+    "board_port": "ports/zephyr-k210",
+    "toolchain_variant": "cross-compile",
+    "output": "workspace/generated/k210-zephyr"
+  },
+  "build": {
+    "jobs": 8,
+    "max_iterations": 3
+  },
+  "evaluation": {
+    "ground_truth": "experiments/k210-ground-truth.json",
+    "run_ablations": false
+  }
+}

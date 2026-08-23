@@ -1,0 +1,41 @@
+{
+  "run_id": "stm32f103-rtthread-v0.4",
+  "workspace": "workspace",
+  "ir_store": "workspace/ir",
+  "sdk": {
+    "id": "stm32cube-f1",
+    "path": "sdk/stm32f103/source"
+  },
+  "resolver": {
+    "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
+    "threshold": 0.42,
+    "top_k": 8
+  },
+  "toolchain": {
+    "architecture": "arm",
+    "abi": "arm-none-eabi",
+    "bin": "toolchains/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin"
+  },
+  "backend": {
+    "type": "rtthread",
+    "board": "stm32/stm32f103-atk-warshipv3",
+    "sdk_profile": "stm32f103",
+    "binding_strategy": "native-driver-trace",
+    "rtthread_root": "third_party/rt-thread",
+    "output": "workspace/generated/stm32f103-rtthread",
+    "native_driver_roots": ["bsp/stm32/libraries/HAL_Drivers"],
+    "validation": {
+      "uart": "uart1",
+      "pin_device": "pin",
+      "pin": -1
+    },
+    "artifacts": {
+      "elf": "rt-thread.elf",
+      "bin": "rtthread.bin"
+    }
+  },
+  "build": {
+    "jobs": 8,
+    "max_iterations": 3
+  }
+}

@@ -1,6 +1,6 @@
 # BSPForge
 
-BSPForge 是一个面向芯片 SDK 语义恢复与 RTOS BSP 自动生成的研究原型。当前端到端样例以 Kendryte K210 SDK 为输入、以 RT-Thread 为操作系统后端；通用分析、闭包、诊断和评估模块不依赖特定芯片。
+BSPForge 是一个面向芯片 SDK 语义恢复与 RTOS BSP 自动生成的研究原型。当前支持 Kendryte K210、STM32F103 和 PSoC E84 Edgi-Talk 三类 SDK，以及 RT-Thread、Zephyr 两个具有不同设备模型和构建系统的后端。
 
 ## 核心能力
 
@@ -11,23 +11,26 @@ BSPForge 是一个面向芯片 SDK 语义恢复与 RTOS BSP 自动生成的研�
 3. **Semantic Resolver**：融合名称、路径、签名、头文件、调用和宏证据，恢复 SDK 能力与目标 OS 契约的映射。
 4. **Closure Solver**：求解源码、头文件、构建规则、启动文件和链接脚本闭包。
 5. **Build Diagnoser**：把编译/链接错误转换为约束，定位 SDK 提供者并执行安全的增量修复。
-6. **OS Backend**：生成原生 RT-Thread BSP、设备模型和注册代码，调用 SCons，并验证 ELF/BIN。
+6. **OS Backend**：生成原生 RT-Thread BSP 或 Zephyr 应用，调用 SCons 或 west/CMake/Ninja，并验证 ELF 与 BIN/HEX。
 
-v0.3 会生成真实参与链接的 `rt_uart_ops`、`rt_pin_ops`、`rt_hwtimer_ops`、设备实例和初始化注册函数。流水线在编译失败后根据 IR 增补源码或包含目录，直到成功、无新约束或达到迭代上限；链接成功后还会检查固件架构、段信息、哈希和关键生成符号。
+K210/RT-Thread 路径会生成真实参与链接的 `rt_uart_ops`、`rt_pin_ops`、`rt_hwtimer_ops`、设备实例和初始化注册函数。成熟 BSP 路径追踪 RTOS 原生驱动到 SDK 实体的调用证据，并生成设备 API 验证入口。流水线在编译失败后根据 IR 增补源码或包含目录，直到成功、无新约束或达到迭代上限；链接成功后还会检查固件架构、段信息、哈希和关键生成符号。
+
+v0.4 已完成 3 块开发板 × 2 个 RTOS 的六组工程生成和固件静态验证。实物启动与外设回归仍需单独执行，不能由编译成功替代。
 
 ## 快速开始
 
 ```bash
 cd /home/whk/RTT-porting/bspforge
 ./scripts/bootstrap_local_inputs.sh
+./scripts/install_python_dependencies.sh
 ./scripts/install_toolchain.sh
-./scripts/run_k210.sh
+./scripts/run_matrix.sh
 ```
 
 只分析和生成，不执行编译：
 
 ```bash
-./scripts/run_k210.sh --no-build
+./scripts/run_matrix.sh --no-build
 ```
 
 运行测试：
@@ -44,6 +47,7 @@ conda run -n AIoT-v1.0 python -m unittest discover -s tests -v
 - [IR 数据结构](docs/ir-schema.md)
 - [K210 复现实验](docs/reproduction.md)
 - [基线实验结果](docs/baseline-results.md)
+- [三芯片双 RTOS 构建矩阵](docs/matrix-results.md)
 - [研究状态与版本演进](docs/research-status.md)
 - [扩展新 SDK/后端](docs/extending.md)
 

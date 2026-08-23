@@ -17,13 +17,21 @@ class FirmwareArtifactVerifier:
         toolchain_bin: Path,
         toolchain_prefix: str,
         expected_symbols: list[str],
+        *,
+        elf_name: str = "rtthread.elf",
+        binary_name: str | None = "rtthread.bin",
+        expected_machine: str = "RISC-V",
     ) -> dict[str, Any]:
-        elf = bsp / "rtthread.elf"
-        binary = bsp / "rtthread.bin"
+        elf = bsp / elf_name
+        binary = bsp / binary_name if binary_name else None
         checks: list[dict[str, Any]] = []
         artifacts: list[dict[str, Any]] = []
 
-        for kind, path in (("elf", elf), ("bin", binary)):
+        candidates = [("elf", elf)]
+        if binary is not None:
+            image_kind = binary.suffix.lower().lstrip(".") or "bin"
+            candidates.append((image_kind, binary))
+        for kind, path in candidates:
             exists = path.is_file() and path.stat().st_size > 0
             checks.append({"name": f"{kind}-exists", "success": exists})
             if exists:
@@ -41,10 +49,11 @@ class FirmwareArtifactVerifier:
         if elf.is_file():
             readelf = self._run(toolchain_bin / f"{toolchain_prefix}readelf", ["-h", str(elf)])
             elf_header = self._parse_elf_header(readelf)
-            architecture_ok = "RISC-V" in elf_header.get("Machine", "")
+            architecture_ok = expected_machine.lower() in elf_header.get("Machine", "").lower()
             checks.append({
-                "name": "elf-machine-riscv",
+                "name": "elf-machine",
                 "success": architecture_ok,
+                "expected": expected_machine,
                 "observed": elf_header.get("Machine", "unknown"),
             })
 
@@ -81,6 +90,7 @@ class FirmwareArtifactVerifier:
             "expected_symbols": sorted(expected_symbols),
             "present_symbols": present_symbols,
             "missing_symbols": missing_symbols,
+            "expected_machine": expected_machine,
         }
 
     @staticmethod

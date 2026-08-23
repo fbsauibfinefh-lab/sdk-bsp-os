@@ -19,6 +19,7 @@
   "backend": {
     "type": "rtthread",
     "board": "k210",
+    "sdk_profile": "k210",
     "rtthread_root": "third_party/rt-thread",
     "output": "workspace/generated/k210-rtthread",
     "devices": {

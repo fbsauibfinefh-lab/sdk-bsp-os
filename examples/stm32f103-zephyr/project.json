@@ -1,0 +1,32 @@
+{
+  "run_id": "stm32f103-zephyr-v0.4",
+  "workspace": "workspace",
+  "ir_store": "workspace/ir",
+  "sdk": {
+    "id": "stm32cube-f1",
+    "path": "sdk/stm32f103/source"
+  },
+  "resolver": {
+    "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
+    "threshold": 0.42,
+    "top_k": 8
+  },
+  "toolchain": {
+    "architecture": "arm",
+    "abi": "arm-none-eabi",
+    "bin": "toolchains/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin"
+  },
+  "backend": {
+    "type": "zephyr",
+    "board": "stm32_min_dev@black/stm32f103xb",
+    "sdk_profile": "stm32f103",
+    "zephyr_root": "third_party/zephyr",
+    "toolchain_variant": "gnuarmemb",
+    "native_provider_roots": ["modules/hal/stm32/stm32cube/stm32f1xx"],
+    "output": "workspace/generated/stm32f103-zephyr"
+  },
+  "build": {
+    "jobs": 8,
+    "max_iterations": 3
+  }
+}

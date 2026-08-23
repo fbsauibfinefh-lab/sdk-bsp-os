@@ -9,9 +9,10 @@ build/
 # Local, reproducible inputs. Keep manifests and README files tracked.
 sdk/*/source
 third_party/rt-thread
+third_party/zephyr
+third_party/psoc-e84-sdk
 toolchains/*/
 !toolchains/.gitkeep
 !toolchains/README.md
 !toolchains/manifest.json
 workspace/
-

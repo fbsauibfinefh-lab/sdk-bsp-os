@@ -1,0 +1,9 @@
+if SOC_KENDRYTE_K210
+
+config RISCV_ISA_EXT_D
+	default y
+
+config RISCV_ISA_EXT_F
+	default y
+
+endif

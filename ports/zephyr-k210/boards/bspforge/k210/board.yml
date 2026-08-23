@@ -1,0 +1,6 @@
+board:
+  name: k210
+  full_name: Kendryte K210 SDK-derived board
+  vendor: bspforge
+  socs:
+    - name: kendryte_k210

@@ -24,7 +24,9 @@
 
 实现 `OSBackend.generate(..., options=None)` 和 `OSBackend.build()`，并提供与 RT-Thread 后端等价的产物验证入口。后端负责目标 OS 的设备模型、工程结构、配置机制、构建规则和产物检查；通用 IR、语义恢复和闭包层不得依赖 K210 路径。
 
-论文中的第二后端应具备明显不同的设备模型和构建系统。Zephyr（devicetree/Kconfig/CMake）或 NuttX（Kconfig/Make）比另一个 SCons RTOS 更有区分度。
+当前第二后端为 Zephyr 4.4，使用 devicetree/Kconfig/CMake/Ninja，与 RT-Thread 的设备对象/SCons 路径形成区分。新增第三后端时应复用现有 IR、闭包、诊断和产物验证契约，不复制流水线控制逻辑。
+
+若目标芯片已有成熟 Zephyr/RT-Thread 驱动，应使用 `NativeDriverBindingTracer` 记录原生驱动到输入 SDK 实体的调用证据；只有目标 BSP 缺少相应绑定时，才增加新的生成式 binding generator。
 
 ## 增加诊断规则
 

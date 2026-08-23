@@ -1,0 +1,7 @@
+config SOC_KENDRYTE_K210
+	bool
+	help
+	  Kendryte K210 RV64 SoC recovered from the standalone SDK platform assets.
+
+config SOC
+	default "kendryte_k210" if SOC_KENDRYTE_K210

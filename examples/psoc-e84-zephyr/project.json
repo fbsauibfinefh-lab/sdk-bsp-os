@@ -1,0 +1,33 @@
+{
+  "run_id": "psoc-e84-zephyr-v0.4",
+  "workspace": "workspace",
+  "ir_store": "workspace/ir",
+  "sdk": {
+    "id": "psoc-e84-edgi-talk-sdk",
+    "path": "sdk/psoc_e84-edgi-talk/source"
+  },
+  "resolver": {
+    "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
+    "threshold": 0.42,
+    "top_k": 8
+  },
+  "toolchain": {
+    "architecture": "arm",
+    "abi": "arm-none-eabi",
+    "bin": "toolchains/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin"
+  },
+  "backend": {
+    "type": "zephyr",
+    "board": "kit_pse84_eval/pse846gps2dbzc4a/m33",
+    "sdk_profile": "psoc_e84_edgi_talk",
+    "zephyr_root": "third_party/zephyr",
+    "toolchain_variant": "gnuarmemb",
+    "objcopy_in_place_workaround": true,
+    "native_provider_roots": ["modules/hal/infineon/mtb-dsl-pse8xxgp"],
+    "output": "workspace/generated/psoc-e84-zephyr"
+  },
+  "build": {
+    "jobs": 8,
+    "max_iterations": 3
+  }
+}

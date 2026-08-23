@@ -1,5 +1,15 @@
 # 变更记录
 
+## 0.4.0
+
+- 增加 Zephyr 4.4 后端，生成 devicetree/Kconfig/CMake 原生应用并调用 west/Ninja 构建。
+- 增加 STM32CubeF1 与 PSoC E84 Edgi-Talk SDK profile，完成三个 SDK、两个 RTOS 的六组合构建矩阵。
+- 增加 K210 Zephyr 板级端口，覆盖 RV64、SRAM、PLIC、机器定时器、UARTHS 和 FPIOA 初始化。
+- 增加成熟 RTOS 驱动到 SDK IR 实体的证据追踪，以及 RT-Thread/Zephyr 原生设备 API 验证入口。
+- STM32F103 从输入 SDK 重新物化 CMSIS Core、Device 和 HAL 软件包；PSoC E84 复用厂商 M33 工程模板。
+- 统一验证 ARM/RISC-V ELF、BIN/HEX、段信息、SHA-256 和关键注册符号。
+- 增加双架构工具链安装、六配置运行脚本、构建矩阵结果文档和 4 项单元测试。
+
 ## 0.3.0
 
 - 生成 RT-Thread 原生 `rt_uart_ops`、`rt_pin_ops` 和 `rt_hwtimer_ops`，以及设备实例和初始化注册代码。

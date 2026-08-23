@@ -1,4 +1,6 @@
-# K210 到 RT-Thread 复现实验
+# 构建矩阵复现实验
+
+本页先给出 v0.4 三芯片双 RTOS 的统一复现入口，再保留 K210/RT-Thread 诊断闭环的详细说明。
 
 ## 本地条件
 
@@ -8,23 +10,39 @@
 - RT-Thread：`/mnt/d/Wuhk/RTT/rt-thread`
 - 工具链：xPack GNU RISC-V Embedded GCC 10.2.0-1.2
 - 目标参数：`rv64imafc`、`lp64f`、`medany`
+- Zephyr：`/home/whk/RTT-porting/zephyr`，v4.4.0
+- STM32CubeF1：`/home/whk/RTT-porting/STM32CubeF1`
+- PSoC E84 SDK：`/home/whk/RTT-porting/sdk-bsp-psoc_e84-edgi-talk`
+- ARM/RISC-V 14.2 工具链：由安装脚本下载到项目 `toolchains/`
 
 ## 一键运行
 
 ```bash
 cd /home/whk/RTT-porting/bspforge
 ./scripts/bootstrap_local_inputs.sh
+./scripts/install_python_dependencies.sh
 ./scripts/install_toolchain.sh
-./scripts/run_k210.sh
+./scripts/run_matrix.sh
 ```
 
 仅分析和生成：
 
 ```bash
-./scripts/run_k210.sh --no-build
+./scripts/run_matrix.sh --no-build
 ```
 
 脚本直接在 `AIoT-v1.0` 中运行仓库模块，不会在每次实验前重复安装项目。
+
+只运行单个组合时，可直接调用对应配置：
+
+```bash
+conda run --no-capture-output -n AIoT-v1.0 env \
+  -u CFLAGS -u CXXFLAGS -u CPPFLAGS -u LDFLAGS \
+  python -m bspforge.cli pipeline \
+  --config examples/stm32f103-zephyr/project.json
+```
+
+六份配置位于 `examples/{k210,stm32f103,psoc-e84}-{rtthread,zephyr}/project.json`，实测结果见 `docs/matrix-results.md`。
 
 ## 设备配置
 

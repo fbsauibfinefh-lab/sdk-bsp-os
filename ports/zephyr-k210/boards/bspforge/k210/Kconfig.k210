@@ -1,0 +1,2 @@
+config BOARD_K210
+	select SOC_KENDRYTE_K210

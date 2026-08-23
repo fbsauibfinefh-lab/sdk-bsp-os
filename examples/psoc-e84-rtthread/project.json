@@ -1,0 +1,44 @@
+{
+  "run_id": "psoc-e84-rtthread-v0.4",
+  "workspace": "workspace",
+  "ir_store": "workspace/ir",
+  "sdk": {
+    "id": "psoc-e84-edgi-talk-sdk",
+    "path": "sdk/psoc_e84-edgi-talk/source"
+  },
+  "resolver": {
+    "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
+    "threshold": 0.42,
+    "top_k": 8
+  },
+  "toolchain": {
+    "architecture": "arm",
+    "abi": "arm-none-eabi",
+    "bin": "toolchains/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin"
+  },
+  "backend": {
+    "type": "rtthread",
+    "board": "psoc_e84-edgi-talk",
+    "sdk_profile": "psoc_e84_edgi_talk",
+    "binding_strategy": "native-driver-trace",
+    "rtthread_root": "third_party/psoc-e84-sdk/rt-thread",
+    "project_template": "third_party/psoc-e84-sdk/projects/Edgi_Talk_M33_Template",
+    "libraries_root": "third_party/psoc-e84-sdk/libraries",
+    "libs_root": "third_party/psoc-e84-sdk/projects/libs",
+    "native_driver_roots": ["libraries/HAL_Drivers"],
+    "output": "workspace/generated/psoc-e84-rtthread",
+    "validation": {
+      "uart": "uart0",
+      "pin_device": "pin",
+      "pin": -1
+    },
+    "artifacts": {
+      "elf": "rt-thread.elf",
+      "bin": "rtthread.hex"
+    }
+  },
+  "build": {
+    "jobs": 8,
+    "max_iterations": 3
+  }
+}

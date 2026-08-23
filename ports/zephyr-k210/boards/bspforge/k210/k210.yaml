@@ -1,0 +1,10 @@
+identifier: k210/kendryte_k210
+name: Kendryte K210 SDK-derived board
+type: mcu
+arch: riscv
+toolchain:
+  - cross-compile
+ram: 6144
+supported:
+  - serial
+vendor: bspforge

@@ -2,10 +2,25 @@
   "riscv-none-embed-gcc-10.2.0": {
     "architecture": "riscv64",
     "abi": "lp64f",
-    "archive": "xpack-riscv-none-embed-gcc-10.2.0-1.2-linux-x64.tar.gz",
     "prefix": "riscv-none-embed-",
+    "sha256": "d72bdcd1eee41dc5a208a8a03976b70d014510deb5890c9e8738e804ba23f985",
     "source": "https://github.com/xpack-dev-tools/riscv-none-embed-gcc-xpack/releases/download/v10.2.0-1.2/xpack-riscv-none-embed-gcc-10.2.0-1.2-linux-x64.tar.gz",
-    "status": "compatibility toolchain for the RT-Thread K210 BSP"
+    "purpose": "RT-Thread K210 兼容构建"
+  },
+  "xpack-riscv-none-elf-gcc-14.2.0-3": {
+    "architecture": "riscv64",
+    "abi": "lp64",
+    "prefix": "riscv-none-elf-",
+    "sha256": "f574415b63f12b09bdd3475223ab492a465d23810646c90c13a4c3b676c83503",
+    "source": "https://github.com/xpack-dev-tools/riscv-none-elf-gcc-xpack/releases/download/v14.2.0-3/xpack-riscv-none-elf-gcc-14.2.0-3-linux-x64.tar.gz",
+    "purpose": "Zephyr K210 构建"
+  },
+  "arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi": {
+    "architecture": "arm",
+    "abi": "arm-none-eabi",
+    "prefix": "arm-none-eabi-",
+    "sha256": "62a63b981fe391a9cbad7ef51b17e49aeaa3e7b0d029b36ca1e9c3b2a9b78823",
+    "source": "https://developer.arm.com/-/media/Files/downloads/gnu/14.2.rel1/binrel/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi.tar.xz",
+    "purpose": "STM32F103 与 PSoC E84 构建"
   }
 }
-

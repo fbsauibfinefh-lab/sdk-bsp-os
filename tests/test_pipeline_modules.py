@@ -9,9 +9,11 @@ from bspforge.closure_solver import ClosureSolver
 from bspforge.common import write_json
 from bspforge.evaluation import ExperimentEvaluator
 from bspforge.ir_store import IRStore
-from bspforge.os_backend import RTThreadBackend
+from bspforge.os_backend import RTThreadBackend, ZephyrBackend
 from bspforge.os_backend.artifact_verifier import FirmwareArtifactVerifier
+from bspforge.os_backend.native_binding import NativeDriverBindingTracer
 from bspforge.os_backend.rtthread_device import RTThreadDeviceModelGenerator
+from bspforge.os_backend.rtthread_validation import RTThreadValidationGenerator
 from bspforge.sdk_ingestor import SDKIngestor
 from bspforge.semantic_resolver import SemanticResolver
 
@@ -205,6 +207,73 @@ class ModuleTests(unittest.TestCase):
                     "hwtimer": [],
                 },
             )
+
+    def test_native_driver_trace_links_sdk_entities_to_rtos_sources(self) -> None:
+        ir = SDKIngestor().ingest(self.sdk, "fixture-sdk")
+        drivers = self.root / "drivers"
+        drivers.mkdir()
+        (drivers / "native_uart.c").write_text(
+            "void native_init(void) { uart_init(115200); }\n", encoding="utf-8"
+        )
+        manifest = NativeDriverBindingTracer().generate(
+            ir, "k210", "zephyr", [drivers]
+        )
+        uart = next(item for item in manifest["bindings"] if item["capability"] == "uart")
+        linked = [item["symbol"] for item in uart["sdk_symbols"] if item["linked_by_native_driver"]]
+        self.assertIn("uart_init", linked)
+        self.assertEqual(uart["status"], "resolved")
+
+    def test_rtthread_native_validation_source_uses_device_api(self) -> None:
+        bsp = self.root / "native-validation"
+        manifest = RTThreadValidationGenerator().generate(
+            bsp, {"uart": "uart2", "pin": 7}
+        )
+        source = Path(manifest["source"]).read_text(encoding="utf-8")
+        self.assertIn('bspforge_uart_name[] = "uart2"', source)
+        self.assertIn("rt_device_write", source)
+        self.assertIn("rt_pin_write", source)
+        self.assertIn("rt_timer_start", source)
+
+    def test_zephyr_backend_generates_native_application_contract(self) -> None:
+        zephyr = self.root / "zephyr"
+        (zephyr / "drivers").mkdir(parents=True)
+        (zephyr / "CMakeLists.txt").write_text("# fixture\n", encoding="utf-8")
+        (zephyr / "drivers" / "uart_fixture.c").write_text(
+            "void bind(void) { uart_init(115200); }\n", encoding="utf-8"
+        )
+        ir = SDKIngestor().ingest(self.sdk, "fixture-sdk")
+        resolution = SemanticResolver().resolve(ir, ["uart"], threshold=0.4)
+        closure = ClosureSolver().solve(ir, resolution)
+        output = self.root / "zephyr-output"
+        manifest = ZephyrBackend().generate(
+            zephyr,
+            "fixture-board",
+            output,
+            ir,
+            resolution,
+            closure,
+            {"sdk_profile": "k210"},
+        )
+        self.assertEqual(manifest["backend"], "zephyr")
+        self.assertTrue((output / "app" / "prj.conf").is_file())
+        self.assertTrue((output / "app" / "src" / "main.c").is_file())
+        self.assertEqual(
+            manifest["device_model"]["registration_symbols"],
+            ["bspforge_zephyr_validation_init", "bspforge_zephyr_validation_run"],
+        )
+
+    def test_zephyr_compiled_source_parser_excludes_unselected_drivers(self) -> None:
+        build = self.root / "zephyr-build"
+        selected = self.root / "zephyr" / "drivers" / "uart_selected.c"
+        unselected = self.root / "zephyr" / "drivers" / "uart_unselected.c"
+        build.mkdir()
+        selected.parent.mkdir(parents=True)
+        selected.write_text("void selected(void) {}\n", encoding="utf-8")
+        unselected.write_text("void unselected(void) {}\n", encoding="utf-8")
+        (build / "build.ninja").write_text(
+            f"build selected.obj: C_COMPILER {selected}\n", encoding="utf-8"
+        )
+        self.assertEqual(ZephyrBackend._compiled_sources(build), [selected.resolve()])
 
     def test_experiment_metrics_cover_semantics_bindings_and_devices(self) -> None:
         ir = SDKIngestor().ingest(self.sdk, "fixture-sdk")
