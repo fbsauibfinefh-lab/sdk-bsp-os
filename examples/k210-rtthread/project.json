@@ -1,0 +1,29 @@
+{
+  "run_id": "k210-rtthread-baseline",
+  "workspace": "workspace",
+  "ir_store": "workspace/ir",
+  "sdk": {
+    "id": "kendryte-k210-standalone-sdk-0.5.6",
+    "path": "sdk/k210/source"
+  },
+  "resolver": {
+    "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
+    "threshold": 0.42,
+    "top_k": 8
+  },
+  "toolchain": {
+    "architecture": "riscv64",
+    "abi": "lp64f",
+    "bin": "toolchains/riscv-none-embed-gcc-10.2.0/bin"
+  },
+  "backend": {
+    "type": "rtthread",
+    "board": "k210",
+    "rtthread_root": "third_party/rt-thread",
+    "output": "workspace/generated/k210-rtthread"
+  },
+  "build": {
+    "jobs": 8,
+    "max_iterations": 3
+  }
+}

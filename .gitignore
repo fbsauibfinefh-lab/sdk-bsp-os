@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+dist/
+build/
+
+# Local, reproducible inputs. Keep manifests and README files tracked.
+sdk/*/source
+third_party/rt-thread
+toolchains/*/
+!toolchains/.gitkeep
+!toolchains/README.md
+!toolchains/manifest.json
+workspace/
+
