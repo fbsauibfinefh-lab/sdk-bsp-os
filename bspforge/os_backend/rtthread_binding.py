@@ -334,6 +334,7 @@ class RTThreadBindingGenerator:
         board_dir: Path,
         ir: dict[str, Any],
         resolution: dict[str, Any],
+        binding_plan: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         function_index: dict[str, list[dict[str, Any]]] = {}
         for function in ir["functions"]:
@@ -347,6 +348,12 @@ class RTThreadBindingGenerator:
             for item in resolution["mappings"]
             if item["status"] == "resolved"
         }
+        if binding_plan is not None:
+            resolved = {
+                item["capability"]
+                for item in binding_plan["capabilities"]
+                if item["status"] in {"resolved", "partial"}
+            }
         headers: list[str] = []
         declarations: list[str] = []
         definitions: list[str] = []
@@ -373,7 +380,7 @@ class RTThreadBindingGenerator:
                     "entity_id": entity["id"],
                     "source": entity["evidence"],
                     "signature": entity["signature"],
-                    "selection_method": "backend-contract-exact-symbol",
+                    "selection_method": "audited-specialization-under-canonical-contract",
                 })
             if capability_missing:
                 continue
@@ -409,6 +416,7 @@ class RTThreadBindingGenerator:
             "schema_version": "1.1",
             "created_at": utc_now(),
             "backend": "rtthread",
+            "binding_plan_id": binding_plan.get("id") if binding_plan else None,
             "source": str(source_path),
             "header": str(header_path),
             "source_sha256": file_sha256(source_path),

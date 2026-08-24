@@ -9,6 +9,7 @@ from time import perf_counter
 from typing import Any
 
 from bspforge.build_diagnoser import BuildDiagnoser
+from bspforge.binding_planner import BindingPlanner
 from bspforge.closure_solver import ClosureSolver
 from bspforge.common import read_json, write_json
 from bspforge.evaluation import ExperimentEvaluator
@@ -32,7 +33,13 @@ class Pipeline:
 
         stage_started = perf_counter()
         sdk_root = self._path(config["sdk"]["path"])
-        ir = SDKIngestor().ingest(sdk_root, config["sdk"]["id"])
+        ingestor_config = config.get("ingestor", {})
+        compile_commands = ingestor_config.get("compile_commands")
+        ir = SDKIngestor(
+            frontend_mode=ingestor_config.get("mode", "hybrid"),
+            compile_commands=self._path(compile_commands) if compile_commands else None,
+            clang_binary=ingestor_config.get("clang_binary", "clang"),
+        ).ingest(sdk_root, config["sdk"]["id"])
         store = IRStore(self._path(config.get("ir_store", "workspace/ir")))
         ir_path = store.put(ir)
         write_json(run_root / "01-sdk-ir.json", ir)
@@ -46,16 +53,32 @@ class Pipeline:
             threshold=float(resolver_config.get("threshold", 0.42)),
             top_k=int(resolver_config.get("top_k", 8)),
             evidence_weights=resolver_config.get("weights"),
+            method=resolver_config.get("method", "weighted"),
+            model_path=(
+                self._path(resolver_config["model_path"])
+                if resolver_config.get("model_path")
+                else None
+            ),
         )
         write_json(run_root / "02-semantic-resolution.json", resolution)
+        binding_plan = BindingPlanner().plan(ir, resolution)
+        write_json(run_root / "02b-canonical-binding-plan.json", binding_plan)
         timings["semantic_resolution_seconds"] = round(perf_counter() - stage_started, 6)
 
         stage_started = perf_counter()
-        closure = ClosureSolver().solve(ir, resolution)
+        target_context = {
+            "architecture": config.get("toolchain", {}).get("architecture"),
+            "toolchain": config.get("toolchain", {}).get("prefix"),
+            "board": config.get("backend", {}).get("board"),
+            "sdk_profile": config.get("backend", {}).get("sdk_profile"),
+            **config.get("closure", {}).get("target", {}),
+        }
+        closure = ClosureSolver().solve(ir, resolution, target_context)
         write_json(run_root / "03-build-closure.json", closure)
         timings["closure_solver_seconds"] = round(perf_counter() - stage_started, 6)
 
         backend_config = dict(config["backend"])
+        backend_config["_binding_plan"] = binding_plan
         for key in ("project_template", "libraries_root", "libs_root", "board_port"):
             if backend_config.get(key):
                 backend_config[key] = str(self._path(backend_config[key]))
@@ -87,9 +110,12 @@ class Pipeline:
             build_config = config.get("build", {})
             jobs = int(build_config.get("jobs", max(1, min(os.cpu_count() or 1, 8))))
             max_iterations = max(1, int(build_config.get("max_iterations", 3)))
+            maximum_repair_risk = build_config.get("max_auto_repair_risk", "low")
             diagnoser = BuildDiagnoser()
             solver = ClosureSolver()
             iterations: list[dict[str, Any]] = []
+            repair_transactions: list[dict[str, Any]] = []
+            pending_transaction: dict[str, Any] | None = None
             repairs_applied = 0
             stop_reason = "max-iterations"
             returncode = 1
@@ -107,6 +133,34 @@ class Pipeline:
                 iteration_log = run_root / f"05-build-iteration-{iteration:02d}.log"
                 iteration_log.write_text(output, encoding="utf-8")
                 diagnosis = diagnoser.diagnose(output, returncode)
+                repair_rolled_back = False
+                if pending_transaction is not None:
+                    pending_transaction["result_diagnostic_cost"] = self._diagnostic_cost(diagnosis)
+                    if returncode == 0:
+                        pending_transaction["status"] = "committed"
+                    elif (
+                        pending_transaction["result_diagnostic_cost"]
+                        > pending_transaction["base_diagnostic_cost"]
+                    ):
+                        pending_transaction["status"] = "rolled-back"
+                        pending_transaction["reason"] = "diagnostic-cost-regression"
+                        closure = pending_transaction["base_closure"]
+                        regeneration_started = perf_counter()
+                        generation = backend.generate(
+                            os_root,
+                            backend_config["board"],
+                            generated_root,
+                            ir,
+                            resolution,
+                            closure,
+                            backend_config,
+                        )
+                        regeneration_seconds += perf_counter() - regeneration_started
+                        stop_reason = "repair-regression-rolled-back"
+                        repair_rolled_back = True
+                    else:
+                        pending_transaction["status"] = "retained"
+                    pending_transaction = None
                 repair_proposal = diagnoser.propose_repairs(ir, diagnosis, closure)
                 iteration_record = {
                     "iteration": iteration,
@@ -117,10 +171,13 @@ class Pipeline:
                     "repair_proposal": repair_proposal,
                     "closure_id": closure["id"],
                     "duration_seconds": iteration_seconds,
+                    "repair_rolled_back": repair_rolled_back,
                 }
                 iterations.append(iteration_record)
                 write_json(run_root / f"06-diagnosis-iteration-{iteration:02d}.json", iteration_record)
 
+                if repair_rolled_back:
+                    break
                 if returncode == 0:
                     stop_reason = "build-succeeded"
                     break
@@ -128,10 +185,28 @@ class Pipeline:
                     stop_reason = "max-iterations"
                     break
 
-                closure, changed = solver.apply_repairs(ir, closure, repair_proposal, iteration)
+                base_closure = closure
+                repaired_closure, changed = solver.apply_repairs(
+                    ir,
+                    closure,
+                    repair_proposal,
+                    iteration,
+                    maximum_risk=maximum_repair_risk,
+                )
                 if not changed:
                     stop_reason = "no-new-actionable-constraint"
                     break
+                transaction = {
+                    "iteration": iteration,
+                    "base_closure_id": base_closure["id"],
+                    "candidate_closure_id": repaired_closure["id"],
+                    "base_diagnostic_cost": self._diagnostic_cost(diagnosis),
+                    "status": "pending",
+                    "base_closure": base_closure,
+                }
+                repair_transactions.append(transaction)
+                pending_transaction = transaction
+                closure = repaired_closure
                 repairs_applied += len(closure["repair_history"][-1]["applied"])
                 write_json(run_root / f"03-build-closure-iteration-{iteration + 1:02d}.json", closure)
                 regeneration_started = perf_counter()
@@ -169,6 +244,10 @@ class Pipeline:
                 "stop_reason": stop_reason,
                 "repairs_applied": repairs_applied,
                 "iterations": iterations,
+                "repair_transactions": [
+                    {key: value for key, value in item.items() if key != "base_closure"}
+                    for item in repair_transactions
+                ],
             })
             build_result = {
                 "skipped": False,
@@ -231,6 +310,7 @@ class Pipeline:
             "generated_root": str(generated_root),
             "sdk_stats": ir["stats"],
             "resolution": resolution["summary"],
+            "binding_plan": binding_plan["summary"],
             "closure": closure["summary"],
             "build": build_result,
             "evaluation": evaluation_result,
@@ -257,3 +337,17 @@ class Pipeline:
             "git_revision": revision,
             "conda_environment": os.getenv("CONDA_DEFAULT_ENV", ""),
         }
+
+    @staticmethod
+    def _diagnostic_cost(diagnosis: dict[str, Any]) -> int:
+        weights = {
+            "unknown-build-failure": 8,
+            "region-overflow": 7,
+            "abi-mismatch": 7,
+            "multiple-definition": 6,
+            "compile-error": 5,
+            "missing-library": 4,
+            "undefined-symbol": 2,
+            "missing-header": 1,
+        }
+        return sum(weights.get(item["category"], 5) for item in diagnosis["diagnostics"])

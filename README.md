@@ -8,14 +8,14 @@ BSPForge 是一个面向芯片 SDK 语义恢复与 RTOS BSP 自动生成的研�
 
 1. **SDK Ingestor**：提取源码、头文件、构建规则、链接脚本、启动文件、函数、调用关系和证据位置。
 2. **IR Store**：保存版本化 SDK Migration IR，支持按稳定实体 ID 回溯证据。
-3. **Semantic Resolver**：融合名称、路径、签名、头文件、调用和宏证据，恢复 SDK 能力与目标 OS 契约的映射。
-4. **Closure Solver**：求解源码、头文件、构建规则、启动文件和链接脚本闭包。
+3. **Semantic Resolver**：支持固定权重与学习排序，恢复 SDK 能力并生成规范化操作绑定计划。
+4. **Closure Solver**：按目标架构、芯片、CPU 核、入口和后端策略求解构建闭包。
 5. **Build Diagnoser**：把编译/链接错误转换为约束，定位 SDK 提供者并执行安全的增量修复。
 6. **OS Backend**：生成原生 RT-Thread BSP 或 Zephyr 应用，调用 SCons 或 west/CMake/Ninja，并验证 ELF 与 BIN/HEX。
 
 K210/RT-Thread 路径会生成真实参与链接的 `rt_uart_ops`、`rt_pin_ops`、`rt_hwtimer_ops`、设备实例和初始化注册函数。成熟 BSP 路径追踪 RTOS 原生驱动到 SDK 实体的调用证据，并生成设备 API 验证入口。流水线在编译失败后根据 IR 增补源码或包含目录，直到成功、无新约束或达到迭代上限；链接成功后还会检查固件架构、段信息、哈希和关键生成符号。
 
-v0.4 已完成 3 块开发板 × 2 个 RTOS 的六组工程生成和固件静态验证。实物启动与外设回归仍需单独执行，不能由编译成功替代。
+v0.5 已完成混合语法前端、通用能力绑定计划、目标感知资产选择、风险分级诊断事务和跨 RTOS 实板自测工具。3 块开发板 × 2 个 RTOS 的六组工程均已重新完成固件静态验证；实物结果仍需烧录采集，不能由编译成功替代。
 
 ## 快速开始
 
@@ -49,6 +49,8 @@ conda run -n AIoT-v1.0 python -m unittest discover -s tests -v
 - [基线实验结果](docs/baseline-results.md)
 - [三芯片双 RTOS 构建矩阵](docs/matrix-results.md)
 - [研究状态与版本演进](docs/research-status.md)
+- [实板自动回归](docs/hardware-validation.md)
+- [语义排序实验](docs/semantic-ranking.md)
 - [扩展新 SDK/后端](docs/extending.md)
 
 ## 仓库约定

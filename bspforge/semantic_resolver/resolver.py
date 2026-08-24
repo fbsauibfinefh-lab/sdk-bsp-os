@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 from typing import Any
+from pathlib import Path
 
 from bspforge.common import stable_id, utc_now
+from bspforge.semantic_resolver.learning import LearnedRanker
 
 
 DEFAULT_CAPABILITIES = {
@@ -54,6 +56,8 @@ class SemanticResolver:
         threshold: float = 0.42,
         top_k: int = 8,
         evidence_weights: dict[str, float] | None = None,
+        method: str = "weighted",
+        model_path: Path | None = None,
     ) -> dict[str, Any]:
         weights = {**DEFAULT_EVIDENCE_WEIGHTS, **(evidence_weights or {})}
         unknown = set(weights).difference(DEFAULT_EVIDENCE_WEIGHTS)
@@ -62,6 +66,15 @@ class SemanticResolver:
         if any(value < 0 for value in weights.values()):
             raise ValueError("Evidence weights must be non-negative")
         capabilities = capability_names or list(DEFAULT_CAPABILITIES)
+        ranker = (
+            LearnedRanker(model_path)
+            if method == "learned" and model_path is not None
+            else None
+        )
+        if method == "learned" and ranker is None:
+            raise ValueError("learned resolver requires model_path")
+        if method not in {"weighted", "learned"}:
+            raise ValueError("resolver method must be 'weighted' or 'learned'")
         mappings: list[dict[str, Any]] = []
         for capability in capabilities:
             spec = DEFAULT_CAPABILITIES.get(capability)
@@ -72,6 +85,9 @@ class SemanticResolver:
                 for function in ir["functions"]
             ]
             candidates = [item for item in candidates if item["score"] > 0]
+            if method == "learned":
+                assert ranker is not None
+                ranker.score(candidates, {item["id"]: item for item in ir["functions"]})
             candidates.sort(key=lambda item: (-item["score"], item["entity_id"]))
             accepted = self._operation_cover(candidates[:top_k], threshold)
             mappings.append({
@@ -88,7 +104,12 @@ class SemanticResolver:
             "created_at": utc_now(),
             "sdk_id": ir["sdk"]["id"],
             "sdk_digest": ir["sdk"]["digest"],
-            "method": "weighted-multi-evidence-static-resolution",
+            "method": (
+                "lightgbm-lambdarank-multi-evidence-resolution"
+                if method == "learned"
+                else "weighted-multi-evidence-static-resolution"
+            ),
+            "baseline_method": "weighted-multi-evidence-static-resolution",
             "evidence_weights": weights,
             "mappings": mappings,
             "summary": {

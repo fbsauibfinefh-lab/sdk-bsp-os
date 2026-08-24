@@ -15,6 +15,7 @@ PATTERNS = [
     ("region-overflow", re.compile(r"region [`']([^`']+)[`'] overflowed by (\d+) bytes"), "revise memory placement or reduce selected closure"),
     ("missing-library", re.compile(r"cannot find -l([^\s:]+)"), "add the archive/library and its search path to the closure"),
     ("compile-error", re.compile(r"([^:\n]+):(\d+)(?::\d+)?: error: (.+)"), "inspect source/configuration evidence at the reported location"),
+    ("tool-error", re.compile(r"([^:\n]+): error: (.+)"), "inspect the failing build tool and target configuration"),
 ]
 
 WARNING_CATEGORIES = [
@@ -103,6 +104,8 @@ class BuildDiagnoser:
                     seen.add(key)
                     repairs.append({
                         "action": "add-include-dir",
+                        "risk": "low",
+                        "validation": "header exists in analyzed SDK and include directory is additive",
                         "path": include_dir,
                         "entity_id": header["id"],
                         "diagnostic_id": diagnostic["id"],
@@ -123,6 +126,8 @@ class BuildDiagnoser:
                     seen.add(key)
                     repairs.append({
                         "action": "add-source",
+                        "risk": "low",
+                        "validation": "provider definition is present in SDK IR",
                         "path": provider["file"],
                         "entity_id": provider["id"],
                         "symbol": provider["name"],
@@ -131,10 +136,40 @@ class BuildDiagnoser:
                         "reason": f"加入未定义符号 {subject} 的实现文件",
                         "already_selected": provider["file"] in selected_paths,
                     })
+            elif category == "missing-library":
+                library_name = f"lib{subject}.a"
+                matches = files_by_name.get(library_name, [])
+                if len(matches) != 1:
+                    unresolved.append({
+                        "diagnostic_id": diagnostic["id"],
+                        "reason": (
+                            f"需要唯一的 {library_name}，IR 中找到 {len(matches)} 个候选"
+                        ),
+                    })
+                    continue
+                library = matches[0]
+                key = ("add-library", library["path"])
+                if key not in seen:
+                    seen.add(key)
+                    repairs.append({
+                        "action": "add-library",
+                        "risk": "medium",
+                        "validation": "archive is unique; ABI is verified after relinking",
+                        "path": library["path"],
+                        "entity_id": library["id"],
+                        "diagnostic_id": diagnostic["id"],
+                        "reason": f"加入链接器请求的归档库 -l{subject}",
+                        "already_selected": library["path"] in selected_paths,
+                    })
             else:
                 unresolved.append({
                     "diagnostic_id": diagnostic["id"],
                     "reason": f"{category} 不能通过安全的闭包增量自动修复",
+                    "risk": (
+                        "high"
+                        if category in {"abi-mismatch", "region-overflow", "multiple-definition"}
+                        else "manual"
+                    ),
                 })
 
         existing_sources = set(closure.get("repair_sources", []))
@@ -143,6 +178,7 @@ class BuildDiagnoser:
             item for item in repairs
             if (item["action"] == "add-source" and item["path"] not in existing_sources)
             or (item["action"] == "add-include-dir" and item["path"] not in existing_includes)
+            or (item["action"] == "add-library" and item["path"] not in set(closure.get("repair_libraries", [])))
         ]
         return {
             "schema_version": "1.0",
@@ -153,6 +189,10 @@ class BuildDiagnoser:
                 "proposed": len(repairs),
                 "actionable": len(actionable),
                 "unresolved": len(unresolved),
+                "by_risk": {
+                    risk: sum(item.get("risk") == risk for item in repairs)
+                    for risk in ("low", "medium", "high")
+                },
             },
         }
 

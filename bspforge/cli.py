@@ -28,12 +28,16 @@ def parser() -> argparse.ArgumentParser:
     ingest.add_argument("--sdk", type=Path, required=True)
     ingest.add_argument("--sdk-id", required=True)
     ingest.add_argument("--store", type=Path, default=Path("workspace/ir"))
+    ingest.add_argument("--frontend", choices=["hybrid", "regex"], default="hybrid")
+    ingest.add_argument("--compile-commands", type=Path)
 
     resolve = commands.add_parser("resolve", help="rank SDK entities for migration capabilities")
     resolve.add_argument("--ir", type=Path, required=True)
     resolve.add_argument("--out", type=Path, required=True)
     resolve.add_argument("--threshold", type=float, default=0.42)
     resolve.add_argument("--capability", action="append", dest="capabilities")
+    resolve.add_argument("--method", choices=["weighted", "learned"], default="weighted")
+    resolve.add_argument("--model", type=Path)
 
     closure = commands.add_parser("closure", help="solve the typed build closure")
     closure.add_argument("--ir", type=Path, required=True)
@@ -62,13 +66,20 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return 0 if report["build"].get("success", True) else 2
     if args.command == "ingest":
-        ir = SDKIngestor().ingest(args.sdk, args.sdk_id)
+        ir = SDKIngestor(
+            frontend_mode=args.frontend,
+            compile_commands=args.compile_commands,
+        ).ingest(args.sdk, args.sdk_id)
         destination = IRStore(args.store).put(ir)
         print(destination)
         return 0
     if args.command == "resolve":
         value = SemanticResolver().resolve(
-            read_json(args.ir), capability_names=args.capabilities, threshold=args.threshold
+            read_json(args.ir),
+            capability_names=args.capabilities,
+            threshold=args.threshold,
+            method=args.method,
+            model_path=args.model,
         )
         write_json(args.out, value)
         print(args.out)

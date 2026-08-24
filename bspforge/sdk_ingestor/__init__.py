@@ -1,4 +1,4 @@
 from .ingestor import SDKIngestor
+from .frontends import HybridFrontend
 
-__all__ = ["SDKIngestor"]
-
+__all__ = ["HybridFrontend", "SDKIngestor"]

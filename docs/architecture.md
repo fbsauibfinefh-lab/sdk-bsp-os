@@ -34,7 +34,7 @@ OS Backend ----------- RT-Thread BSP / Zephyr 应用 + 功能绑定
 
 ### SDK Ingestor
 
-递归识别 C/C++/汇编源码、头文件、CMake/Make/SCons 规则、链接脚本和启动文件；记录 SHA-256、函数定义、调用、包含关系、宏上下文、构建引用和源码行号。当前解析器强调确定性和低依赖，后续可接入 Clang 或 tree-sitter 而不改变下游接口。
+递归识别 C/C++/汇编源码、头文件、静态库、CMake/Make/SCons 规则、链接脚本和启动文件；记录 SHA-256、函数定义、调用、包含关系、宏上下文、构建引用和源码行号。`hybrid` 前端优先使用编译数据库驱动的 Clang AST，其次使用 tree-sitter，最后以正则兜底；`regex` 模式保留为论文基线。实体证据同时记录解析前端和置信度。
 
 ### IR Store
 
@@ -42,15 +42,15 @@ OS Backend ----------- RT-Thread BSP / Zephyr 应用 + 功能绑定
 
 ### Semantic Resolver
 
-基于名称、操作词、路径、函数签名、包含文件、调用和宏等独立证据进行加权评分。同一能力只保留能够覆盖不同操作角色的高分候选，减少简单 Top-K 带来的重复结果。
+基于名称、操作词、路径、函数签名、包含文件、调用和宏等独立证据恢复候选。固定权重排序是可审计基线，学习排序可从独立 SDK 标注训练 LightGBM LambdaRank。候选随后映射为 OS 无关的规范化操作计划，缺失和多解不会由人工 profile 静默填充。
 
 ### Closure Solver
 
-从已接受函数出发，沿定义、调用、包含和构建规则边求解闭包，并强制加入启动与链接资产。闭包记录每个实体的加入原因。诊断阶段可在原闭包上增量加入提供未定义符号的源码或缺失头文件的包含目录，并形成新版本。
+从已接受函数出发，沿定义、调用、包含和构建规则边求解闭包。启动与链接资产依据构建引用、架构、芯片、CPU 核、入口符号和后端策略选择；当目标 RTOS 已提供这些契约时，SDK 资产被明确记录为 `replaced-by-os-backend`。闭包记录每个实体的加入或拒绝原因。
 
 ### Build Diagnoser
 
-识别缺失头文件、未定义符号、重复定义、ABI 不匹配、链接库缺失、内存区域溢出和一般编译错误。缺失头文件和未定义符号可安全反查 SDK IR 并形成自动修复；其余问题保留为不可自动处理约束，避免危险修改。
+识别缺失头文件、未定义符号、重复定义、ABI 不匹配、链接库缺失、内存区域溢出、构建工具错误和一般编译错误。修复按风险分级：低风险动作默认自动应用，唯一静态库属于中风险，ABI、内存布局与重复定义保持人工处理。每次修复以闭包快照为事务边界；若下一轮诊断代价上升，后端从基快照重新生成。
 
 流水线采用有界迭代，默认最多 3 次：
 
@@ -115,7 +115,13 @@ K210 端口定义 RV64 CPU、6 MiB SRAM、PLIC、机器定时器和 UARTHS，并
 
 ### 统一产物契约
 
-两个后端都生成 `sdk-ir.json`、`semantic-resolution.json`、`build-closure.json`、`functional-bindings.json`、`device-model.json` 和 `generation-manifest.json`。最终验证统一检查 ELF、BIN/HEX、架构、段大小、SHA-256 和注册入口，从而让不同 RTOS 的工程结构可用同一实验脚本比较。
+两个后端都生成 `sdk-ir.json`、`semantic-resolution.json`、`canonical-binding-plan.json`、`build-closure.json`、`functional-bindings.json`、`device-model.json` 和 `generation-manifest.json`。最终验证统一检查 ELF、BIN/HEX、架构、段大小、SHA-256 和注册入口，从而让不同 RTOS 的工程结构可用同一实验脚本比较。
+
+## v0.5 规范化绑定与实板数据流
+
+`02b-canonical-binding-plan.json` 位于语义解析和 OS Backend 之间。它按 clock、interrupt、uart、gpio、timer 的规范化操作保存所选 SDK 实体、签名、参数来源、备选项、置信度及 `inferred/missing` 状态。OS 后端消费这份计划；`SDK_PROFILES` 只提供已知平台架构提示和人工 oracle，不替代自动选择。
+
+固件自测采用统一命令集合：`info`、`uart.loopback`、`gpio.toggle`、`gpio.irq`、`timer.oneshot`、`timer.periodic`、`stability`。RT-Thread 通过 FinSH 命令接收，Zephyr 通过 console 轮询接收，均输出协议 1.0 的逐行 JSON。主机端保存原始串口日志，并把 `unsupported` 从适用命令分母中剔除。详细操作见 `docs/hardware-validation.md`。
 
 ## 构建后验证与评估
 

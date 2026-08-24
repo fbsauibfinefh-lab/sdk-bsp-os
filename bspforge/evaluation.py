@@ -32,21 +32,25 @@ class ExperimentEvaluator:
 
         per_capability: dict[str, Any] = {}
         for capability, truth in ground_truth["capabilities"].items():
+            supported = truth.get("supported", True)
             binding_metrics = self._set_metrics(
                 binding_index.get(capability, set()),
                 set(truth.get("binding_symbols", [])),
+                applicable=supported,
             )
             device_metrics = self._set_metrics(
                 operation_index.get(capability, set()),
                 set(truth.get("device_operations", [])),
+                applicable=supported,
             )
             per_capability[capability] = {
+                "supported_by_sdk": supported,
                 "binding": binding_metrics,
                 "device_model": device_metrics,
             }
 
         return {
-            "schema_version": "1.0",
+            "schema_version": "1.1",
             "created_at": utc_now(),
             "ground_truth_id": ground_truth.get("id", "unknown"),
             "semantic_resolution": semantic,
@@ -60,6 +64,14 @@ class ExperimentEvaluator:
                 "device_operation_macro_recall": self._macro(
                     per_capability, "device_model", "recall"
                 ),
+                "unsupported_capability_claims": sum(
+                    not item["supported_by_sdk"]
+                    and (
+                        item["binding"]["predicted"] > 0
+                        or item["device_model"]["predicted"] > 0
+                    )
+                    for item in per_capability.values()
+                ),
             },
         }
 
@@ -72,20 +84,26 @@ class ExperimentEvaluator:
         per_capability: dict[str, Any] = {}
         reciprocal_ranks: list[float] = []
         for capability, truth in ground_truth["capabilities"].items():
+            supported = truth.get("supported", True)
             relevant = set(truth.get("semantic_symbols", truth.get("binding_symbols", [])))
             mapping = mapping_index.get(capability, {"accepted": [], "candidates": []})
             accepted = {item["symbol"] for item in mapping["accepted"]}
             ranked = [item["symbol"] for item in mapping["candidates"]]
-            metrics = self._set_metrics(accepted, relevant)
+            metrics = self._set_metrics(accepted, relevant, applicable=supported)
             ranks = [index + 1 for index, symbol in enumerate(ranked) if symbol in relevant]
             reciprocal_rank = 1.0 / min(ranks) if ranks else 0.0
-            reciprocal_ranks.append(reciprocal_rank)
+            if supported and relevant:
+                reciprocal_ranks.append(reciprocal_rank)
             metrics.update({
                 "relevant": sorted(relevant),
                 "accepted": sorted(accepted),
                 "ranked_candidates": ranked,
-                "recall_at_k": self._ratio(len(relevant.intersection(ranked)), len(relevant)),
-                "reciprocal_rank": round(reciprocal_rank, 4),
+                "recall_at_k": (
+                    self._ratio(len(relevant.intersection(ranked)), len(relevant))
+                    if supported
+                    else None
+                ),
+                "reciprocal_rank": round(reciprocal_rank, 4) if supported and relevant else None,
             })
             per_capability[capability] = metrics
         return {
@@ -129,8 +147,10 @@ class ExperimentEvaluator:
             })
         baseline = experiments[0]["metrics"]
         for experiment in experiments:
-            experiment["delta_macro_f1"] = round(
-                experiment["metrics"]["macro_f1"] - baseline["macro_f1"], 4
+            current = experiment["metrics"]["macro_f1"]
+            base = baseline["macro_f1"]
+            experiment["delta_macro_f1"] = (
+                round(current - base, 4) if current is not None and base is not None else None
             )
         return {
             "schema_version": "1.0",
@@ -142,12 +162,32 @@ class ExperimentEvaluator:
         }
 
     @classmethod
-    def _set_metrics(cls, predicted: set[str], relevant: set[str]) -> dict[str, Any]:
+    def _set_metrics(
+        cls,
+        predicted: set[str],
+        relevant: set[str],
+        applicable: bool = True,
+    ) -> dict[str, Any]:
         true_positive = len(predicted.intersection(relevant))
-        precision = cls._ratio(true_positive, len(predicted))
+        if not applicable or not relevant:
+            return {
+                "applicable": False,
+                "true_positive": true_positive,
+                "predicted": len(predicted),
+                "relevant": len(relevant),
+                "precision": 0.0 if predicted else None,
+                "recall": None,
+                "f1": None,
+                "unsupported_claim": bool(predicted) and not applicable,
+                "false_positive": sorted(predicted.difference(relevant)),
+                "false_negative": [],
+            }
+        precision = cls._ratio(true_positive, len(predicted)) if predicted else 0.0
         recall = cls._ratio(true_positive, len(relevant))
+        assert precision is not None and recall is not None
         f1 = 0.0 if precision + recall == 0 else 2 * precision * recall / (precision + recall)
         return {
+            "applicable": True,
             "true_positive": true_positive,
             "predicted": len(predicted),
             "relevant": len(relevant),
@@ -159,13 +199,19 @@ class ExperimentEvaluator:
         }
 
     @staticmethod
-    def _ratio(numerator: int, denominator: int) -> float:
-        return round(numerator / denominator, 4) if denominator else 1.0
+    def _ratio(numerator: int, denominator: int) -> float | None:
+        return round(numerator / denominator, 4) if denominator else None
 
     @staticmethod
-    def _flat_macro(values: dict[str, Any], metric: str) -> float:
-        return round(mean(item[metric] for item in values.values()), 4) if values else 0.0
+    def _flat_macro(values: dict[str, Any], metric: str) -> float | None:
+        applicable = [item[metric] for item in values.values() if item.get(metric) is not None]
+        return round(mean(applicable), 4) if applicable else None
 
     @staticmethod
-    def _macro(values: dict[str, Any], section: str, metric: str) -> float:
-        return round(mean(item[section][metric] for item in values.values()), 4) if values else 0.0
+    def _macro(values: dict[str, Any], section: str, metric: str) -> float | None:
+        applicable = [
+            item[section][metric]
+            for item in values.values()
+            if item[section].get(metric) is not None
+        ]
+        return round(mean(applicable), 4) if applicable else None

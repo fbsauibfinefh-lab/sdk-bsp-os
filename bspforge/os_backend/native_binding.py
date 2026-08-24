@@ -18,6 +18,7 @@ class NativeDriverBindingTracer:
         backend: str,
         driver_roots: list[Path],
         provider_roots: list[Path] | None = None,
+        binding_plan: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
         profile = sdk_profile(profile_name)
         entities = {item["name"]: item for item in ir["functions"]}
@@ -25,7 +26,17 @@ class NativeDriverBindingTracer:
         providers = self._searchable_files(provider_roots or [])
         bindings: list[dict[str, Any]] = []
 
-        for capability, expected in profile["capabilities"].items():
+        expected_by_capability = profile["capabilities"]
+        if binding_plan is not None:
+            expected_by_capability = {
+                item["capability"]: sorted({
+                    operation["selected_symbol"]
+                    for operation in item["operations"]
+                    if operation.get("selected_symbol")
+                })
+                for item in binding_plan["capabilities"]
+            }
+        for capability, expected in expected_by_capability.items():
             symbols: list[dict[str, Any]] = []
             for name in expected:
                 entity = entities.get(name)
@@ -72,6 +83,7 @@ class NativeDriverBindingTracer:
             "backend": backend,
             "sdk_profile": profile_name,
             "strategy": "native-driver-trace",
+            "binding_plan_id": binding_plan.get("id") if binding_plan else None,
             "bindings": bindings,
             "required_sources": [],
             "summary": {

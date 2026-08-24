@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import re
+import os
 from collections import Counter, defaultdict
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
 
 from bspforge.common import file_sha256, relative_files, stable_id, utc_now
+from bspforge.sdk_ingestor.frontends import HybridFrontend
 
 
 FUNCTION_RE = re.compile(
@@ -28,13 +31,23 @@ HEADER_SUFFIXES = {".h", ".hpp"}
 BUILD_NAMES = {"CMakeLists.txt", "Makefile", "SConstruct", "SConscript"}
 BUILD_SUFFIXES = {".cmake", ".mk"}
 LINKER_SUFFIXES = {".ld", ".lds"}
+ARCHIVE_SUFFIXES = {".a"}
 
 
 class SDKIngestor:
     """Extract a traceable migration IR from a vendor SDK tree."""
 
-    def __init__(self, max_file_bytes: int = 2 * 1024 * 1024) -> None:
+    def __init__(
+        self,
+        max_file_bytes: int = 2 * 1024 * 1024,
+        frontend_mode: str = "hybrid",
+        compile_commands: Path | None = None,
+        clang_binary: str = "clang",
+        workers: int | None = None,
+    ) -> None:
         self.max_file_bytes = max_file_bytes
+        self.frontend = HybridFrontend(frontend_mode, compile_commands, clang_binary)
+        self.workers = workers or max(1, min(os.cpu_count() or 1, 8))
 
     def ingest(self, sdk_root: Path, sdk_id: str) -> dict[str, Any]:
         sdk_root = sdk_root.resolve()
@@ -43,7 +56,7 @@ class SDKIngestor:
 
         paths = relative_files(
             sdk_root,
-            SOURCE_SUFFIXES | HEADER_SUFFIXES | BUILD_SUFFIXES | LINKER_SUFFIXES,
+            SOURCE_SUFFIXES | HEADER_SUFFIXES | BUILD_SUFFIXES | LINKER_SUFFIXES | ARCHIVE_SUFFIXES,
         )
         records: list[dict[str, Any]] = []
         functions: list[dict[str, Any]] = []
@@ -52,6 +65,7 @@ class SDKIngestor:
         edges: list[dict[str, str]] = []
         basename_index: dict[str, list[str]] = defaultdict(list)
         texts: dict[str, str] = {}
+        frontend_reports: list[dict[str, Any]] = []
 
         for path in paths:
             relative = path.relative_to(sdk_root).as_posix()
@@ -67,18 +81,40 @@ class SDKIngestor:
             }
             records.append(record)
             if size <= self.max_file_bytes:
-                texts[relative] = path.read_text(encoding="utf-8", errors="replace")
+                text = path.read_text(encoding="utf-8", errors="replace")
+                texts[relative] = text
+                if kind in {"startup", "linker"}:
+                    record["asset_metadata"] = self._asset_metadata(relative, text)
 
         function_by_name: dict[str, list[dict[str, Any]]] = defaultdict(list)
-        for relative, text in texts.items():
-            path = Path(relative)
-            if path.suffix in SOURCE_SUFFIXES:
-                for entity in self._extract_functions(sdk_id, relative, text):
-                    functions.append(entity)
-                    function_by_name[entity["name"]].append(entity)
-                symbols.extend(self._extract_global_symbols(sdk_id, relative, text))
+        source_inputs = [
+            (relative, text)
+            for relative, text in texts.items()
+            if Path(relative).suffix in SOURCE_SUFFIXES
+        ]
+
+        def extract_source(item: tuple[str, str]) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+            relative, text = item
+            extracted, report = self.frontend.extract(
+                sdk_id,
+                relative,
+                sdk_root / relative,
+                text,
+                self._extract_functions,
+            )
+            return extracted, self._extract_global_symbols(sdk_id, relative, text), report
+
+        with ThreadPoolExecutor(max_workers=self.workers) as executor:
+            extracted_sources = list(executor.map(extract_source, source_inputs))
+        for extracted, extracted_symbols, frontend_report in extracted_sources:
+            frontend_reports.append(frontend_report)
+            functions.extend(extracted)
+            symbols.extend(extracted_symbols)
+            for entity in extracted:
+                function_by_name[entity["name"]].append(entity)
 
         for relative, text in texts.items():
+            path = Path(relative)
             file_id = stable_id(sdk_id, "file", relative)
             includes = INCLUDE_RE.findall(text)
             for include in includes:
@@ -128,7 +164,7 @@ class SDKIngestor:
         sdk_digest = stable_id(sdk_id, digest_material)
         kind_counts = Counter(item["kind"] for item in records)
         return {
-            "schema_version": "1.0",
+            "schema_version": "1.1",
             "created_at": utc_now(),
             "sdk": {"id": sdk_id, "root": str(sdk_root), "digest": sdk_digest},
             "files": records,
@@ -136,6 +172,13 @@ class SDKIngestor:
             "symbols": symbols,
             "build_rules": build_rules,
             "edges": edges,
+            "frontend": {
+                "mode": self.frontend.mode,
+                "files": frontend_reports,
+                "selected_counts": dict(sorted(Counter(
+                    item["selected_frontend"] for item in frontend_reports
+                ).items())),
+            },
             "stats": {
                 "files": len(records),
                 "functions": len(functions),
@@ -182,13 +225,14 @@ class SDKIngestor:
             depth = max(depth, 0)
         return output
 
-    def _extract_functions(self, sdk_id: str, relative: str, text: str) -> list[dict[str, Any]]:
+    @staticmethod
+    def _extract_functions(sdk_id: str, relative: str, text: str) -> list[dict[str, Any]]:
         output: list[dict[str, Any]] = []
         includes = INCLUDE_RE.findall(text)
         macros = MACRO_RE.findall(text)
         for match in FUNCTION_RE.finditer(text):
             name = match.group("name")
-            end = self._body_end(text, match.end() - 1)
+            end = SDKIngestor._body_end(text, match.end() - 1)
             body = text[match.end():end]
             calls = sorted({call for call in CALL_RE.findall(body) if call != name})
             line = text.count("\n", 0, match.start()) + 1
@@ -202,7 +246,15 @@ class SDKIngestor:
                 "calls": calls,
                 "includes": includes,
                 "nearby_macros": macros[:64],
-                "evidence": {"path": relative, "line": line, "kind": "definition"},
+                "parser": "regex",
+                "parser_confidence": 0.55,
+                "evidence": {
+                    "path": relative,
+                    "line": line,
+                    "kind": "definition",
+                    "parser": "regex",
+                    "confidence": 0.55,
+                },
             })
         return output
 
@@ -233,6 +285,8 @@ class SDKIngestor:
             return "build"
         if path.suffix in LINKER_SUFFIXES:
             return "linker"
+        if path.suffix in ARCHIVE_SUFFIXES:
+            return "library"
         if path.suffix in HEADER_SUFFIXES:
             return "header"
         if path.suffix.lower() in {".s"}:
@@ -247,3 +301,26 @@ class SDKIngestor:
         if path.name in {"SConstruct", "SConscript"}:
             return "scons"
         return "make"
+
+    @staticmethod
+    def _asset_metadata(relative: str, text: str) -> dict[str, list[str]]:
+        material = f"{relative}\n{text[:65536]}".lower()
+        architectures: list[str] = []
+        if any(token in material for token in ("riscv", "rv32", "rv64", "__riscv")):
+            architectures.append("riscv")
+        if any(token in material for token in ("cortex", "__arm", "thumb", "reset_handler")):
+            architectures.append("arm")
+        cores = [
+            token
+            for token in ("cortex-m0", "cortex-m3", "cortex-m4", "cortex-m7", "cortex-m33")
+            if token in material or token.replace("cortex-m", "cm") in material
+        ]
+        entry_symbols = sorted(set(
+            re.findall(r"\bENTRY\s*\(\s*([A-Za-z_]\w*)\s*\)", text)
+            + re.findall(r"\b(Reset_Handler|_start|start|crt0)\b", text)
+        ))
+        return {
+            "architectures": sorted(set(architectures)),
+            "cores": cores,
+            "entry_symbols": entry_symbols,
+        }

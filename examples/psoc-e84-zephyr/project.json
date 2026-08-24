@@ -2,6 +2,7 @@
   "run_id": "psoc-e84-zephyr-v0.4",
   "workspace": "workspace",
   "ir_store": "workspace/ir",
+  "ingestor": {"mode": "hybrid"},
   "sdk": {
     "id": "psoc-e84-edgi-talk-sdk",
     "path": "sdk/psoc_e84-edgi-talk/source"
@@ -15,6 +16,15 @@
     "architecture": "arm",
     "abi": "arm-none-eabi",
     "bin": "toolchains/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin"
+  },
+  "closure": {
+    "target": {
+      "chip": "cyw20829",
+      "core": "cortex-m33",
+      "entry_symbols": ["Reset_Handler"],
+      "startup_policy": "backend",
+      "linker_policy": "backend"
+    }
   },
   "backend": {
     "type": "zephyr",

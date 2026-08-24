@@ -34,6 +34,7 @@ class RTThreadBackend(OSBackend):
         options = options or {}
         profile_name = options.get("sdk_profile", "k210")
         profile = sdk_profile(profile_name)
+        binding_plan = options.get("_binding_plan")
         rtthread_root = rtthread_root.resolve()
         project_template = options.get("project_template")
         if project_template:
@@ -57,11 +58,35 @@ class RTThreadBackend(OSBackend):
         adapter: Path | None = None
         if strategy == "generated-sdk-adapter":
             binding_manifest = RTThreadBindingGenerator().generate(
-                generated_bsp / "board", ir, resolution
+                generated_bsp / "board", ir, resolution, binding_plan
             )
             device_manifest = RTThreadDeviceModelGenerator().generate(
                 generated_bsp, binding_manifest, options.get("devices")
             )
+            validation_options = dict(options.get("validation", {}))
+            validation_options.setdefault("board", board)
+            validation_options.setdefault("firmware_build_id", ir["sdk"]["digest"][:12])
+            configured_uarts = options.get("devices", {}).get("uart", [])
+            if configured_uarts and "uart" not in validation_options:
+                validation_options["uart"] = configured_uarts[0]["name"]
+            protocol_manifest = RTThreadValidationGenerator().generate(
+                generated_bsp, validation_options
+            )
+            device_manifest["sources"] = sorted(set(
+                device_manifest.get("sources", []) + [protocol_manifest["source"]]
+            ))
+            device_manifest["registration_symbols"] = sorted(set(
+                device_manifest["registration_symbols"]
+                + protocol_manifest["registration_symbols"]
+            ))
+            device_manifest["required_rtthread_features"] = sorted(set(
+                device_manifest["required_rtthread_features"]
+                + protocol_manifest["required_rtthread_features"]
+            ))
+            device_manifest["selftest_protocol"] = {
+                "version": protocol_manifest["protocol_version"],
+                "source": protocol_manifest["source"],
+            }
             sdk_package = self._install_sdk_input(
                 generated_bsp,
                 Path(ir["sdk"]["root"]),
@@ -87,16 +112,23 @@ class RTThreadBackend(OSBackend):
                 self._option_paths(options.get("native_driver_roots", []), output)
             )
             binding_manifest = NativeDriverBindingTracer().generate(
-                ir, profile_name, "rtthread", driver_roots
+                ir, profile_name, "rtthread", driver_roots, binding_plan=binding_plan
             )
             device_manifest = RTThreadValidationGenerator().generate(
-                generated_bsp, options.get("validation")
+                generated_bsp,
+                {
+                    **options.get("validation", {}),
+                    "board": board,
+                    "firmware_build_id": ir["sdk"]["digest"][:12],
+                },
             )
         else:
             raise ValueError(f"Unsupported RT-Thread binding strategy: {strategy}")
 
         write_json(metadata / "sdk-ir.json", ir)
         write_json(metadata / "semantic-resolution.json", resolution)
+        if binding_plan is not None:
+            write_json(metadata / "canonical-binding-plan.json", binding_plan)
         write_json(metadata / "build-closure.json", closure)
         write_json(metadata / "functional-bindings.json", binding_manifest)
         write_json(metadata / "device-model.json", device_manifest)
@@ -148,6 +180,7 @@ class RTThreadBackend(OSBackend):
             "sdk_materialization": "copied-from-analyzed-input",
             "mapping_count": len(resolution["mappings"]),
             "resolved_count": resolution["summary"]["resolved"],
+            "binding_plan": binding_plan["summary"] if binding_plan else None,
             "closure_files": closure["summary"]["files"],
             "expected_machine": profile["machine"],
             "artifacts": artifacts,

@@ -5,10 +5,12 @@ import unittest
 from pathlib import Path
 
 from bspforge.build_diagnoser import BuildDiagnoser
+from bspforge.binding_planner import BindingPlanner
 from bspforge.closure_solver import ClosureSolver
 from bspforge.common import write_json
 from bspforge.evaluation import ExperimentEvaluator
 from bspforge.ir_store import IRStore
+from bspforge.hardware_test.host import HardwareTestRunner
 from bspforge.os_backend import RTThreadBackend, ZephyrBackend
 from bspforge.os_backend.artifact_verifier import FirmwareArtifactVerifier
 from bspforge.os_backend.native_binding import NativeDriverBindingTracer
@@ -71,6 +73,37 @@ class ModuleTests(unittest.TestCase):
         self.assertGreaterEqual(len(closure["selected_build_rules"]), 1)
         self.assertGreater(len(closure["provenance"]), 0)
 
+    def test_hybrid_and_regex_frontends_remain_comparable(self) -> None:
+        hybrid = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "hybrid-sdk")
+        regex = SDKIngestor(frontend_mode="regex").ingest(self.sdk, "regex-sdk")
+        self.assertEqual(hybrid["frontend"]["mode"], "hybrid")
+        self.assertEqual(regex["frontend"]["selected_counts"], {"regex": 3})
+        self.assertGreaterEqual(hybrid["stats"]["functions"], regex["stats"]["functions"])
+        self.assertTrue(all("parser" in item for item in hybrid["functions"]))
+
+    def test_binding_planner_maps_operations_without_profile_symbols(self) -> None:
+        ir = SDKIngestor().ingest(self.sdk, "fixture-sdk")
+        resolution = SemanticResolver().resolve(ir, ["uart"], threshold=0.4)
+        plan = BindingPlanner().plan(ir, resolution)
+        uart = next(item for item in plan["capabilities"] if item["capability"] == "uart")
+        write = next(item for item in uart["operations"] if item["operation"] == "write")
+        self.assertEqual(write["selected_symbol"], "uart_send_data")
+        self.assertEqual(write["status"], "inferred")
+
+    def test_target_aware_closure_rejects_foreign_architecture_assets(self) -> None:
+        (self.sdk / "lib" / "bsp" / "startup_arm.S").write_text(".section .text\n")
+        (self.sdk / "lib" / "bsp" / "startup_riscv.S").write_text(".section .text\n")
+        (self.sdk / "lds" / "arm.ld").write_text("ENTRY(Reset_Handler)\n")
+        (self.sdk / "lds" / "riscv.ld").write_text("ENTRY(_start)\n")
+        ir = SDKIngestor().ingest(self.sdk, "mixed-sdk")
+        resolution = SemanticResolver().resolve(ir, ["uart"], threshold=0.4)
+        closure = ClosureSolver().solve(ir, resolution, {"architecture": "riscv64"})
+        selected = {item["path"] for item in closure["selected_files"]}
+        self.assertIn("lib/bsp/startup_riscv.S", selected)
+        self.assertIn("lds/riscv.ld", selected)
+        self.assertNotIn("lib/bsp/startup_arm.S", selected)
+        self.assertNotIn("lds/arm.ld", selected)
+
     def test_build_diagnostics_become_constraints(self) -> None:
         log = "a.c:3:10: fatal error: board.h: No such file or directory\nld: undefined reference to `uart_init'"
         value = BuildDiagnoser().diagnose(log, 1)
@@ -128,6 +161,20 @@ class ModuleTests(unittest.TestCase):
         self.assertEqual(proposal["summary"]["unresolved"], 0)
         self.assertEqual(proposal["repairs"][0]["provider_kind"], "global-variable")
 
+    def test_missing_library_repair_is_medium_risk(self) -> None:
+        (self.sdk / "libdrivers.a").write_bytes(b"!<arch>\n")
+        ir = SDKIngestor().ingest(self.sdk, "library-sdk")
+        resolution = SemanticResolver().resolve(ir, ["uart"], threshold=0.4)
+        closure = ClosureSolver().solve(ir, resolution)
+        diagnosis = BuildDiagnoser().diagnose("ld: cannot find -ldrivers", 1)
+        proposal = BuildDiagnoser().propose_repairs(ir, diagnosis, closure)
+        self.assertEqual(proposal["repairs"][0]["action"], "add-library")
+        self.assertEqual(proposal["repairs"][0]["risk"], "medium")
+        _, changed = ClosureSolver().apply_repairs(
+            ir, closure, proposal, 1, maximum_risk="low"
+        )
+        self.assertFalse(changed)
+
     def test_rtthread_backend_preserves_input_and_generates_manifest(self) -> None:
         source = self.root / "rt-thread"
         bsp = source / "bsp" / "k210"
@@ -154,7 +201,9 @@ class ModuleTests(unittest.TestCase):
         self.assertIn("uart_send_data", generated_binding.read_text(encoding="utf-8"))
         device_model = manifest["device_model"]
         self.assertEqual(device_model["summary"]["serial"], 1)
-        generated_devices = output / device_model["sources"][0]
+        generated_devices = output / next(
+            item for item in device_model["sources"] if item.endswith("bspforge_devices.c")
+        )
         self.assertIn("bspforge_uart_ops", generated_devices.read_text(encoding="utf-8"))
         self.assertIn("riscv-none-embed-", (bsp / "rtconfig.py").read_text(encoding="utf-8"))
         generated_config = (Path(manifest["bsp_path"]) / "rtconfig.py").read_text(encoding="utf-8")
@@ -305,6 +354,60 @@ class ModuleTests(unittest.TestCase):
         self.assertEqual(metrics["summary"]["device_operation_macro_recall"], 1.0)
         ablations = ExperimentEvaluator().ablate(ir, ground_truth, threshold=0.4, top_k=8)
         self.assertEqual(len(ablations["experiments"]), 8)
+
+    def test_not_applicable_metrics_do_not_inflate_macro_average(self) -> None:
+        resolution = {
+            "mappings": [{
+                "capability": "clock",
+                "accepted": [],
+                "candidates": [],
+            }]
+        }
+        truth = {"id": "n-a", "capabilities": {
+            "clock": {
+                "supported": False,
+                "semantic_symbols": [],
+                "binding_symbols": [],
+                "device_operations": [],
+            }
+        }}
+        metrics = ExperimentEvaluator().evaluate(
+            resolution, {"bindings": []}, {"devices": []}, truth
+        )
+        self.assertIsNone(metrics["summary"]["semantic_macro_f1"])
+        self.assertIsNone(metrics["summary"]["binding_macro_recall"])
+
+    def test_hardware_protocol_report_excludes_unsupported_commands(self) -> None:
+        class FakeTransport:
+            def __init__(self) -> None:
+                self.lines = [
+                    b'{"bspforge":true,"protocol":"1.0","event":"boot"}\n'
+                ]
+
+            def write(self, value: bytes) -> int:
+                _, request_id, command = value.decode().strip().split()
+                status = "unsupported" if command == "gpio.irq" else "pass"
+                self.lines.append(
+                    (
+                        '{"bspforge":true,"protocol":"1.0","event":"result",'
+                        f'"request_id":"{request_id}","command":"{command}",'
+                        f'"status":"{status}","metrics":{{}}}}\n'
+                    ).encode()
+                )
+                return len(value)
+
+            def readline(self) -> bytes:
+                return self.lines.pop(0) if self.lines else b""
+
+            def close(self) -> None:
+                pass
+
+        report = HardwareTestRunner(
+            FakeTransport(), "fixture", "rtthread", timeout=0.1
+        ).run(commands=["info", "gpio.irq"])
+        self.assertEqual(report["summary"]["commands_passed"], 1)
+        self.assertEqual(report["summary"]["commands_applicable"], 1)
+        self.assertEqual(report["summary"]["unsupported"], 1)
 
     def test_artifact_output_parsers(self) -> None:
         header = FirmwareArtifactVerifier._parse_elf_header(
