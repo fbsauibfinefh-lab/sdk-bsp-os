@@ -21,10 +21,12 @@ class BindingPlanner:
                 candidates = [
                     candidate
                     for candidate in accepted
-                    if operation_matches(
-                        candidate["symbol"],
-                        aliases,
-                        candidate.get("operations", []),
+                    if operation in candidate.get("target_operations", [])
+                    or (
+                        not candidate.get("target_operations")
+                        and operation_matches(
+                            candidate["symbol"], aliases, candidate.get("operations", [])
+                        )
                     )
                 ]
                 candidates.sort(key=lambda item: (-item["score"], item["entity_id"]))

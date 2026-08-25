@@ -69,8 +69,16 @@ class SDKIngestor:
 
         for path in paths:
             relative = path.relative_to(sdk_root).as_posix()
+            try:
+                size = path.stat().st_size
+            except OSError:
+                frontend_reports.append({
+                    "file": relative,
+                    "selected_frontend": "skipped-unreadable",
+                    "attempts": [],
+                })
+                continue
             basename_index[path.name].append(relative)
-            size = path.stat().st_size
             kind = self._kind(path)
             record = {
                 "id": stable_id(sdk_id, "file", relative),

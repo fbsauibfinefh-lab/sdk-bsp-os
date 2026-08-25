@@ -36,9 +36,14 @@ def parser() -> argparse.ArgumentParser:
     resolve.add_argument("--out", type=Path, required=True)
     resolve.add_argument("--threshold", type=float, default=0.42)
     resolve.add_argument("--capability", action="append", dest="capabilities")
-    resolve.add_argument("--method", choices=["weighted", "learned", "hybrid"], default="weighted")
+    resolve.add_argument(
+        "--method",
+        choices=["weighted", "learned", "hybrid", "operation-weighted"],
+        default="weighted",
+    )
     resolve.add_argument("--model", type=Path)
     resolve.add_argument("--hybrid-weight", type=float)
+    resolve.add_argument("--operation-min-margin", type=float, default=0.0)
 
     closure = commands.add_parser("closure", help="solve the typed build closure")
     closure.add_argument("--ir", type=Path, required=True)
@@ -82,6 +87,7 @@ def main(argv: list[str] | None = None) -> int:
             method=args.method,
             model_path=args.model,
             hybrid_weight=args.hybrid_weight,
+            operation_min_margin=args.operation_min_margin,
         )
         write_json(args.out, value)
         print(args.out)

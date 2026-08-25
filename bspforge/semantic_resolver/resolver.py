@@ -3,23 +3,25 @@ from __future__ import annotations
 from typing import Any
 from pathlib import Path
 
+from bspforge.capability_schema import CAPABILITY_SCHEMA
 from bspforge.common import stable_id, utc_now
+from bspforge.operation_ranking import operation_feature_map, operation_static_score
 from bspforge.semantic_resolver.learning import LearnedRanker
 
 
 DEFAULT_CAPABILITIES = {
     "uart": {
-        "terms": ["uart", "uarths", "serial", "baud"],
+        "terms": ["uart", "uarths", "serial", "usart", "sci", "baud"],
         "actions": ["init", "deinit", "configure", "send", "receive", "read", "write", "irq"],
         "target_api": "RT-Thread serial device",
     },
     "gpio": {
-        "terms": ["gpio", "gpiohs", "pin", "fpioa"],
+        "terms": ["gpio", "gpiohs", "pin", "fpioa", "port", "dio"],
         "actions": ["init", "deinit", "configure", "drive", "set", "get", "read", "write", "toggle", "mode", "irq"],
         "target_api": "RT-Thread pin device",
     },
     "timer": {
-        "terms": ["timer", "gptimer", "ctimer", "alarm", "tick", "clint", "mtime"],
+        "terms": ["timer", "gptimer", "ctimer", "alarm", "tick", "clint", "mtime", "counter", "tmr"],
         "actions": ["init", "deinit", "start", "stop", "enable", "disable", "setup", "read", "capture", "register", "irq", "interval"],
         "target_api": "RT-Thread timer/tick service",
     },
@@ -29,7 +31,7 @@ DEFAULT_CAPABILITIES = {
         "target_api": "RT-Thread interrupt subsystem",
     },
     "clock": {
-        "terms": ["sysctl", "clock", "pll", "frequency"],
+        "terms": ["sysctl", "clock", "clk", "pll", "frequency", "rcc"],
         "actions": ["init", "configure", "enable", "disable", "start", "stop", "set", "get", "freq"],
         "target_api": "RT-Thread board clock initialization",
     },
@@ -82,6 +84,7 @@ class SemanticResolver:
         method: str = "weighted",
         model_path: Path | None = None,
         hybrid_weight: float | None = None,
+        operation_min_margin: float = 0.0,
     ) -> dict[str, Any]:
         weights = {**DEFAULT_EVIDENCE_WEIGHTS, **(evidence_weights or {})}
         unknown = set(weights).difference(DEFAULT_EVIDENCE_WEIGHTS)
@@ -97,8 +100,12 @@ class SemanticResolver:
         )
         if method in {"learned", "hybrid"} and ranker is None:
             raise ValueError(f"{method} resolver requires model_path")
-        if method not in {"weighted", "learned", "hybrid"}:
-            raise ValueError("resolver method must be 'weighted', 'learned', or 'hybrid'")
+        if method not in {"weighted", "learned", "hybrid", "operation-weighted"}:
+            raise ValueError(
+                "resolver method must be 'weighted', 'learned', 'hybrid', or 'operation-weighted'"
+            )
+        if operation_min_margin < 0.0:
+            raise ValueError("operation_min_margin must be non-negative")
         selected_hybrid_weight = 0.0
         if method == "hybrid":
             assert ranker is not None
@@ -115,6 +122,27 @@ class SemanticResolver:
             if spec is None:
                 raise ValueError(f"Unknown capability: {capability}")
             candidates = self.candidate_pool(ir, capability, weights)
+            if method == "operation-weighted":
+                operation_resolution = self._resolve_operations(
+                    capability,
+                    candidates,
+                    {item["id"]: item for item in ir["functions"]},
+                    threshold,
+                    top_k,
+                    operation_min_margin,
+                )
+                mappings.append({
+                    "id": stable_id(ir["sdk"]["id"], "mapping", capability),
+                    "capability": capability,
+                    "target_api": spec["target_api"],
+                    "threshold": threshold,
+                    "accepted": operation_resolution["accepted"],
+                    "candidates": operation_resolution["candidates"],
+                    "operation_rankings": operation_resolution["operation_rankings"],
+                    "minimum_margin": operation_min_margin,
+                    "status": "resolved" if operation_resolution["accepted"] else "unresolved",
+                })
+                continue
             if method in {"learned", "hybrid"}:
                 assert ranker is not None
                 ranker.score(
@@ -139,12 +167,16 @@ class SemanticResolver:
             "sdk_id": ir["sdk"]["id"],
             "sdk_digest": ir["sdk"]["digest"],
             "method": (
-                "weighted-lightgbm-hybrid-resolution"
-                if method == "hybrid"
+                "operation-aware-static-resolution"
+                if method == "operation-weighted"
                 else (
-                    "lightgbm-lambdarank-multi-evidence-resolution"
-                    if method == "learned"
-                    else "weighted-multi-evidence-static-resolution"
+                    "weighted-lightgbm-hybrid-resolution"
+                    if method == "hybrid"
+                    else (
+                        "lightgbm-lambdarank-multi-evidence-resolution"
+                        if method == "learned"
+                        else "weighted-multi-evidence-static-resolution"
+                    )
                 )
             ),
             "baseline_method": "weighted-multi-evidence-static-resolution",
@@ -156,6 +188,82 @@ class SemanticResolver:
                 "resolved": sum(item["status"] == "resolved" for item in mappings),
                 "accepted_entities": sum(len(item["accepted"]) for item in mappings),
             },
+        }
+
+    @staticmethod
+    def _resolve_operations(
+        capability: str,
+        candidates: list[dict[str, Any]],
+        functions: dict[str, dict[str, Any]],
+        threshold: float,
+        top_k: int,
+        minimum_margin: float,
+    ) -> dict[str, Any]:
+        operation_rankings = []
+        accepted_by_entity: dict[str, dict[str, Any]] = {}
+        all_ranked: dict[str, dict[str, Any]] = {}
+        for operation in CAPABILITY_SCHEMA[capability]["operations"]:
+            ranked = []
+            for candidate in candidates:
+                item = dict(candidate)
+                features = operation_feature_map(
+                    capability, operation, item, functions[item["entity_id"]]
+                )
+                item["baseline_score"] = candidate["score"]
+                item["operation_score"] = operation_static_score(features)
+                item["score"] = item["operation_score"]
+                item["operation_features"] = features
+                item["target_operations"] = [operation]
+                ranked.append(item)
+            ranked.sort(key=lambda item: (-item["score"], item["entity_id"]))
+            top = ranked[:top_k]
+            runner_up = next(
+                (item for item in top[1:] if top and item["symbol"] != top[0]["symbol"]),
+                None,
+            )
+            margin = (
+                top[0]["score"] - runner_up["score"]
+                if top and runner_up is not None
+                else top[0]["score"] if top else 0.0
+            )
+            selected = (
+                top[0]
+                if top
+                and top[0]["score"] >= min(threshold, 0.30)
+                and margin >= minimum_margin
+                else None
+            )
+            operation_rankings.append({
+                "operation": operation,
+                "selected_entity_id": selected["entity_id"] if selected else None,
+                "selected_symbol": selected["symbol"] if selected else None,
+                "confidence_margin": round(margin, 6),
+                "abstained": bool(top and selected is None),
+                "candidates": top,
+            })
+            for item in top:
+                current = all_ranked.get(item["entity_id"])
+                if current is None or item["score"] > current["score"]:
+                    all_ranked[item["entity_id"]] = dict(item)
+            if selected:
+                current = accepted_by_entity.get(selected["entity_id"])
+                if current is None:
+                    accepted_by_entity[selected["entity_id"]] = dict(selected)
+                else:
+                    current["target_operations"] = sorted(
+                        set(current["target_operations"] + [operation])
+                    )
+                    current["score"] = max(current["score"], selected["score"])
+        accepted = sorted(
+            accepted_by_entity.values(), key=lambda item: (-item["score"], item["entity_id"])
+        )
+        ranked_candidates = sorted(
+            all_ranked.values(), key=lambda item: (-item["score"], item["entity_id"])
+        )
+        return {
+            "accepted": accepted,
+            "candidates": ranked_candidates[:top_k],
+            "operation_rankings": operation_rankings,
         }
 
     @staticmethod

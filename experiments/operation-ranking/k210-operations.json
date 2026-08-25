@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "sdk_id": "kendryte-k210-standalone-sdk-0.5.6",
+  "annotation": {"status": "single-curator-source-audited", "second_reviewer_required_for_publication": true},
+  "operations": {
+    "clock.initialize": {"symbols": ["sysctl_pll_set_freq", "sysctl_clock_set_clock_select"]},
+    "clock.enable": {"symbols": ["sysctl_clock_enable"]},
+    "clock.disable": {"symbols": ["sysctl_clock_disable"]},
+    "clock.get_frequency": {"symbols": ["sysctl_clock_get_freq", "sysctl_clock_source_get_freq"]},
+    "interrupt.initialize": {"symbols": ["plic_init"]},
+    "interrupt.enable": {"symbols": ["plic_irq_enable"]},
+    "interrupt.disable": {"symbols": ["plic_irq_disable"]},
+    "interrupt.register": {"symbols": ["plic_irq_register", "plic_irq_unregister"]},
+    "uart.configure": {"symbols": ["uart_init", "uart_configure"]},
+    "uart.write": {"symbols": ["uart_send_data"]},
+    "uart.read": {"symbols": ["uart_receive_data"]},
+    "gpio.configure": {"symbols": ["gpiohs_set_drive_mode", "gpiohs_set_pin_edge"]},
+    "gpio.write": {"symbols": ["gpiohs_set_pin", "gpio_set_pin"]},
+    "gpio.read": {"symbols": ["gpiohs_get_pin", "gpio_get_pin"]},
+    "gpio.attach_irq": {"symbols": ["gpiohs_irq_register", "gpiohs_irq_unregister"]},
+    "timer.initialize": {"symbols": ["timer_init"]},
+    "timer.start": {"symbols": ["timer_set_enable"]},
+    "timer.stop": {"symbols": ["timer_set_enable"]},
+    "timer.set_interval": {"symbols": ["timer_set_interval"]}
+  }
+}

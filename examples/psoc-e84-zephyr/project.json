@@ -8,6 +8,8 @@
     "path": "sdk/psoc_e84-edgi-talk/source"
   },
   "resolver": {
+    "method": "operation-weighted",
+    "operation_min_margin": 0.0,
     "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
     "threshold": 0.42,
     "top_k": 8

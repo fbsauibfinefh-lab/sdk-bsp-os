@@ -1,0 +1,26 @@
+{
+  "schema_version": "1.0",
+  "sdk_id": "stm32cube-f1",
+  "annotation": {"status": "single-curator-source-audited", "second_reviewer_required_for_publication": true},
+  "operations": {
+    "clock.initialize": {"symbols": ["HAL_RCC_OscConfig", "HAL_RCC_ClockConfig"]},
+    "clock.enable": {"supported": false, "symbols": []},
+    "clock.disable": {"supported": false, "symbols": []},
+    "clock.get_frequency": {"symbols": ["HAL_RCC_GetSysClockFreq", "HAL_RCC_GetHCLKFreq", "HAL_RCC_GetPCLK1Freq", "HAL_RCC_GetPCLK2Freq"]},
+    "interrupt.initialize": {"symbols": ["HAL_NVIC_SetPriority"]},
+    "interrupt.enable": {"symbols": ["HAL_NVIC_EnableIRQ"]},
+    "interrupt.disable": {"symbols": ["HAL_NVIC_DisableIRQ"]},
+    "interrupt.register": {"supported": false, "symbols": []},
+    "uart.configure": {"symbols": ["HAL_UART_Init", "HAL_UART_DeInit"]},
+    "uart.write": {"symbols": ["HAL_UART_Transmit", "HAL_UART_Transmit_IT"]},
+    "uart.read": {"symbols": ["HAL_UART_Receive", "HAL_UART_Receive_IT"]},
+    "gpio.configure": {"symbols": ["HAL_GPIO_Init", "HAL_GPIO_DeInit"]},
+    "gpio.write": {"symbols": ["HAL_GPIO_WritePin", "HAL_GPIO_TogglePin"]},
+    "gpio.read": {"symbols": ["HAL_GPIO_ReadPin"]},
+    "gpio.attach_irq": {"supported": false, "symbols": []},
+    "timer.initialize": {"symbols": ["HAL_TIM_Base_Init"]},
+    "timer.start": {"symbols": ["HAL_TIM_Base_Start", "HAL_TIM_Base_Start_IT"]},
+    "timer.stop": {"symbols": ["HAL_TIM_Base_Stop", "HAL_TIM_Base_Stop_IT"]},
+    "timer.set_interval": {"supported": false, "symbols": []}
+  }
+}

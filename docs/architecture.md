@@ -132,3 +132,11 @@ K210 端口定义 RV64 CPU、6 MiB SRAM、PLIC、机器定时器和 UARTHS，并
 `scripts/ingest_semantic_corpus.py` 从固定版本的 7 个 SDK 生成 IR，`build_semantic_dataset.py` 先逐符号审计真值，再抽取全部正例、高分困难负例和固定种子随机负例。`evaluate_ranker_cv.py` 执行外层 SDK 留一、内层融合权重选择、特征消融、Bootstrap 和配对置换检验。最终模型及特征模式保存在 `models/semantic-ranker.txt` 和相邻元数据中。
 
 主机验证层实现 `SerialTransport` 与 `ProcessTransport`。前者连接三块实板，后者启动 Zephyr native_sim、QEMU 或 Renode 并连接标准输入输出；二者均交给同一个 `HardwareTestRunner`，因而请求、超时、原始日志和统计口径完全一致。仿真验证可重复性和 OS API 行为，实板验证真实时钟、中断和外设电气语义。
+
+## v0.7 操作级排序与拒答数据流
+
+`experiments/operation-ranking/manifest.json` 把 22 套开发 SDK 和 3 套板卡外部测试 SDK 固定为不同角色。`ingest_operation_corpus.py` 生成独立操作 IR，`build_operation_dataset.py` 将五类能力展开为 19 个操作查询，并分别产生弱监督训练标签和源码审计外部标签。板卡真值不进入训练。
+
+操作排序在能力候选池内部增加动作、签名、HAL 层次、中断控制器、参数化开关、冲突操作和适配方向证据。可选嵌入脚本只增加 `code-embedding` 特征，不改变 IR 或解析输出模式。`evaluate_operation_ranker.py` 统一计算 BM25、静态规则、弱监督 LambdaRank、语义嵌入和融合结果，并保存 bootstrap 区间、前五候选和置信拒答曲线。
+
+Resolver 的 `operation_min_margin` 对每个操作比较前两名不同符号的分差。低于门槛时保留候选和证据，但不写入已接受绑定；Binding Planner 将其转成 missing，后端不得用低分函数静默填充。该变更只扩展语义输出契约，Closure Solver、Build Diagnoser 和两个 OS Backend 的职责不变。

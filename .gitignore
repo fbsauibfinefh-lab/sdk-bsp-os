@@ -16,3 +16,8 @@ toolchains/*/
 !toolchains/README.md
 !toolchains/manifest.json
 workspace/
+
+# 由固定清单和脚本生成的大体积操作级数据，可在本地重建。
+experiments/generated/operation-ranking-dataset*.json
+models/operation-ranker*.txt
+models/operation-ranker*.txt.json

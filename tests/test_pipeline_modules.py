@@ -17,6 +17,8 @@ from bspforge.os_backend.artifact_verifier import FirmwareArtifactVerifier
 from bspforge.os_backend.native_binding import NativeDriverBindingTracer
 from bspforge.os_backend.rtthread_device import RTThreadDeviceModelGenerator
 from bspforge.os_backend.rtthread_validation import RTThreadValidationGenerator
+from bspforge.operation_dataset import build_operation_dataset
+from bspforge.operation_ranking import operation_feature_map, operation_static_score, weak_relevance
 from bspforge.sdk_ingestor import SDKIngestor
 from bspforge.ranking_dataset import audit_ground_truth, build_ranking_dataset
 from bspforge.semantic_resolver import SemanticResolver
@@ -95,6 +97,19 @@ class ModuleTests(unittest.TestCase):
         self.assertEqual(entity["file"], "lib/drivers/include/irq.h")
         self.assertEqual(entity["parser"], "tree-sitter")
 
+    def test_ingestor_skips_broken_sdk_symlinks(self) -> None:
+        broken = self.sdk / "lib" / "drivers" / "missing.c"
+        try:
+            broken.symlink_to(self.sdk / "not-checked-out.c")
+        except OSError:
+            self.skipTest("当前文件系统不支持符号链接")
+        ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "broken-link-sdk")
+        skipped = [
+            item for item in ir["frontend"]["files"]
+            if item.get("selected_frontend") == "skipped-unreadable"
+        ]
+        self.assertEqual(skipped[0]["file"], "lib/drivers/missing.c")
+
     def test_ground_truth_audit_and_dataset_are_sdk_grouped(self) -> None:
         ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "fixture-sdk")
         truth = {
@@ -127,6 +142,101 @@ class ModuleTests(unittest.TestCase):
         scores = bm25_scores(group)
         self.assertGreater(scores[0], scores[1])
         self.assertEqual(ranking_metrics(group["candidates"], scores)["precision_at_1"], 1.0)
+
+    def test_operation_ranker_separates_opposite_actions(self) -> None:
+        ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "fixture-sdk")
+        functions = {item["id"]: item for item in ir["functions"]}
+        candidates = SemanticResolver().candidate_pool(ir, "uart")
+        send = next(item for item in candidates if item["symbol"] == "uart_send_data")
+        receive = next(item for item in candidates if item["symbol"] == "uart_receive_data")
+        send_score = operation_static_score(
+            operation_feature_map("uart", "write", send, functions[send["entity_id"]])
+        )
+        receive_score = operation_static_score(
+            operation_feature_map("uart", "write", receive, functions[receive["entity_id"]])
+        )
+        self.assertGreater(send_score, receive_score)
+
+    def test_operation_ranker_keeps_parameterized_toggle_for_stop(self) -> None:
+        candidate = {"entity_id": "toggle", "symbol": "timer_set_enable", "score": 0.7}
+        function = {
+            "file": "drivers/timer.c",
+            "signature": "void timer_set_enable(unsigned channel, bool enable)",
+            "calls": [],
+            "parser_confidence": 1.0,
+        }
+        features = operation_feature_map("timer", "stop", candidate, function)
+        self.assertEqual(features["parameterized-toggle"], 1.0)
+        self.assertEqual(features["opposite-action"], 0.0)
+
+    def test_operation_ranker_rejects_reverse_os_adapter(self) -> None:
+        candidate = {"entity_id": "reverse", "symbol": "cyhal_gpio_write", "score": 0.7}
+        function = {
+            "file": "middleware/wifi-host-driver/porting/src/hal/cyhal_gpio.c",
+            "signature": "void cyhal_gpio_write(unsigned pin, bool value)",
+            "calls": ["rt_pin_write"],
+            "parser_confidence": 1.0,
+        }
+        features = operation_feature_map("gpio", "write", candidate, function)
+        self.assertEqual(features["reverse-os-adapter"], 1.0)
+        self.assertEqual(weak_relevance(features), 0)
+
+    def test_operation_resolver_preserves_binding_planner_contract(self) -> None:
+        ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "fixture-sdk")
+        resolution = SemanticResolver().resolve(
+            ir, ["uart", "gpio"], method="operation-weighted", threshold=0.3
+        )
+        plan = BindingPlanner().plan(ir, resolution)
+        uart = next(item for item in plan["capabilities"] if item["capability"] == "uart")
+        selected = {item["operation"]: item["selected_symbol"] for item in uart["operations"]}
+        self.assertEqual(selected["write"], "uart_send_data")
+        self.assertEqual(selected["read"], "uart_receive_data")
+
+    def test_operation_resolver_can_abstain_on_small_margin(self) -> None:
+        ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "fixture-sdk")
+        resolution = SemanticResolver().resolve(
+            ir,
+            ["uart"],
+            method="operation-weighted",
+            threshold=0.3,
+            operation_min_margin=1.0,
+        )
+        rankings = resolution["mappings"][0]["operation_rankings"]
+        self.assertTrue(all(item["selected_symbol"] is None for item in rankings))
+        self.assertTrue(all(item["abstained"] for item in rankings))
+
+    def test_operation_dataset_keeps_external_labels_out_of_training(self) -> None:
+        train_ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "train-sdk")
+        test_ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "test-sdk")
+        train_meta = {
+            "sdk_id": "train-sdk",
+            "vendor": "Train",
+            "independence_group": "train-vendor",
+            "role": "train",
+        }
+        test_meta = {
+            "sdk_id": "test-sdk",
+            "vendor": "Test",
+            "independence_group": "board-test",
+            "role": "external-test",
+        }
+        truth = {
+            "sdk_id": "test-sdk",
+            "operations": {
+                "uart.configure": {"symbols": ["uart_configure"]},
+                "uart.write": {"symbols": ["uart_send_data"]},
+                "uart.read": {"symbols": ["uart_receive_data"]},
+            },
+        }
+        dataset = build_operation_dataset([
+            (train_meta, train_ir, None, self.root / "train-ir.json"),
+            (test_meta, test_ir, truth, self.root / "test-ir.json"),
+        ])
+        training = [item for item in dataset["groups"] if item["role"] == "train"]
+        external = [item for item in dataset["groups"] if item["role"] == "external-test"]
+        self.assertTrue(training)
+        self.assertEqual({item["label_source"] for group in training for item in group["candidates"]}, {"weak-supervision"})
+        self.assertEqual({item["label_source"] for group in external for item in group["candidates"]}, {"source-audited"})
 
     def test_process_transport_reuses_hardware_protocol(self) -> None:
         simulator = self.root / "simulator.py"

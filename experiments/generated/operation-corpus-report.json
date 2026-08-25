@@ -1,0 +1,532 @@
+{
+  "frontend": "hybrid",
+  "records": [
+    {
+      "duration_seconds": 0.163,
+      "independence_group": "raspberry-pi",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/raspberry-pi-pico-sdk-2.2.0/45190cbaae605e04/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "45190cbaae605e04",
+      "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/pico-sdk",
+      "stats": {
+        "build_rules": 178,
+        "edges": 9049,
+        "file_kinds": {
+          "assembly": 52,
+          "build": 178,
+          "header": 525,
+          "linker": 11,
+          "source": 150,
+          "startup": 3
+        },
+        "files": 919,
+        "functions": 3281,
+        "symbols": 36
+      }
+    },
+    {
+      "duration_seconds": 0.293,
+      "independence_group": "nordic",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/nordic-nrfx-4.2.1/949bec96d89711ef/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "949bec96d89711ef",
+      "sdk_id": "nordic-nrfx-4.2.1",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/nrfx",
+      "stats": {
+        "build_rules": 0,
+        "edges": 14179,
+        "file_kinds": {
+          "header": 690,
+          "linker": 62,
+          "source": 75,
+          "startup": 165
+        },
+        "files": 992,
+        "functions": 6029,
+        "symbols": 2
+      }
+    },
+    {
+      "duration_seconds": 3.301,
+      "independence_group": "espressif",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/espressif-esp-idf-6.0.1/1dd6c028f56a4ef5/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "1dd6c028f56a4ef5",
+      "sdk_id": "espressif-esp-idf-6.0.1",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/esp-idf",
+      "stats": {
+        "build_rules": 1781,
+        "edges": 211614,
+        "file_kinds": {
+          "assembly": 74,
+          "build": 1781,
+          "header": 5475,
+          "library": 3,
+          "linker": 216,
+          "source": 3980,
+          "startup": 3
+        },
+        "files": 11532,
+        "functions": 58127,
+        "symbols": 510
+      }
+    },
+    {
+      "duration_seconds": 4.293,
+      "independence_group": "nxp",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/nxp-mcuxpresso-sdk-2.16.100/361ac5e7d005d5d4/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "361ac5e7d005d5d4",
+      "sdk_id": "nxp-mcuxpresso-sdk-2.16.100",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/mcux-sdk",
+      "stats": {
+        "build_rules": 2464,
+        "edges": 238258,
+        "file_kinds": {
+          "assembly": 13,
+          "build": 2464,
+          "header": 6328,
+          "library": 245,
+          "linker": 688,
+          "source": 5038,
+          "startup": 242
+        },
+        "files": 15018,
+        "functions": 96320,
+        "symbols": 771
+      }
+    },
+    {
+      "duration_seconds": 0.511,
+      "independence_group": "ti",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/ti-mspm0-driverlib/1c9d999b8a4260f4/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "1c9d999b8a4260f4",
+      "sdk_id": "ti-mspm0-driverlib",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/mspm0-sdk/source/ti",
+      "stats": {
+        "build_rules": 9,
+        "edges": 16969,
+        "file_kinds": {
+          "build": 9,
+          "header": 418,
+          "library": 161,
+          "linker": 54,
+          "source": 356,
+          "startup": 27
+        },
+        "files": 1025,
+        "functions": 7628,
+        "symbols": 72
+      }
+    },
+    {
+      "duration_seconds": 1.372,
+      "independence_group": "ti",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/ti-simplelink-f2/081d8a301086502a/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "081d8a301086502a",
+      "sdk_id": "ti-simplelink-f2",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/simplelink-lowpower-f2-sdk/source/ti",
+      "stats": {
+        "build_rules": 19,
+        "edges": 82963,
+        "file_kinds": {
+          "build": 19,
+          "header": 2256,
+          "library": 443,
+          "linker": 58,
+          "source": 1508
+        },
+        "files": 4284,
+        "functions": 23333,
+        "symbols": 1406
+      }
+    },
+    {
+      "duration_seconds": 0.721,
+      "independence_group": "renesas",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/renesas-fsp/af5996157dae4f4b/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "af5996157dae4f4b",
+      "sdk_id": "renesas-fsp",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/renesas-fsp/ra/fsp",
+      "stats": {
+        "build_rules": 0,
+        "edges": 49318,
+        "file_kinds": {
+          "header": 877,
+          "source": 2751
+        },
+        "files": 3628,
+        "functions": 10694,
+        "symbols": 151
+      }
+    },
+    {
+      "duration_seconds": 0.029,
+      "independence_group": "microchip",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/microchip-harmony-csp/23dfcd229f20d724/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "23dfcd229f20d724",
+      "sdk_id": "microchip-harmony-csp",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/microchip-csp/peripheral",
+      "stats": {
+        "build_rules": 0,
+        "edges": 161,
+        "file_kinds": {
+          "assembly": 1,
+          "header": 91,
+          "source": 6
+        },
+        "files": 98,
+        "functions": 99,
+        "symbols": 0
+      }
+    },
+    {
+      "duration_seconds": 0.074,
+      "independence_group": "analog-devices",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/analog-devices-no-os-platform/6710070defaf3da6/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "6710070defaf3da6",
+      "sdk_id": "analog-devices-no-os-platform",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/analogdevices-no-os/drivers/platform",
+      "stats": {
+        "build_rules": 25,
+        "edges": 4700,
+        "file_kinds": {
+          "build": 25,
+          "header": 174,
+          "source": 219
+        },
+        "files": 418,
+        "functions": 1936,
+        "symbols": 10
+      }
+    },
+    {
+      "duration_seconds": 0.157,
+      "independence_group": "sony",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/sony-spresense-sdk/85c1c2e6654e14a5/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "85c1c2e6654e14a5",
+      "sdk_id": "sony-spresense-sdk",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/sony-spresense/sdk",
+      "stats": {
+        "build_rules": 65,
+        "edges": 9714,
+        "file_kinds": {
+          "assembly": 1,
+          "build": 65,
+          "header": 426,
+          "library": 3,
+          "linker": 1,
+          "source": 250
+        },
+        "files": 746,
+        "functions": 3248,
+        "symbols": 9
+      }
+    },
+    {
+      "duration_seconds": 0.158,
+      "independence_group": "sifli",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/sifli-hal/83de5bbcefd5e605/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "83de5bbcefd5e605",
+      "sdk_id": "sifli-hal",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/sifli-sdk/drivers",
+      "stats": {
+        "build_rules": 11,
+        "edges": 9695,
+        "file_kinds": {
+          "build": 11,
+          "header": 382,
+          "library": 1,
+          "linker": 13,
+          "source": 137,
+          "startup": 53
+        },
+        "files": 597,
+        "functions": 3411,
+        "symbols": 44
+      }
+    },
+    {
+      "duration_seconds": 0.381,
+      "independence_group": "bouffalo",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/bouffalo-lhal/1ce42e0c5573a5bb/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "1ce42e0c5573a5bb",
+      "sdk_id": "bouffalo-lhal",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/bouffalo-sdk/drivers",
+      "stats": {
+        "build_rules": 17,
+        "edges": 19346,
+        "file_kinds": {
+          "assembly": 9,
+          "build": 17,
+          "header": 420,
+          "library": 30,
+          "source": 256,
+          "startup": 8
+        },
+        "files": 740,
+        "functions": 9687,
+        "symbols": 24
+      }
+    },
+    {
+      "duration_seconds": 0.03,
+      "independence_group": "wch",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/wch-ch32v307-stdperiph/e3caac458005feba/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "e3caac458005feba",
+      "sdk_id": "wch-ch32v307-stdperiph",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/wch-ch32v307/EVT/EXAM/SRC/Peripheral",
+      "stats": {
+        "build_rules": 0,
+        "edges": 742,
+        "file_kinds": {
+          "header": 28,
+          "source": 26
+        },
+        "files": 54,
+        "functions": 597,
+        "symbols": 0
+      }
+    },
+    {
+      "duration_seconds": 0.058,
+      "independence_group": "nuclei",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/nuclei-soc-sdk/bc401929e35e1ef5/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "bc401929e35e1ef5",
+      "sdk_id": "nuclei-soc-sdk",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/nuclei-sdk/SoC",
+      "stats": {
+        "build_rules": 9,
+        "edges": 2700,
+        "file_kinds": {
+          "assembly": 6,
+          "build": 9,
+          "header": 89,
+          "linker": 13,
+          "source": 82,
+          "startup": 4
+        },
+        "files": 203,
+        "functions": 1567,
+        "symbols": 23
+      }
+    },
+    {
+      "duration_seconds": 0.107,
+      "independence_group": "libopencm3",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/libopencm3-hal/891ca4cfac874a30/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "891ca4cfac874a30",
+      "sdk_id": "libopencm3-hal",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/libopencm3",
+      "stats": {
+        "build_rules": 48,
+        "edges": 5888,
+        "file_kinds": {
+          "assembly": 1,
+          "build": 48,
+          "header": 757,
+          "linker": 3,
+          "source": 274
+        },
+        "files": 1083,
+        "functions": 2626,
+        "symbols": 45
+      }
+    },
+    {
+      "duration_seconds": 7.118,
+      "independence_group": "arm-mbed",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/arm-mbed-hal/65b699653fe7d0ee/sdk-ir.json",
+      "reused_existing_ir": true,
+      "role": "train",
+      "sdk_digest": "65b699653fe7d0ee",
+      "sdk_id": "arm-mbed-hal",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/mbed-os",
+      "stats": {
+        "build_rules": 1027,
+        "edges": 378093,
+        "file_kinds": {
+          "assembly": 40,
+          "build": 1027,
+          "header": 8190,
+          "library": 18,
+          "linker": 273,
+          "source": 6220,
+          "startup": 675
+        },
+        "files": 16443,
+        "functions": 131767,
+        "symbols": 1217
+      }
+    },
+    {
+      "duration_seconds": 1.11,
+      "independence_group": "renesas",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/arduino-renesas-core/ed54c32adda8baaf/sdk-ir.json",
+      "reused_existing_ir": false,
+      "role": "train",
+      "sdk_digest": "ed54c32adda8baaf",
+      "sdk_id": "arduino-renesas-core",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/arduino-renesas/cores",
+      "stats": {
+        "build_rules": 0,
+        "edges": 718,
+        "file_kinds": {
+          "assembly": 1,
+          "header": 20,
+          "source": 26
+        },
+        "files": 47,
+        "functions": 376,
+        "symbols": 41
+      }
+    },
+    {
+      "duration_seconds": 3.553,
+      "independence_group": "telink",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/telink-tlsr9-hal/56962c557408e6a9/sdk-ir.json",
+      "reused_existing_ir": false,
+      "role": "train",
+      "sdk_digest": "56962c557408e6a9",
+      "sdk_id": "telink-tlsr9-hal",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/telink-hal/tlsr9",
+      "stats": {
+        "build_rules": 1,
+        "edges": 1955,
+        "file_kinds": {
+          "build": 1,
+          "header": 124,
+          "source": 29
+        },
+        "files": 154,
+        "functions": 715,
+        "symbols": 6
+      }
+    },
+    {
+      "duration_seconds": 17.033,
+      "independence_group": "alif",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/alif-ensemble-dfp/e7a8ed777c6d4b72/sdk-ir.json",
+      "reused_existing_ir": false,
+      "role": "train",
+      "sdk_digest": "e7a8ed777c6d4b72",
+      "sdk_id": "alif-ensemble-dfp",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/alif-cmsis-dfp",
+      "stats": {
+        "build_rules": 10,
+        "edges": 17744,
+        "file_kinds": {
+          "build": 10,
+          "header": 597,
+          "library": 3,
+          "source": 339
+        },
+        "files": 949,
+        "functions": 5559,
+        "symbols": 212
+      }
+    },
+    {
+      "duration_seconds": 2.936,
+      "independence_group": "silabs",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/silabs-emlib/6c768a945123f24c/sdk-ir.json",
+      "reused_existing_ir": false,
+      "role": "train",
+      "sdk_digest": "6c768a945123f24c",
+      "sdk_id": "silabs-emlib",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/silabs-hal/gecko/emlib",
+      "stats": {
+        "build_rules": 0,
+        "edges": 3022,
+        "file_kinds": {
+          "header": 59,
+          "source": 43
+        },
+        "files": 102,
+        "functions": 1386,
+        "symbols": 7
+      }
+    },
+    {
+      "duration_seconds": 3.373,
+      "independence_group": "hpmicro",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/hpmicro-hpm-sdk/4eb828a304e31927/sdk-ir.json",
+      "reused_existing_ir": false,
+      "role": "train",
+      "sdk_digest": "4eb828a304e31927",
+      "sdk_id": "hpmicro-hpm-sdk",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/hpm-sdk/drivers",
+      "stats": {
+        "build_rules": 1,
+        "edges": 4883,
+        "file_kinds": {
+          "assembly": 1,
+          "build": 1,
+          "header": 97,
+          "source": 77
+        },
+        "files": 176,
+        "functions": 2939,
+        "symbols": 0
+      }
+    },
+    {
+      "duration_seconds": 18.166,
+      "independence_group": "nuvoton",
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/operation-ir/nuvoton-std-driver/2355b10692463a79/sdk-ir.json",
+      "reused_existing_ir": false,
+      "role": "train",
+      "sdk_digest": "2355b10692463a79",
+      "sdk_id": "nuvoton-std-driver",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/nuvoton-hal",
+      "stats": {
+        "build_rules": 15,
+        "edges": 13704,
+        "file_kinds": {
+          "build": 15,
+          "header": 654,
+          "source": 301,
+          "startup": 2
+        },
+        "files": 972,
+        "functions": 6512,
+        "symbols": 116
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "summary": {
+    "duration_seconds": 64.937,
+    "files": 60180,
+    "functions": 377837,
+    "independence_groups": 20,
+    "sdks": 22
+  }
+}
