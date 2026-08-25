@@ -23,14 +23,14 @@ def main() -> int:
     capabilities = list(truth["capabilities"])
     evaluator = ExperimentEvaluator()
     results = []
-    for method in ("weighted", "learned"):
+    for method in ("weighted", "learned", "hybrid"):
         resolution = SemanticResolver().resolve(
             ir,
             capabilities,
             threshold=args.threshold,
             top_k=args.top_k,
             method=method,
-            model_path=args.model if method == "learned" else None,
+            model_path=args.model if method in {"learned", "hybrid"} else None,
         )
         metrics = evaluator.evaluate_resolution(resolution, truth)
         results.append({
@@ -38,13 +38,14 @@ def main() -> int:
             "resolution_method": resolution["method"],
             "metrics": metrics["summary"],
         })
-    weighted, learned = results
-    results[1]["delta_macro_f1"] = (
-        round(learned["metrics"]["macro_f1"] - weighted["metrics"]["macro_f1"], 4)
-        if learned["metrics"]["macro_f1"] is not None
-        and weighted["metrics"]["macro_f1"] is not None
-        else None
-    )
+    weighted = results[0]
+    for result in results[1:]:
+        result["delta_macro_f1"] = (
+            round(result["metrics"]["macro_f1"] - weighted["metrics"]["macro_f1"], 4)
+            if result["metrics"]["macro_f1"] is not None
+            and weighted["metrics"]["macro_f1"] is not None
+            else None
+        )
     write_json(args.output, {
         "schema_version": "1.0",
         "ground_truth_id": truth.get("id", "unknown"),

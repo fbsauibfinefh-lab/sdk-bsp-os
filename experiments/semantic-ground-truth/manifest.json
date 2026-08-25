@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "description": "BSPForge 跨厂商 SDK 语义恢复实验清单",
+  "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
+  "sdks": [
+    {
+      "sdk_id": "kendryte-k210-standalone-sdk-0.5.6",
+      "ground_truth": "../k210-ground-truth.json",
+      "source_path": "/mnt/d/Wuhk/AIOT/k210sdk/kendryte-standalone-sdk"
+    },
+    {
+      "sdk_id": "stm32cube-f1",
+      "ground_truth": "stm32cube-f1.json",
+      "source_path": "/home/whk/RTT-porting/STM32CubeF1"
+    },
+    {
+      "sdk_id": "psoc-e84-edgi-talk-sdk",
+      "ground_truth": "psoc-e84.json",
+      "source_path": "/home/whk/RTT-porting/sdk-bsp-psoc_e84-edgi-talk/libraries"
+    },
+    {
+      "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+      "ground_truth": "pico-sdk.json",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/pico-sdk"
+    },
+    {
+      "sdk_id": "nordic-nrfx-4.2.1",
+      "ground_truth": "nrfx.json",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/nrfx"
+    },
+    {
+      "sdk_id": "espressif-esp-idf-6.0.1",
+      "ground_truth": "esp-idf.json",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/esp-idf"
+    },
+    {
+      "sdk_id": "nxp-mcuxpresso-sdk-2.16.100",
+      "ground_truth": "mcux-sdk.json",
+      "source_path": "/home/whk/RTT-porting/evaluation-sdks/mcux-sdk"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": "2.0",
+  "id": "esp-idf-6.0.1-semantic-contract-v1",
+  "description": "Espressif ESP-IDF 6.0.1 的迁移语义人工核验真值",
+  "sdk": {
+    "id": "espressif-esp-idf-6.0.1",
+    "vendor": "Espressif",
+    "version": "6.0.1",
+    "revision": "8c19b156084a0753687347cca1f5355782893533",
+    "source_url": "https://github.com/espressif/esp-idf"
+  },
+  "annotation": {
+    "status": "single-curator-source-audited",
+    "selection_policy": "选择 ESP-IDF 公共驱动接口，排除测试函数、VFS 包装和内部 HAL 辅助函数",
+    "second_reviewer_required_for_publication": true
+  },
+  "capabilities": {
+    "clock": {"semantic_symbols": ["esp_clk_init", "esp_clk_cpu_freq", "esp_clk_apb_freq", "esp_clk_xtal_freq", "esp_clk_slowclk_cal_get", "esp_clk_slowclk_cal_set"], "binding_symbols": [], "device_operations": []},
+    "interrupt": {"semantic_symbols": ["esp_intr_alloc", "esp_intr_alloc_intrstatus", "esp_intr_enable", "esp_intr_disable", "esp_intr_free", "esp_intr_get_intno"], "binding_symbols": [], "device_operations": []},
+    "uart": {"semantic_symbols": ["uart_driver_install", "uart_driver_delete", "uart_param_config", "uart_set_baudrate", "uart_write_bytes", "uart_read_bytes", "uart_enable_rx_intr"], "binding_symbols": [], "device_operations": []},
+    "gpio": {"semantic_symbols": ["gpio_config", "gpio_reset_pin", "gpio_set_direction", "gpio_set_level", "gpio_get_level", "gpio_isr_handler_add", "gpio_isr_handler_remove"], "binding_symbols": [], "device_operations": []},
+    "timer": {"semantic_symbols": ["gptimer_new_timer", "gptimer_del_timer", "gptimer_enable", "gptimer_disable", "gptimer_start", "gptimer_stop", "gptimer_get_raw_count", "gptimer_register_event_callbacks"], "binding_symbols": [], "device_operations": []}
+  }
+}

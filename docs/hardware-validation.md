@@ -32,6 +32,17 @@ conda run -n AIoT-v1.0 bspforge-hwtest \
 
 RT-Thread 接收形式为 `bspforge_selftest <request-id> <command>` 的 FinSH 命令；Zephyr 使用同一行格式，由 console 轮询分发。主机报告包含原始日志、每轮启动事件、每项命令往返时间和板端指标。
 
+仿真器或本地可执行程序使用 `--command` 代替 `--port`，并通过标准输入输出复用同一协议：
+
+```bash
+conda run -n AIoT-v1.0 bspforge-hwtest \
+  --command workspace/generated/simulation-zephyr-native/build/zephyr/zephyr.exe \
+  --board native_sim \
+  --rtos zephyr \
+  --rounds 20 \
+  --output experiments/generated/zephyr-native-simulation.json
+```
+
 ## 报告口径
 
 - `boot_successes/boot_attempts` 与 `boot_success_rate`：主机复位后在超时内收到启动事件的次数。

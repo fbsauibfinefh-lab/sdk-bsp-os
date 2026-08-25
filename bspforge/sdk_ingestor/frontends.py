@@ -168,9 +168,11 @@ class HybridFrontend:
     @classmethod
     def _descendants(cls, node: dict[str, Any]) -> list[dict[str, Any]]:
         result: list[dict[str, Any]] = []
-        for child in node.get("inner", []):
+        stack = list(reversed(node.get("inner", [])))
+        while stack:
+            child = stack.pop()
             result.append(child)
-            result.extend(cls._descendants(child))
+            stack.extend(reversed(child.get("inner", [])))
         return result
 
     def _tree_sitter_functions(
@@ -195,7 +197,9 @@ class HybridFrontend:
         tree = parser.parse(encoded)
         output: list[dict[str, Any]] = []
 
-        def walk(node: Any) -> None:
+        stack = [tree.root_node]
+        while stack:
+            node = stack.pop()
             if node.type == "function_definition":
                 declarator = node.child_by_field_name("declarator")
                 body = node.child_by_field_name("body")
@@ -216,23 +220,18 @@ class HybridFrontend:
                         "tree-sitter",
                         0.9,
                     ))
-            for child in node.children:
-                walk(child)
-
-        walk(tree.root_node)
+            stack.extend(reversed(node.children))
         attempts.append({"frontend": "tree-sitter", "status": "success" if output else "empty"})
         return output
 
     @classmethod
     def _identifier(cls, node: Any) -> Any:
-        if node is None:
-            return None
-        if node.type in {"identifier", "field_identifier"}:
-            return node
-        for child in node.children:
-            found = cls._identifier(child)
-            if found is not None:
-                return found
+        stack = [node] if node is not None else []
+        while stack:
+            current = stack.pop()
+            if current.type in {"identifier", "field_identifier"}:
+                return current
+            stack.extend(reversed(current.children))
         return None
 
     @staticmethod

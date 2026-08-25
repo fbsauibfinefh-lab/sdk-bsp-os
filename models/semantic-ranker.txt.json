@@ -1,0 +1,51 @@
+{
+  "schema_version": "1.0",
+  "feature_names": [
+    "name-capability",
+    "name-action",
+    "path",
+    "signature",
+    "include",
+    "call-context",
+    "macro-context",
+    "parser-confidence",
+    "baseline-score",
+    "evidence-kind-count",
+    "name-capability-action-joint",
+    "canonical-name-order",
+    "driver-hal-path",
+    "public-include-path",
+    "test-example-path",
+    "internal-private-path",
+    "private-symbol",
+    "identifier-token-count",
+    "identifier-length"
+  ],
+  "sdk_ids": [
+    "espressif-esp-idf-6.0.1",
+    "kendryte-k210-standalone-sdk-0.5.6",
+    "nordic-nrfx-4.2.1",
+    "nxp-mcuxpresso-sdk-2.16.100",
+    "psoc-e84-edgi-talk-sdk",
+    "raspberry-pi-pico-sdk-2.2.0",
+    "stm32cube-f1"
+  ],
+  "groups": 34,
+  "candidates": 4340,
+  "dataset_summary": {
+    "candidates": 4340,
+    "groups": 34,
+    "positive_candidates": 260,
+    "sdks": 7
+  },
+  "training_protocol": "grouped-by-sdk-capability; evaluate with leave-one-sdk-out",
+  "recommended_method": "hybrid",
+  "recommended_hybrid_weight": 0.75,
+  "model": {
+    "objective": "lambdarank",
+    "n_estimators": 120,
+    "learning_rate": 0.05,
+    "num_leaves": 15,
+    "random_state": 20260824
+  }
+}

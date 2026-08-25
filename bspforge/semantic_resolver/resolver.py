@@ -10,27 +10,27 @@ from bspforge.semantic_resolver.learning import LearnedRanker
 DEFAULT_CAPABILITIES = {
     "uart": {
         "terms": ["uart", "uarths", "serial", "baud"],
-        "actions": ["init", "configure", "send", "receive", "irq"],
+        "actions": ["init", "deinit", "configure", "send", "receive", "read", "write", "irq"],
         "target_api": "RT-Thread serial device",
     },
     "gpio": {
         "terms": ["gpio", "gpiohs", "pin", "fpioa"],
-        "actions": ["init", "drive", "set", "get", "mode", "irq"],
+        "actions": ["init", "deinit", "configure", "drive", "set", "get", "read", "write", "toggle", "mode", "irq"],
         "target_api": "RT-Thread pin device",
     },
     "timer": {
-        "terms": ["timer", "tick", "clint", "mtime"],
-        "actions": ["init", "start", "stop", "irq", "interval"],
+        "terms": ["timer", "gptimer", "ctimer", "alarm", "tick", "clint", "mtime"],
+        "actions": ["init", "deinit", "start", "stop", "enable", "disable", "setup", "read", "capture", "register", "irq", "interval"],
         "target_api": "RT-Thread timer/tick service",
     },
     "interrupt": {
-        "terms": ["plic", "interrupt", "irq", "trap"],
-        "actions": ["init", "enable", "disable", "register", "claim"],
+        "terms": ["plic", "interrupt", "irq", "isr", "intr", "nvic", "sysint", "trap"],
+        "actions": ["init", "enable", "disable", "register", "alloc", "free", "set", "clear", "priority", "pending", "claim", "handler", "trigger"],
         "target_api": "RT-Thread interrupt subsystem",
     },
     "clock": {
         "terms": ["sysctl", "clock", "pll", "frequency"],
-        "actions": ["init", "enable", "disable", "set", "get"],
+        "actions": ["init", "configure", "enable", "disable", "start", "stop", "set", "get", "freq"],
         "target_api": "RT-Thread board clock initialization",
     },
 }
@@ -49,6 +49,29 @@ DEFAULT_EVIDENCE_WEIGHTS = {
 class SemanticResolver:
     """Rank SDK functions using independent, auditable static evidence."""
 
+    def candidate_pool(
+        self,
+        ir: dict[str, Any],
+        capability: str,
+        evidence_weights: dict[str, float] | None = None,
+    ) -> list[dict[str, Any]]:
+        spec = DEFAULT_CAPABILITIES.get(capability)
+        if spec is None:
+            raise ValueError(f"Unknown capability: {capability}")
+        weights = {**DEFAULT_EVIDENCE_WEIGHTS, **(evidence_weights or {})}
+        unknown = set(weights).difference(DEFAULT_EVIDENCE_WEIGHTS)
+        if unknown:
+            raise ValueError(f"Unknown evidence types: {sorted(unknown)}")
+        if any(value < 0 for value in weights.values()):
+            raise ValueError("Evidence weights must be non-negative")
+        candidates = [
+            self._candidate(capability, spec, function, weights)
+            for function in ir["functions"]
+        ]
+        candidates = [item for item in candidates if item["score"] > 0]
+        candidates.sort(key=lambda item: (-item["score"], item["entity_id"]))
+        return candidates
+
     def resolve(
         self,
         ir: dict[str, Any],
@@ -58,6 +81,7 @@ class SemanticResolver:
         evidence_weights: dict[str, float] | None = None,
         method: str = "weighted",
         model_path: Path | None = None,
+        hybrid_weight: float | None = None,
     ) -> dict[str, Any]:
         weights = {**DEFAULT_EVIDENCE_WEIGHTS, **(evidence_weights or {})}
         unknown = set(weights).difference(DEFAULT_EVIDENCE_WEIGHTS)
@@ -68,26 +92,36 @@ class SemanticResolver:
         capabilities = capability_names or list(DEFAULT_CAPABILITIES)
         ranker = (
             LearnedRanker(model_path)
-            if method == "learned" and model_path is not None
+            if method in {"learned", "hybrid"} and model_path is not None
             else None
         )
-        if method == "learned" and ranker is None:
-            raise ValueError("learned resolver requires model_path")
-        if method not in {"weighted", "learned"}:
-            raise ValueError("resolver method must be 'weighted' or 'learned'")
+        if method in {"learned", "hybrid"} and ranker is None:
+            raise ValueError(f"{method} resolver requires model_path")
+        if method not in {"weighted", "learned", "hybrid"}:
+            raise ValueError("resolver method must be 'weighted', 'learned', or 'hybrid'")
+        selected_hybrid_weight = 0.0
+        if method == "hybrid":
+            assert ranker is not None
+            selected_hybrid_weight = float(
+                hybrid_weight
+                if hybrid_weight is not None
+                else ranker.metadata.get("recommended_hybrid_weight", 0.75)
+            )
+            if not 0.0 <= selected_hybrid_weight <= 1.0:
+                raise ValueError("hybrid_weight must be between 0 and 1")
         mappings: list[dict[str, Any]] = []
         for capability in capabilities:
             spec = DEFAULT_CAPABILITIES.get(capability)
             if spec is None:
                 raise ValueError(f"Unknown capability: {capability}")
-            candidates = [
-                self._candidate(capability, spec, function, weights)
-                for function in ir["functions"]
-            ]
-            candidates = [item for item in candidates if item["score"] > 0]
-            if method == "learned":
+            candidates = self.candidate_pool(ir, capability, weights)
+            if method in {"learned", "hybrid"}:
                 assert ranker is not None
-                ranker.score(candidates, {item["id"]: item for item in ir["functions"]})
+                ranker.score(
+                    candidates,
+                    {item["id"]: item for item in ir["functions"]},
+                    baseline_weight=selected_hybrid_weight,
+                )
             candidates.sort(key=lambda item: (-item["score"], item["entity_id"]))
             accepted = self._operation_cover(candidates[:top_k], threshold)
             mappings.append({
@@ -105,11 +139,16 @@ class SemanticResolver:
             "sdk_id": ir["sdk"]["id"],
             "sdk_digest": ir["sdk"]["digest"],
             "method": (
-                "lightgbm-lambdarank-multi-evidence-resolution"
-                if method == "learned"
-                else "weighted-multi-evidence-static-resolution"
+                "weighted-lightgbm-hybrid-resolution"
+                if method == "hybrid"
+                else (
+                    "lightgbm-lambdarank-multi-evidence-resolution"
+                    if method == "learned"
+                    else "weighted-multi-evidence-static-resolution"
+                )
             ),
             "baseline_method": "weighted-multi-evidence-static-resolution",
+            "hybrid_weight": selected_hybrid_weight if method == "hybrid" else None,
             "evidence_weights": weights,
             "mappings": mappings,
             "summary": {

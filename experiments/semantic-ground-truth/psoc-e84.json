@@ -1,0 +1,24 @@
+{
+  "schema_version": "2.0",
+  "id": "psoc-e84-mtb-hal-semantic-contract-v1",
+  "description": "PSoC E84 SDK MTB-HAL 的迁移语义人工核验真值",
+  "sdk": {
+    "id": "psoc-e84-edgi-talk-sdk",
+    "vendor": "Infineon/Cypress",
+    "version": "edgi-talk-snapshot",
+    "revision": "1c6964a67ffb3925e9731c2e29e14b99a3534ee2",
+    "source_url": "https://github.com/Huanfiy/sdk-bsp-psoc_e84-edgi-talk"
+  },
+  "annotation": {
+    "status": "single-curator-source-audited",
+    "selection_policy": "优先选择当前 SDK 的 MTB-HAL 公共接口，并以 PDL 中断控制接口补足中断契约",
+    "second_reviewer_required_for_publication": true
+  },
+  "capabilities": {
+    "clock": {"semantic_symbols": ["mtb_hal_clock_get_hf_clock_freq", "mtb_hal_clock_get_peri_clock_freq", "mtb_hal_clock_set_hf_clock_enabled", "mtb_hal_clock_set_hf_clock_freq", "mtb_hal_clock_set_peri_clock_enabled", "mtb_hal_clock_set_peri_clock_freq"], "binding_symbols": [], "device_operations": []},
+    "interrupt": {"semantic_symbols": ["Cy_SysInt_Init", "Cy_SysInt_SetVector", "Cy_SysInt_GetVector", "Cy_SysInt_SoftwareTrig"], "binding_symbols": [], "device_operations": []},
+    "uart": {"semantic_symbols": ["mtb_hal_uart_setup", "mtb_hal_uart_set_baud", "mtb_hal_uart_read", "mtb_hal_uart_write", "mtb_hal_uart_register_callback", "mtb_hal_uart_enable_event"], "binding_symbols": [], "device_operations": []},
+    "gpio": {"semantic_symbols": ["mtb_hal_gpio_setup", "mtb_hal_gpio_configure", "mtb_hal_gpio_read_internal", "mtb_hal_gpio_write_internal", "mtb_hal_gpio_toggle_internal", "mtb_hal_gpio_register_callback", "mtb_hal_gpio_enable_event"], "binding_symbols": [], "device_operations": []},
+    "timer": {"semantic_symbols": ["mtb_hal_timer_setup", "mtb_hal_timer_start", "mtb_hal_timer_stop", "mtb_hal_timer_read", "mtb_hal_timer_reset", "mtb_hal_timer_register_callback", "mtb_hal_timer_enable_event"], "binding_symbols": [], "device_operations": []}
+  }
+}

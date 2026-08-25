@@ -5,7 +5,7 @@ IR 使用 JSON 表示，包含五类主要集合：
 | 集合 | 作用 | 稳定标识依据 |
 | --- | --- | --- |
 | `files` | 源码、头文件、静态库、构建、链接和启动资产 | SDK ID + 相对路径 |
-| `functions` | 函数定义、签名、调用、包含和宏上下文 | SDK ID + 路径 + 符号 + 行号 |
+| `functions` | 源文件及头文件内联函数的定义、签名、调用、包含和宏上下文 | SDK ID + 路径 + 符号 + 行号 |
 | `symbols` | 可参与链接诊断的全局变量定义 | SDK ID + 路径 + 符号 + 行号 |
 | `build_rules` | CMake、Make 和 SCons 构建引用 | SDK ID + 构建文件路径 |
 | `edges` | `defines`、`calls`、`includes`、`builds` 关系 | 两端实体 ID |
@@ -24,7 +24,7 @@ IR 使用 JSON 表示，包含五类主要集合：
 
 ## 版本演进
 
-当前 SDK IR schema 版本为 `1.1`。`functions[].parser`、`parser_confidence` 和 `evidence.parser` 记录实体来源；顶层 `frontend.files` 记录逐文件前端尝试；启动/链接文件的 `asset_metadata` 记录可恢复的架构、CPU 核和入口符号。兼容修改可以增加可选字段；破坏性修改需要提升主版本并提供转换器。
+当前 SDK IR schema 版本为 `1.1`。源码与头文件中的有函数体实体均进入 `functions`，包括 SDK 常见的 `static inline` API。`functions[].parser`、`parser_confidence` 和 `evidence.parser` 记录实体来源；顶层 `frontend.files` 记录逐文件前端尝试；启动/链接文件的 `asset_metadata` 记录可恢复的架构、CPU 核和入口符号。兼容修改可以增加可选字段；破坏性修改需要提升主版本并提供转换器。
 
 ## 派生清单
 

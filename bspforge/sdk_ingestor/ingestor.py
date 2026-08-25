@@ -87,10 +87,10 @@ class SDKIngestor:
                     record["asset_metadata"] = self._asset_metadata(relative, text)
 
         function_by_name: dict[str, list[dict[str, Any]]] = defaultdict(list)
-        source_inputs = [
+        parser_inputs = [
             (relative, text)
             for relative, text in texts.items()
-            if Path(relative).suffix in SOURCE_SUFFIXES
+            if Path(relative).suffix in SOURCE_SUFFIXES | HEADER_SUFFIXES
         ]
 
         def extract_source(item: tuple[str, str]) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
@@ -102,10 +102,15 @@ class SDKIngestor:
                 text,
                 self._extract_functions,
             )
-            return extracted, self._extract_global_symbols(sdk_id, relative, text), report
+            extracted_symbols = (
+                self._extract_global_symbols(sdk_id, relative, text)
+                if Path(relative).suffix in SOURCE_SUFFIXES
+                else []
+            )
+            return extracted, extracted_symbols, report
 
         with ThreadPoolExecutor(max_workers=self.workers) as executor:
-            extracted_sources = list(executor.map(extract_source, source_inputs))
+            extracted_sources = list(executor.map(extract_source, parser_inputs))
         for extracted, extracted_symbols, frontend_report in extracted_sources:
             frontend_reports.append(frontend_report)
             functions.extend(extracted)

@@ -1,0 +1,3450 @@
+{
+  "created_at": "2026-08-25T05:42:04.973753+00:00",
+  "schema_version": "1.0",
+  "sdks": [
+    {
+      "capabilities": [
+        {
+          "candidate_pool": 655,
+          "capability": "clock",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/sysctl.c",
+                  "line": 389,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "sysctl_clock_enable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/sysctl.c",
+                  "line": 398,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "sysctl_clock_disable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/sysctl.c",
+                  "line": 1267,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "sysctl_clock_get_freq"
+            }
+          ],
+          "truth_symbols": 3
+        },
+        {
+          "candidate_pool": 621,
+          "capability": "interrupt",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/plic.c",
+                  "line": 26,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "plic_init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/plic.c",
+                  "line": 76,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "plic_irq_enable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/plic.c",
+                  "line": 91,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "plic_irq_disable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/plic.c",
+                  "line": 140,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "plic_irq_register"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/plic.c",
+                  "line": 150,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "plic_irq_unregister"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/plic.c",
+                  "line": 125,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "plic_irq_claim"
+            }
+          ],
+          "truth_symbols": 6
+        },
+        {
+          "candidate_pool": 243,
+          "capability": "uart",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/uart.c",
+                  "line": 361,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/uart.c",
+                  "line": 310,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_configure"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/uart.c",
+                  "line": 245,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_send_data"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/uart.c",
+                  "line": 179,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_receive_data"
+            }
+          ],
+          "truth_symbols": 4
+        },
+        {
+          "candidate_pool": 527,
+          "capability": "gpio",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/gpiohs.c",
+                  "line": 34,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpiohs_set_drive_mode"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/gpiohs.c",
+                  "line": 72,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpiohs_get_pin"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/gpiohs.c",
+                  "line": 78,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpiohs_set_pin"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/gpiohs.c",
+                  "line": 84,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpiohs_set_pin_edge"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/gpiohs.c",
+                  "line": 185,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpiohs_irq_register"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/gpiohs.c",
+                  "line": 196,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpiohs_irq_unregister"
+            }
+          ],
+          "truth_symbols": 6
+        },
+        {
+          "candidate_pool": 249,
+          "capability": "timer",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/timer.c",
+                  "line": 44,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "timer_init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/timer.c",
+                  "line": 157,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "timer_set_interval"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/timer.c",
+                  "line": 149,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "timer_set_enable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/timer.c",
+                  "line": 319,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "timer_irq_register"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "lib/drivers/timer.c",
+                  "line": 340,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "timer_irq_unregister"
+            }
+          ],
+          "truth_symbols": 5
+        }
+      ],
+      "functions": 2164,
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/ir/kendryte-k210-standalone-sdk-0.5.6/506385b64047df42/sdk-ir.json",
+      "sdk_digest": "506385b64047df42",
+      "sdk_id": "kendryte-k210-standalone-sdk-0.5.6"
+    },
+    {
+      "capabilities": [
+        {
+          "candidate_pool": 6345,
+          "capability": "clock",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+                  "line": 345,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_RCC_OscConfig"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+                  "line": 811,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_RCC_ClockConfig"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+                  "line": 1080,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_RCC_GetSysClockFreq"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+                  "line": 1174,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_RCC_GetHCLKFreq"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+                  "line": 1185,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_RCC_GetPCLK1Freq"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+                  "line": 1197,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_RCC_GetPCLK2Freq"
+            }
+          ],
+          "truth_symbols": 6
+        },
+        {
+          "candidate_pool": 8712,
+          "capability": "interrupt",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c",
+                  "line": 164,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_NVIC_SetPriority"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c",
+                  "line": 186,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_NVIC_EnableIRQ"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c",
+                  "line": 202,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_NVIC_DisableIRQ"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c",
+                  "line": 411,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_NVIC_SetPendingIRQ"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c",
+                  "line": 445,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_NVIC_ClearPendingIRQ"
+            }
+          ],
+          "truth_symbols": 5
+        },
+        {
+          "candidate_pool": 3661,
+          "capability": "uart",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+                  "line": 354,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_UART_Init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+                  "line": 672,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_UART_DeInit"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+                  "line": 1138,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_UART_Transmit"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+                  "line": 1224,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_UART_Receive"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+                  "line": 1311,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_UART_Transmit_IT"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+                  "line": 1350,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_UART_Receive_IT"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+                  "line": 2358,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_UART_IRQHandler"
+            }
+          ],
+          "truth_symbols": 7
+        },
+        {
+          "candidate_pool": 5732,
+          "capability": "gpio",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c",
+                  "line": 178,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_GPIO_Init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c",
+                  "line": 351,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_GPIO_DeInit"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c",
+                  "line": 431,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_GPIO_ReadPin"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c",
+                  "line": 465,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_GPIO_WritePin"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c",
+                  "line": 487,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_GPIO_TogglePin"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c",
+                  "line": 546,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_GPIO_EXTI_IRQHandler"
+            }
+          ],
+          "truth_symbols": 6
+        },
+        {
+          "candidate_pool": 5400,
+          "capability": "timer",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+                  "line": 266,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_TIM_Base_Init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+                  "line": 400,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_TIM_Base_Start"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+                  "line": 439,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_TIM_Base_Stop"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+                  "line": 459,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_TIM_Base_Start_IT"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+                  "line": 501,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_TIM_Base_Stop_IT"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+                  "line": 3822,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "HAL_TIM_IRQHandler"
+            }
+          ],
+          "truth_symbols": 6
+        }
+      ],
+      "functions": 15250,
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/ir/stm32cube-f1/0870692ef7f56a48/sdk-ir.json",
+      "sdk_digest": "0870692ef7f56a48",
+      "sdk_id": "stm32cube-f1"
+    },
+    {
+      "capabilities": [
+        {
+          "candidate_pool": 7403,
+          "capability": "clock",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+                  "line": 243,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_clock_get_hf_clock_freq"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+                  "line": 76,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_clock_get_peri_clock_freq"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+                  "line": 265,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_clock_set_hf_clock_enabled"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+                  "line": 252,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_clock_set_hf_clock_freq"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+                  "line": 184,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_clock_set_peri_clock_enabled"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+                  "line": 99,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_clock_set_peri_clock_freq"
+            }
+          ],
+          "truth_symbols": 6
+        },
+        {
+          "candidate_pool": 7077,
+          "capability": "interrupt",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_sysint_v2.c",
+                  "line": 80,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "Cy_SysInt_Init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_sysint_v2.c",
+                  "line": 105,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "Cy_SysInt_SetVector"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_sysint_v2.c",
+                  "line": 127,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "Cy_SysInt_GetVector"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_sysint_v2.c",
+                  "line": 146,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "Cy_SysInt_SoftwareTrig"
+            }
+          ],
+          "truth_symbols": 4
+        },
+        {
+          "candidate_pool": 3112,
+          "capability": "uart",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c",
+                  "line": 531,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_uart_setup"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c",
+                  "line": 570,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_uart_set_baud"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c",
+                  "line": 749,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_uart_read"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c",
+                  "line": 724,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_uart_write"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c",
+                  "line": 809,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_uart_register_callback"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c",
+                  "line": 824,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_uart_enable_event"
+            }
+          ],
+          "truth_symbols": 6
+        },
+        {
+          "candidate_pool": 7843,
+          "capability": "gpio",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_gpio.c",
+                  "line": 132,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_gpio_setup"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_gpio.c",
+                  "line": 146,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_gpio_configure"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+                  "line": 77,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_gpio_read_internal"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+                  "line": 66,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_gpio_write_internal"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+                  "line": 88,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_gpio_toggle_internal"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_gpio.c",
+                  "line": 157,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_gpio_register_callback"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_gpio.c",
+                  "line": 170,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_gpio_enable_event"
+            }
+          ],
+          "truth_symbols": 7
+        },
+        {
+          "candidate_pool": 4522,
+          "capability": "timer",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c",
+                  "line": 51,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_timer_setup"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c",
+                  "line": 89,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_timer_start"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c",
+                  "line": 114,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_timer_stop"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c",
+                  "line": 152,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_timer_read"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c",
+                  "line": 133,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_timer_reset"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c",
+                  "line": 169,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_timer_register_callback"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c",
+                  "line": 186,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "mtb_hal_timer_enable_event"
+            }
+          ],
+          "truth_symbols": 7
+        }
+      ],
+      "functions": 17423,
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/ir/psoc-e84-edgi-talk-sdk/b82c1945e240f276/sdk-ir.json",
+      "sdk_digest": "b82c1945e240f276",
+      "sdk_id": "psoc-e84-edgi-talk-sdk"
+    },
+    {
+      "capabilities": [
+        {
+          "candidate_pool": 1294,
+          "capability": "clock",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_clocks/clocks.c",
+                  "line": 98,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "clock_configure"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_clocks/clocks.c",
+                  "line": 137,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "clock_get_hz"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_clocks/clocks.c",
+                  "line": 142,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "clock_set_reported_hz"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_clocks/clocks.c",
+                  "line": 33,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "clock_stop"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "src/host/pico_stdlib/stdlib.c",
+                  "line": 13,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "src/rp2_common/hardware_clocks/clocks.c",
+                  "line": 333,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "set_sys_clock_48mhz"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "src/host/pico_stdlib/stdlib.c",
+                  "line": 24,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "src/rp2_common/hardware_clocks/clocks.c",
+                  "line": 367,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "set_sys_clock_pll"
+            }
+          ],
+          "truth_symbols": 6
+        },
+        {
+          "candidate_pool": 1492,
+          "capability": "interrupt",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_irq/irq.c",
+                  "line": 60,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "irq_set_enabled"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_irq/irq.c",
+                  "line": 231,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "irq_set_exclusive_handler"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_irq/irq.c",
+                  "line": 369,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "irq_add_shared_handler"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_irq/irq.c",
+                  "line": 485,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "irq_remove_handler"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_irq/irq.c",
+                  "line": 604,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "irq_set_priority"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_irq/irq.c",
+                  "line": 116,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "irq_set_pending"
+            }
+          ],
+          "truth_symbols": 6
+        },
+        {
+          "candidate_pool": 573,
+          "capability": "uart",
+          "symbols": [
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "src/host/hardware_uart/uart.c",
+                  "line": 75,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "src/rp2_common/hardware_uart/uart.c",
+                  "line": 42,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_uart/uart.c",
+                  "line": 95,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_deinit"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_uart/uart.c",
+                  "line": 155,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_set_baudrate"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "src/host/hardware_uart/uart.c",
+                  "line": 91,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "src/rp2_common/hardware_uart/include/hardware/uart.h",
+                  "line": 459,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_write_blocking"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "src/host/hardware_uart/uart.c",
+                  "line": 98,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "src/rp2_common/hardware_uart/include/hardware/uart.h",
+                  "line": 476,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_read_blocking"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "src/host/hardware_uart/uart.c",
+                  "line": 86,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "src/rp2_common/hardware_uart/include/hardware/uart.h",
+                  "line": 442,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_is_readable"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "src/host/hardware_uart/uart.c",
+                  "line": 111,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "src/rp2_common/hardware_uart/include/hardware/uart.h",
+                  "line": 495,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_putc_raw"
+            }
+          ],
+          "truth_symbols": 7
+        },
+        {
+          "candidate_pool": 1753,
+          "capability": "gpio",
+          "symbols": [
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "src/host/hardware_gpio/gpio.c",
+                  "line": 79,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "src/rp2_common/hardware_gpio/gpio.c",
+                  "line": 273,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_gpio/gpio.c",
+                  "line": 279,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_deinit"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "src/host/hardware_gpio/gpio.c",
+                  "line": 133,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "src/rp2_common/hardware_gpio/include/hardware/gpio.h",
+                  "line": 1350,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_set_dir"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "src/host/hardware_gpio/gpio.c",
+                  "line": 113,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "src/rp2_common/hardware_gpio/include/hardware/gpio.h",
+                  "line": 1155,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_put"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "src/host/hardware_gpio/gpio.c",
+                  "line": 89,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "src/rp2_common/hardware_gpio/include/hardware/gpio.h",
+                  "line": 886,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_get_all"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "src/host/hardware_gpio/gpio.c",
+                  "line": 71,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "src/rp2_common/hardware_gpio/gpio.c",
+                  "line": 186,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_set_irq_enabled"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_gpio/gpio.c",
+                  "line": 198,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_set_irq_enabled_with_callback"
+            }
+          ],
+          "truth_symbols": 7
+        },
+        {
+          "candidate_pool": 850,
+          "capability": "timer",
+          "symbols": [
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "src/host/hardware_timer/timer.c",
+                  "line": 90,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "src/rp2_common/hardware_timer/timer.c",
+                  "line": 26,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "hardware_alarm_claim"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_timer/timer.c",
+                  "line": 266,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "hardware_alarm_set_target"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_timer/timer.c",
+                  "line": 212,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "hardware_alarm_set_callback"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_timer/timer.c",
+                  "line": 280,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "hardware_alarm_cancel"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/common/pico_time/time.c",
+                  "line": 511,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "cancel_repeating_timer"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "src/rp2_common/hardware_timer/timer.c",
+                  "line": 125,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "time_us_64"
+            }
+          ],
+          "truth_symbols": 6
+        }
+      ],
+      "functions": 3281,
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/ir/raspberry-pi-pico-sdk-2.2.0/45190cbaae605e04/sdk-ir.json",
+      "sdk_digest": "45190cbaae605e04",
+      "sdk_id": "raspberry-pi-pico-sdk-2.2.0"
+    },
+    {
+      "capabilities": [
+        {
+          "candidate_pool": 3760,
+          "capability": "clock",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_clock.c",
+                  "line": 103,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_clock_init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_clock.c",
+                  "line": 228,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_clock_uninit"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_clock.c",
+                  "line": 259,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_clock_start"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_clock.c",
+                  "line": 297,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_clock_stop"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_clock.c",
+                  "line": 175,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_clock_enable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_clock.c",
+                  "line": 188,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_clock_disable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_clock.c",
+                  "line": 362,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_clock_divider_set"
+            }
+          ],
+          "truth_symbols": 7
+        },
+        {
+          "candidate_pool": 855,
+          "capability": "uart",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_uarte.c",
+                  "line": 393,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_uarte_init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_uarte.c",
+                  "line": 535,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_uarte_uninit"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_uarte.c",
+                  "line": 503,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_uarte_reconfigure"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_uarte.c",
+                  "line": 819,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_uarte_tx"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_uarte.c",
+                  "line": 1228,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_uarte_rx_enable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_uarte.c",
+                  "line": 1587,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_uarte_rx_abort"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_uarte.c",
+                  "line": 1966,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_uarte_irq_handler"
+            }
+          ],
+          "truth_symbols": 7
+        },
+        {
+          "candidate_pool": 3586,
+          "capability": "gpio",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_gpiote.c",
+                  "line": 1158,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_gpiote_init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_gpiote.c",
+                  "line": 1172,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_gpiote_uninit"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_gpiote.c",
+                  "line": 1114,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_gpiote_input_configure"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_gpiote.c",
+                  "line": 1123,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_gpiote_output_configure"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_gpiote.c",
+                  "line": 1206,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_gpiote_out_set"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_gpiote.c",
+                  "line": 1211,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_gpiote_out_clear"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_gpiote.c",
+                  "line": 1316,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_gpiote_trigger_enable"
+            }
+          ],
+          "truth_symbols": 7
+        },
+        {
+          "candidate_pool": 1644,
+          "capability": "timer",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_timer.c",
+                  "line": 88,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_timer_init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_timer.c",
+                  "line": 153,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_timer_uninit"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_timer.c",
+                  "line": 175,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_timer_enable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_timer.c",
+                  "line": 184,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_timer_disable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_timer.c",
+                  "line": 263,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_timer_compare"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_timer.c",
+                  "line": 236,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_timer_capture"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/src/nrfx_timer.c",
+                  "line": 328,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "nrfx_timer_irq_handler"
+            }
+          ],
+          "truth_symbols": 7
+        }
+      ],
+      "functions": 6029,
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/ir/nordic-nrfx-4.2.1/949bec96d89711ef/sdk-ir.json",
+      "sdk_digest": "949bec96d89711ef",
+      "sdk_id": "nordic-nrfx-4.2.1"
+    },
+    {
+      "capabilities": [
+        {
+          "candidate_pool": 32053,
+          "capability": "clock",
+          "symbols": [
+            {
+              "definition_count": 13,
+              "evidence": [
+                {
+                  "file": "components/esp_system/fpga_overrides_clk.c",
+                  "line": 67,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "components/esp_system/port/soc/esp32/clk.c",
+                  "line": 122,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "components/esp_system/port/soc/esp32c2/clk.c",
+                  "line": 77,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "components/esp_system/port/soc/esp32c3/clk.c",
+                  "line": 75,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "components/esp_system/port/soc/esp32c5/clk.c",
+                  "line": 59,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "esp_clk_init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_hw_support/esp_clk.c",
+                  "line": 81,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "esp_clk_cpu_freq"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "components/bootloader_support/src/bootloader_clock_loader.c",
+                  "line": 11,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "components/esp_hw_support/esp_clk.c",
+                  "line": 86,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "esp_clk_apb_freq"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_hw_support/esp_clk.c",
+                  "line": 97,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "esp_clk_xtal_freq"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_hw_support/esp_clk.c",
+                  "line": 200,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "esp_clk_slowclk_cal_get"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_hw_support/esp_clk.c",
+                  "line": 158,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "esp_clk_slowclk_cal_set"
+            }
+          ],
+          "truth_symbols": 6
+        },
+        {
+          "candidate_pool": 32923,
+          "capability": "interrupt",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_hw_support/intr_alloc.c",
+                  "line": 722,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "esp_intr_alloc"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_hw_support/intr_alloc.c",
+                  "line": 715,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "esp_intr_alloc_intrstatus"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_hw_support/intr_alloc.c",
+                  "line": 889,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "esp_intr_enable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_hw_support/intr_alloc.c",
+                  "line": 917,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "esp_intr_disable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_hw_support/intr_alloc.c",
+                  "line": 768,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "esp_intr_free"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_hw_support/intr_alloc.c",
+                  "line": 862,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "esp_intr_get_intno"
+            }
+          ],
+          "truth_symbols": 6
+        },
+        {
+          "candidate_pool": 10463,
+          "capability": "uart",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_uart/src/uart.c",
+                  "line": 1997,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_driver_install"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_uart/src/uart.c",
+                  "line": 2115,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_driver_delete"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_uart/src/uart.c",
+                  "line": 1056,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_param_config"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_uart/src/uart.c",
+                  "line": 376,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_set_baudrate"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_uart/src/uart.c",
+                  "line": 1691,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_write_bytes"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_uart/src/uart.c",
+                  "line": 1727,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_read_bytes"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_uart/src/uart.c",
+                  "line": 680,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "uart_enable_rx_intr"
+            }
+          ],
+          "truth_symbols": 7
+        },
+        {
+          "candidate_pool": 30097,
+          "capability": "gpio",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gpio/src/gpio.c",
+                  "line": 350,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_config"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gpio/src/gpio.c",
+                  "line": 468,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_reset_pin"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gpio/src/gpio.c",
+                  "line": 318,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_set_direction"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gpio/src/gpio.c",
+                  "line": 248,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_set_level"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gpio/src/gpio.c",
+                  "line": 255,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_get_level"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gpio/src/gpio.c",
+                  "line": 565,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_isr_handler_add"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gpio/src/gpio.c",
+                  "line": 580,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gpio_isr_handler_remove"
+            }
+          ],
+          "truth_symbols": 7
+        },
+        {
+          "candidate_pool": 22831,
+          "capability": "timer",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gptimer/src/gptimer.c",
+                  "line": 129,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gptimer_new_timer"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gptimer/src/gptimer.c",
+                  "line": 193,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gptimer_del_timer"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gptimer/src/gptimer.c",
+                  "line": 348,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gptimer_enable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gptimer/src/gptimer.c",
+                  "line": 371,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gptimer_disable"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gptimer/src/gptimer.c",
+                  "line": 394,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gptimer_start"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gptimer/src/gptimer.c",
+                  "line": 424,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gptimer_stop"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gptimer/src/gptimer.c",
+                  "line": 235,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gptimer_get_raw_count"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "components/esp_driver_gptimer/src/gptimer.c",
+                  "line": 266,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "gptimer_register_event_callbacks"
+            }
+          ],
+          "truth_symbols": 8
+        }
+      ],
+      "functions": 58127,
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/ir/espressif-esp-idf-6.0.1/1dd6c028f56a4ef5/sdk-ir.json",
+      "sdk_digest": "1dd6c028f56a4ef5",
+      "sdk_id": "espressif-esp-idf-6.0.1"
+    },
+    {
+      "capabilities": [
+        {
+          "candidate_pool": 39129,
+          "capability": "clock",
+          "symbols": [
+            {
+              "definition_count": 15,
+              "evidence": [
+                {
+                  "file": "devices/MIMX8DX1/drivers/fsl_clock.c",
+                  "line": 40,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/MIMX8DX2/drivers/fsl_clock.c",
+                  "line": 40,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/MIMX8DX3/drivers/fsl_clock.c",
+                  "line": 40,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/MIMX8DX4/drivers/fsl_clock.c",
+                  "line": 40,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/MIMX8DX5/drivers/fsl_clock.c",
+                  "line": 40,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "CLOCK_Init"
+            },
+            {
+              "definition_count": 231,
+              "evidence": [
+                {
+                  "file": "devices/K32L2A31A/drivers/fsl_clock.h",
+                  "line": 643,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/K32L2A41A/drivers/fsl_clock.h",
+                  "line": 643,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/K32L2B11A/drivers/fsl_clock.h",
+                  "line": 438,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/K32L2B21A/drivers/fsl_clock.h",
+                  "line": 438,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/K32L2B31A/drivers/fsl_clock.h",
+                  "line": 438,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "CLOCK_EnableClock"
+            },
+            {
+              "definition_count": 231,
+              "evidence": [
+                {
+                  "file": "devices/K32L2A31A/drivers/fsl_clock.h",
+                  "line": 655,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/K32L2A41A/drivers/fsl_clock.h",
+                  "line": 655,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/K32L2B11A/drivers/fsl_clock.h",
+                  "line": 449,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/K32L2B21A/drivers/fsl_clock.h",
+                  "line": 449,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/K32L2B31A/drivers/fsl_clock.h",
+                  "line": 449,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "CLOCK_DisableClock"
+            },
+            {
+              "definition_count": 221,
+              "evidence": [
+                {
+                  "file": "devices/K32L2A31A/drivers/fsl_clock.c",
+                  "line": 184,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/K32L2A41A/drivers/fsl_clock.c",
+                  "line": 184,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/K32L2B11A/drivers/fsl_clock.c",
+                  "line": 225,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/K32L2B21A/drivers/fsl_clock.c",
+                  "line": 225,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/K32L2B31A/drivers/fsl_clock.c",
+                  "line": 225,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "CLOCK_GetFreq"
+            },
+            {
+              "definition_count": 12,
+              "evidence": [
+                {
+                  "file": "devices/MCXA132/drivers/fsl_clock.c",
+                  "line": 149,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/MCXA133/drivers/fsl_clock.c",
+                  "line": 149,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/MCXA142/drivers/fsl_clock.c",
+                  "line": 149,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/MCXA143/drivers/fsl_clock.c",
+                  "line": 149,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/MCXA144/drivers/fsl_clock.c",
+                  "line": 149,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "CLOCK_SetClockDiv"
+            },
+            {
+              "definition_count": 12,
+              "evidence": [
+                {
+                  "file": "devices/MCXA132/drivers/fsl_clock.c",
+                  "line": 174,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/MCXA133/drivers/fsl_clock.c",
+                  "line": 174,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/MCXA142/drivers/fsl_clock.c",
+                  "line": 174,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/MCXA143/drivers/fsl_clock.c",
+                  "line": 174,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "devices/MCXA144/drivers/fsl_clock.c",
+                  "line": 174,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "CLOCK_GetClockDiv"
+            }
+          ],
+          "truth_symbols": 6
+        },
+        {
+          "candidate_pool": 67867,
+          "capability": "interrupt",
+          "symbols": [
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "drivers/common/fsl_common_arm.h",
+                  "line": 586,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/common/fsl_common_dsp.h",
+                  "line": 125,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "EnableIRQ"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "drivers/common/fsl_common_arm.h",
+                  "line": 630,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/common/fsl_common_dsp.h",
+                  "line": 138,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "DisableIRQ"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/common/fsl_common_arm.h",
+                  "line": 675,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "EnableIRQWithPriority"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "drivers/common/fsl_common_arm.h",
+                  "line": 830,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/common/fsl_common_dsp.h",
+                  "line": 162,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "EnableGlobalIRQ"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "drivers/common/fsl_common_arm.h",
+                  "line": 804,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/common/fsl_common_dsp.h",
+                  "line": 150,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "DisableGlobalIRQ"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/common/fsl_common_arm.h",
+                  "line": 768,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "IRQ_ClearPendingIRQ"
+            }
+          ],
+          "truth_symbols": 6
+        },
+        {
+          "candidate_pool": 57723,
+          "capability": "uart",
+          "symbols": [
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "drivers/iuart/fsl_uart.c",
+                  "line": 191,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/uart/fsl_uart.c",
+                  "line": 213,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "UART_Init"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "drivers/iuart/fsl_uart.c",
+                  "line": 272,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/uart/fsl_uart.c",
+                  "line": 358,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "UART_Deinit"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "drivers/iuart/fsl_uart.c",
+                  "line": 352,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/uart/fsl_uart.c",
+                  "line": 437,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "UART_SetBaudRate"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "drivers/iuart/fsl_uart.c",
+                  "line": 681,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/uart/fsl_uart.c",
+                  "line": 756,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "UART_WriteBlocking"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "drivers/iuart/fsl_uart.c",
+                  "line": 740,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/uart/fsl_uart.c",
+                  "line": 828,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "UART_ReadBlocking"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "drivers/iuart/fsl_uart.c",
+                  "line": 474,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/uart/fsl_uart.c",
+                  "line": 566,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "UART_EnableInterrupts"
+            },
+            {
+              "definition_count": 2,
+              "evidence": [
+                {
+                  "file": "drivers/iuart/fsl_uart.c",
+                  "line": 531,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/uart/fsl_uart.c",
+                  "line": 594,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "UART_DisableInterrupts"
+            }
+          ],
+          "truth_symbols": 7
+        },
+        {
+          "candidate_pool": 71666,
+          "capability": "gpio",
+          "symbols": [
+            {
+              "definition_count": 4,
+              "evidence": [
+                {
+                  "file": "drivers/gpio/fsl_gpio.c",
+                  "line": 117,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/gpio_1/fsl_gpio.c",
+                  "line": 79,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/igpio/fsl_gpio.c",
+                  "line": 75,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/lpc_gpio/fsl_gpio.c",
+                  "line": 97,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "GPIO_PinInit"
+            },
+            {
+              "definition_count": 4,
+              "evidence": [
+                {
+                  "file": "drivers/gpio/fsl_gpio.h",
+                  "line": 329,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/gpio_1/fsl_gpio.c",
+                  "line": 113,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/igpio/fsl_gpio.c",
+                  "line": 115,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/lpc_gpio/fsl_gpio.h",
+                  "line": 153,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "GPIO_PinWrite"
+            },
+            {
+              "definition_count": 4,
+              "evidence": [
+                {
+                  "file": "drivers/gpio/fsl_gpio.h",
+                  "line": 411,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/gpio_1/fsl_gpio.c",
+                  "line": 199,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/igpio/fsl_gpio.h",
+                  "line": 176,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/lpc_gpio/fsl_gpio.h",
+                  "line": 172,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "GPIO_PinRead"
+            },
+            {
+              "definition_count": 4,
+              "evidence": [
+                {
+                  "file": "drivers/gpio/fsl_gpio.h",
+                  "line": 358,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/gpio_1/fsl_gpio.c",
+                  "line": 139,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/igpio/fsl_gpio.h",
+                  "line": 112,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/lpc_gpio/fsl_gpio.h",
+                  "line": 186,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "GPIO_PortSet"
+            },
+            {
+              "definition_count": 4,
+              "evidence": [
+                {
+                  "file": "drivers/gpio/fsl_gpio.h",
+                  "line": 373,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/gpio_1/fsl_gpio.c",
+                  "line": 158,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/igpio/fsl_gpio.h",
+                  "line": 136,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/lpc_gpio/fsl_gpio.h",
+                  "line": 198,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "GPIO_PortClear"
+            },
+            {
+              "definition_count": 4,
+              "evidence": [
+                {
+                  "file": "drivers/gpio/fsl_gpio.h",
+                  "line": 388,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/gpio_1/fsl_gpio.c",
+                  "line": 177,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/igpio/fsl_gpio.h",
+                  "line": 160,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                },
+                {
+                  "file": "drivers/lpc_gpio/fsl_gpio.h",
+                  "line": 210,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "GPIO_PortToggle"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/igpio/fsl_gpio.c",
+                  "line": 144,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "GPIO_PinSetInterruptConfig"
+            }
+          ],
+          "truth_symbols": 7
+        },
+        {
+          "candidate_pool": 55088,
+          "capability": "timer",
+          "symbols": [
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/ctimer/fsl_ctimer.c",
+                  "line": 98,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "CTIMER_Init"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/ctimer/fsl_ctimer.c",
+                  "line": 127,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "CTIMER_Deinit"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/ctimer/fsl_ctimer.c",
+                  "line": 380,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "CTIMER_SetupMatch"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/ctimer/fsl_ctimer.c",
+                  "line": 480,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "CTIMER_RegisterCallBack"
+            },
+            {
+              "definition_count": 1,
+              "evidence": [
+                {
+                  "file": "drivers/ctimer/fsl_ctimer.c",
+                  "line": 492,
+                  "parser": "tree-sitter",
+                  "parser_confidence": 0.9
+                }
+              ],
+              "retrievable": true,
+              "symbol": "CTIMER_GenericIRQHandler"
+            }
+          ],
+          "truth_symbols": 5
+        }
+      ],
+      "functions": 96320,
+      "ir_path": "/home/whk/RTT-porting/bspforge/workspace/ir/nxp-mcuxpresso-sdk-2.16.100/361ac5e7d005d5d4/sdk-ir.json",
+      "sdk_digest": "361ac5e7d005d5d4",
+      "sdk_id": "nxp-mcuxpresso-sdk-2.16.100"
+    }
+  ],
+  "summary": {
+    "missing_symbols": 0,
+    "passed": true,
+    "sdks": 7,
+    "truth_symbols": 209,
+    "unretrievable_symbols": 0
+  }
+}

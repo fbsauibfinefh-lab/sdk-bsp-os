@@ -51,6 +51,11 @@ SDK_PROFILES: dict[str, dict[str, Any]] = {
             "timer": ["Cy_TCPWM_Counter_Init", "Cy_TCPWM_TriggerStart", "Cy_TCPWM_TriggerStop"],
         },
     },
+    "native_sim": {
+        "architecture": "x86_64",
+        "machine": "Advanced Micro Devices X86-64",
+        "capabilities": {},
+    },
 }
 
 

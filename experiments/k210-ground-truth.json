@@ -1,7 +1,19 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "2.0",
   "id": "k210-sdk-0.5.6-rtthread-device-contract-v1",
   "description": "K210 SDK 0.5.6 到 RT-Thread 设备契约的人工核验真值集",
+  "sdk": {
+    "id": "kendryte-k210-standalone-sdk-0.5.6",
+    "vendor": "Kendryte",
+    "version": "0.5.6",
+    "revision": "02576ba67e8797444f3ee3f34c625b5ed048e707",
+    "source_url": "https://github.com/kendryte/kendryte-standalone-sdk"
+  },
+  "annotation": {
+    "status": "single-curator-source-audited",
+    "selection_policy": "覆盖初始化、配置、数据、控制与中断路径的最小迁移契约；仅收录 SDK 中可定位的函数实体",
+    "second_reviewer_required_for_publication": true
+  },
   "capabilities": {
     "clock": {
       "semantic_symbols": ["sysctl_clock_enable", "sysctl_clock_disable", "sysctl_clock_get_freq"],

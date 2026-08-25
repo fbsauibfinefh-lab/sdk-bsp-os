@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import tempfile
 import unittest
+import sys
 from pathlib import Path
 
 from bspforge.build_diagnoser import BuildDiagnoser
@@ -10,14 +11,17 @@ from bspforge.closure_solver import ClosureSolver
 from bspforge.common import write_json
 from bspforge.evaluation import ExperimentEvaluator
 from bspforge.ir_store import IRStore
-from bspforge.hardware_test.host import HardwareTestRunner
+from bspforge.hardware_test.host import HardwareTestRunner, ProcessTransport
 from bspforge.os_backend import RTThreadBackend, ZephyrBackend
 from bspforge.os_backend.artifact_verifier import FirmwareArtifactVerifier
 from bspforge.os_backend.native_binding import NativeDriverBindingTracer
 from bspforge.os_backend.rtthread_device import RTThreadDeviceModelGenerator
 from bspforge.os_backend.rtthread_validation import RTThreadValidationGenerator
 from bspforge.sdk_ingestor import SDKIngestor
+from bspforge.ranking_dataset import audit_ground_truth, build_ranking_dataset
 from bspforge.semantic_resolver import SemanticResolver
+from bspforge.semantic_resolver.learning import FEATURE_NAMES
+from scripts.evaluate_ranker_cv import bm25_scores, ranking_metrics
 
 
 class ModuleTests(unittest.TestCase):
@@ -77,9 +81,83 @@ class ModuleTests(unittest.TestCase):
         hybrid = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "hybrid-sdk")
         regex = SDKIngestor(frontend_mode="regex").ingest(self.sdk, "regex-sdk")
         self.assertEqual(hybrid["frontend"]["mode"], "hybrid")
-        self.assertEqual(regex["frontend"]["selected_counts"], {"regex": 3})
+        self.assertGreaterEqual(regex["frontend"]["selected_counts"]["regex"], 3)
         self.assertGreaterEqual(hybrid["stats"]["functions"], regex["stats"]["functions"])
         self.assertTrue(all("parser" in item for item in hybrid["functions"]))
+
+    def test_header_inline_functions_are_ingested(self) -> None:
+        (self.sdk / "lib" / "drivers" / "include" / "irq.h").write_text(
+            "static inline void irq_enable(int irq) { (void)irq; }\n",
+            encoding="utf-8",
+        )
+        ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "header-sdk")
+        entity = next(item for item in ir["functions"] if item["name"] == "irq_enable")
+        self.assertEqual(entity["file"], "lib/drivers/include/irq.h")
+        self.assertEqual(entity["parser"], "tree-sitter")
+
+    def test_ground_truth_audit_and_dataset_are_sdk_grouped(self) -> None:
+        ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "fixture-sdk")
+        truth = {
+            "sdk": {"id": "fixture-sdk"},
+            "capabilities": {
+                "uart": {"semantic_symbols": ["uart_init"]},
+                "gpio": {"semantic_symbols": ["gpio_set_drive_mode"]},
+            },
+        }
+        inputs = [(ir, truth, self.root / "sdk-ir.json")]
+        audit = audit_ground_truth(inputs)
+        self.assertTrue(audit["summary"]["passed"])
+        dataset = build_ranking_dataset(
+            inputs, hard_negatives=4, random_negatives=2, positive_instances=1
+        )
+        self.assertEqual(dataset["summary"]["sdks"], 1)
+        self.assertEqual(dataset["summary"]["groups"], 2)
+        self.assertTrue(all(item["sdk_id"] == "fixture-sdk" for item in dataset["groups"]))
+        candidate = dataset["groups"][0]["candidates"][0]
+        self.assertEqual(set(candidate["features"]), set(FEATURE_NAMES))
+
+    def test_bm25_lexical_baseline_prefers_matching_sdk_api(self) -> None:
+        group = {
+            "capability": "uart",
+            "candidates": [
+                {"entity_id": "1", "symbol": "uart_send", "file": "drivers/uart.c", "label": 1},
+                {"entity_id": "2", "symbol": "clock_setup", "file": "system/clock.c", "label": 0},
+            ],
+        }
+        scores = bm25_scores(group)
+        self.assertGreater(scores[0], scores[1])
+        self.assertEqual(ranking_metrics(group["candidates"], scores)["precision_at_1"], 1.0)
+
+    def test_process_transport_reuses_hardware_protocol(self) -> None:
+        simulator = self.root / "simulator.py"
+        simulator.write_text(
+            "import json, sys\n"
+            "print(json.dumps({'bspforge': True, 'protocol': '1.0', 'event': 'boot'}), flush=True)\n"
+            "for line in sys.stdin:\n"
+            "    parts = line.strip().split()\n"
+            "    if len(parts) == 3:\n"
+            "        print(json.dumps({'bspforge': True, 'protocol': '1.0', 'event': 'result', "
+            "'request_id': parts[1], 'command': parts[2], 'status': 'pass'}), flush=True)\n",
+            encoding="utf-8",
+        )
+        transport = ProcessTransport([sys.executable, "-u", str(simulator)], timeout=1.0)
+        try:
+            report = HardwareTestRunner(transport, "sim", "zephyr", timeout=1.0).run(
+                rounds=2, commands=["info"]
+            )
+        finally:
+            transport.close()
+        self.assertEqual(report["summary"]["boot_success_rate"], 1.0)
+        self.assertEqual(report["summary"]["command_pass_rate"], 1.0)
+
+    def test_hybrid_frontend_handles_deep_syntax_trees(self) -> None:
+        nested = "(" * 1200 + "1" + ")" * 1200
+        (self.sdk / "lib" / "drivers" / "deep.c").write_text(
+            f"int deeply_nested(void) {{ return {nested}; }}\n",
+            encoding="utf-8",
+        )
+        ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "deep-sdk")
+        self.assertTrue(any(item["name"] == "deeply_nested" for item in ir["functions"]))
 
     def test_binding_planner_maps_operations_without_profile_symbols(self) -> None:
         ir = SDKIngestor().ingest(self.sdk, "fixture-sdk")

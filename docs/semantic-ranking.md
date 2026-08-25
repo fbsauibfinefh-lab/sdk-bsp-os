@@ -1,29 +1,58 @@
-# 语义排序实验
+# 跨 SDK 语义排序实验
 
-## 两种方法
+## 实验问题
 
-`resolver.method=weighted` 是七类证据的固定权重基线；`resolver.method=learned` 使用 LightGBM LambdaRank。二者消费同一 IR、能力模式、阈值和 Top-K，差别只在候选排序分数，因此可以隔离排序方法对后续绑定与闭包的影响。
+语义实验回答三个问题：结构化证据是否优于普通词法检索，学习排序能否泛化到未见 SDK，以及学习分数与固定证据融合后是否更加稳定。四类方法消费相同的候选池：
 
-## 数据划分
+- `bm25-lexical`：只使用函数名和源码路径的标准 BM25 词法检索基线。
+- `weighted`：七类静态证据的固定权重基线。
+- `learned`：LightGBM LambdaRank 纯学习排序。
+- `hybrid`：固定权重分数与归一化学习分数融合，默认固定证据权重为 0.75。
 
-训练样本按“SDK + 能力”组成排序组，标签表示候选与目标操作的相关程度。不得把同一 SDK 的函数随机拆分到训练和测试；正式实验采用 leave-one-SDK-out，每轮用其余 SDK 训练，在完全未见的 SDK 上测试。
+纯学习结果必须保留。当前数据上纯学习总体弱于固定权重，而融合方法改善多数集合排序指标；这说明学习模型适合作为重排序项，不能替代可审计的静态证据。
 
-训练数据至少包含两个 SDK：
+## 数据规模
+
+语料包含 Kendryte K210、STM32CubeF1、PSoC E84、Raspberry Pi Pico SDK、Nordic nrfx、ESP-IDF 和 NXP MCUXpresso，共 7 个独立 SDK、35,837 个文件和 198,594 个函数实体。nrfx 的通用中断由平台宏提供，因此该能力标为不适用，最终得到 34 个 SDK-能力查询组。
+
+真值集选择覆盖初始化、配置、数据读写、启停和中断路径的最小迁移契约。当前为单人源码审计版本，每个符号都由脚本重新核验定义位置、行号、解析前端和候选可检索性。投稿前仍应由第二位熟悉嵌入式软件的人员独立标注，并报告 Cohen's kappa 和裁决规则。
+
+训练数据包含 4,340 个候选实体，其中 260 个为正例实体。同一 API 在多芯片目录中的重复实现最多保留 3 个用于训练；测试指标按唯一 API 符号去重，避免重复实现虚增或压低结果。
+
+## 防止数据泄漏
+
+正式协议采用 leave-one-SDK-out。每轮完整留出一个 SDK，其函数、路径和同名实现均不得进入训练。融合权重使用嵌套 SDK 留一验证选择：外层测试 SDK 不参与模型训练，也不参与融合权重选择。
+
+固定 0.25、0.50、0.75 的结果只作为敏感性分析。论文主表应使用 `hybrid-nested`，不能把测试集上表现最好的固定权重当成预先指定结果。
+
+## 当前结果
+
+| 方法 | P@1 | Recall@5 | Recall@10 | MRR | MAP | nDCG@10 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| BM25 lexical | 0.1471 | 0.1593 | 0.2847 | 0.3284 | 0.2406 | 0.2377 |
+| weighted | 0.2059 | 0.1655 | 0.3224 | 0.3215 | 0.2517 | 0.2649 |
+| learned | 0.1471 | 0.1162 | 0.2607 | 0.2613 | 0.2099 | 0.2045 |
+| hybrid-nested | 0.1765 | 0.2004 | 0.3559 | 0.3130 | 0.2754 | 0.2896 |
+| hybrid，固定 0.75 | 0.2353 | 0.2235 | 0.3986 | 0.3835 | 0.3053 | 0.3367 |
+
+固定多证据和嵌套融合的 MAP 分别比 BM25 高 0.0111 和 0.0348；嵌套融合还在 Recall@5、Recall@10 和 nDCG@10 上取得最高主协议结果。嵌套融合相对固定权重的 MAP 平均增加 0.0237，但 95% Bootstrap 区间跨越 0，配对置换检验也未达到显著水平。当前只能主张“结构化证据总体优于词法基线，融合在集合指标上呈正向趋势”，不能主张统计显著优越。扩大独立 SDK 数量、增加操作级查询和完成双人标注后应重新计算。
+
+## 可复现命令
 
 ```bash
-conda run -n AIoT-v1.0 python scripts/train_ranker.py \
-  --dataset experiments/ranker-training.json \
-  --output workspace/models/semantic-ranker.txt
+./scripts/bootstrap_evaluation_sdks.sh
+conda run -n AIoT-v1.0 python -m pip install -e '.[learning]'
+./scripts/run_semantic_experiment.sh
 ```
 
-在独立测试 SDK 上对照：
+各阶段产物如下：
 
-```bash
-conda run -n AIoT-v1.0 python scripts/compare_resolvers.py \
-  --ir workspace/runs/<run-id>/01-sdk-ir.json \
-  --ground-truth experiments/<sdk>-ground-truth.json \
-  --model workspace/models/semantic-ranker.txt \
-  --output workspace/runs/<run-id>/resolver-comparison.json
-```
+- `experiments/generated/corpus-ingest-report.json`：SDK 规模、前端分布和耗时。
+- `experiments/generated/ground-truth-audit.json`：逐符号定义和证据位置。
+- `experiments/generated/semantic-ranking-dataset.json`：可发布训练候选。
+- `experiments/generated/semantic-ranking-cv.json`：外层折、内层权重选择、消融、置信区间和显著性。
+- `models/semantic-ranker.txt`：全部训练数据上的最终模型及元数据。
 
-至少报告 Precision、Recall、F1、Recall@K、MRR、解析耗时、闭包规模和规范化操作绑定覆盖。当前仓库提供训练和对照实现，但只有 K210 完整真值，尚不能给出可信的学习排序优越性结论。
+## 报告口径
+
+论文应同时报告 BM25、固定权重、纯学习、嵌套融合和各特征消融。除了 P@1、Recall@K、MRR、MAP 和 nDCG，还应报告 IR 构建时间、候选池大小、后续规范化操作覆盖和闭包构建结果。排序结果只是方法链条的一层，不能代替固件编译与实板功能验证。

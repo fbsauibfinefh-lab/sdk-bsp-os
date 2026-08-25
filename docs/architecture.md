@@ -34,7 +34,7 @@ OS Backend ----------- RT-Thread BSP / Zephyr 应用 + 功能绑定
 
 ### SDK Ingestor
 
-递归识别 C/C++/汇编源码、头文件、静态库、CMake/Make/SCons 规则、链接脚本和启动文件；记录 SHA-256、函数定义、调用、包含关系、宏上下文、构建引用和源码行号。`hybrid` 前端优先使用编译数据库驱动的 Clang AST，其次使用 tree-sitter，最后以正则兜底；`regex` 模式保留为论文基线。实体证据同时记录解析前端和置信度。
+递归识别 C/C++/汇编源码、头文件、静态库、CMake/Make/SCons 规则、链接脚本和启动文件；记录 SHA-256、源码与头文件内联函数定义、调用、包含关系、宏上下文、构建引用和源码行号。`hybrid` 前端优先使用编译数据库驱动的 Clang AST，其次使用 tree-sitter，最后以正则兜底；`regex` 模式保留为论文基线。实体证据同时记录解析前端和置信度，AST 使用显式栈遍历以支持大型生成代码中的深层语法树。
 
 ### IR Store
 
@@ -42,7 +42,7 @@ OS Backend ----------- RT-Thread BSP / Zephyr 应用 + 功能绑定
 
 ### Semantic Resolver
 
-基于名称、操作词、路径、函数签名、包含文件、调用和宏等独立证据恢复候选。固定权重排序是可审计基线，学习排序可从独立 SDK 标注训练 LightGBM LambdaRank。候选随后映射为 OS 无关的规范化操作计划，缺失和多解不会由人工 profile 静默填充。
+基于名称、操作词、路径、函数签名、包含文件、调用和宏等独立证据恢复候选。固定权重排序是可审计基线，学习排序从独立 SDK 标注训练 LightGBM LambdaRank；`hybrid` 将固定证据作为先验并使用模型重排序。候选随后映射为 OS 无关的规范化操作计划，缺失和多解不会由人工 profile 静默填充。训练和评测以 SDK 为分组边界，禁止同一 SDK 的实体随机泄漏到两侧。
 
 ### Closure Solver
 
@@ -126,3 +126,9 @@ K210 端口定义 RV64 CPU、6 MiB SRAM、PLIC、机器定时器和 UARTHS，并
 ## 构建后验证与评估
 
 编译返回码为 0 后，Artifact Verifier 继续检查 ELF 与 BIN/HEX、ARM/RISC-V 架构、段大小、哈希以及生成操作表和注册入口是否真实进入 ELF。Experiment Evaluator 使用人工真值集分别评估候选恢复、后端契约绑定和设备操作覆盖，并自动执行证据消融。构建验证和方法评估是两个独立结果，避免用“能编译”替代语义准确性。
+
+## v0.6 语料与仿真数据流
+
+`scripts/ingest_semantic_corpus.py` 从固定版本的 7 个 SDK 生成 IR，`build_semantic_dataset.py` 先逐符号审计真值，再抽取全部正例、高分困难负例和固定种子随机负例。`evaluate_ranker_cv.py` 执行外层 SDK 留一、内层融合权重选择、特征消融、Bootstrap 和配对置换检验。最终模型及特征模式保存在 `models/semantic-ranker.txt` 和相邻元数据中。
+
+主机验证层实现 `SerialTransport` 与 `ProcessTransport`。前者连接三块实板，后者启动 Zephyr native_sim、QEMU 或 Renode 并连接标准输入输出；二者均交给同一个 `HardwareTestRunner`，因而请求、超时、原始日志和统计口径完全一致。仿真验证可重复性和 OS API 行为，实板验证真实时钟、中断和外设电气语义。

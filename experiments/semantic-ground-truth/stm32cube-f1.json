@@ -1,0 +1,24 @@
+{
+  "schema_version": "2.0",
+  "id": "stm32cube-f1-hal-semantic-contract-v1",
+  "description": "STM32CubeF1 HAL 的迁移语义人工核验真值",
+  "sdk": {
+    "id": "stm32cube-f1",
+    "vendor": "STMicroelectronics",
+    "version": "repository-snapshot",
+    "revision": "bb2016eaa0004f74b5bd2369709415cae1fc88b2",
+    "source_url": "https://github.com/STMicroelectronics/STM32CubeF1"
+  },
+  "annotation": {
+    "status": "single-curator-source-audited",
+    "selection_policy": "选择 STM32F1 HAL 中覆盖初始化、配置、读写、启停和中断的公开驱动函数",
+    "second_reviewer_required_for_publication": true
+  },
+  "capabilities": {
+    "clock": {"semantic_symbols": ["HAL_RCC_OscConfig", "HAL_RCC_ClockConfig", "HAL_RCC_GetSysClockFreq", "HAL_RCC_GetHCLKFreq", "HAL_RCC_GetPCLK1Freq", "HAL_RCC_GetPCLK2Freq"], "binding_symbols": [], "device_operations": []},
+    "interrupt": {"semantic_symbols": ["HAL_NVIC_SetPriority", "HAL_NVIC_EnableIRQ", "HAL_NVIC_DisableIRQ", "HAL_NVIC_SetPendingIRQ", "HAL_NVIC_ClearPendingIRQ"], "binding_symbols": [], "device_operations": []},
+    "uart": {"semantic_symbols": ["HAL_UART_Init", "HAL_UART_DeInit", "HAL_UART_Transmit", "HAL_UART_Receive", "HAL_UART_Transmit_IT", "HAL_UART_Receive_IT", "HAL_UART_IRQHandler"], "binding_symbols": [], "device_operations": []},
+    "gpio": {"semantic_symbols": ["HAL_GPIO_Init", "HAL_GPIO_DeInit", "HAL_GPIO_ReadPin", "HAL_GPIO_WritePin", "HAL_GPIO_TogglePin", "HAL_GPIO_EXTI_IRQHandler"], "binding_symbols": [], "device_operations": []},
+    "timer": {"semantic_symbols": ["HAL_TIM_Base_Init", "HAL_TIM_Base_Start", "HAL_TIM_Base_Stop", "HAL_TIM_Base_Start_IT", "HAL_TIM_Base_Stop_IT", "HAL_TIM_IRQHandler"], "binding_symbols": [], "device_operations": []}
+  }
+}

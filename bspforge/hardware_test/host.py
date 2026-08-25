@@ -2,6 +2,9 @@ from __future__ import annotations
 
 import argparse
 import json
+import selectors
+import shlex
+import subprocess
 import time
 import uuid
 from dataclasses import dataclass
@@ -41,6 +44,71 @@ class SerialTransport:
         time.sleep(0.05)
         self.serial.reset_input_buffer()
         self.serial.dtr = True
+
+
+class ProcessTransport:
+    """Run a simulator/native executable through the same line protocol as a board."""
+
+    def __init__(self, command: list[str], timeout: float) -> None:
+        if not command:
+            raise ValueError("simulator command cannot be empty")
+        self.command = command
+        self.timeout = timeout
+        self.process: subprocess.Popen[bytes] | None = None
+        self.selector = selectors.DefaultSelector()
+        self._start()
+
+    def _start(self) -> None:
+        self.process = subprocess.Popen(
+            self.command,
+            stdin=subprocess.PIPE,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            bufsize=0,
+        )
+        assert self.process.stdout is not None
+        self.selector.register(self.process.stdout, selectors.EVENT_READ)
+
+    def write(self, value: bytes) -> int:
+        if self.process is None or self.process.stdin is None:
+            return 0
+        self.process.stdin.write(value)
+        self.process.stdin.flush()
+        return len(value)
+
+    def readline(self) -> bytes:
+        if self.process is None or self.process.stdout is None:
+            return b""
+        if not self.selector.select(self.timeout):
+            return b""
+        return self.process.stdout.readline()
+
+    def reset(self) -> None:
+        self.close()
+        self.selector = selectors.DefaultSelector()
+        self._start()
+
+    def close(self) -> None:
+        if self.process is None:
+            return
+        process = self.process
+        if process.stdout is not None:
+            try:
+                self.selector.unregister(process.stdout)
+            except KeyError:
+                pass
+        process.terminate()
+        try:
+            process.wait(timeout=2)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait(timeout=2)
+        if process.stdin is not None:
+            process.stdin.close()
+        if process.stdout is not None:
+            process.stdout.close()
+        self.process = None
+        self.selector.close()
 
 
 @dataclass
@@ -142,8 +210,10 @@ class HardwareTestRunner:
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="BSPForge 跨 RTOS 实板回归工具")
-    parser.add_argument("--port", required=True)
+    parser = argparse.ArgumentParser(description="BSPForge 跨 RTOS 实板/仿真回归工具")
+    transport = parser.add_mutually_exclusive_group(required=True)
+    transport.add_argument("--port")
+    transport.add_argument("--command", help="以标准输入输出运行的仿真器命令")
     parser.add_argument("--board", required=True)
     parser.add_argument("--rtos", choices=["rtthread", "zephyr"], required=True)
     parser.add_argument("--baudrate", type=int, default=115200)
@@ -151,13 +221,17 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--rounds", type=int, default=1)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
-    transport = SerialTransport(args.port, args.baudrate, args.timeout)
+    active_transport: Transport = (
+        SerialTransport(args.port, args.baudrate, args.timeout)
+        if args.port
+        else ProcessTransport(shlex.split(args.command), args.timeout)
+    )
     try:
         report = HardwareTestRunner(
-            transport, args.board, args.rtos, args.timeout
+            active_transport, args.board, args.rtos, args.timeout
         ).run(args.rounds)
     finally:
-        transport.close()
+        active_transport.close()
     write_json(args.output, report)
     print(json.dumps(report["summary"], ensure_ascii=False, indent=2))
     return 0 if report["summary"]["failed"] == 0 else 2

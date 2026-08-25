@@ -1,0 +1,24 @@
+{
+  "schema_version": "2.0",
+  "id": "nordic-nrfx-4.2.1-semantic-contract-v1",
+  "description": "Nordic nrfx 4.2.1 的迁移语义人工核验真值",
+  "sdk": {
+    "id": "nordic-nrfx-4.2.1",
+    "vendor": "Nordic Semiconductor",
+    "version": "4.2.1",
+    "revision": "aa83d4df8d5f41b591f23a8555794632afb3475d",
+    "source_url": "https://github.com/NordicSemiconductor/nrfx"
+  },
+  "annotation": {
+    "status": "single-curator-source-audited",
+    "selection_policy": "选择 nrfx 驱动层和公共 IRQ 包装层中的生命周期、数据与事件控制函数",
+    "second_reviewer_required_for_publication": true
+  },
+  "capabilities": {
+    "clock": {"semantic_symbols": ["nrfx_clock_init", "nrfx_clock_uninit", "nrfx_clock_start", "nrfx_clock_stop", "nrfx_clock_enable", "nrfx_clock_disable", "nrfx_clock_divider_set"], "binding_symbols": [], "device_operations": []},
+    "interrupt": {"supported": false, "reason": "nrfx 将通用中断控制定义为平台必须提供的 NRFX_IRQ_* 宏，不存在可作为函数排序真值的 SDK 实体", "semantic_symbols": [], "binding_symbols": [], "device_operations": []},
+    "uart": {"semantic_symbols": ["nrfx_uarte_init", "nrfx_uarte_uninit", "nrfx_uarte_reconfigure", "nrfx_uarte_tx", "nrfx_uarte_rx_enable", "nrfx_uarte_rx_abort", "nrfx_uarte_irq_handler"], "binding_symbols": [], "device_operations": []},
+    "gpio": {"semantic_symbols": ["nrfx_gpiote_init", "nrfx_gpiote_uninit", "nrfx_gpiote_input_configure", "nrfx_gpiote_output_configure", "nrfx_gpiote_out_set", "nrfx_gpiote_out_clear", "nrfx_gpiote_trigger_enable"], "binding_symbols": [], "device_operations": []},
+    "timer": {"semantic_symbols": ["nrfx_timer_init", "nrfx_timer_uninit", "nrfx_timer_enable", "nrfx_timer_disable", "nrfx_timer_compare", "nrfx_timer_capture", "nrfx_timer_irq_handler"], "binding_symbols": [], "device_operations": []}
+  }
+}

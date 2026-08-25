@@ -12,6 +12,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="训练 BSPForge LightGBM LambdaRank 排序器")
     parser.add_argument("--dataset", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--hybrid-weight", type=float, default=0.75)
     args = parser.parse_args()
     try:
         import lightgbm
@@ -48,7 +49,17 @@ def main() -> int:
             "sdk_ids": sorted(sdk_ids),
             "groups": len(groups),
             "candidates": len(features),
+            "dataset_summary": dataset.get("summary", {}),
             "training_protocol": "grouped-by-sdk-capability; evaluate with leave-one-sdk-out",
+            "recommended_method": "hybrid",
+            "recommended_hybrid_weight": args.hybrid_weight,
+            "model": {
+                "objective": "lambdarank",
+                "n_estimators": 120,
+                "learning_rate": 0.05,
+                "num_leaves": 15,
+                "random_state": 20260824
+            }
         }, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )

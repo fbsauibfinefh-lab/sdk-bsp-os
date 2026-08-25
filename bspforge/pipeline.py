@@ -59,6 +59,7 @@ class Pipeline:
                 if resolver_config.get("model_path")
                 else None
             ),
+            hybrid_weight=resolver_config.get("hybrid_weight"),
         )
         write_json(run_root / "02-semantic-resolution.json", resolution)
         binding_plan = BindingPlanner().plan(ir, resolution)

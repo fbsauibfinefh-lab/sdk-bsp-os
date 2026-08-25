@@ -1,0 +1,24 @@
+{
+  "schema_version": "2.0",
+  "id": "pico-sdk-2.2.0-semantic-contract-v1",
+  "description": "Raspberry Pi Pico SDK 2.2.0 的迁移语义人工核验真值",
+  "sdk": {
+    "id": "raspberry-pi-pico-sdk-2.2.0",
+    "vendor": "Raspberry Pi",
+    "version": "2.2.0",
+    "revision": "a1438dff1d38bd9c65dbd693f0e5db4b9ae91779",
+    "source_url": "https://github.com/raspberrypi/pico-sdk"
+  },
+  "annotation": {
+    "status": "single-curator-source-audited",
+    "selection_policy": "选择 Pico hardware API 中可组成时钟、中断、UART、GPIO 和硬件闹钟迁移契约的函数",
+    "second_reviewer_required_for_publication": true
+  },
+  "capabilities": {
+    "clock": {"semantic_symbols": ["clock_configure", "clock_get_hz", "clock_set_reported_hz", "clock_stop", "set_sys_clock_48mhz", "set_sys_clock_pll"], "binding_symbols": [], "device_operations": []},
+    "interrupt": {"semantic_symbols": ["irq_set_enabled", "irq_set_exclusive_handler", "irq_add_shared_handler", "irq_remove_handler", "irq_set_priority", "irq_set_pending"], "binding_symbols": [], "device_operations": []},
+    "uart": {"semantic_symbols": ["uart_init", "uart_deinit", "uart_set_baudrate", "uart_write_blocking", "uart_read_blocking", "uart_is_readable", "uart_putc_raw"], "binding_symbols": [], "device_operations": []},
+    "gpio": {"semantic_symbols": ["gpio_init", "gpio_deinit", "gpio_set_dir", "gpio_put", "gpio_get_all", "gpio_set_irq_enabled", "gpio_set_irq_enabled_with_callback"], "binding_symbols": [], "device_operations": []},
+    "timer": {"semantic_symbols": ["hardware_alarm_claim", "hardware_alarm_set_target", "hardware_alarm_set_callback", "hardware_alarm_cancel", "cancel_repeating_timer", "time_us_64"], "binding_symbols": [], "device_operations": []}
+  }
+}

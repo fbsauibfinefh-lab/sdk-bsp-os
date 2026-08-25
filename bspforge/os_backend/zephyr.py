@@ -48,7 +48,10 @@ class ZephyrBackend(OSBackend):
             encoding="utf-8",
         )
         (app / "CMakeLists.txt").write_text(self._cmake_source(), encoding="utf-8")
-        (app / "prj.conf").write_text(self._project_config(), encoding="utf-8")
+        (app / "prj.conf").write_text(
+            self._project_config(options.get("native_executable", False)),
+            encoding="utf-8",
+        )
         overlay = options.get("overlay")
         if overlay:
             (app / "app.overlay").write_text(str(overlay).rstrip() + "\n", encoding="utf-8")
@@ -141,7 +144,11 @@ class ZephyrBackend(OSBackend):
             "binding_plan": binding_plan["summary"] if binding_plan else None,
             "closure_files": closure["summary"]["files"],
             "expected_machine": profile["machine"],
-            "artifacts": {"elf": "build/zephyr/zephyr.elf", "bin": "build/zephyr/zephyr.bin"},
+            "artifacts": {
+                "elf": "build/zephyr/zephyr.elf",
+                "bin": None if options.get("native_executable", False) else "build/zephyr/zephyr.bin",
+                "executable": "build/zephyr/zephyr.exe" if options.get("native_executable", False) else None,
+            },
             "toolchain_variant": options.get("toolchain_variant", "gnuarmemb"),
             "cmake_args": cmake_args,
             "native_driver_roots": [str(path.resolve()) for path in driver_roots],
@@ -160,13 +167,16 @@ class ZephyrBackend(OSBackend):
             environment.pop(name, None)
         environment["ZEPHYR_TOOLCHAIN_VARIANT"] = manifest["toolchain_variant"]
         environment["CMAKE_BUILD_PARALLEL_LEVEL"] = str(max(1, jobs))
-        if manifest["toolchain_variant"] == "gnuarmemb":
+        if manifest["toolchain_variant"] == "host":
+            pass
+        elif manifest["toolchain_variant"] == "gnuarmemb":
             environment["GNUARMEMB_TOOLCHAIN_PATH"] = str(toolchain_bin.resolve().parent)
         else:
             environment["CROSS_COMPILE"] = str(toolchain_bin / self._detect_prefix(toolchain_bin))
-        environment["BSPFORGE_REAL_OBJCOPY"] = str(
-            toolchain_bin / f"{self._detect_prefix(toolchain_bin)}objcopy"
-        )
+        if manifest["toolchain_variant"] != "host":
+            environment["BSPFORGE_REAL_OBJCOPY"] = str(
+                toolchain_bin / f"{self._detect_prefix(toolchain_bin)}objcopy"
+            )
         command = [
             "west", "build", "-p", "always", "-d", str(output / "build"),
             "-b", manifest["board"], str(app), "--",
@@ -262,14 +272,17 @@ target_sources(app PRIVATE src/main.c)
 """
 
     @staticmethod
-    def _project_config() -> str:
-        return """CONFIG_SERIAL=y
+    def _project_config(native_executable: bool = False) -> str:
+        config = """CONFIG_SERIAL=y
 CONFIG_CONSOLE=y
 CONFIG_UART_CONSOLE=y
 CONFIG_GPIO=y
 CONFIG_PRINTK=y
 CONFIG_ASSERT=y
 """
+        if native_executable:
+            config += "CONFIG_UART_NATIVE_PTY_0_ON_STDINOUT=y\n"
+        return config
 
     @staticmethod
     def _objcopy_wrapper() -> str:
@@ -417,6 +430,8 @@ int main(void)
 
     @staticmethod
     def _detect_prefix(toolchain_bin: Path) -> str:
+        if (toolchain_bin / "gcc").is_file() and (toolchain_bin / "readelf").is_file():
+            return ""
         for prefix in (
             "arm-none-eabi-", "riscv-none-embed-", "riscv-none-elf-", "riscv64-unknown-elf-"
         ):

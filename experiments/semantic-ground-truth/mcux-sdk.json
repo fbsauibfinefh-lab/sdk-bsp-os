@@ -1,0 +1,24 @@
+{
+  "schema_version": "2.0",
+  "id": "mcux-sdk-2.16.100-semantic-contract-v1",
+  "description": "NXP MCUXpresso SDK 2.16.100 的迁移语义人工核验真值",
+  "sdk": {
+    "id": "nxp-mcuxpresso-sdk-2.16.100",
+    "vendor": "NXP",
+    "version": "2.16.100",
+    "revision": "0420001d787c2c7bb062a2da4c46233d9daf2737",
+    "source_url": "https://github.com/nxp-mcuxpresso/legacy-mcux-sdk"
+  },
+  "annotation": {
+    "status": "single-curator-source-audited",
+    "selection_policy": "选择 MCUXpresso 公共 FSL 驱动接口；计时器以 CTIMER 代表，避免混合多个功能等价外设系列",
+    "second_reviewer_required_for_publication": true
+  },
+  "capabilities": {
+    "clock": {"semantic_symbols": ["CLOCK_Init", "CLOCK_EnableClock", "CLOCK_DisableClock", "CLOCK_GetFreq", "CLOCK_SetClockDiv", "CLOCK_GetClockDiv"], "binding_symbols": [], "device_operations": []},
+    "interrupt": {"semantic_symbols": ["EnableIRQ", "DisableIRQ", "EnableIRQWithPriority", "EnableGlobalIRQ", "DisableGlobalIRQ", "IRQ_ClearPendingIRQ"], "binding_symbols": [], "device_operations": []},
+    "uart": {"semantic_symbols": ["UART_Init", "UART_Deinit", "UART_SetBaudRate", "UART_WriteBlocking", "UART_ReadBlocking", "UART_EnableInterrupts", "UART_DisableInterrupts"], "binding_symbols": [], "device_operations": []},
+    "gpio": {"semantic_symbols": ["GPIO_PinInit", "GPIO_PinWrite", "GPIO_PinRead", "GPIO_PortSet", "GPIO_PortClear", "GPIO_PortToggle", "GPIO_PinSetInterruptConfig"], "binding_symbols": [], "device_operations": []},
+    "timer": {"semantic_symbols": ["CTIMER_Init", "CTIMER_Deinit", "CTIMER_SetupMatch", "CTIMER_RegisterCallBack", "CTIMER_GenericIRQHandler"], "binding_symbols": [], "device_operations": []}
+  }
+}

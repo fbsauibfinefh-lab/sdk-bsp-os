@@ -1,4 +1,10 @@
-from .host import HardwareTestRunner, SerialTransport
+from .host import HardwareTestRunner, ProcessTransport, SerialTransport
 from .protocol import DEFAULT_COMMANDS, ProtocolError
 
-__all__ = ["DEFAULT_COMMANDS", "HardwareTestRunner", "ProtocolError", "SerialTransport"]
+__all__ = [
+    "DEFAULT_COMMANDS",
+    "HardwareTestRunner",
+    "ProcessTransport",
+    "ProtocolError",
+    "SerialTransport",
+]
