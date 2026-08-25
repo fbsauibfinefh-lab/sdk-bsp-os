@@ -1,0 +1,115 @@
+{
+  "base_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "base_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "best_development_map": 0.498682,
+  "created_at": "2026-08-25T10:21:33.205503+00:00",
+  "dataset_summary": {
+    "candidates": 37808,
+    "groups": 441,
+    "groups_by_role": {
+      "external-test": 50,
+      "train": 391
+    },
+    "positive_candidates": 3012,
+    "sdks": 25,
+    "skipped_groups": 34,
+    "training_independence_groups": 20,
+    "training_sdks": 22
+  },
+  "development_baseline": {
+    "map": 0.336322,
+    "mrr": 0.520665,
+    "ndcg_at_10": 0.357431,
+    "precision_at_1": 0.411765,
+    "recall_at_5": 0.243277
+  },
+  "history": [
+    {
+      "development": {
+        "map": 0.469165,
+        "mrr": 0.673679,
+        "ndcg_at_10": 0.505873,
+        "precision_at_1": 0.564706,
+        "recall_at_5": 0.33444
+      },
+      "epoch": 1,
+      "loss": 0.061605,
+      "seconds": 149.505
+    },
+    {
+      "development": {
+        "map": 0.498682,
+        "mrr": 0.687417,
+        "ndcg_at_10": 0.528831,
+        "precision_at_1": 0.564706,
+        "recall_at_5": 0.367367
+      },
+      "epoch": 2,
+      "loss": 0.022013,
+      "seconds": 149.125
+    },
+    {
+      "development": {
+        "map": 0.495556,
+        "mrr": 0.687573,
+        "ndcg_at_10": 0.527827,
+        "precision_at_1": 0.564706,
+        "recall_at_5": 0.371681
+      },
+      "epoch": 3,
+      "loss": 0.010064,
+      "seconds": 149.579
+    }
+  ],
+  "method": "IR-aware cosine triplet adaptation with grouped SDK development split",
+  "model_sha256": "67b541fb19a8b5bd37bb94d29b02e63c3f3ce1c89f2364d5ea6da11a9472dc0d",
+  "query_format": "ir-operation-v1",
+  "schema_version": "1.0",
+  "split": {
+    "development_independence_groups": [
+      "espressif",
+      "libopencm3",
+      "raspberry-pi",
+      "renesas"
+    ],
+    "development_query_groups": 85,
+    "external_test_sdks_excluded": [
+      "kendryte-k210-standalone-sdk-0.5.6",
+      "psoc-e84-edgi-talk-sdk",
+      "stm32cube-f1"
+    ],
+    "training_independence_groups": [
+      "alif",
+      "analog-devices",
+      "arm-mbed",
+      "bouffalo",
+      "hpmicro",
+      "microchip",
+      "nordic",
+      "nuclei",
+      "nuvoton",
+      "nxp",
+      "sifli",
+      "silabs",
+      "sony",
+      "telink",
+      "ti",
+      "wch"
+    ],
+    "training_query_groups": 306
+  },
+  "training": {
+    "batch_size": 16,
+    "best_epoch": 2,
+    "epochs_requested": 3,
+    "learning_rate": 2e-05,
+    "margin": 0.15,
+    "seconds": 448.568,
+    "seed": 20260825,
+    "total_parameters": 22713216,
+    "train_last_layers": 2,
+    "trainable_parameters": 3548928,
+    "trainable_ratio": 0.156249,
+    "triplets": 992
+  }
+}

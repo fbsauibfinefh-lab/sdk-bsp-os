@@ -140,3 +140,11 @@ K210 端口定义 RV64 CPU、6 MiB SRAM、PLIC、机器定时器和 UARTHS，并
 操作排序在能力候选池内部增加动作、签名、HAL 层次、中断控制器、参数化开关、冲突操作和适配方向证据。可选嵌入脚本只增加 `code-embedding` 特征，不改变 IR 或解析输出模式。`evaluate_operation_ranker.py` 统一计算 BM25、静态规则、弱监督 LambdaRank、语义嵌入和融合结果，并保存 bootstrap 区间、前五候选和置信拒答曲线。
 
 Resolver 的 `operation_min_margin` 对每个操作比较前两名不同符号的分差。低于门槛时保留候选和证据，但不写入已接受绑定；Binding Planner 将其转成 missing，后端不得用低分函数静默填充。该变更只扩展语义输出契约，Closure Solver、Build Diagnoser 和两个 OS Backend 的职责不变。
+
+## v0.8 轻量 IR 语义适配数据流
+
+`operation-semantic` 在 `operation-weighted` 的候选和证据之上增加两个冻结 MiniLM 分支。基础分支把 IR 中的操作契约作为简洁查询；适配分支把 capability、operation 和 contract 序列化为 `ir-operation-v1`，再经过秩 16 的查询残差适配器。SDK 函数实体统一序列化为文件、符号、签名、包含和调用文本，候选向量只计算一次。
+
+基础模型为固定提交的 22.7M 参数 all-MiniLM-L6-v2。主体参数不进入训练，适配器只有 12,288 个参数，并以近似恒等映射初始化。运行时输出静态、基础语义和适配语义三项证据；均衡模式在全候选中融合，精度模式先用静态证据建立 Top-10 池，再在池内重排。
+
+语义模型只扩展 Semantic Resolver。其输出仍是稳定实体 ID、操作、分数和证据，Binding Planner、Closure Solver、Build Diagnoser 与两个 OS Backend 的输入契约不变。K210 完整回归已经验证该输出能够形成 19 操作绑定、触发一次链接诊断修复并生成 RISC-V ELF/BIN。详细算法、负向消融、指标与复现命令见 `docs/ir-semantic-reranking-v0.8.md`。

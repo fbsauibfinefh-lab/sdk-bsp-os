@@ -1,0 +1,51 @@
+{
+  "run_id": "k210-rtthread-semantic",
+  "workspace": "workspace",
+  "ir_store": "workspace/ir",
+  "ingestor": {"mode": "hybrid"},
+  "sdk": {
+    "id": "kendryte-k210-standalone-sdk-0.5.6",
+    "path": "sdk/k210/source"
+  },
+  "resolver": {
+    "method": "operation-semantic",
+    "model_path": "models/operation-query-adapter-ir-v1.pt",
+    "semantic_device": "cpu",
+    "semantic_weights": {"static": 0.30, "base": 0.20, "adapted": 0.50},
+    "semantic_candidate_top_k": 0,
+    "operation_min_margin": 0.0,
+    "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
+    "threshold": 0.42,
+    "top_k": 8
+  },
+  "toolchain": {
+    "architecture": "riscv64",
+    "abi": "lp64f",
+    "bin": "toolchains/riscv-none-embed-gcc-10.2.0/bin"
+  },
+  "closure": {
+    "target": {"chip": "k210", "core": "riscv64", "entry_symbols": ["_start"]}
+  },
+  "backend": {
+    "type": "rtthread",
+    "board": "k210",
+    "sdk_profile": "k210",
+    "rtthread_root": "third_party/rt-thread",
+    "output": "workspace/generated/k210-rtthread-semantic",
+    "devices": {
+      "uart": [
+        {"name": "bspuart1", "channel": 0, "baud_rate": 115200},
+        {"name": "bspuart2", "channel": 1, "baud_rate": 115200}
+      ],
+      "pin": {"name": "bsppin", "max_pins": 32},
+      "hwtimer": [
+        {"name": "bsptim0", "device": 0, "channel": 0, "frequency": 1000000}
+      ]
+    }
+  },
+  "build": {"jobs": 8, "max_iterations": 3},
+  "evaluation": {
+    "ground_truth": "experiments/k210-ground-truth.json",
+    "run_ablations": true
+  }
+}

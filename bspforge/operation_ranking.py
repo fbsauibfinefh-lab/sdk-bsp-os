@@ -36,6 +36,7 @@ OPERATION_FEATURE_NAMES = [
     "test-example",
     "symbol-specificity",
     "code-embedding",
+    "cross-reranker",
 ]
 
 OPERATION_DESCRIPTIONS = {
@@ -185,6 +186,7 @@ def operation_feature_map(
         "test-example": float(test_path),
         "symbol-specificity": specificity,
         "code-embedding": 0.0,
+        "cross-reranker": 0.0,
     }
 
 

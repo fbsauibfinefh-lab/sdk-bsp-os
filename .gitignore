@@ -21,3 +21,8 @@ workspace/
 experiments/generated/operation-ranking-dataset*.json
 models/operation-ranker*.txt
 models/operation-ranker*.txt.json
+models/operation-encoder*/
+models/operation-reranker*/
+experiments/generated/operation-ranking-results-*.json
+!experiments/generated/operation-ranking-results-adapter-ensemble.json
+!experiments/generated/operation-ranking-results-adapter-cascade-k10.json

@@ -15,7 +15,7 @@ BSPForge 是一个面向芯片 SDK 语义恢复与 RTOS BSP 自动生成的研�
 
 K210/RT-Thread 路径会生成真实参与链接的 `rt_uart_ops`、`rt_pin_ops`、`rt_hwtimer_ops`、设备实例和初始化注册函数。成熟 BSP 路径追踪 RTOS 原生驱动到 SDK 实体的调用证据，并生成设备 API 验证入口。流水线在编译失败后根据 IR 增补源码或包含目录，直到成功、无新约束或达到迭代上限；链接成功后还会检查固件架构、段信息、哈希和关键生成符号。
 
-v0.7 已把开发语料扩展到 22 套 SDK、20 个独立来源组，并把 K210、STM32F103、PSoC E84 保留为严格外部测试。语义恢复细化为 19 个操作，支持参数化开关、适配方向、HAL 层次、轻量语义嵌入和置信拒答。当前外部测试的静态与语义等权融合 P@1 为 0.600、MAP 为 0.628，仍不能替代实物外设验证。3 块开发板 × 2 个 RTOS 的六组工程均已完成固件静态验证；Zephyr native_sim 已完成 20 轮可执行回归。
+v0.8 在 22.7M 参数 MiniLM 上增加 12,288 参数的 IR 查询低秩适配器，并实现静态、基础语义和适配语义三路融合。50 个板卡操作组上的均衡模式 P@1 为 0.620、MAP 为 0.635，Top-10 精度模式 P@1 为 0.640；相对 v0.7 的增量尚未达到统计显著。K210 的 `operation-semantic` 完整流水线已生成 19 个操作绑定，经一次自动诊断修复后编译出 RISC-V ELF/BIN。3 块开发板 × 2 个 RTOS 的六组工程均已完成固件静态验证；Zephyr native_sim 已完成 20 轮可执行回归，真实上板验证仍待完成。
 
 ## 快速开始
 
@@ -61,6 +61,19 @@ conda run -n AIoT-v1.0 python scripts/evaluate_operation_ranker.py \
   --output experiments/generated/operation-ranking-results.json
 ```
 
+运行轻量 IR 查询适配器与 K210 语义流水线：
+
+```bash
+conda run -n AIoT-v1.0 python -m pip install -e '.[retrieval,learning]'
+conda run -n AIoT-v1.0 python scripts/train_operation_query_adapter.py \
+  --dataset experiments/generated/operation-ranking-dataset.json \
+  --split experiments/operation-ranking/development-split.json \
+  --output-adapter models/operation-query-adapter-ir-v1.pt \
+  --report experiments/generated/operation-query-adapter-training.json
+conda run -n AIoT-v1.0 python -m bspforge.cli pipeline \
+  --config examples/k210-rtthread/project-semantic.json
+```
+
 所有阶段产物保存在 `workspace/runs/<run-id>/`，包括 SDK IR、语义映射、闭包、绑定与设备清单、逐轮编译日志、诊断约束、产物验证、方法指标、证据消融和最终报告。
 
 ## 文档
@@ -74,6 +87,7 @@ conda run -n AIoT-v1.0 python scripts/evaluate_operation_ranker.py \
 - [实板自动回归](docs/hardware-validation.md)
 - [语义排序实验](docs/semantic-ranking.md)
 - [操作级排序与模型优化](docs/operation-ranking-v0.7.md)
+- [IR 感知轻量语义排序 v0.8](docs/ir-semantic-reranking-v0.8.md)
 - [实验规模与仿真方案](docs/experiment-scale-and-simulation-plan.md)
 - [扩展新 SDK/后端](docs/extending.md)
 

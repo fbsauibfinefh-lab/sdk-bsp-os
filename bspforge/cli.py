@@ -38,7 +38,7 @@ def parser() -> argparse.ArgumentParser:
     resolve.add_argument("--capability", action="append", dest="capabilities")
     resolve.add_argument(
         "--method",
-        choices=["weighted", "learned", "hybrid", "operation-weighted"],
+        choices=["weighted", "learned", "hybrid", "operation-weighted", "operation-semantic"],
         default="weighted",
     )
     resolve.add_argument("--model", type=Path)

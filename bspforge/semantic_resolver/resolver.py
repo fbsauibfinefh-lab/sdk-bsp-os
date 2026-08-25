@@ -6,6 +6,7 @@ from pathlib import Path
 from bspforge.capability_schema import CAPABILITY_SCHEMA
 from bspforge.common import stable_id, utc_now
 from bspforge.operation_ranking import operation_feature_map, operation_static_score
+from bspforge.semantic_adapter import OperationSemanticRanker
 from bspforge.semantic_resolver.learning import LearnedRanker
 
 
@@ -47,6 +48,12 @@ DEFAULT_EVIDENCE_WEIGHTS = {
     "macro-context": 0.08,
 }
 
+DEFAULT_SEMANTIC_WEIGHTS = {
+    "static": 0.30,
+    "base": 0.20,
+    "adapted": 0.50,
+}
+
 
 class SemanticResolver:
     """Rank SDK functions using independent, auditable static evidence."""
@@ -85,6 +92,9 @@ class SemanticResolver:
         model_path: Path | None = None,
         hybrid_weight: float | None = None,
         operation_min_margin: float = 0.0,
+        semantic_weights: dict[str, float] | None = None,
+        semantic_candidate_top_k: int = 0,
+        semantic_device: str = "cpu",
     ) -> dict[str, Any]:
         weights = {**DEFAULT_EVIDENCE_WEIGHTS, **(evidence_weights or {})}
         unknown = set(weights).difference(DEFAULT_EVIDENCE_WEIGHTS)
@@ -98,14 +108,36 @@ class SemanticResolver:
             if method in {"learned", "hybrid"} and model_path is not None
             else None
         )
+        semantic_ranker = (
+            OperationSemanticRanker(model_path, device=semantic_device)
+            if method == "operation-semantic" and model_path is not None
+            else None
+        )
         if method in {"learned", "hybrid"} and ranker is None:
             raise ValueError(f"{method} resolver requires model_path")
-        if method not in {"weighted", "learned", "hybrid", "operation-weighted"}:
+        if method == "operation-semantic" and semantic_ranker is None:
+            raise ValueError("operation-semantic resolver requires model_path")
+        if method not in {
+            "weighted", "learned", "hybrid", "operation-weighted", "operation-semantic"
+        }:
             raise ValueError(
-                "resolver method must be 'weighted', 'learned', 'hybrid', or 'operation-weighted'"
+                "unsupported resolver method"
             )
         if operation_min_margin < 0.0:
             raise ValueError("operation_min_margin must be non-negative")
+        selected_semantic_weights = {
+            **DEFAULT_SEMANTIC_WEIGHTS,
+            **(semantic_weights or {}),
+        }
+        unknown_semantic = set(selected_semantic_weights).difference(DEFAULT_SEMANTIC_WEIGHTS)
+        if unknown_semantic:
+            raise ValueError(f"Unknown semantic weights: {sorted(unknown_semantic)}")
+        if any(value < 0 for value in selected_semantic_weights.values()):
+            raise ValueError("semantic weights must be non-negative")
+        if not abs(sum(selected_semantic_weights.values()) - 1.0) < 1e-9:
+            raise ValueError("semantic weights must sum to 1.0")
+        if semantic_candidate_top_k < 0:
+            raise ValueError("semantic_candidate_top_k must be non-negative")
         selected_hybrid_weight = 0.0
         if method == "hybrid":
             assert ranker is not None
@@ -122,7 +154,7 @@ class SemanticResolver:
             if spec is None:
                 raise ValueError(f"Unknown capability: {capability}")
             candidates = self.candidate_pool(ir, capability, weights)
-            if method == "operation-weighted":
+            if method in {"operation-weighted", "operation-semantic"}:
                 operation_resolution = self._resolve_operations(
                     capability,
                     candidates,
@@ -130,6 +162,9 @@ class SemanticResolver:
                     threshold,
                     top_k,
                     operation_min_margin,
+                    semantic_ranker=semantic_ranker,
+                    semantic_weights=selected_semantic_weights,
+                    semantic_candidate_top_k=semantic_candidate_top_k,
                 )
                 mappings.append({
                     "id": stable_id(ir["sdk"]["id"], "mapping", capability),
@@ -140,6 +175,7 @@ class SemanticResolver:
                     "candidates": operation_resolution["candidates"],
                     "operation_rankings": operation_resolution["operation_rankings"],
                     "minimum_margin": operation_min_margin,
+                    "semantic_candidate_top_k": semantic_candidate_top_k,
                     "status": "resolved" if operation_resolution["accepted"] else "unresolved",
                 })
                 continue
@@ -167,7 +203,9 @@ class SemanticResolver:
             "sdk_id": ir["sdk"]["id"],
             "sdk_digest": ir["sdk"]["digest"],
             "method": (
-                "operation-aware-static-resolution"
+                "operation-aware-semantic-adapter-resolution"
+                if method == "operation-semantic"
+                else "operation-aware-static-resolution"
                 if method == "operation-weighted"
                 else (
                     "weighted-lightgbm-hybrid-resolution"
@@ -181,6 +219,8 @@ class SemanticResolver:
             ),
             "baseline_method": "weighted-multi-evidence-static-resolution",
             "hybrid_weight": selected_hybrid_weight if method == "hybrid" else None,
+            "semantic_weights": selected_semantic_weights if method == "operation-semantic" else None,
+            "semantic_model": semantic_ranker.metadata if semantic_ranker is not None else None,
             "evidence_weights": weights,
             "mappings": mappings,
             "summary": {
@@ -198,11 +238,21 @@ class SemanticResolver:
         threshold: float,
         top_k: int,
         minimum_margin: float,
+        semantic_ranker: OperationSemanticRanker | None = None,
+        semantic_weights: dict[str, float] | None = None,
+        semantic_candidate_top_k: int = 0,
     ) -> dict[str, Any]:
         operation_rankings = []
         accepted_by_entity: dict[str, dict[str, Any]] = {}
         all_ranked: dict[str, dict[str, Any]] = {}
-        for operation in CAPABILITY_SCHEMA[capability]["operations"]:
+        operations = list(CAPABILITY_SCHEMA[capability]["operations"])
+        semantic_scores = (
+            semantic_ranker.score_operations(capability, operations, candidates, functions)
+            if semantic_ranker is not None
+            else None
+        )
+        selected_semantic_weights = semantic_weights or DEFAULT_SEMANTIC_WEIGHTS
+        for operation in operations:
             ranked = []
             for candidate in candidates:
                 item = dict(candidate)
@@ -215,7 +265,37 @@ class SemanticResolver:
                 item["operation_features"] = features
                 item["target_operations"] = [operation]
                 ranked.append(item)
-            ranked.sort(key=lambda item: (-item["score"], item["entity_id"]))
+            if semantic_scores is not None:
+                static_ranked = sorted(
+                    ranked, key=lambda item: (-item["operation_score"], item["entity_id"])
+                )
+                pool = {
+                    item["entity_id"]
+                    for item in static_ranked[:semantic_candidate_top_k]
+                } if semantic_candidate_top_k else {item["entity_id"] for item in ranked}
+                for item in ranked:
+                    values = semantic_scores[operation][item["entity_id"]]
+                    item["semantic_scores"] = {
+                        "base": round(values["base"], 6),
+                        "adapted": round(values["adapted"], 6),
+                    }
+                    item["semantic_candidate"] = item["entity_id"] in pool
+                    if item["semantic_candidate"]:
+                        item["score"] = round(
+                            selected_semantic_weights["static"] * item["operation_score"]
+                            + selected_semantic_weights["base"] * values["base"]
+                            + selected_semantic_weights["adapted"] * values["adapted"],
+                            6,
+                        )
+                ranked.sort(
+                    key=lambda item: (
+                        -int(item["semantic_candidate"]),
+                        -item["score"],
+                        item["entity_id"],
+                    )
+                )
+            else:
+                ranked.sort(key=lambda item: (-item["score"], item["entity_id"]))
             top = ranked[:top_k]
             runner_up = next(
                 (item for item in top[1:] if top and item["symbol"] != top[0]["symbol"]),

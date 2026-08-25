@@ -1,0 +1,6 @@
+{
+  "schema_version": "1.0",
+  "purpose": "模型选择只使用开发 SDK，三套板卡 external-test 不参与",
+  "development_groups": ["raspberry-pi", "espressif", "renesas", "libopencm3"],
+  "notes": "其余 16 个独立性分组用于模型内部调优；开发分组只用于选轮次和融合权重。"
+}

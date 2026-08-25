@@ -205,6 +205,42 @@ class ModuleTests(unittest.TestCase):
         self.assertTrue(all(item["selected_symbol"] is None for item in rankings))
         self.assertTrue(all(item["abstained"] for item in rankings))
 
+    def test_operation_semantic_fusion_can_rerank_static_candidates(self) -> None:
+        ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "fixture-sdk")
+        resolver = SemanticResolver()
+        candidates = resolver.candidate_pool(ir, "uart")
+        functions = {item["id"]: item for item in ir["functions"]}
+
+        class FixedSemanticRanker:
+            def score_operations(self, capability, operations, ranked, function_map):
+                del capability, function_map
+                return {
+                    operation: {
+                        item["entity_id"]: {
+                            "base": float(item["symbol"] == "uart_receive_data"),
+                            "adapted": float(item["symbol"] == "uart_receive_data"),
+                        }
+                        for item in ranked
+                    }
+                    for operation in operations
+                }
+
+        result = resolver._resolve_operations(
+            "uart",
+            candidates,
+            functions,
+            threshold=0.3,
+            top_k=8,
+            minimum_margin=0.0,
+            semantic_ranker=FixedSemanticRanker(),
+            semantic_weights={"static": 0.0, "base": 0.5, "adapted": 0.5},
+        )
+        write_ranking = next(
+            item for item in result["operation_rankings"] if item["operation"] == "write"
+        )
+        self.assertEqual(write_ranking["selected_symbol"], "uart_receive_data")
+        self.assertEqual(write_ranking["candidates"][0]["semantic_scores"]["adapted"], 1.0)
+
     def test_operation_dataset_keeps_external_labels_out_of_training(self) -> None:
         train_ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "train-sdk")
         test_ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "test-sdk")

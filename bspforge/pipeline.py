@@ -61,6 +61,9 @@ class Pipeline:
             ),
             hybrid_weight=resolver_config.get("hybrid_weight"),
             operation_min_margin=float(resolver_config.get("operation_min_margin", 0.0)),
+            semantic_weights=resolver_config.get("semantic_weights"),
+            semantic_candidate_top_k=int(resolver_config.get("semantic_candidate_top_k", 0)),
+            semantic_device=resolver_config.get("semantic_device", "cpu"),
         )
         write_json(run_root / "02-semantic-resolution.json", resolution)
         binding_plan = BindingPlanner().plan(ir, resolution)

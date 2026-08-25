@@ -167,6 +167,28 @@ def bm25_scores(group: dict[str, Any], k1: float = 1.2, b: float = 0.75) -> list
     return scores
 
 
+def reciprocal_rank_fusion(
+    candidates: list[dict[str, Any]],
+    left: list[float],
+    right: list[float],
+    constant: float = 60.0,
+) -> list[float]:
+    def ranks(scores: list[float]) -> dict[str, int]:
+        ordered = sorted(
+            zip(candidates, scores, strict=True),
+            key=lambda item: (-item[1], item[0]["entity_id"]),
+        )
+        return {item["entity_id"]: index for index, (item, _) in enumerate(ordered, start=1)}
+
+    left_ranks = ranks(left)
+    right_ranks = ranks(right)
+    return [
+        1.0 / (constant + left_ranks[item["entity_id"]])
+        + 1.0 / (constant + right_ranks[item["entity_id"]])
+        for item in candidates
+    ]
+
+
 def aggregate(records: list[dict[str, Any]]) -> dict[str, float]:
     return {name: round(mean(item["metrics"][name] for item in records), 6) for name in METRICS}
 
@@ -222,11 +244,16 @@ def main() -> int:
     learning_features = [
         name
         for name in OPERATION_FEATURE_NAMES
-        if name != "code-embedding"
+        if name not in {"code-embedding", "cross-reranker"}
         or any(candidate["features"].get(name, 0.0) for group in training for candidate in group["candidates"])
     ]
     has_external_embedding = any(
         candidate["features"].get("code-embedding", 0.0)
+        for group in external
+        for candidate in group["candidates"]
+    )
+    has_external_reranker = any(
+        candidate["features"].get("cross-reranker", 0.0)
         for group in external
         for candidate in group["candidates"]
     )
@@ -239,8 +266,14 @@ def main() -> int:
     records = {name: [] for name in ("bm25-lexical", "operation-static", "learned-weak", "hybrid-selected")}
     if has_external_embedding:
         records["embedding-only"] = []
+        records["static-embedding-rrf"] = []
         for weight in (0.25, 0.5, 0.75):
             records[f"static-embedding-{weight:.2f}"] = []
+    if has_external_reranker:
+        records["cross-reranker-only"] = []
+        records["static-cross-reranker-rrf"] = []
+        for weight in (0.25, 0.5, 0.75):
+            records[f"static-cross-reranker-{weight:.2f}"] = []
     for group in external:
         score_sets = {
             "bm25-lexical": bm25_scores(group),
@@ -258,6 +291,30 @@ def main() -> int:
                     weight * static + (1.0 - weight) * embedding
                     for static, embedding in zip(
                         score_sets["operation-static"], score_sets["embedding-only"], strict=True
+                    )
+                ]
+            score_sets["static-embedding-rrf"] = reciprocal_rank_fusion(
+                group["candidates"],
+                score_sets["operation-static"],
+                score_sets["embedding-only"],
+            )
+        if "cross-reranker-only" in records:
+            score_sets["cross-reranker-only"] = [
+                float(item["features"]["cross-reranker"])
+                for item in group["candidates"]
+            ]
+            score_sets["static-cross-reranker-rrf"] = reciprocal_rank_fusion(
+                group["candidates"],
+                score_sets["operation-static"],
+                score_sets["cross-reranker-only"],
+            )
+            for weight in (0.25, 0.5, 0.75):
+                score_sets[f"static-cross-reranker-{weight:.2f}"] = [
+                    weight * static + (1.0 - weight) * reranker
+                    for static, reranker in zip(
+                        score_sets["operation-static"],
+                        score_sets["cross-reranker-only"],
+                        strict=True,
                     )
                 ]
         for method, scores in score_sets.items():
@@ -287,7 +344,9 @@ def main() -> int:
         "dataset_summary": dataset["summary"],
         "active_features": learning_features,
         "external_embedding_evaluated": has_external_embedding,
+        "external_reranker_evaluated": has_external_reranker,
         "embedding": dataset.get("embedding"),
+        "cross_reranker": dataset.get("cross_reranker"),
         "selected_static_weight": selected_weight,
         "training_group_validation_map": validation_scores,
         "aggregate": aggregates,
