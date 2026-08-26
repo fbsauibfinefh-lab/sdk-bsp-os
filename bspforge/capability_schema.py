@@ -37,7 +37,7 @@ CAPABILITY_SCHEMA: dict[str, dict[str, Any]] = {
     },
     "timer": {
         "operations": {
-            "initialize": ["init", "configure"],
+            "initialize": ["init", "configure", "setup"],
             "start": ["start", "enable"],
             "stop": ["stop", "disable"],
             "set_interval": ["interval", "period", "compare"],

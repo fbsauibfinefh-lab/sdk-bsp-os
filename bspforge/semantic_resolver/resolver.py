@@ -9,7 +9,12 @@ from bspforge.common import stable_id, utc_now
 from bspforge.compile_feedback import feedback_index
 from bspforge.operation_constraints import compatibility, contract_adjustment
 from bspforge.operation_ranking import operation_feature_map, operation_static_score
+from bspforge.operation_ranking import candidate_code_text
 from bspforge.semantic_adapter import OperationSemanticRanker
+from bspforge.structured_retrieval import (
+    complete_structured_scores,
+    enrich_group_with_structured_retrieval,
+)
 from bspforge.semantic_resolver.learning import LearnedRanker
 
 
@@ -117,15 +122,16 @@ class SemanticResolver:
         )
         semantic_ranker = (
             OperationSemanticRanker(model_path, device=semantic_device)
-            if method == "operation-semantic" and model_path is not None
+            if method in {"operation-semantic", "operation-structured"} and model_path is not None
             else None
         )
         if method in {"learned", "hybrid"} and ranker is None:
             raise ValueError(f"{method} resolver requires model_path")
-        if method == "operation-semantic" and semantic_ranker is None:
-            raise ValueError("operation-semantic resolver requires model_path")
+        if method in {"operation-semantic", "operation-structured"} and semantic_ranker is None:
+            raise ValueError(f"{method} resolver requires model_path")
         if method not in {
-            "weighted", "learned", "hybrid", "operation-weighted", "operation-semantic"
+            "weighted", "learned", "hybrid", "operation-weighted", "operation-semantic",
+            "operation-structured",
         }:
             raise ValueError(
                 "unsupported resolver method"
@@ -166,7 +172,7 @@ class SemanticResolver:
             if spec is None:
                 raise ValueError(f"Unknown capability: {capability}")
             candidates = self.candidate_pool(ir, capability, weights)
-            if method in {"operation-weighted", "operation-semantic"}:
+            if method in {"operation-weighted", "operation-semantic", "operation-structured"}:
                 operation_resolution = self._resolve_operations(
                     capability,
                     candidates,
@@ -180,6 +186,7 @@ class SemanticResolver:
                     operation_constraint_weight=operation_constraint_weight,
                     compile_feedback=previous_feedback,
                     compile_feedback_weight=compile_feedback_weight,
+                    structured_retrieval=method == "operation-structured",
                 )
                 mappings.append({
                     "id": stable_id(ir["sdk"]["id"], "mapping", capability),
@@ -220,6 +227,8 @@ class SemanticResolver:
             "method": (
                 "operation-aware-semantic-adapter-resolution"
                 if method == "operation-semantic"
+                else "operation-aware-structured-retrieval-resolution"
+                if method == "operation-structured"
                 else "operation-aware-static-resolution"
                 if method == "operation-weighted"
                 else (
@@ -234,7 +243,7 @@ class SemanticResolver:
             ),
             "baseline_method": "weighted-multi-evidence-static-resolution",
             "hybrid_weight": selected_hybrid_weight if method == "hybrid" else None,
-            "semantic_weights": selected_semantic_weights if method == "operation-semantic" else None,
+            "semantic_weights": selected_semantic_weights if method in {"operation-semantic", "operation-structured"} else None,
             "semantic_model": semantic_ranker.metadata if semantic_ranker is not None else None,
             "operation_constraint_weight": operation_constraint_weight,
             "compile_feedback_weight": compile_feedback_weight,
@@ -261,6 +270,7 @@ class SemanticResolver:
         operation_constraint_weight: float = 0.0,
         compile_feedback: dict[tuple[str, str, str], float] | None = None,
         compile_feedback_weight: float = 0.0,
+        structured_retrieval: bool = False,
     ) -> dict[str, Any]:
         operation_rankings = []
         accepted_by_entity: dict[str, dict[str, Any]] = {}
@@ -313,6 +323,54 @@ class SemanticResolver:
                             + selected_semantic_weights["field"] * values.get("field", 0.0),
                             6,
                         )
+            if structured_retrieval:
+                structured_group = {
+                    "group_id": f"runtime::{capability}.{operation}",
+                    "capability": capability,
+                    "operation": operation,
+                    "operation_id": f"{capability}.{operation}",
+                    "candidates": [],
+                }
+                ranked_by_entity = {item["entity_id"]: item for item in ranked}
+                for item in ranked:
+                    row = {
+                        "entity_id": item["entity_id"],
+                        "symbol": item["symbol"],
+                        "file": functions[item["entity_id"]]["file"],
+                        "static_score": item["operation_score"],
+                        "candidate_text": candidate_code_text(functions[item["entity_id"]]),
+                        "features": dict(item["operation_features"]),
+                    }
+                    row["features"]["field-late-interaction"] = float(
+                        item.get("semantic_scores", {}).get("field", 0.0)
+                    )
+                    structured_group["candidates"].append(row)
+                retrieval_report = enrich_group_with_structured_retrieval(structured_group)
+                structured_scores, policy = complete_structured_scores(
+                    structured_group, family_quota=4
+                )
+                for row, score in zip(
+                    structured_group["candidates"], structured_scores, strict=True
+                ):
+                    item = ranked_by_entity[row["entity_id"]]
+                    item["score"] = round(float(score), 6)
+                    item["semantic_candidate"] = True
+                    item["structured_retrieval"] = {
+                        "source_role": row.get("source_role"),
+                        "api_family": row.get("api_family"),
+                        "features": {
+                            name: row["features"].get(name, 0.0)
+                            for name in (
+                                "operation-contract-retrieval",
+                                "layer-route-score",
+                                "graph-neighbor-support",
+                                "api-family-support",
+                                "multi-channel-rrf",
+                            )
+                        },
+                        "policy": policy,
+                        "graph_edges": retrieval_report["graph_edges"],
+                    }
             if operation_constraint_weight:
                 for item in ranked:
                     adjustment, constraint_evidence = contract_adjustment(item)

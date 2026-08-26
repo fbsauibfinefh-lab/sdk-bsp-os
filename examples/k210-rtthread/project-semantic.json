@@ -8,7 +8,7 @@
     "path": "sdk/k210/source"
   },
   "resolver": {
-    "method": "operation-semantic",
+    "method": "operation-structured",
     "model_path": "models/operation-query-adapter-ir-v1.pt",
     "semantic_device": "cpu",
     "semantic_weights": {"static": 0.30, "base": 0.20, "adapted": 0.40, "field": 0.10},

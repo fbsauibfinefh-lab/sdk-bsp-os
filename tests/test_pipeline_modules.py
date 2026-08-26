@@ -31,6 +31,12 @@ from bspforge.sdk_ingestor import SDKIngestor
 from bspforge.ranking_dataset import audit_ground_truth, build_ranking_dataset
 from bspforge.semantic_resolver import SemanticResolver
 from bspforge.semantic_resolver.learning import FEATURE_NAMES
+from bspforge.structured_retrieval import (
+    api_family_key,
+    classify_source_role,
+    complete_structured_scores,
+    enrich_group_with_structured_retrieval,
+)
 from scripts.evaluate_ranker_cv import bm25_scores, ranking_metrics
 
 
@@ -176,6 +182,66 @@ class ModuleTests(unittest.TestCase):
         features = operation_feature_map("timer", "stop", candidate, function)
         self.assertEqual(features["parameterized-toggle"], 1.0)
         self.assertEqual(features["opposite-action"], 0.0)
+
+    def test_source_role_router_separates_hal_from_middleware(self) -> None:
+        hal = classify_source_role(
+            "components/device/hal/source/mtb_hal_gpio.c", "mtb_hal_gpio_setup"
+        )
+        middleware = classify_source_role(
+            "Middlewares/Third_Party/FreeRTOS/Source/timers.c", "xTimerStart"
+        )
+        self.assertEqual(hal[0], "public-hal")
+        self.assertEqual(middleware[0], "middleware")
+        self.assertGreater(hal[1], middleware[1])
+
+    def test_api_family_keeps_base_timer_separate_from_extended_modes(self) -> None:
+        self.assertEqual(api_family_key("timer", "HAL_TIM_Base_Start"), "hal_tim_base")
+        self.assertEqual(api_family_key("timer", "HAL_TIMEx_PWMN_Start"), "hal_tim_ex")
+
+    def test_structured_policy_recovers_public_hal_siblings(self) -> None:
+        group = {
+            "group_id": "fixture::clock.initialize",
+            "capability": "clock",
+            "operation": "initialize",
+            "operation_id": "clock.initialize",
+            "candidates": [
+                {
+                    "entity_id": "ll",
+                    "symbol": "LL_USART_ClockInit",
+                    "file": "Drivers/STM32/Inc/stm32_ll_usart.h",
+                    "static_score": 0.92,
+                    "candidate_text": "file: Drivers/STM32/Inc/stm32_ll_usart.h\nsymbol: LL_USART_ClockInit\nsignature: void LL_USART_ClockInit(void)\nincludes:\ncalls:",
+                    "features": {"operation-exact": 1.0, "operation-substring": 0.0, "parameterized-toggle": 0.0, "field-late-interaction": 0.93},
+                },
+                {
+                    "entity_id": "clock",
+                    "symbol": "HAL_RCC_ClockConfig",
+                    "file": "Drivers/STM32_HAL_Driver/Src/stm32_hal_rcc.c",
+                    "static_score": 0.72,
+                    "candidate_text": "file: Drivers/STM32_HAL_Driver/Src/stm32_hal_rcc.c\nsymbol: HAL_RCC_ClockConfig\nsignature: int HAL_RCC_ClockConfig(void *config)\nincludes:\ncalls:",
+                    "features": {"operation-exact": 1.0, "operation-substring": 0.0, "parameterized-toggle": 0.0, "field-late-interaction": 0.75},
+                },
+                {
+                    "entity_id": "osc",
+                    "symbol": "HAL_RCC_OscConfig",
+                    "file": "Drivers/STM32_HAL_Driver/Src/stm32_hal_rcc.c",
+                    "static_score": 0.70,
+                    "candidate_text": "file: Drivers/STM32_HAL_Driver/Src/stm32_hal_rcc.c\nsymbol: HAL_RCC_OscConfig\nsignature: int HAL_RCC_OscConfig(void *config)\nincludes:\ncalls:",
+                    "features": {"operation-exact": 1.0, "operation-substring": 0.0, "parameterized-toggle": 0.0, "field-late-interaction": 0.74},
+                },
+            ],
+        }
+        enrich_group_with_structured_retrieval(group)
+        scores, policy = complete_structured_scores(group)
+        ranked = sorted(
+            zip(group["candidates"], scores, strict=True),
+            key=lambda item: (-item[1], item[0]["entity_id"]),
+        )
+        self.assertTrue(policy["leader_fallback"])
+        self.assertEqual(
+            {item["symbol"] for item, _ in ranked[:2]},
+            {"HAL_RCC_ClockConfig", "HAL_RCC_OscConfig"},
+        )
 
     def test_operation_tokens_normalize_inflected_and_deinit_actions(self) -> None:
         self.assertIn("enable", identifier_tokens("clock_enabled"))

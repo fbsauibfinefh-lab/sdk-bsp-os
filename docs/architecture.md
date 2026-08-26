@@ -160,3 +160,24 @@ v0.9 将候选函数 IR 拆为 `symbol`、`signature`、`calls`、`file` 和 `in
 构建结束后，`compile_feedback.py` 将结果写入 `08b-semantic-compile-feedback.json`。直接被诊断提及、完整编译并通过产物检查、构建失败但不可归因和未观测绑定采用不同校准值。历史反馈可在同一 SDK 的后续解析中按稳定实体 ID 融合。该反馈只说明可编译、可链接和产物结构，不声明硬件语义正确。
 
 选择性自动接受使用分差、静态/语义一致性、契约准入和候选分数建立置信度。阈值按开发 SDK 分组校准并取保守值；外部集不允许重新选阈值。详细公式、约束表、保证边界和复现命令见 `docs/field-aware-structured-ranking-v0.9.md`，文献与许可边界见 `docs/related-work-citation-and-ip-risk-v0.9.md`。
+
+## v1.0 层级约束结构化排序数据流
+
+`operation-structured` 保持原有 Migration IR 和下游绑定契约不变，只扩展 Semantic Resolver 内部的候选召回、重排和证据记录：
+
+```text
+Migration IR 函数实体
+  -> 五字段 MiniLM 迟交互
+  -> 静态操作、符号词法、签名与操作契约通道
+  -> 源码角色和 HAL/LL 层级路由
+  -> 调用图邻域与 API 家族通道
+  -> 多通道 RRF 和层级契约融合
+  -> q4 API 家族覆盖解码
+  -> 规范化操作绑定计划
+```
+
+源码角色由路径、符号和包含关系共同识别；操作契约使用 capability/operation 专用的必要词、冲突词、签名形态和参数化开关规则。API 家族归一时保留影响设备子模式的标记，例如 `HAL_TIM_Base` 与 `HAL_TIMEx` 属于不同家族，避免扩展定时器接口挤占基础定时器候选。
+
+最终解码先冻结高精度首位，再以同族高契约兄弟、高抽象层兼容家族代表和多通道剩余候选补齐 Top5。每个候选的 `structured_retrieval` 证据包含源码角色、家族、各通道分数和解码分数，可以从最终绑定反查方法选择过程。轻量自适应字段门控不参与最终路径，仅作为自动弱真值跨域泛化不足的消融实验。
+
+OS Backend、Closure Solver 和 Build Diagnoser 不感知具体排序算法。它们继续消费稳定实体 ID、操作、签名和证据位置，因此 v1.0 不需要改动 RT-Thread/Zephyr 后端契约。完整方法边界、实验主表和论文写法见 `docs/core-method-v1.0.md`。

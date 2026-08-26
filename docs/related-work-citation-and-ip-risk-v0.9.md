@@ -10,6 +10,7 @@
 | --- | --- | --- | --- |
 | MiniLM 小模型编码 | MiniLM、Sentence-BERT | 在 Migration IR/API 迁移任务中的输入表示、调优和完整工程验证 | 发明小型 Transformer 或句向量模型 |
 | token 级 MaxSim | ColBERT、ColBERTv2 | 五类 SDK IR 字段专用查询、非空字段归一化、字段消融及与静态契约融合 | 发明 late interaction 或 MaxSim |
+| 多通道 RRF | Reciprocal Rank Fusion | 将静态、字段、契约、层级、调用图和家族证据作为 SDK 专用召回通道，并记录可审计分项 | 发明 RRF |
 | LambdaMART 排序 | LambdaRank/LambdaMART | 四级迁移相关性、SDK 独立分组、面向接口契约的特征 | 发明 learning-to-rank |
 | 语义代码检索 | CodeSearchNet、CodeBERT、GraphCodeBERT | 从自然语言代码检索转化为“规范化 RTOS 操作到 SDK API”的受约束排序 | 首次用预训练模型理解代码 |
 | API 组合约束 | 结构化预测和约束推断相关工作 | 参数化互补、同 API 族、共享句柄/目录/HAL 层等 BSP 迁移约束 | 发明结构化预测、beam search 或整数规划 |
@@ -33,14 +34,15 @@
 8. Burges, Ragno, and Le. **Learning to Rank with Non-Smooth Cost Functions.** NeurIPS 2006. [Microsoft Research](https://www.microsoft.com/en-us/research/publication/learning-to-rank-with-non-smooth-cost-functions/)
 9. Burges. **From RankNet to LambdaRank to LambdaMART: An Overview.** MSR-TR-2010-82. [Microsoft Research](https://www.microsoft.com/en-us/research/publication/from-ranknet-to-lambdarank-to-lambdamart-an-overview/)
 10. Sentence Transformers. **Hard Negative Mining documentation.** [官方文档](https://www.sbert.net/docs/package_reference/util/hard_negatives.html)
+11. Cormack, Clarke, and Buettcher. **Reciprocal Rank Fusion Outperforms Condorcet and Individual Rank Learning Methods.** SIGIR 2009. [ACM DOI](https://doi.org/10.1145/1571941.1572114)
 
 ### 3.3 编译反馈、约束和风险控制
 
-11. Wang et al. **Compilable Neural Code Generation with Compiler Feedback.** Findings of ACL 2022. [ACL Anthology PDF](https://aclanthology.org/2022.findings-acl.2.pdf)
-12. Ahmed et al. **Compilation Error Repair: For the Student Programs, From the Student Programs.** ICSE-SEET 2018. [Microsoft Research](https://www.microsoft.com/en-us/research/publication/compilation-error-repair-student-programs-student-programs/)
-13. Xu, Guo, and Wei. **Conformal Risk Control for Ordinal Classification.** UAI 2023. [PMLR](https://proceedings.mlr.press/v216/xu23a.html)
-14. **Conformal Risk Control.** ICLR 2024. [OpenReview PDF](https://openreview.net/pdf?id=33XGfHLtZg)
-15. **Type-Constrained Code Generation with Language Models.** PACMPL 2025. [ACM DOI](https://doi.org/10.1145/3729274)
+12. Wang et al. **Compilable Neural Code Generation with Compiler Feedback.** Findings of ACL 2022. [ACL Anthology PDF](https://aclanthology.org/2022.findings-acl.2.pdf)
+13. Ahmed et al. **Compilation Error Repair: For the Student Programs, From the Student Programs.** ICSE-SEET 2018. [Microsoft Research](https://www.microsoft.com/en-us/research/publication/compilation-error-repair-student-programs-student-programs/)
+14. Xu, Guo, and Wei. **Conformal Risk Control for Ordinal Classification.** UAI 2023. [PMLR](https://proceedings.mlr.press/v216/xu23a.html)
+15. **Conformal Risk Control.** ICLR 2024. [OpenReview PDF](https://openreview.net/pdf?id=33XGfHLtZg)
+16. **Type-Constrained Code Generation with Language Models.** PACMPL 2025. [ACM DOI](https://doi.org/10.1145/3729274)
 引用纪律是只保留真正支撑方法或讨论的文献，不为凑数量加入未使用条目。正式 BibTeX 应从出版社、ACL Anthology、PMLR 或作者主页导出，不从二次博客复制。
 
 ## 4. 雷同与抄袭风险判断
@@ -51,13 +53,14 @@
 
 ### 4.2 当前最接近的公开思想
 
-最接近字段迟交互的是 ColBERT；最接近排序器的是 LambdaMART；最接近编译闭环的是 CompCoder 和编译错误修复；最接近自动接受控制的是 conformal/selective prediction。它们分别面向文本检索、通用排序、代码生成/修复和风险控制，没有给出“异构芯片 SDK IR 到多 RTOS 设备模型绑定”的完整问题定义、API 组合规则、构建闭包和固件验证流程。
+最接近字段迟交互的是 ColBERT，多通道名次融合直接采用 RRF 的公开思想；最接近学习排序器的是 LambdaMART；最接近编译闭环的是 CompCoder 和编译错误修复；最接近自动接受控制的是 conformal/selective prediction。它们分别面向文本检索、通用排序、代码生成/修复和风险控制，没有给出“异构芯片 SDK IR 到多 RTOS 设备模型绑定”的完整问题定义、源码层级与操作契约、API 家族覆盖解码、构建闭包和固件验证流程。
 
 因此，论文创新点应放在任务建模和组合方法上，而不是单个通用算法组件：
 
 - SDK Migration IR 的字段化迁移语义表示；
 - 面向规范化设备操作的字段专用迟交互；
-- 结合句柄、API 族、层级和互补操作的组合约束；
+- 将源码角色、操作契约和调用图作为 SDK 专用通道，并以 RRF 进行异构名次融合；
+- 固定高精度首位、补齐同族兄弟和兼容家族代表的 API 家族覆盖解码；
 - 排序、绑定、闭包、编译诊断、固件和上板验证的可追溯闭环；
 - SDK 独立分组与选择性自动接受协议。
 

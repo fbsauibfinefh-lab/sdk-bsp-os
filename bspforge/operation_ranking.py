@@ -43,6 +43,14 @@ OPERATION_FEATURE_NAMES = [
     "field-calls-maxsim",
     "field-file-maxsim",
     "field-includes-maxsim",
+    "source-role-prior",
+    "symbol-lexical-retrieval",
+    "signature-contract-retrieval",
+    "operation-contract-retrieval",
+    "layer-route-score",
+    "graph-neighbor-support",
+    "api-family-support",
+    "multi-channel-rrf",
 ]
 
 OPERATION_DESCRIPTIONS = {
@@ -228,6 +236,14 @@ def operation_feature_map(
         "field-calls-maxsim": 0.0,
         "field-file-maxsim": 0.0,
         "field-includes-maxsim": 0.0,
+        "source-role-prior": 0.0,
+        "symbol-lexical-retrieval": 0.0,
+        "signature-contract-retrieval": 0.0,
+        "operation-contract-retrieval": 0.0,
+        "layer-route-score": 0.0,
+        "graph-neighbor-support": 0.0,
+        "api-family-support": 0.0,
+        "multi-channel-rrf": 0.0,
     }
 
 

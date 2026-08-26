@@ -1,0 +1,259 @@
+{
+  "created_at": "2026-08-26T08:12:05.274609+00:00",
+  "dataset_summary": {
+    "candidates": 37607,
+    "groups": 450,
+    "groups_by_role": {
+      "external-test": 50,
+      "train": 400
+    },
+    "positive_candidates": 2357,
+    "sdks": 25,
+    "skipped_groups": 25,
+    "training_independence_groups": 20,
+    "training_sdks": 22
+  },
+  "external": {
+    "bootstrap_vs_operation_static": {
+      "map": {
+        "ci95_high": 0.274473,
+        "ci95_low": 0.093777,
+        "mean_delta": 0.183154
+      },
+      "mrr": {
+        "ci95_high": 0.258658,
+        "ci95_low": 0.073162,
+        "mean_delta": 0.165232
+      },
+      "ndcg_at_10": {
+        "ci95_high": 0.280371,
+        "ci95_low": 0.107131,
+        "mean_delta": 0.192922
+      },
+      "precision_at_1": {
+        "ci95_high": 0.3,
+        "ci95_low": 0.06,
+        "mean_delta": 0.18
+      },
+      "recall_at_3": {
+        "ci95_high": 0.275333,
+        "ci95_low": 0.046,
+        "mean_delta": 0.159333
+      },
+      "recall_at_5": {
+        "ci95_high": 0.361667,
+        "ci95_low": 0.131,
+        "mean_delta": 0.247667
+      }
+    },
+    "by_capability": {
+      "clock": {
+        "map": 0.688097,
+        "mrr": 0.741667,
+        "ndcg_at_10": 0.759191,
+        "precision_at_1": 0.6,
+        "recall_at_3": 0.67,
+        "recall_at_5": 0.84
+      },
+      "gpio": {
+        "map": 0.853896,
+        "mrr": 1.0,
+        "ndcg_at_10": 0.930006,
+        "precision_at_1": 1.0,
+        "recall_at_3": 0.727273,
+        "recall_at_5": 0.94697
+      },
+      "interrupt": {
+        "map": 0.830688,
+        "mrr": 0.830688,
+        "ndcg_at_10": 0.87037,
+        "precision_at_1": 0.777778,
+        "recall_at_3": 0.888889,
+        "recall_at_5": 0.888889
+      },
+      "timer": {
+        "map": 0.772727,
+        "mrr": 0.795455,
+        "ndcg_at_10": 0.838509,
+        "precision_at_1": 0.727273,
+        "recall_at_3": 0.681818,
+        "recall_at_5": 0.954545
+      },
+      "uart": {
+        "map": 0.944444,
+        "mrr": 1.0,
+        "ndcg_at_10": 0.97324,
+        "precision_at_1": 1.0,
+        "recall_at_3": 1.0,
+        "recall_at_5": 1.0
+      }
+    },
+    "by_sdk": {
+      "kendryte-k210-standalone-sdk-0.5.6": {
+        "map": 0.847368,
+        "mrr": 0.921053,
+        "ndcg_at_10": 0.903121,
+        "precision_at_1": 0.894737,
+        "recall_at_3": 0.833333,
+        "recall_at_5": 0.903509
+      },
+      "psoc-e84-edgi-talk-sdk": {
+        "map": 0.840336,
+        "mrr": 0.890756,
+        "ndcg_at_10": 0.896147,
+        "precision_at_1": 0.823529,
+        "recall_at_3": 0.833333,
+        "recall_at_5": 0.926471
+      },
+      "stm32cube-f1": {
+        "map": 0.740308,
+        "mrr": 0.785714,
+        "ndcg_at_10": 0.803163,
+        "precision_at_1": 0.714286,
+        "recall_at_3": 0.657143,
+        "recall_at_5": 0.957143
+      }
+    },
+    "field_late_interaction": {
+      "map": 0.668104,
+      "mrr": 0.755837,
+      "ndcg_at_10": 0.728428,
+      "precision_at_1": 0.66,
+      "recall_at_3": 0.667333,
+      "recall_at_5": 0.772333
+    },
+    "final_method": {
+      "map": 0.815,
+      "mrr": 0.872857,
+      "ndcg_at_10": 0.872761,
+      "precision_at_1": 0.82,
+      "recall_at_3": 0.784,
+      "recall_at_5": 0.926333
+    },
+    "hierarchical_fusion": {
+      "map": 0.780656,
+      "mrr": 0.852413,
+      "ndcg_at_10": 0.832265,
+      "precision_at_1": 0.78,
+      "recall_at_3": 0.797333,
+      "recall_at_5": 0.832333
+    },
+    "operation_static": {
+      "map": 0.631846,
+      "mrr": 0.707626,
+      "ndcg_at_10": 0.679839,
+      "precision_at_1": 0.64,
+      "recall_at_3": 0.624667,
+      "recall_at_5": 0.678667
+    },
+    "selective_calibration": {
+      "development": {
+        "accepted": 5,
+        "coverage": 0.05814,
+        "precision": 1
+      },
+      "external": {
+        "accepted": 19,
+        "coverage": 0.38,
+        "precision": 1
+      },
+      "status": "calibrated-on-development-only",
+      "target_precision": 0.95,
+      "threshold": 0.411392
+    },
+    "structured_rrf": {
+      "map": 0.670875,
+      "mrr": 0.750387,
+      "ndcg_at_10": 0.732876,
+      "precision_at_1": 0.66,
+      "recall_at_3": 0.68,
+      "recall_at_5": 0.736333
+    },
+    "v0.9_best_map_configuration": {
+      "map": 0.72267,
+      "mrr": 0.829384,
+      "ndcg_at_10": 0.767459,
+      "precision_at_1": 0.78,
+      "recall_at_3": 0.710667,
+      "recall_at_5": 0.772333
+    }
+  },
+  "k210_pipeline": {
+    "artifacts": [
+      {
+        "kind": "elf",
+        "path": "/home/whk/RTT-porting/bspforge/workspace/generated/k210-rtthread-semantic/bsp/k210/rtthread.elf",
+        "sha256": "0a41a6d6618460e26107469ea055c1b81e59ac60eaca94069ca8c662db428295",
+        "size": 668008
+      },
+      {
+        "kind": "bin",
+        "path": "/home/whk/RTT-porting/bspforge/workspace/generated/k210-rtthread-semantic/bsp/k210/rtthread.bin",
+        "sha256": "426332fc66545def898228db9691abbd009458de4335afdfb6559971a1d9c5c7",
+        "size": 471992
+      }
+    ],
+    "build_attempts": 2,
+    "build_success": true,
+    "compile_feedback": {
+      "bindings": 19,
+      "compiled": 19,
+      "implicated": 0,
+      "unobserved": 0
+    },
+    "legacy_capability_metric_warning": "旧 K210 能力级真值不包含操作级替代符号，不能与 50 组分级操作主表直接比较。",
+    "method": "operation-structured",
+    "repairs_applied": 1,
+    "semantic_resolution_seconds": 120.389411,
+    "total_seconds": 259.671801
+  },
+  "limitations": [
+    "三套板卡 SDK 已用于错误分析，因此结果属于探索性外部测试。",
+    "正式论文需冻结方法后增加未查看 SDK 做一次性确认测试。",
+    "当前单人源码真值仍需第二名标注者复核。",
+    "编译反馈不证明上板运行语义。"
+  ],
+  "method": {
+    "adaptive_gate_role": "negative ablation; excluded from final score",
+    "family_quota": 4,
+    "name": "hierarchy-constrained field late interaction with API-family coverage decoding",
+    "runtime_resolver": "operation-structured",
+    "trainable_gate_parameters": 461
+  },
+  "protocol": "16 training independence groups; 4 development groups; 3 board SDKs external only",
+  "schema_version": "1.0",
+  "status": "exploratory-external-test",
+  "targets": {
+    "map": 0.8,
+    "ndcg_at_10": 0.8,
+    "passed": {
+      "map": true,
+      "ndcg_at_10": true,
+      "precision_at_1": true,
+      "recall_at_5": true,
+      "selective_precision": true
+    },
+    "precision_at_1": 0.8,
+    "recall_at_5": 0.9,
+    "selective_precision": 0.95
+  },
+  "truth_audit": {
+    "checks": {
+      "at_least_20_training_independence_groups": true,
+      "external_labels_source_audited": true,
+      "graded_training_labels_present": true,
+      "training_external_group_disjoint": true
+    },
+    "group_coverage": {
+      "strong-positive": 383,
+      "weak-positive-only": 67
+    },
+    "label_counts": {
+      "0": 35250,
+      "1": 532,
+      "2": 677,
+      "3": 1148
+    },
+    "passed": true
+  }
+}
