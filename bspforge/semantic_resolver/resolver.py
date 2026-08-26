@@ -2,9 +2,12 @@ from __future__ import annotations
 
 from typing import Any
 from pathlib import Path
+from statistics import mean
 
 from bspforge.capability_schema import CAPABILITY_SCHEMA
 from bspforge.common import stable_id, utc_now
+from bspforge.compile_feedback import feedback_index
+from bspforge.operation_constraints import compatibility, contract_adjustment
 from bspforge.operation_ranking import operation_feature_map, operation_static_score
 from bspforge.semantic_adapter import OperationSemanticRanker
 from bspforge.semantic_resolver.learning import LearnedRanker
@@ -22,7 +25,7 @@ DEFAULT_CAPABILITIES = {
         "target_api": "RT-Thread pin device",
     },
     "timer": {
-        "terms": ["timer", "gptimer", "ctimer", "alarm", "tick", "clint", "mtime", "counter", "tmr"],
+        "terms": ["timer", "tim", "gptimer", "ctimer", "tcpwm", "alarm", "tick", "clint", "mtime", "counter", "tmr"],
         "actions": ["init", "deinit", "start", "stop", "enable", "disable", "setup", "read", "capture", "register", "irq", "interval"],
         "target_api": "RT-Thread timer/tick service",
     },
@@ -52,6 +55,7 @@ DEFAULT_SEMANTIC_WEIGHTS = {
     "static": 0.30,
     "base": 0.20,
     "adapted": 0.50,
+    "field": 0.0,
 }
 
 
@@ -95,6 +99,9 @@ class SemanticResolver:
         semantic_weights: dict[str, float] | None = None,
         semantic_candidate_top_k: int = 0,
         semantic_device: str = "cpu",
+        operation_constraint_weight: float = 0.0,
+        compile_feedback: dict[str, Any] | None = None,
+        compile_feedback_weight: float = 0.0,
     ) -> dict[str, Any]:
         weights = {**DEFAULT_EVIDENCE_WEIGHTS, **(evidence_weights or {})}
         unknown = set(weights).difference(DEFAULT_EVIDENCE_WEIGHTS)
@@ -138,6 +145,11 @@ class SemanticResolver:
             raise ValueError("semantic weights must sum to 1.0")
         if semantic_candidate_top_k < 0:
             raise ValueError("semantic_candidate_top_k must be non-negative")
+        if operation_constraint_weight < 0.0:
+            raise ValueError("operation_constraint_weight must be non-negative")
+        if not 0.0 <= compile_feedback_weight <= 1.0:
+            raise ValueError("compile_feedback_weight must be between 0 and 1")
+        previous_feedback = feedback_index(compile_feedback or {})
         selected_hybrid_weight = 0.0
         if method == "hybrid":
             assert ranker is not None
@@ -165,6 +177,9 @@ class SemanticResolver:
                     semantic_ranker=semantic_ranker,
                     semantic_weights=selected_semantic_weights,
                     semantic_candidate_top_k=semantic_candidate_top_k,
+                    operation_constraint_weight=operation_constraint_weight,
+                    compile_feedback=previous_feedback,
+                    compile_feedback_weight=compile_feedback_weight,
                 )
                 mappings.append({
                     "id": stable_id(ir["sdk"]["id"], "mapping", capability),
@@ -221,6 +236,8 @@ class SemanticResolver:
             "hybrid_weight": selected_hybrid_weight if method == "hybrid" else None,
             "semantic_weights": selected_semantic_weights if method == "operation-semantic" else None,
             "semantic_model": semantic_ranker.metadata if semantic_ranker is not None else None,
+            "operation_constraint_weight": operation_constraint_weight,
+            "compile_feedback_weight": compile_feedback_weight,
             "evidence_weights": weights,
             "mappings": mappings,
             "summary": {
@@ -241,6 +258,9 @@ class SemanticResolver:
         semantic_ranker: OperationSemanticRanker | None = None,
         semantic_weights: dict[str, float] | None = None,
         semantic_candidate_top_k: int = 0,
+        operation_constraint_weight: float = 0.0,
+        compile_feedback: dict[tuple[str, str, str], float] | None = None,
+        compile_feedback_weight: float = 0.0,
     ) -> dict[str, Any]:
         operation_rankings = []
         accepted_by_entity: dict[str, dict[str, Any]] = {}
@@ -251,7 +271,11 @@ class SemanticResolver:
             if semantic_ranker is not None
             else None
         )
-        selected_semantic_weights = semantic_weights or DEFAULT_SEMANTIC_WEIGHTS
+        selected_semantic_weights = {
+            **DEFAULT_SEMANTIC_WEIGHTS,
+            **(semantic_weights or {}),
+        }
+        selected_for_capability: list[tuple[str, dict[str, Any]]] = []
         for operation in operations:
             ranked = []
             for candidate in candidates:
@@ -278,18 +302,51 @@ class SemanticResolver:
                     item["semantic_scores"] = {
                         "base": round(values["base"], 6),
                         "adapted": round(values["adapted"], 6),
+                        "field": round(values.get("field", 0.0), 6),
                     }
                     item["semantic_candidate"] = item["entity_id"] in pool
                     if item["semantic_candidate"]:
                         item["score"] = round(
                             selected_semantic_weights["static"] * item["operation_score"]
                             + selected_semantic_weights["base"] * values["base"]
-                            + selected_semantic_weights["adapted"] * values["adapted"],
+                            + selected_semantic_weights["adapted"] * values["adapted"]
+                            + selected_semantic_weights["field"] * values.get("field", 0.0),
                             6,
                         )
+            if operation_constraint_weight:
+                for item in ranked:
+                    adjustment, constraint_evidence = contract_adjustment(item)
+                    pair_values = [
+                        compatibility(
+                            capability, operation, item, previous_operation, previous
+                        )[0]
+                        for previous_operation, previous in selected_for_capability
+                    ]
+                    pair_support = mean(pair_values) if pair_values else 0.0
+                    item["constraint_scores"] = {
+                        "contract": round(adjustment, 6),
+                        "api_family": round(pair_support, 6),
+                        "evidence": constraint_evidence,
+                    }
+                    item["score"] = round(
+                        item["score"] + operation_constraint_weight * (adjustment + pair_support),
+                        6,
+                    )
+            if compile_feedback_weight:
+                for item in ranked:
+                    feedback_score = (compile_feedback or {}).get(
+                        (capability, operation, item["entity_id"]), 0.5
+                    )
+                    item["compile_feedback_score"] = feedback_score
+                    item["score"] = round(
+                        (1.0 - compile_feedback_weight) * item["score"]
+                        + compile_feedback_weight * feedback_score,
+                        6,
+                    )
+            if semantic_scores is not None:
                 ranked.sort(
                     key=lambda item: (
-                        -int(item["semantic_candidate"]),
+                        -int(item.get("semantic_candidate", True)),
                         -item["score"],
                         item["entity_id"],
                     )
@@ -326,6 +383,7 @@ class SemanticResolver:
                 if current is None or item["score"] > current["score"]:
                     all_ranked[item["entity_id"]] = dict(item)
             if selected:
+                selected_for_capability.append((operation, selected))
                 current = accepted_by_entity.get(selected["entity_id"])
                 if current is None:
                     accepted_by_entity[selected["entity_id"]] = dict(selected)

@@ -257,6 +257,11 @@ def main() -> int:
         for group in external
         for candidate in group["candidates"]
     )
+    has_external_field = any(
+        candidate["features"].get("field-late-interaction", 0.0)
+        for group in external
+        for candidate in group["candidates"]
+    )
     selected_weight, validation_scores = select_weight(
         training, learning_features, (0.0, 0.25, 0.5, 0.75, 1.0), args.seed
     )
@@ -274,6 +279,10 @@ def main() -> int:
         records["static-cross-reranker-rrf"] = []
         for weight in (0.25, 0.5, 0.75):
             records[f"static-cross-reranker-{weight:.2f}"] = []
+    if has_external_field:
+        records["field-late-interaction-only"] = []
+        for weight in (0.25, 0.5, 0.75):
+            records[f"static-field-late-{weight:.2f}"] = []
     for group in external:
         score_sets = {
             "bm25-lexical": bm25_scores(group),
@@ -314,6 +323,20 @@ def main() -> int:
                     for static, reranker in zip(
                         score_sets["operation-static"],
                         score_sets["cross-reranker-only"],
+                        strict=True,
+                    )
+                ]
+        if "field-late-interaction-only" in records:
+            score_sets["field-late-interaction-only"] = [
+                float(item["features"]["field-late-interaction"])
+                for item in group["candidates"]
+            ]
+            for weight in (0.25, 0.5, 0.75):
+                score_sets[f"static-field-late-{weight:.2f}"] = [
+                    weight * static + (1.0 - weight) * field_score
+                    for static, field_score in zip(
+                        score_sets["operation-static"],
+                        score_sets["field-late-interaction-only"],
                         strict=True,
                     )
                 ]

@@ -15,7 +15,7 @@ BSPForge 是一个面向芯片 SDK 语义恢复与 RTOS BSP 自动生成的研�
 
 K210/RT-Thread 路径会生成真实参与链接的 `rt_uart_ops`、`rt_pin_ops`、`rt_hwtimer_ops`、设备实例和初始化注册函数。成熟 BSP 路径追踪 RTOS 原生驱动到 SDK 实体的调用证据，并生成设备 API 验证入口。流水线在编译失败后根据 IR 增补源码或包含目录，直到成功、无新约束或达到迭代上限；链接成功后还会检查固件架构、段信息、哈希和关键生成符号。
 
-v0.8 在 22.7M 参数 MiniLM 上增加 12,288 参数的 IR 查询低秩适配器，并实现静态、基础语义和适配语义三路融合。50 个板卡操作组上的均衡模式 P@1 为 0.620、MAP 为 0.635，Top-10 精度模式 P@1 为 0.640；相对 v0.7 的增量尚未达到统计显著。K210 的 `operation-semantic` 完整流水线已生成 19 个操作绑定，经一次自动诊断修复后编译出 RISC-V ELF/BIN。3 块开发板 × 2 个 RTOS 的六组工程均已完成固件静态验证；Zephyr native_sim 已完成 20 轮可执行回归，真实上板验证仍待完成。
+v0.9 将 MiniLM token 迟交互应用到 Migration IR 的五个字段，并增加四级真值、API 组合约束、编译反馈和保守拒答。50 个板卡操作组上的探索性结果为：最佳 P@1 0.800，最佳 Recall@5 0.772、MAP 0.723、nDCG@10 0.767；首位目标达到，但其余目标和有实际覆盖的 0.95 选择性精度尚未达到。K210 的完整流水线可生成 19 个操作绑定，经自动诊断修复后编译出 RISC-V ELF/BIN。3 块开发板 × 2 个 RTOS 的六组工程均已完成固件静态验证；Zephyr native_sim 已完成 20 轮可执行回归，真实上板验证仍待完成。
 
 ## 快速开始
 
@@ -88,6 +88,9 @@ conda run -n AIoT-v1.0 python -m bspforge.cli pipeline \
 - [语义排序实验](docs/semantic-ranking.md)
 - [操作级排序与模型优化](docs/operation-ranking-v0.7.md)
 - [IR 感知轻量语义排序 v0.8](docs/ir-semantic-reranking-v0.8.md)
+- [字段迟交互、组合约束与编译校准 v0.9](docs/field-aware-structured-ranking-v0.9.md)
+- [方法引用与知识产权风险检查](docs/related-work-citation-and-ip-risk-v0.9.md)
+- [第三方组件与许可证说明](THIRD_PARTY_NOTICES.md)
 - [实验规模与仿真方案](docs/experiment-scale-and-simulation-plan.md)
 - [扩展新 SDK/后端](docs/extending.md)
 

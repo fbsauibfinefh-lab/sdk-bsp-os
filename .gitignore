@@ -24,5 +24,8 @@ models/operation-ranker*.txt.json
 models/operation-encoder*/
 models/operation-reranker*/
 experiments/generated/operation-ranking-results-*.json
+experiments/generated/development-truth-review-*.json
+experiments/generated/operation-ranking-errors-*.json
+experiments/generated/operation-graded-truth-audit-*.json
 !experiments/generated/operation-ranking-results-adapter-ensemble.json
 !experiments/generated/operation-ranking-results-adapter-cascade-k10.json

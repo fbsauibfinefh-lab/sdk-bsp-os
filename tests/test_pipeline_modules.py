@@ -8,6 +8,7 @@ from pathlib import Path
 from bspforge.build_diagnoser import BuildDiagnoser
 from bspforge.binding_planner import BindingPlanner
 from bspforge.closure_solver import ClosureSolver
+from bspforge.compile_feedback import create_compile_feedback
 from bspforge.common import write_json
 from bspforge.evaluation import ExperimentEvaluator
 from bspforge.ir_store import IRStore
@@ -18,7 +19,14 @@ from bspforge.os_backend.native_binding import NativeDriverBindingTracer
 from bspforge.os_backend.rtthread_device import RTThreadDeviceModelGenerator
 from bspforge.os_backend.rtthread_validation import RTThreadValidationGenerator
 from bspforge.operation_dataset import build_operation_dataset
-from bspforge.operation_ranking import operation_feature_map, operation_static_score, weak_relevance
+from bspforge.operation_constraints import contract_adjustment
+from bspforge.operation_ranking import (
+    graded_relevance,
+    identifier_tokens,
+    operation_feature_map,
+    operation_static_score,
+    weak_relevance,
+)
 from bspforge.sdk_ingestor import SDKIngestor
 from bspforge.ranking_dataset import audit_ground_truth, build_ranking_dataset
 from bspforge.semantic_resolver import SemanticResolver
@@ -169,6 +177,61 @@ class ModuleTests(unittest.TestCase):
         self.assertEqual(features["parameterized-toggle"], 1.0)
         self.assertEqual(features["opposite-action"], 0.0)
 
+    def test_operation_tokens_normalize_inflected_and_deinit_actions(self) -> None:
+        self.assertIn("enable", identifier_tokens("clock_enabled"))
+        self.assertIn("deinit", identifier_tokens("HAL_RCC_DeInit"))
+
+    def test_public_header_inline_internal_is_not_private(self) -> None:
+        candidate = {"entity_id": "inline", "symbol": "mtb_hal_gpio_write_internal", "score": 0.7}
+        function = {
+            "file": "hal/include/mtb_hal_gpio_impl.h",
+            "signature": "static inline void mtb_hal_gpio_write_internal(void *obj, bool value)",
+            "calls": [],
+            "parser_confidence": 1.0,
+        }
+        features = operation_feature_map("gpio", "write", candidate, function)
+        self.assertEqual(features["private-api"], 0.0)
+        self.assertGreaterEqual(graded_relevance(features)[0], 2)
+
+    def test_contract_adjustment_rejects_semantic_conflict(self) -> None:
+        candidate = {
+            "features": {
+                "capability-name": 1.0,
+                "operation-exact": 1.0,
+                "operation-substring": 0.0,
+                "parameterized-toggle": 0.0,
+                "signature-hint": 0.0,
+                "controller-api": 0.0,
+                "hal-abstraction": 1.0,
+                "opposite-action": 0.0,
+                "semantic-conflict": 1.0,
+                "reverse-os-adapter": 0.0,
+                "private-api": 0.0,
+                "test-example": 0.0,
+            }
+        }
+        adjustment, evidence = contract_adjustment(candidate)
+        self.assertLess(adjustment, 0.0)
+        self.assertIn("reject:semantic-conflict", evidence)
+
+    def test_compile_feedback_does_not_claim_runtime_semantics(self) -> None:
+        resolution = {
+            "sdk_id": "fixture-sdk",
+            "mappings": [{
+                "capability": "uart",
+                "operation_rankings": [{
+                    "operation": "write",
+                    "selected_entity_id": "fn-uart-write",
+                    "selected_symbol": "uart_send_data",
+                }],
+            }],
+        }
+        feedback = create_compile_feedback(
+            resolution, {"success": True, "skipped": False, "diagnosis": {"diagnostics": []}}
+        )
+        self.assertEqual(feedback["records"][0]["calibration_score"], 1.0)
+        self.assertFalse(feedback["records"][0]["semantic_correctness_proven"])
+
     def test_operation_ranker_rejects_reverse_os_adapter(self) -> None:
         candidate = {"entity_id": "reverse", "symbol": "cyhal_gpio_write", "score": 0.7}
         function = {
@@ -271,7 +334,10 @@ class ModuleTests(unittest.TestCase):
         training = [item for item in dataset["groups"] if item["role"] == "train"]
         external = [item for item in dataset["groups"] if item["role"] == "external-test"]
         self.assertTrue(training)
-        self.assertEqual({item["label_source"] for group in training for item in group["candidates"]}, {"weak-supervision"})
+        self.assertEqual(
+            {item["label_source"] for group in training for item in group["candidates"]},
+            {"auditable-graded-supervision"},
+        )
         self.assertEqual({item["label_source"] for group in external for item in group["candidates"]}, {"source-audited"})
 
     def test_process_transport_reuses_hardware_protocol(self) -> None:

@@ -1,0 +1,193 @@
+{
+  "created_at": "2026-08-25T15:49:42.132179+00:00",
+  "dataset_summary": {
+    "candidates": 37607,
+    "groups": 450,
+    "groups_by_role": {
+      "external-test": 50,
+      "train": 400
+    },
+    "positive_candidates": 2357,
+    "sdks": 25,
+    "skipped_groups": 25,
+    "training_independence_groups": 20,
+    "training_sdks": 22
+  },
+  "interpretation": {
+    "status": "exploratory-external-test",
+    "target": {
+      "map": 0.8,
+      "ndcg_at_10": 0.8,
+      "precision_at_1": 0.8,
+      "recall_at_5": 0.9,
+      "selective_precision": 0.95
+    },
+    "warning": "板卡结果已用于多轮错误分析和真值完整性修订；正式论文需冻结方法后增加未查看 SDK，并对板卡真值进行第二人复核。"
+  },
+  "protocol": "22 training corpora / 20 independence groups; three board SDKs are external test only",
+  "ranking": {
+    "bm25-lexical": {
+      "map": 0.36811,
+      "mrr": 0.41232,
+      "ndcg_at_10": 0.462253,
+      "precision_at_1": 0.26,
+      "recall_at_3": 0.315,
+      "recall_at_5": 0.468333
+    },
+    "field-late-interaction-only": {
+      "map": 0.668104,
+      "mrr": 0.755837,
+      "ndcg_at_10": 0.728428,
+      "precision_at_1": 0.66,
+      "recall_at_3": 0.667333,
+      "recall_at_5": 0.772333
+    },
+    "hybrid-selected": {
+      "map": 0.627657,
+      "mrr": 0.713191,
+      "ndcg_at_10": 0.667167,
+      "precision_at_1": 0.66,
+      "recall_at_3": 0.624667,
+      "recall_at_5": 0.658667
+    },
+    "learned-weak": {
+      "map": 0.364405,
+      "mrr": 0.397284,
+      "ndcg_at_10": 0.430737,
+      "precision_at_1": 0.22,
+      "recall_at_3": 0.438333,
+      "recall_at_5": 0.55
+    },
+    "operation-static": {
+      "map": 0.631846,
+      "mrr": 0.707626,
+      "ndcg_at_10": 0.679839,
+      "precision_at_1": 0.64,
+      "recall_at_3": 0.624667,
+      "recall_at_5": 0.678667
+    },
+    "static-field-late-0.25": {
+      "map": 0.72267,
+      "mrr": 0.829384,
+      "ndcg_at_10": 0.767459,
+      "precision_at_1": 0.78,
+      "recall_at_3": 0.710667,
+      "recall_at_5": 0.772333
+    },
+    "static-field-late-0.50": {
+      "map": 0.711867,
+      "mrr": 0.83243,
+      "ndcg_at_10": 0.758818,
+      "precision_at_1": 0.8,
+      "recall_at_3": 0.708667,
+      "recall_at_5": 0.743667
+    },
+    "static-field-late-0.75": {
+      "map": 0.692873,
+      "mrr": 0.800106,
+      "ndcg_at_10": 0.741139,
+      "precision_at_1": 0.74,
+      "recall_at_3": 0.684667,
+      "recall_at_5": 0.747667
+    }
+  },
+  "schema_version": "1.0",
+  "structured": {
+    "external": {
+      "field-late-interaction": {
+        "map": 0.647735,
+        "mrr": 0.741708,
+        "ndcg_at_10": 0.697596,
+        "precision_at_1": 0.66,
+        "recall_at_3": 0.674,
+        "recall_at_5": 0.759
+      },
+      "operation-static": {
+        "map": 0.629683,
+        "mrr": 0.702823,
+        "ndcg_at_10": 0.675192,
+        "precision_at_1": 0.64,
+        "recall_at_3": 0.618,
+        "recall_at_5": 0.665333
+      },
+      "structured-selected": {
+        "map": 0.632813,
+        "mrr": 0.701562,
+        "ndcg_at_10": 0.67977,
+        "precision_at_1": 0.6,
+        "recall_at_3": 0.648,
+        "recall_at_5": 0.675333
+      }
+    },
+    "selected": {
+      "development": {
+        "map": 0.851782,
+        "mrr": 0.908046,
+        "ndcg_at_10": 0.856511,
+        "precision_at_1": 0.895349,
+        "recall_at_3": 0.536822,
+        "recall_at_5": 0.765116
+      },
+      "field_weight": 0.0,
+      "pair_weight": 0.05,
+      "static_weight": 1.0
+    },
+    "selective_calibration": {
+      "development": {
+        "accepted": 1,
+        "coverage": 0.011628,
+        "precision": 1
+      },
+      "external": {
+        "accepted": 0,
+        "coverage": 0.0,
+        "precision": null
+      },
+      "per_sdk_thresholds": {
+        "arduino-renesas-core": {
+          "accepted": 1,
+          "threshold": 0.95831
+        },
+        "espressif-esp-idf-6.0.1": {
+          "accepted": 19,
+          "threshold": 0.3213
+        },
+        "libopencm3-hal": {
+          "accepted": 9,
+          "threshold": 0.59005
+        },
+        "raspberry-pi-pico-sdk-2.2.0": {
+          "accepted": 16,
+          "threshold": 0.31675
+        },
+        "renesas-fsp": {
+          "accepted": 18,
+          "threshold": 0.30509
+        }
+      },
+      "required_empirical_precision": 1.0,
+      "status": "calibrated-on-development-only",
+      "target_precision": 0.95,
+      "threshold": 0.95831
+    }
+  },
+  "truth_audit": {
+    "checks": {
+      "at_least_20_training_independence_groups": true,
+      "external_labels_source_audited": true,
+      "graded_training_labels_present": true,
+      "training_external_group_disjoint": true
+    },
+    "group_coverage": {
+      "strong-positive": 383,
+      "weak-positive-only": 67
+    },
+    "label_counts": {
+      "0": 35250,
+      "1": 532,
+      "2": 677,
+      "3": 1148
+    },
+    "passed": true
+  }
+}

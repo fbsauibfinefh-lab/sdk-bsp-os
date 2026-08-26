@@ -1,5 +1,15 @@
 # 变更记录
 
+## 0.9.0
+
+- 将操作训练真值改为带证据和置信度的四级相关性，并增加独立性组、标签来源和覆盖审计。
+- 增加基于 MiniLM token embedding 的五字段迟交互，保存 symbol、signature、calls、file 和 includes 的 MaxSim 分项。
+- 增加操作契约准入、API 族/签名/目录/HAL 层兼容规则及能力级 beam 组合解码。
+- 增加选择性接受校准；开发 SDK 无法支撑目标精度时必须弃权，不在板卡外部集移动阈值。
+- 将编译与产物验证映射为稳定操作绑定反馈，明确编译通过不证明硬件语义正确。
+- Resolver 支持字段语义、运行时组合约束和历史编译反馈；流水线输出 `08b-semantic-compile-feedback.json`。
+- 增加完整方法文档、参考文献与知识产权/许可证风险检查文档。
+
 ## 0.4.0
 
 - 增加 Zephyr 4.4 后端，生成 devicetree/Kconfig/CMake 原生应用并调用 west/Ninja 构建。

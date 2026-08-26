@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Any
 
 from bspforge.operation_encoder import operation_encoder_query
+from bspforge.field_late_interaction import FieldLateInteractionScorer
 from bspforge.operation_ranking import candidate_code_text, operation_query_text
 
 
@@ -62,6 +63,13 @@ class OperationSemanticRanker:
         )
         self.adapter.module.load_state_dict(self.payload["state_dict"])
         self.adapter.eval()
+        self.field_scorer = FieldLateInteractionScorer(
+            self.payload["base_model"],
+            revision=self.payload["base_revision"],
+            device=device,
+            batch_size=batch_size,
+            model=self.model,
+        )
 
     @property
     def metadata(self) -> dict[str, Any]:
@@ -70,6 +78,7 @@ class OperationSemanticRanker:
             "base_revision": self.payload["base_revision"],
             "query_format": self.payload["query_format"],
             "adapter_rank": self.payload["rank"],
+            "late_interaction": "field-aware-token-maxsim-v1",
         }
 
     def score_operations(
@@ -111,6 +120,27 @@ class OperationSemanticRanker:
         ).to(self.device)
         with self.torch.no_grad():
             adapted_queries = self.adapter(adapted_base).cpu().numpy()
+        field_groups = []
+        for group in groups:
+            field_groups.append({
+                **group,
+                "candidates": [
+                    {
+                        **candidate,
+                        "candidate_text": candidate_code_text(functions[candidate["entity_id"]]),
+                        "features": {},
+                    }
+                    for candidate in candidates
+                ],
+            })
+        self.field_scorer.score_groups(field_groups)
+        field_scores = {
+            group["operation"]: {
+                item["entity_id"]: float(item["features"]["field-late-interaction"])
+                for item in group["candidates"]
+            }
+            for group in field_groups
+        }
         output: dict[str, dict[str, dict[str, float]]] = {}
         for index, operation in enumerate(operations):
             operation_scores = {}
@@ -118,6 +148,7 @@ class OperationSemanticRanker:
                 operation_scores[candidate["entity_id"]] = {
                     "base": (float(np.dot(base_queries[index], document)) + 1.0) / 2.0,
                     "adapted": (float(np.dot(adapted_queries[index], document)) + 1.0) / 2.0,
+                    "field": field_scores[operation][candidate["entity_id"]],
                 }
             output[operation] = operation_scores
         return output

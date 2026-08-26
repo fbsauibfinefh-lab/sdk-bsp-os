@@ -11,6 +11,7 @@ from typing import Any
 from bspforge.build_diagnoser import BuildDiagnoser
 from bspforge.binding_planner import BindingPlanner
 from bspforge.closure_solver import ClosureSolver
+from bspforge.compile_feedback import create_compile_feedback
 from bspforge.common import read_json, write_json
 from bspforge.evaluation import ExperimentEvaluator
 from bspforge.ir_store import IRStore
@@ -47,6 +48,10 @@ class Pipeline:
 
         stage_started = perf_counter()
         resolver_config = config.get("resolver", {})
+        previous_feedback = (
+            read_json(self._path(resolver_config["compile_feedback_path"]))
+            if resolver_config.get("compile_feedback_path") else None
+        )
         resolution = SemanticResolver().resolve(
             ir,
             capability_names=resolver_config.get("capabilities"),
@@ -64,6 +69,13 @@ class Pipeline:
             semantic_weights=resolver_config.get("semantic_weights"),
             semantic_candidate_top_k=int(resolver_config.get("semantic_candidate_top_k", 0)),
             semantic_device=resolver_config.get("semantic_device", "cpu"),
+            operation_constraint_weight=float(
+                resolver_config.get("operation_constraint_weight", 0.0)
+            ),
+            compile_feedback=previous_feedback,
+            compile_feedback_weight=float(
+                resolver_config.get("compile_feedback_weight", 0.0)
+            ),
         )
         write_json(run_root / "02-semantic-resolution.json", resolution)
         binding_plan = BindingPlanner().plan(ir, resolution)
@@ -273,6 +285,9 @@ class Pipeline:
             timings["diagnostic_regeneration_seconds"] = round(regeneration_seconds, 6)
 
         evaluation_result: dict[str, Any] = {"skipped": True}
+        compile_feedback = create_compile_feedback(resolution, build_result)
+        compile_feedback_path = run_root / "08b-semantic-compile-feedback.json"
+        write_json(compile_feedback_path, compile_feedback)
         evaluation_config = config.get("evaluation", {})
         if evaluation_config.get("ground_truth"):
             evaluation_started = perf_counter()
@@ -318,6 +333,10 @@ class Pipeline:
             "binding_plan": binding_plan["summary"],
             "closure": closure["summary"],
             "build": build_result,
+            "compile_feedback": {
+                "path": str(compile_feedback_path),
+                "summary": compile_feedback["summary"],
+            },
             "evaluation": evaluation_result,
             "timings": timings,
         }

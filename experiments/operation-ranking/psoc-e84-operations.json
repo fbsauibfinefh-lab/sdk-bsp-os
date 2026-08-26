@@ -1,12 +1,12 @@
 {
   "schema_version": "1.0",
   "sdk_id": "psoc-e84-edgi-talk-sdk",
-  "annotation": {"status": "single-curator-source-audited", "second_reviewer_required_for_publication": true},
+  "annotation": {"status": "single-curator-source-audited", "second_reviewer_required_for_publication": true, "revision": "2026-08-25-completeness-audit", "policy": "MTB HAL is preferred; callable public inline and PDL alternatives receive relevance grade 2"},
   "operations": {
     "clock.initialize": {"symbols": ["mtb_hal_clock_set_hf_clock_freq", "mtb_hal_clock_set_peri_clock_freq"]},
     "clock.enable": {"symbols": ["mtb_hal_clock_set_hf_clock_enabled", "mtb_hal_clock_set_peri_clock_enabled"]},
     "clock.disable": {"symbols": ["mtb_hal_clock_set_hf_clock_enabled", "mtb_hal_clock_set_peri_clock_enabled"]},
-    "clock.get_frequency": {"symbols": ["mtb_hal_clock_get_hf_clock_freq", "mtb_hal_clock_get_peri_clock_freq"]},
+    "clock.get_frequency": {"symbols": ["mtb_hal_clock_get_hf_clock_freq", "mtb_hal_clock_get_peri_clock_freq"], "alternative_symbols": ["mtb_hal_clock_get_peri_src_clock_freq"]},
     "interrupt.initialize": {"symbols": ["Cy_SysInt_Init"]},
     "interrupt.enable": {"supported": false, "symbols": []},
     "interrupt.disable": {"supported": false, "symbols": []},
@@ -15,12 +15,12 @@
     "uart.write": {"symbols": ["mtb_hal_uart_write"]},
     "uart.read": {"symbols": ["mtb_hal_uart_read"]},
     "gpio.configure": {"symbols": ["mtb_hal_gpio_setup", "mtb_hal_gpio_configure"]},
-    "gpio.write": {"symbols": ["mtb_hal_gpio_write_internal", "mtb_hal_gpio_toggle_internal"]},
-    "gpio.read": {"symbols": ["mtb_hal_gpio_read_internal"]},
+    "gpio.write": {"symbols": ["mtb_hal_gpio_write_internal", "mtb_hal_gpio_toggle_internal"], "alternative_symbols": ["mtb_hal_gpio_port_write_internal", "Cy_GPIO_Write"]},
+    "gpio.read": {"symbols": ["mtb_hal_gpio_read_internal"], "alternative_symbols": ["mtb_hal_gpio_port_read_internal", "Cy_GPIO_Read"]},
     "gpio.attach_irq": {"symbols": ["mtb_hal_gpio_register_callback", "mtb_hal_gpio_enable_event"]},
-    "timer.initialize": {"symbols": ["mtb_hal_timer_setup"]},
+    "timer.initialize": {"symbols": ["mtb_hal_timer_setup"], "alternative_symbols": ["Cy_TCPWM_Counter_Init"]},
     "timer.start": {"symbols": ["mtb_hal_timer_start"]},
     "timer.stop": {"symbols": ["mtb_hal_timer_stop"]},
-    "timer.set_interval": {"symbols": ["mtb_hal_timer_setup"]}
+    "timer.set_interval": {"symbols": ["mtb_hal_timer_setup"], "alternative_symbols": ["Cy_TCPWM_Counter_SetPeriod"]}
   }
 }

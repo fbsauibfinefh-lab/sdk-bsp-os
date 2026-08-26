@@ -11,7 +11,7 @@ CAPABILITY_TERMS = {
     "interrupt": ["plic", "interrupt", "irq", "isr", "intr", "nvic", "sysint", "trap"],
     "uart": ["uart", "uarths", "serial", "usart", "sci", "baud"],
     "gpio": ["gpio", "gpiohs", "pin", "fpioa", "port", "dio"],
-    "timer": ["timer", "gptimer", "ctimer", "alarm", "tick", "counter", "tmr"],
+    "timer": ["timer", "tim", "gptimer", "ctimer", "tcpwm", "alarm", "tick", "counter", "tmr"],
 }
 
 
@@ -37,6 +37,12 @@ OPERATION_FEATURE_NAMES = [
     "symbol-specificity",
     "code-embedding",
     "cross-reranker",
+    "field-late-interaction",
+    "field-symbol-maxsim",
+    "field-signature-maxsim",
+    "field-calls-maxsim",
+    "field-file-maxsim",
+    "field-includes-maxsim",
 ]
 
 OPERATION_DESCRIPTIONS = {
@@ -88,24 +94,24 @@ OPPOSITE_ACTIONS = {
 # These are operation-contract conflicts rather than SDK-specific symbol lists.
 # They prevent a compilable but behaviorally different API from being promoted.
 SEMANTIC_CONFLICTS = {
-    "clock.initialize": {"get", "frequency", "freq", "disable"},
+    "clock.initialize": {"get", "frequency", "freq", "disable", "deinit"},
     "clock.enable": {"disable", "get", "frequency", "freq"},
     "clock.disable": {"enable", "get", "frequency", "freq"},
     "clock.get_frequency": {"enable", "disable", "init", "configure", "set"},
-    "interrupt.initialize": {"enable", "disable", "register", "attach"},
+    "interrupt.initialize": {"enable", "disable", "register", "attach", "deinit"},
     "interrupt.enable": {"disable", "register", "attach"},
     "interrupt.disable": {"enable", "register", "attach"},
     "interrupt.register": {"enable", "disable"},
-    "uart.configure": {"read", "receive", "write", "send", "transmit", "put"},
+    "uart.configure": {"read", "receive", "write", "send", "transmit", "put", "deinit"},
     "uart.write": {"read", "receive", "get", "init", "configure", "setup"},
     "uart.read": {"write", "send", "transmit", "put", "init", "configure", "setup"},
-    "gpio.configure": {"read", "write", "set", "get", "irq", "interrupt"},
+    "gpio.configure": {"read", "write", "set", "get", "irq", "interrupt", "deinit"},
     "gpio.write": {"read", "get", "mode", "drive", "setup", "irq", "interrupt"},
     "gpio.read": {"write", "set", "mode", "drive", "setup", "irq", "interrupt"},
     "gpio.attach_irq": {"read", "write", "get", "mode", "drive"},
-    "timer.initialize": {"start", "stop", "enable", "disable", "interval", "period"},
-    "timer.start": {"stop", "disable", "interval", "period", "compare"},
-    "timer.stop": {"start", "enable", "interval", "period", "compare"},
+    "timer.initialize": {"start", "stop", "enable", "disable", "interval", "period", "deinit", "pwm"},
+    "timer.start": {"stop", "disable", "interval", "period", "compare", "pwm"},
+    "timer.stop": {"start", "enable", "interval", "period", "compare", "pwm"},
     "timer.set_interval": {"start", "stop", "enable", "disable", "clint", "mtime", "systick"},
 }
 
@@ -116,7 +122,22 @@ def identifier_tokens(value: str) -> list[str]:
     tokens = []
     for part in re.split(r"[^A-Za-z0-9]+", value):
         tokens.extend(item.lower() for item in TOKEN_PATTERN.findall(part) if item)
-    return tokens
+    normalized = []
+    inflections = {
+        "enabled": "enable",
+        "disabled": "disable",
+        "started": "start",
+        "stopped": "stop",
+        "initialized": "init",
+        "configured": "configure",
+        "registered": "register",
+        "attached": "attach",
+    }
+    for index, token in enumerate(tokens):
+        normalized.append(inflections.get(token, token))
+        if index + 1 < len(tokens) and token == "de" and tokens[index + 1] == "init":
+            normalized.append("deinit")
+    return normalized
 
 
 def operation_feature_map(
@@ -148,7 +169,13 @@ def operation_feature_map(
     public_path = any(token in path for token in ("/include/", "/inc/", "include/", "driver", "/hal/", "_hal/", "emlib"))
     private_path = any(token in path for token in ("/internal", "private", "/mock", "/port/"))
     test_path = any(token in path for token in ("/test", "test/", "/example", "examples/", "/sample", "samples/"))
-    private_symbol = symbol.startswith("_") or "internal" in symbol or "private" in symbol
+    # Public SDK headers often expose a macro through a static-inline *_internal body.
+    # Such entities remain callable through the header and must not be treated as private.
+    private_symbol = (
+        symbol.startswith("_")
+        or symbol.endswith(("_impl_s", "_impl_ns"))
+        or (("internal" in symbol or "private" in symbol) and not public_path)
+    )
     hal_abstraction = (
         "hal" in symbol_tokens
         or symbol.startswith(("hal_", "mtb_hal_", "cyhal_"))
@@ -158,8 +185,16 @@ def operation_feature_map(
         token in symbol_tokens for token in ("plic", "nvic", "gic", "intc", "sysint")
     )
     reverse_os_adapter = (
-        any(token in path for token in ("/porting/", "wifi-host-driver", "/middleware/", "/rtos/"))
-        and any(call.startswith(("rt_", "k_", "os_", "zephyr_")) for call in function.get("calls", []))
+        any(token in path for token in (
+            "/porting/", "wifi-host-driver", "/middleware/", "/rtos/", "/rtos2/"
+        ))
+        and (
+            symbol.startswith(("rt_", "k_", "os_", "zephyr_"))
+            or any(
+                call.startswith(("rt_", "k_", "os_", "zephyr_"))
+                for call in function.get("calls", [])
+            )
+        )
     )
     operation_position = min((symbol.find(alias) for alias in aliases if alias in symbol), default=-1)
     capability_position = min((symbol.find(term) for term in capability_terms if term in symbol), default=-1)
@@ -187,6 +222,12 @@ def operation_feature_map(
         "symbol-specificity": specificity,
         "code-embedding": 0.0,
         "cross-reranker": 0.0,
+        "field-late-interaction": 0.0,
+        "field-symbol-maxsim": 0.0,
+        "field-signature-maxsim": 0.0,
+        "field-calls-maxsim": 0.0,
+        "field-file-maxsim": 0.0,
+        "field-includes-maxsim": 0.0,
     }
 
 
@@ -229,6 +270,59 @@ def weak_relevance(features: dict[str, float]) -> int:
     if features["operation-exact"] and (features["driver-path"] or features["signature-hint"]):
         return 1
     return 0
+
+
+def graded_relevance(features: dict[str, float]) -> tuple[int, list[str], float]:
+    """Return an auditable four-level relevance grade for development corpora."""
+    evidence = []
+    rejection = []
+    for name in (
+        "opposite-action",
+        "semantic-conflict",
+        "reverse-os-adapter",
+        "private-api",
+        "test-example",
+    ):
+        if features[name]:
+            rejection.append(name)
+    if rejection:
+        return 0, [f"reject:{name}" for name in rejection], 0.98
+    if features["operation-exact"]:
+        evidence.append("exact-operation-token")
+    if features["capability-name"]:
+        evidence.append("capability-token")
+    if features["signature-hint"]:
+        evidence.append("signature-contract")
+    if features["call-context"]:
+        evidence.append("call-context")
+    if features["public-api"]:
+        evidence.append("public-api")
+    if features["hal-abstraction"]:
+        evidence.append("hal-layer")
+    if features["controller-api"]:
+        evidence.append("controller-api")
+    if features["driver-path"]:
+        evidence.append("driver-path")
+    if features["parameterized-toggle"]:
+        evidence.append("parameterized-toggle")
+    layer_support = max(
+        features["public-api"],
+        features["hal-abstraction"],
+        features["controller-api"],
+        features["driver-path"],
+    )
+    contract_support = max(
+        features["signature-hint"],
+        features["call-context"],
+        features["parameterized-toggle"],
+    )
+    if features["operation-exact"] and features["capability-name"] and layer_support and contract_support:
+        return 3, evidence, 0.94
+    if features["operation-exact"] and features["capability-name"] and (layer_support or contract_support):
+        return 2, evidence, 0.86
+    if features["operation-exact"] and (features["capability-name"] or contract_support):
+        return 1, evidence, 0.68
+    return 0, evidence or ["insufficient-positive-evidence"], 0.80
 
 
 def operation_query_text(capability: str, operation: str) -> str:

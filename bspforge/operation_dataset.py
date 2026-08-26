@@ -11,7 +11,7 @@ from bspforge.operation_ranking import (
     operation_feature_map,
     operation_query_text,
     operation_static_score,
-    weak_relevance,
+    graded_relevance,
 )
 from bspforge.ranking_dataset import GroundTruthError, latest_ir
 from bspforge.semantic_resolver import SemanticResolver
@@ -57,23 +57,39 @@ def build_operation_dataset(
                 if truth_contract and not truth_contract.get("supported", True):
                     skipped.append({"sdk_id": ir["sdk"]["id"], "operation": operation_id, "reason": "not-supported"})
                     continue
-                truth_symbols = set(truth_contract.get("symbols", [])) if truth_contract else set()
+                primary_truth = set(truth_contract.get("symbols", [])) if truth_contract else set()
+                alternative_truth = set(
+                    truth_contract.get("alternative_symbols", [])
+                ) if truth_contract else set()
+                truth_symbols = primary_truth | alternative_truth
                 rows = []
                 for candidate in pool:
                     function = functions[candidate["entity_id"]]
                     features = operation_feature_map(capability, operation, candidate, function)
-                    label = (
-                        2 if candidate["symbol"] in truth_symbols
-                        else 0 if truth is not None
-                        else weak_relevance(features)
-                    )
+                    if truth is not None:
+                        if candidate["symbol"] in primary_truth:
+                            label = 3
+                            label_evidence = ["source-audited-primary-symbol"]
+                            label_confidence = 1.0
+                        elif candidate["symbol"] in alternative_truth:
+                            label = 2
+                            label_evidence = ["source-audited-alternative-symbol"]
+                            label_confidence = 0.95
+                        else:
+                            label = 0
+                            label_evidence = ["not-in-source-audited-truth"]
+                            label_confidence = 1.0
+                    else:
+                        label, label_evidence, label_confidence = graded_relevance(features)
                     rows.append({
                         "entity_id": candidate["entity_id"],
                         "symbol": candidate["symbol"],
                         "file": function["file"],
                         "line": function["line"],
                         "label": label,
-                        "label_source": "source-audited" if truth is not None else "weak-supervision",
+                        "label_source": "source-audited" if truth is not None else "auditable-graded-supervision",
+                        "label_evidence": label_evidence,
+                        "label_confidence": label_confidence,
                         "static_score": operation_static_score(features),
                         "features": features,
                         "candidate_text": candidate_code_text(function),
@@ -91,7 +107,7 @@ def build_operation_dataset(
                     continue
                 positives.sort(key=lambda item: (-item["static_score"], item["entity_id"]))
                 if truth is None:
-                    positives = positives[:8]
+                    positives = positives[:6]
                 negatives = sorted(
                     (item for item in rows if item["label"] == 0),
                     key=lambda item: (-item["static_score"], item["entity_id"]),
@@ -123,7 +139,7 @@ def build_operation_dataset(
             "seed": seed,
             "hard_negatives_per_group": hard_negatives,
             "random_negatives_per_group": random_negatives,
-            "weak_positive_limit": 8,
+            "graded_positive_limit": 6,
         },
         "summary": {
             "sdks": len({item["sdk_id"] for item in groups}),

@@ -148,3 +148,15 @@ Resolver 的 `operation_min_margin` 对每个操作比较前两名不同符号�
 基础模型为固定提交的 22.7M 参数 all-MiniLM-L6-v2。主体参数不进入训练，适配器只有 12,288 个参数，并以近似恒等映射初始化。运行时输出静态、基础语义和适配语义三项证据；均衡模式在全候选中融合，精度模式先用静态证据建立 Top-10 池，再在池内重排。
 
 语义模型只扩展 Semantic Resolver。其输出仍是稳定实体 ID、操作、分数和证据，Binding Planner、Closure Solver、Build Diagnoser 与两个 OS Backend 的输入契约不变。K210 完整回归已经验证该输出能够形成 19 操作绑定、触发一次链接诊断修复并生成 RISC-V ELF/BIN。详细算法、负向消融、指标与复现命令见 `docs/ir-semantic-reranking-v0.8.md`。
+
+## v0.9 字段迟交互、组合约束与编译校准数据流
+
+v0.9 将候选函数 IR 拆为 `symbol`、`signature`、`calls`、`file` 和 `includes` 五个字段。每个字段使用不同的操作查询，经冻结 MiniLM 生成 token 表示后，以 MaxSim 计算迟交互分数。系统同时保留五个字段分数和聚合分数，使 LambdaMART、手工权重及字段消融共享同一份输入证据。
+
+训练真值改为 0 至 3 的分级标签。每条标签包含规则证据和置信度；外部板卡真值区分首选 HAL 绑定与功能等价的次级驱动层实现。数据审计器检查 20 个训练独立组、外部组隔离、标签来源和强正例覆盖。自动分级标签仍不是人工金标准，正式投稿前需要第二标注者复核。
+
+独立操作分数进入能力级组合解码。解码器先施加操作冲突、API 可见性和适配方向等一元契约，再用共享 API 族、目录、签名类型、HAL 层级和参数化互补函数计算成对兼容。离线实验使用 beam search；Resolver 运行时采用有界贪心，并在 `constraint_scores` 中保存调整证据。
+
+构建结束后，`compile_feedback.py` 将结果写入 `08b-semantic-compile-feedback.json`。直接被诊断提及、完整编译并通过产物检查、构建失败但不可归因和未观测绑定采用不同校准值。历史反馈可在同一 SDK 的后续解析中按稳定实体 ID 融合。该反馈只说明可编译、可链接和产物结构，不声明硬件语义正确。
+
+选择性自动接受使用分差、静态/语义一致性、契约准入和候选分数建立置信度。阈值按开发 SDK 分组校准并取保守值；外部集不允许重新选阈值。详细公式、约束表、保证边界和复现命令见 `docs/field-aware-structured-ranking-v0.9.md`，文献与许可边界见 `docs/related-work-citation-and-ip-risk-v0.9.md`。
