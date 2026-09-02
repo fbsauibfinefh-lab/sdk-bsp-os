@@ -139,6 +139,16 @@ class RTThreadBackend(OSBackend):
             generated_bsp / "rtconfig.h",
             device_manifest["required_rtthread_features"],
         )
+        disabled_features = list(options.get("disabled_rtthread_features", []))
+        required_disabled = sorted(
+            set(device_manifest["required_rtthread_features"]) & set(disabled_features)
+        )
+        if required_disabled:
+            raise ValueError(
+                "RT-Thread features cannot be both required and disabled: "
+                + ", ".join(required_disabled)
+            )
+        self._disable_rtthread_features(generated_bsp / "rtconfig.h", disabled_features)
 
         device_sources = device_manifest.get("sources", [device_manifest.get("source")])
         device_sources = [item for item in device_sources if item]
@@ -174,6 +184,10 @@ class RTThreadBackend(OSBackend):
                 "operation_tables": device_manifest["operation_tables"],
                 "registration_symbols": device_manifest["registration_symbols"],
                 "summary": device_manifest["summary"],
+            },
+            "rtthread_features": {
+                "required": device_manifest["required_rtthread_features"],
+                "disabled": disabled_features,
             },
             "sdk_package": self._relative_or_absolute(sdk_package, output),
             "sdk_digest": ir["sdk"]["digest"],
@@ -498,6 +512,19 @@ int bspforge_mapping_count(void)
             text = text.replace(marker, f"{marker}\n\n{declarations}", 1)
         else:
             text = f"{text.rstrip()}\n\n{declarations}\n"
+        path.write_text(text, encoding="utf-8")
+
+    @staticmethod
+    def _disable_rtthread_features(path: Path, features: list[str]) -> None:
+        if not features:
+            return
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for feature in features:
+            text = re.sub(
+                rf"(?m)^[ \t]*#define[ \t]+{re.escape(feature)}(?:[ \t]+[^\r\n]*)?\r?\n?",
+                "",
+                text,
+            )
         path.write_text(text, encoding="utf-8")
 
     @staticmethod

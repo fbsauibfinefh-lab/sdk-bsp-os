@@ -3,6 +3,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from bspforge.common import read_json
 from bspforge.operation_encoder import operation_encoder_query
 from bspforge.field_late_interaction import FieldLateInteractionScorer
 from bspforge.operation_ranking import candidate_code_text, operation_query_text
@@ -38,7 +39,7 @@ class QueryResidualAdapter:
 
 
 class OperationSemanticRanker:
-    """Score operation-to-function pairs with a frozen encoder and query adapter."""
+    """Score operation-to-function pairs with a frozen encoder and optional adapter."""
 
     def __init__(self, adapter_path: Path, device: str = "cpu", batch_size: int = 128) -> None:
         try:
@@ -51,18 +52,25 @@ class OperationSemanticRanker:
         self.torch = torch
         self.device = device
         self.batch_size = batch_size
-        self.payload = torch.load(adapter_path, map_location="cpu", weights_only=True)
+        self.payload = (
+            read_json(adapter_path)
+            if adapter_path.suffix.lower() == ".json"
+            else torch.load(adapter_path, map_location="cpu", weights_only=True)
+        )
+        self.frozen_only = self.payload.get("mode") == "frozen-encoder"
         self.model = SentenceTransformer(
             self.payload["base_model"],
             revision=self.payload["base_revision"],
             device=device,
         )
         self.model.max_seq_length = 128
-        self.adapter = QueryResidualAdapter(
-            self.payload["dimension"], self.payload["rank"], device
-        )
-        self.adapter.module.load_state_dict(self.payload["state_dict"])
-        self.adapter.eval()
+        self.adapter = None
+        if not self.frozen_only:
+            self.adapter = QueryResidualAdapter(
+                self.payload["dimension"], self.payload["rank"], device
+            )
+            self.adapter.module.load_state_dict(self.payload["state_dict"])
+            self.adapter.eval()
         self.field_scorer = FieldLateInteractionScorer(
             self.payload["base_model"],
             revision=self.payload["base_revision"],
@@ -77,7 +85,8 @@ class OperationSemanticRanker:
             "base_model": self.payload["base_model"],
             "base_revision": self.payload["base_revision"],
             "query_format": self.payload["query_format"],
-            "adapter_rank": self.payload["rank"],
+            "mode": "frozen-encoder" if self.frozen_only else "query-residual-adapter",
+            "adapter_rank": None if self.frozen_only else self.payload["rank"],
             "late_interaction": "field-aware-token-maxsim-v1",
         }
 
@@ -111,15 +120,22 @@ class OperationSemanticRanker:
             normalize_embeddings=True,
             show_progress_bar=False,
         )
-        adapted_base = self.model.encode(
-            [operation_encoder_query(group, self.payload["query_format"]) for group in groups],
-            batch_size=self.batch_size,
-            normalize_embeddings=True,
-            show_progress_bar=False,
-            convert_to_tensor=True,
-        ).to(self.device)
-        with self.torch.no_grad():
-            adapted_queries = self.adapter(adapted_base).cpu().numpy()
+        if self.frozen_only:
+            adapted_queries = base_queries
+        else:
+            adapted_base = self.model.encode(
+                [
+                    operation_encoder_query(group, self.payload["query_format"])
+                    for group in groups
+                ],
+                batch_size=self.batch_size,
+                normalize_embeddings=True,
+                show_progress_bar=False,
+                convert_to_tensor=True,
+            ).to(self.device)
+            with self.torch.no_grad():
+                assert self.adapter is not None
+                adapted_queries = self.adapter(adapted_base).cpu().numpy()
         field_groups = []
         for group in groups:
             field_groups.append({

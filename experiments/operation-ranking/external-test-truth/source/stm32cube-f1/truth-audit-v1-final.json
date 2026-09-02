@@ -1,0 +1,1825 @@
+{
+  "schema_version": "truth-audit-v1-final",
+  "truth_set": "3-test-board-external-evaluation",
+  "sdk_id": "stm32cube-f1",
+  "display_name": "STM32F103 / STM32CubeF1",
+  "vendor": "STMicroelectronics",
+  "role": "external-test",
+  "training_included": false,
+  "source_revision": "bb2016eaa0004f74b5bd2369709415cae1fc88b2",
+  "source_root": "/home/whk/RTT-porting/STM32CubeF1",
+  "annotator_id": "H03-external-adjudication",
+  "review_method": "manual source audit against public headers, definitions, and 1-2 level call chains",
+  "policy": {
+    "grade_3": "正式或首选 callable API，可直接完成操作契约。",
+    "grade_2": "可独立完成契约但层级更低、模式更专用或接口更重。",
+    "grade_1": "相关前置/后置/分步动作，不能独立完成契约。",
+    "grade_0": "名称或模块相关但行为不满足契约。",
+    "macro_rule": "纯宏名不进入真值；若宏包装真实 function/static inline，则记录真实 callable 目标。"
+  },
+  "operations": [
+    {
+      "operation_id": "clock.initialize",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "clock init",
+        "clock configure",
+        "pll",
+        "oscillator",
+        "clock source"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_RCC_OscConfig",
+          "canonical_symbol": "HAL_RCC_OscConfig",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h",
+          "declaration_line": 1155,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+          "definition_line": 345,
+          "signature": "HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "配置 HSE/HSI/LSE/LSI 与 PLL，是 STM32F1 振荡器/PLL 初始化的正式 HAL 入口。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c:345 — HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_RCC_ClockConfig",
+          "canonical_symbol": "HAL_RCC_ClockConfig",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h",
+          "declaration_line": 1156,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+          "definition_line": 811,
+          "signature": "HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef *RCC_ClkInitStruct, uint32_t FLatency)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "配置 SYSCLK 来源和 AHB/APB 分频，直接完成系统时钟树切换。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c:811 — HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef *RCC_ClkInitStruct, uint32_t FLatency)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_RCCEx_PeriphCLKConfig",
+          "canonical_symbol": "HAL_RCCEx_PeriphCLKConfig",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h",
+          "declaration_line": 1857,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c",
+          "definition_line": 98,
+          "signature": "HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkInit)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "配置特定外设时钟来源，范围窄于系统时钟初始化。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c:98 — HAL_StatusTypeDef HAL_RCCEx_PeriphCLKConfig(RCC_PeriphCLKInitTypeDef *PeriphClkInit)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_RCC_DeInit",
+          "canonical_symbol": "HAL_RCC_DeInit",
+          "grade": 1,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h",
+          "declaration_line": 1154,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+          "definition_line": 200,
+          "signature": "HAL_StatusTypeDef HAL_RCC_DeInit(void)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "复位 RCC 配置，是初始化前置/反向步骤而非目标配置。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c:200 — HAL_StatusTypeDef HAL_RCC_DeInit(void)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "clock.enable",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "clock enable",
+        "gate enable",
+        "pll enable"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_RCC_OscConfig",
+          "canonical_symbol": "HAL_RCC_OscConfig",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h",
+          "declaration_line": 1155,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+          "definition_line": 345,
+          "signature": "HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "可通过振荡器状态字段独立开启振荡器/PLL，但接口比专用 enable 更重。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c:345 — HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_RCCEx_EnablePLLI2S",
+          "canonical_symbol": "HAL_RCCEx_EnablePLLI2S",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h",
+          "declaration_line": 1869,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c",
+          "definition_line": 611,
+          "signature": "HAL_StatusTypeDef HAL_RCCEx_EnablePLLI2S(RCC_PLLI2SInitTypeDef *PLLI2SInit)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接开启 PLLI2S，仅适用于支持该 PLL 的 STM32F1 变体。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c:611 — HAL_StatusTypeDef HAL_RCCEx_EnablePLLI2S(RCC_PLLI2SInitTypeDef *PLLI2SInit)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_RCCEx_EnablePLL2",
+          "canonical_symbol": "HAL_RCCEx_EnablePLL2",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h",
+          "declaration_line": 1879,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c",
+          "definition_line": 737,
+          "signature": "HAL_StatusTypeDef HAL_RCCEx_EnablePLL2(RCC_PLL2InitTypeDef *PLL2Init)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接开启 PLL2，仅适用于连接型 STM32F1 变体。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c:737 — HAL_StatusTypeDef HAL_RCCEx_EnablePLL2(RCC_PLL2InitTypeDef *PLL2Init)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_RCC_EnableCSS",
+          "canonical_symbol": "HAL_RCC_EnableCSS",
+          "grade": 0,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h",
+          "declaration_line": 1168,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+          "definition_line": 1037,
+          "signature": "void HAL_RCC_EnableCSS(void)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "开启时钟安全系统，不是开启时钟源或外设门控。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c:1037 — void HAL_RCC_EnableCSS(void)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "clock.disable",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "clock disable",
+        "gate disable",
+        "pll disable"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_RCC_OscConfig",
+          "canonical_symbol": "HAL_RCC_OscConfig",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h",
+          "declaration_line": 1155,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+          "definition_line": 345,
+          "signature": "HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "可通过振荡器状态字段独立关闭振荡器/PLL，但接口比专用 disable 更重。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c:345 — HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_RCCEx_DisablePLLI2S",
+          "canonical_symbol": "HAL_RCCEx_DisablePLLI2S",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h",
+          "declaration_line": 1870,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c",
+          "definition_line": 681,
+          "signature": "HAL_StatusTypeDef HAL_RCCEx_DisablePLLI2S(void)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接关闭 PLLI2S，仅适用于支持该 PLL 的 STM32F1 变体。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c:681 — HAL_StatusTypeDef HAL_RCCEx_DisablePLLI2S(void)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_RCCEx_DisablePLL2",
+          "canonical_symbol": "HAL_RCCEx_DisablePLL2",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h",
+          "declaration_line": 1880,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c",
+          "definition_line": 808,
+          "signature": "HAL_StatusTypeDef HAL_RCCEx_DisablePLL2(void)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接关闭 PLL2，仅适用于连接型 STM32F1 变体。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c:808 — HAL_StatusTypeDef HAL_RCCEx_DisablePLL2(void)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_RCC_DisableCSS",
+          "canonical_symbol": "HAL_RCC_DisableCSS",
+          "grade": 0,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h",
+          "declaration_line": 1169,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+          "definition_line": 1046,
+          "signature": "void HAL_RCC_DisableCSS(void)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "关闭时钟安全系统，不是关闭时钟源或外设门控。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c:1046 — void HAL_RCC_DisableCSS(void)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "clock.get_frequency",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "clock frequency",
+        "get freq",
+        "clock rate",
+        "Hz"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_RCC_GetSysClockFreq",
+          "canonical_symbol": "HAL_RCC_GetSysClockFreq",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h",
+          "declaration_line": 1170,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+          "definition_line": 942,
+          "signature": "uint32_t HAL_RCC_GetSysClockFreq(void)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "返回 SYSCLK 频率（Hz）。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c:942 — SystemCoreClock = HAL_RCC_GetSysClockFreq() >> AHBPrescTable[(RCC->CFGR & RCC_CFGR_HPRE) >> RCC_CFGR_HPRE_Pos]",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_RCC_GetHCLKFreq",
+          "canonical_symbol": "HAL_RCC_GetHCLKFreq",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h",
+          "declaration_line": 1171,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+          "definition_line": 1174,
+          "signature": "uint32_t HAL_RCC_GetHCLKFreq(void)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "返回 HCLK 频率（Hz）。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c:1174 — uint32_t HAL_RCC_GetHCLKFreq(void)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_RCC_GetPCLK1Freq",
+          "canonical_symbol": "HAL_RCC_GetPCLK1Freq",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h",
+          "declaration_line": 1172,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+          "definition_line": 1185,
+          "signature": "uint32_t HAL_RCC_GetPCLK1Freq(void)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "返回 PCLK1 频率（Hz）。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c:1185 — uint32_t HAL_RCC_GetPCLK1Freq(void)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_RCC_GetPCLK2Freq",
+          "canonical_symbol": "HAL_RCC_GetPCLK2Freq",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc.h",
+          "declaration_line": 1173,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c",
+          "definition_line": 1197,
+          "signature": "uint32_t HAL_RCC_GetPCLK2Freq(void)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "返回 PCLK2 频率（Hz）。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c:1197 — uint32_t HAL_RCC_GetPCLK2Freq(void)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_RCCEx_GetPeriphCLKFreq",
+          "canonical_symbol": "HAL_RCCEx_GetPeriphCLKFreq",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_rcc_ex.h",
+          "declaration_line": 1859,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c",
+          "definition_line": 385,
+          "signature": "uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按外设时钟标识返回对应频率。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc_ex.c:385 — uint32_t HAL_RCCEx_GetPeriphCLKFreq(uint32_t PeriphClk)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "interrupt.initialize",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/CMSIS/Include/",
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "interrupt init",
+        "priority grouping",
+        "controller init"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_NVIC_SetPriorityGrouping",
+          "canonical_symbol": "HAL_NVIC_SetPriorityGrouping",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h",
+          "declaration_line": 261,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c",
+          "definition_line": 142,
+          "signature": "void HAL_NVIC_SetPriorityGrouping(uint32_t PriorityGroup)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "正式 HAL 入口，用于初始化 NVIC 优先级分组。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c:142 — void HAL_NVIC_SetPriorityGrouping(uint32_t PriorityGroup)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "__NVIC_SetPriorityGrouping",
+          "canonical_symbol": "__NVIC_SetPriorityGrouping",
+          "grade": 2,
+          "declaration_file": "Drivers/CMSIS/Include/core_cm3.h",
+          "declaration_line": 1480,
+          "definition_file": "Drivers/CMSIS/Include/core_cm3.h",
+          "definition_line": 1480,
+          "signature": "__STATIC_INLINE void __NVIC_SetPriorityGrouping(uint32_t PriorityGroup)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "CMSIS static inline 底层入口，可完成分组设置但层级更低。",
+          "evidence_snippet": "Drivers/CMSIS/Include/core_cm3.h:1480 — __STATIC_INLINE void __NVIC_SetPriorityGrouping(uint32_t PriorityGroup)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_NVIC_SetPriority",
+          "canonical_symbol": "HAL_NVIC_SetPriority",
+          "grade": 1,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h",
+          "declaration_line": 262,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c",
+          "definition_line": 164,
+          "signature": "void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t SubPriority)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只设置单个 IRQ 的优先级，不能独立初始化 NVIC。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c:164 — void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t SubPriority)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "__NVIC_SetPriority",
+          "canonical_symbol": "__NVIC_SetPriority",
+          "grade": 1,
+          "declaration_file": "Drivers/CMSIS/Include/core_cm3.h",
+          "declaration_line": 1639,
+          "definition_file": "Drivers/CMSIS/Include/core_cm3.h",
+          "definition_line": 1639,
+          "signature": "__STATIC_INLINE void __NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "CMSIS 底层优先级设置，仅是初始化的一部分。",
+          "evidence_snippet": "Drivers/CMSIS/Include/core_cm3.h:1639 — __STATIC_INLINE void __NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "interrupt.enable",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/CMSIS/Include/",
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "irq enable",
+        "interrupt enable",
+        "NVIC",
+        "PLIC"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_NVIC_EnableIRQ",
+          "canonical_symbol": "HAL_NVIC_EnableIRQ",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h",
+          "declaration_line": 263,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c",
+          "definition_line": 186,
+          "signature": "void HAL_NVIC_EnableIRQ(IRQn_Type IRQn)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按 IRQn 直接使能 NVIC 中断。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c:186 — void HAL_NVIC_EnableIRQ(IRQn_Type IRQn)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "__NVIC_EnableIRQ",
+          "canonical_symbol": "__NVIC_EnableIRQ",
+          "grade": 2,
+          "declaration_file": "Drivers/CMSIS/Include/core_cm3.h",
+          "declaration_line": 1511,
+          "definition_file": "Drivers/CMSIS/Include/core_cm3.h",
+          "definition_line": 1511,
+          "signature": "__STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "CMSIS static inline 可直接使能 IRQ，层级低于 HAL。",
+          "evidence_snippet": "Drivers/CMSIS/Include/core_cm3.h:1511 — __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "interrupt.disable",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/CMSIS/Include/",
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "irq disable",
+        "interrupt disable",
+        "NVIC",
+        "PLIC"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_NVIC_DisableIRQ",
+          "canonical_symbol": "HAL_NVIC_DisableIRQ",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_cortex.h",
+          "declaration_line": 264,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c",
+          "definition_line": 202,
+          "signature": "void HAL_NVIC_DisableIRQ(IRQn_Type IRQn)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按 IRQn 直接禁止 NVIC 中断。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c:202 — void HAL_NVIC_DisableIRQ(IRQn_Type IRQn)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "__NVIC_DisableIRQ",
+          "canonical_symbol": "__NVIC_DisableIRQ",
+          "grade": 2,
+          "declaration_file": "Drivers/CMSIS/Include/core_cm3.h",
+          "declaration_line": 1547,
+          "definition_file": "Drivers/CMSIS/Include/core_cm3.h",
+          "definition_line": 1547,
+          "signature": "__STATIC_INLINE void __NVIC_DisableIRQ(IRQn_Type IRQn)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "CMSIS static inline 可直接禁止 IRQ，层级低于 HAL。",
+          "evidence_snippet": "Drivers/CMSIS/Include/core_cm3.h:1547 — __STATIC_INLINE void __NVIC_DisableIRQ(IRQn_Type IRQn)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "interrupt.register",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/CMSIS/Include/"
+      ],
+      "search_terms": [
+        "irq register",
+        "set vector",
+        "ISR",
+        "callback"
+      ],
+      "items": [
+        {
+          "symbol": "__NVIC_SetVector",
+          "canonical_symbol": "__NVIC_SetVector",
+          "grade": 2,
+          "declaration_file": "Drivers/CMSIS/Include/core_cm3.h",
+          "declaration_line": 1736,
+          "definition_file": "Drivers/CMSIS/Include/core_cm3.h",
+          "definition_line": 1736,
+          "signature": "__STATIC_INLINE void __NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态",
+            "VTOR 指向可写向量表"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "CMSIS static inline 可写入向量表项，需要向量表位于可写内存。",
+          "evidence_snippet": "Drivers/CMSIS/Include/core_cm3.h:1736 — __STATIC_INLINE void __NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "uart.configure",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "uart init",
+        "uart configure",
+        "baud",
+        "word length",
+        "parity"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_UART_Init",
+          "canonical_symbol": "HAL_UART_Init",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 722,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 354,
+          "signature": "HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef *huart)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "正式 HAL UART 初始化/配置入口，应用句柄携带完整帧参数。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:354 — HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef *huart)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_HalfDuplex_Init",
+          "canonical_symbol": "HAL_HalfDuplex_Init",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 723,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 432,
+          "signature": "HAL_StatusTypeDef HAL_HalfDuplex_Init(UART_HandleTypeDef *huart)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "完成半双工 UART 配置，模式范围较窄。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:432 — HAL_StatusTypeDef HAL_HalfDuplex_Init(UART_HandleTypeDef *huart)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_LIN_Init",
+          "canonical_symbol": "HAL_LIN_Init",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 724,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 508,
+          "signature": "HAL_StatusTypeDef HAL_LIN_Init(UART_HandleTypeDef *huart, uint32_t BreakDetectLength)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "完成 LIN 模式 UART 配置，模式范围较窄。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:508 — HAL_StatusTypeDef HAL_LIN_Init(UART_HandleTypeDef *huart, uint32_t BreakDetectLength)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_MultiProcessor_Init",
+          "canonical_symbol": "HAL_MultiProcessor_Init",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 725,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 592,
+          "signature": "HAL_StatusTypeDef HAL_MultiProcessor_Init(UART_HandleTypeDef *huart, uint8_t Address, uint32_t WakeUpMethod)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "完成多处理器模式 UART 配置，模式范围较窄。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:592 — HAL_StatusTypeDef HAL_MultiProcessor_Init(UART_HandleTypeDef *huart, uint8_t Address, uint32_t WakeUpMethod)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_UART_DeInit",
+          "canonical_symbol": "HAL_UART_DeInit",
+          "grade": 1,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 726,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 672,
+          "signature": "HAL_StatusTypeDef HAL_UART_DeInit(UART_HandleTypeDef *huart)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "反初始化 UART，是 configure 的反向相关接口。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:672 — HAL_StatusTypeDef HAL_UART_DeInit(UART_HandleTypeDef *huart)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "uart.write",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "uart write",
+        "send",
+        "transmit",
+        "DMA"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_UART_Transmit",
+          "canonical_symbol": "HAL_UART_Transmit",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 749,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 1138,
+          "signature": "HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "阻塞式发送缓冲区并报告 HAL 状态。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:1138 — HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_UART_Transmit_IT",
+          "canonical_symbol": "HAL_UART_Transmit_IT",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 751,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 1311,
+          "signature": "HAL_StatusTypeDef HAL_UART_Transmit_IT(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "中断模式异步发送，需中断处理生命周期。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:1311 — HAL_StatusTypeDef HAL_UART_Transmit_IT(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_UART_Transmit_DMA",
+          "canonical_symbol": "HAL_UART_Transmit_DMA",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 753,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 1382,
+          "signature": "HAL_StatusTypeDef HAL_UART_Transmit_DMA(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "DMA 模式异步发送，需 DMA 配置。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:1382 — HAL_StatusTypeDef HAL_UART_Transmit_DMA(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "uart.read",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "uart read",
+        "receive",
+        "DMA",
+        "idle"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_UART_Receive",
+          "canonical_symbol": "HAL_UART_Receive",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 750,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 1224,
+          "signature": "HAL_StatusTypeDef HAL_UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "阻塞式接收指定长度缓冲区并报告 HAL 状态。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:1224 — HAL_StatusTypeDef HAL_UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_UART_Receive_IT",
+          "canonical_symbol": "HAL_UART_Receive_IT",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 752,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 1350,
+          "signature": "HAL_StatusTypeDef HAL_UART_Receive_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "中断模式异步接收，需中断处理生命周期。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:1350 — HAL_StatusTypeDef HAL_UART_Receive_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_UART_Receive_DMA",
+          "canonical_symbol": "HAL_UART_Receive_DMA",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 754,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 1452,
+          "signature": "HAL_StatusTypeDef HAL_UART_Receive_DMA(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "DMA 模式异步接收，需 DMA 配置。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:1452 — HAL_StatusTypeDef HAL_UART_Receive_DMA(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_UARTEx_ReceiveToIdle",
+          "canonical_symbol": "HAL_UARTEx_ReceiveToIdle",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 759,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 1599,
+          "signature": "HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint16_t *RxLen, uint32_t Timeout)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "以空闲线为边界接收，语义更专用。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:1599 — HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint16_t *RxLen, uint32_t Timeout)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_UARTEx_ReceiveToIdle_IT",
+          "canonical_symbol": "HAL_UARTEx_ReceiveToIdle_IT",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 761,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 1724,
+          "signature": "HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "中断式空闲线接收，语义更专用。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:1724 — HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle_IT(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_UARTEx_ReceiveToIdle_DMA",
+          "canonical_symbol": "HAL_UARTEx_ReceiveToIdle_DMA",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_uart.h",
+          "declaration_line": 762,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c",
+          "definition_line": 1784,
+          "signature": "HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle_DMA(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "DMA 空闲线接收，语义更专用。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c:1784 — HAL_StatusTypeDef HAL_UARTEx_ReceiveToIdle_DMA(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "gpio.configure",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "gpio init",
+        "pin configure",
+        "drive mode",
+        "direction"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_GPIO_Init",
+          "canonical_symbol": "HAL_GPIO_Init",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h",
+          "declaration_line": 223,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c",
+          "definition_line": 178,
+          "signature": "void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按 GPIO_InitTypeDef 配置模式、上下拉与速度。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c:178 — void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_GPIO_DeInit",
+          "canonical_symbol": "HAL_GPIO_DeInit",
+          "grade": 1,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h",
+          "declaration_line": 224,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c",
+          "definition_line": 351,
+          "signature": "void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "反初始化引脚，是 configure 的反向相关接口。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c:351 — void HAL_GPIO_DeInit(GPIO_TypeDef *GPIOx, uint32_t GPIO_Pin)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "gpio.write",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "gpio write",
+        "set pin",
+        "clear pin",
+        "toggle"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_GPIO_WritePin",
+          "canonical_symbol": "HAL_GPIO_WritePin",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h",
+          "declaration_line": 234,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c",
+          "definition_line": 465,
+          "signature": "void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按 PinState 直接设置指定 GPIO 引脚逻辑值。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c:465 — void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_GPIO_TogglePin",
+          "canonical_symbol": "HAL_GPIO_TogglePin",
+          "grade": 1,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h",
+          "declaration_line": 235,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c",
+          "definition_line": 487,
+          "signature": "void HAL_GPIO_TogglePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只翻转当前值，不能表达指定高/低电平写入。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c:487 — void HAL_GPIO_TogglePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "gpio.read",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "gpio read",
+        "get pin",
+        "input state"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_GPIO_ReadPin",
+          "canonical_symbol": "HAL_GPIO_ReadPin",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h",
+          "declaration_line": 233,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c",
+          "definition_line": 431,
+          "signature": "GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "返回指定 GPIO 引脚当前输入状态。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c:431 — GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "gpio.attach_irq",
+      "group_status": "no_public_api",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "gpio interrupt",
+        "register callback",
+        "edge",
+        "event"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_GPIO_Init",
+          "canonical_symbol": "HAL_GPIO_Init",
+          "grade": 1,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_gpio.h",
+          "declaration_line": 223,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c",
+          "definition_line": 178,
+          "signature": "void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "可配置 EXTI 模式和触发边沿，但不绑定应用回调。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c:178 — void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_EXTI_SetConfigLine",
+          "canonical_symbol": "HAL_EXTI_SetConfigLine",
+          "grade": 1,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_exti.h",
+          "declaration_line": 278,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c",
+          "definition_line": 142,
+          "signature": "HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只配置 EXTI 线路和触发参数，不绑定 GPIO 应用处理函数。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c:142 — HAL_StatusTypeDef HAL_EXTI_SetConfigLine(EXTI_HandleTypeDef *hexti, EXTI_ConfigTypeDef *pExtiConfig)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_EXTI_RegisterCallback",
+          "canonical_symbol": "HAL_EXTI_RegisterCallback",
+          "grade": 1,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_exti.h",
+          "declaration_line": 281,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c",
+          "definition_line": 369,
+          "signature": "HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID, void (*pPendingCbfn)(void))",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只向 EXTI 句柄登记回调，仍需 GPIO/线路配置与 IRQ 分发。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_exti.c:369 — HAL_StatusTypeDef HAL_EXTI_RegisterCallback(EXTI_HandleTypeDef *hexti, EXTI_CallbackIDTypeDef CallbackID, void (*pPendingCbfn)(void))",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；发现的接口只能完成触发/回调/使能等分步动作，没有单一稳定公开 callable API 可独立完成完整契约。"
+    },
+    {
+      "operation_id": "timer.initialize",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "timer init",
+        "timer setup",
+        "base init"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_TIM_Base_Init",
+          "canonical_symbol": "HAL_TIM_Base_Init",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h",
+          "declaration_line": 1885,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+          "definition_line": 266,
+          "signature": "HAL_StatusTypeDef HAL_TIM_Base_Init(TIM_HandleTypeDef *htim)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "正式 HAL 基本定时器初始化入口。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c:266 — HAL_StatusTypeDef HAL_TIM_Base_Init(TIM_HandleTypeDef *htim)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_TIM_Base_DeInit",
+          "canonical_symbol": "HAL_TIM_Base_DeInit",
+          "grade": 1,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h",
+          "declaration_line": 1886,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+          "definition_line": 326,
+          "signature": "HAL_StatusTypeDef HAL_TIM_Base_DeInit(TIM_HandleTypeDef *htim)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "反初始化定时器，是 initialize 的反向相关接口。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c:326 — HAL_StatusTypeDef HAL_TIM_Base_DeInit(TIM_HandleTypeDef *htim)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "timer.start",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "timer start",
+        "timer enable",
+        "trigger start"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_TIM_Base_Start",
+          "canonical_symbol": "HAL_TIM_Base_Start",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h",
+          "declaration_line": 1890,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+          "definition_line": 400,
+          "signature": "HAL_StatusTypeDef HAL_TIM_Base_Start(TIM_HandleTypeDef *htim)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接启动已初始化的基本定时器。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c:400 — HAL_StatusTypeDef HAL_TIM_Base_Start(TIM_HandleTypeDef *htim)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_TIM_Base_Start_IT",
+          "canonical_symbol": "HAL_TIM_Base_Start_IT",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h",
+          "declaration_line": 1893,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+          "definition_line": 459,
+          "signature": "HAL_StatusTypeDef HAL_TIM_Base_Start_IT(TIM_HandleTypeDef *htim)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "启动并启用更新中断，模式更专用。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c:459 — HAL_StatusTypeDef HAL_TIM_Base_Start_IT(TIM_HandleTypeDef *htim)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_TIM_Base_Start_DMA",
+          "canonical_symbol": "HAL_TIM_Base_Start_DMA",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h",
+          "declaration_line": 1896,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+          "definition_line": 526,
+          "signature": "HAL_StatusTypeDef HAL_TIM_Base_Start_DMA(TIM_HandleTypeDef *htim, const uint32_t *pData, uint16_t Length)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "以 DMA 模式启动定时器，模式更专用。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c:526 — HAL_StatusTypeDef HAL_TIM_Base_Start_DMA(TIM_HandleTypeDef *htim, const uint32_t *pData, uint16_t Length)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "timer.stop",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "timer stop",
+        "timer disable",
+        "pause"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_TIM_Base_Stop",
+          "canonical_symbol": "HAL_TIM_Base_Stop",
+          "grade": 3,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h",
+          "declaration_line": 1891,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+          "definition_line": 439,
+          "signature": "HAL_StatusTypeDef HAL_TIM_Base_Stop(TIM_HandleTypeDef *htim)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接停止基本定时器。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c:439 — HAL_StatusTypeDef HAL_TIM_Base_Stop(TIM_HandleTypeDef *htim)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_TIM_Base_Stop_IT",
+          "canonical_symbol": "HAL_TIM_Base_Stop_IT",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h",
+          "declaration_line": 1894,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+          "definition_line": 501,
+          "signature": "HAL_StatusTypeDef HAL_TIM_Base_Stop_IT(TIM_HandleTypeDef *htim)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "停止中断模式基本定时器并关闭更新中断。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c:501 — HAL_StatusTypeDef HAL_TIM_Base_Stop_IT(TIM_HandleTypeDef *htim)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "HAL_TIM_Base_Stop_DMA",
+          "canonical_symbol": "HAL_TIM_Base_Stop_DMA",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h",
+          "declaration_line": 1897,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+          "definition_line": 595,
+          "signature": "HAL_StatusTypeDef HAL_TIM_Base_Stop_DMA(TIM_HandleTypeDef *htim)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "停止 DMA 模式基本定时器。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c:595 — HAL_StatusTypeDef HAL_TIM_Base_Stop_DMA(TIM_HandleTypeDef *htim)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "timer.set_interval",
+      "group_status": "complete",
+      "search_scope": [
+        "Drivers/STM32F1xx_HAL_Driver/Inc/",
+        "Drivers/STM32F1xx_HAL_Driver/Src/"
+      ],
+      "search_terms": [
+        "timer interval",
+        "period",
+        "autoreload",
+        "timeout"
+      ],
+      "items": [
+        {
+          "symbol": "HAL_TIM_Base_Init",
+          "canonical_symbol": "HAL_TIM_Base_Init",
+          "grade": 2,
+          "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_hal_tim.h",
+          "declaration_line": 1885,
+          "definition_file": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c",
+          "definition_line": 266,
+          "signature": "HAL_StatusTypeDef HAL_TIM_Base_Init(TIM_HandleTypeDef *htim)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "可通过句柄 Init.Period 与 Prescaler 独立形成目标周期，但会重做初始化。",
+          "evidence_snippet": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c:266 — HAL_StatusTypeDef HAL_TIM_Base_Init(TIM_HandleTypeDef *htim)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    }
+  ]
+}

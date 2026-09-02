@@ -1,0 +1,36 @@
+{
+  "status": "pass",
+  "expected_sdk_count": 3,
+  "actual_sdk_count": 3,
+  "expected_operation_groups": 57,
+  "actual_operation_groups": 57,
+  "candidate_count": 164,
+  "grade_distribution": {
+    "0": 4,
+    "1": 36,
+    "2": 61,
+    "3": 63
+  },
+  "group_status_distribution": {
+    "complete": 55,
+    "no_public_api": 2
+  },
+  "invalid_grade_count": 0,
+  "missing_evidence_count": 0,
+  "pure_macro_names_in_truth_count": 0,
+  "external_test_role_only": true,
+  "training_truth_contamination_audit": {
+    "人工真值1": {
+      "files_with_external_sdk_id": 0,
+      "hits": []
+    },
+    "人工真值2": {
+      "files_with_external_sdk_id": 0,
+      "hits": []
+    },
+    "人工真值3": {
+      "files_with_external_sdk_id": 0,
+      "hits": []
+    }
+  }
+}

@@ -7,6 +7,8 @@ from typing import Any
 PROTOCOL_VERSION = "1.0"
 DEFAULT_COMMANDS = [
     "info",
+    "clock.basic",
+    "interrupt.basic",
     "uart.loopback",
     "gpio.toggle",
     "gpio.irq",
@@ -29,8 +31,13 @@ def request_line(request_id: str, command: str) -> bytes:
 def parse_event(line: bytes | str) -> dict[str, Any] | None:
     text = line.decode("utf-8", "replace") if isinstance(line, bytes) else line
     text = text.strip()
-    if not text.startswith('{"bspforge":'):
+    marker = '{"bspforge":'
+    marker_index = text.find(marker)
+    if marker_index < 0:
         return None
+    # RTOS consoles may leave an ANSI reset sequence or shell prompt on the
+    # same physical line immediately before the machine-readable event.
+    text = text[marker_index:]
     try:
         event = json.loads(text)
     except json.JSONDecodeError as error:

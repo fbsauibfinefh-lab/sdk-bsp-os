@@ -1,0 +1,89 @@
+{
+  "default_truth_set": "automatic-v0.9",
+  "notes": [
+    "H01 与 H02 按项目负责人确认视为两名独立工程师。",
+    "两份输入审计内部均写为 A01；原值保存在 source_metadata_annotator_id，不据此覆盖规范标注者编号。",
+    "H03 是 H01/H02 的源码级仲裁结果，不是第三名独立工程师标注。",
+    "四套真值可独立选择，不自动合并，也不自动执行训练。"
+  ],
+  "schema_version": "operation-truth-set-registry-v1",
+  "truth_sets": {
+    "automatic-v0.9": {
+      "annotator_id": null,
+      "file": "automatic-v0.9.json",
+      "summary": {
+        "grade_counts": {
+          "0": 25165,
+          "1": 489,
+          "2": 570,
+          "3": 777
+        },
+        "group_status_counts": {
+          "complete": 400,
+          "no-positive-label": 18
+        },
+        "query_groups": 418,
+        "training_sdks": 22
+      },
+      "truth_source": "legacy-auditable-graded-weak-supervision"
+    },
+    "human-adjudicated-h03": {
+      "annotator_id": "H03",
+      "file": "human-adjudicated-h03.json",
+      "summary": {
+        "grade_counts": {
+          "0": 162,
+          "1": 259,
+          "2": 178,
+          "3": 410
+        },
+        "group_status_counts": {
+          "complete": 284,
+          "no_public_api": 134
+        },
+        "query_groups": 418,
+        "training_sdks": 22
+      },
+      "truth_source": "human-source-adjudication"
+    },
+    "human-engineer-1": {
+      "annotator_id": "H01",
+      "file": "human-engineer-1.json",
+      "summary": {
+        "grade_counts": {
+          "0": 0,
+          "1": 39,
+          "2": 106,
+          "3": 265
+        },
+        "group_status_counts": {
+          "blocked": 19,
+          "complete": 286,
+          "no_public_api": 113
+        },
+        "query_groups": 418,
+        "training_sdks": 22
+      },
+      "truth_source": "independent-human-source-audit"
+    },
+    "human-engineer-2": {
+      "annotator_id": "H02",
+      "file": "human-engineer-2.json",
+      "summary": {
+        "grade_counts": {
+          "0": 164,
+          "1": 240,
+          "2": 163,
+          "3": 397
+        },
+        "group_status_counts": {
+          "complete": 281,
+          "no_public_api": 137
+        },
+        "query_groups": 418,
+        "training_sdks": 22
+      },
+      "truth_source": "independent-human-source-audit"
+    }
+  }
+}

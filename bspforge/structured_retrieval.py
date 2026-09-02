@@ -18,6 +18,7 @@ STRUCTURED_RETRIEVAL_FEATURES = [
     "symbol-lexical-retrieval",
     "signature-contract-retrieval",
     "operation-contract-retrieval",
+    "generic-operation-fit",
     "layer-route-score",
     "graph-neighbor-support",
     "api-family-support",
@@ -29,7 +30,10 @@ _PATH_SPLIT = re.compile(r"[^a-z0-9]+")
 CONTRACT_TERMS = {
     "clock.initialize": {
         "prefer": {"clock", "clk", "rcc", "osc", "pll", "sysclk", "freq", "source", "config", "init"},
-        "reject": {"uart", "usart", "i2c", "spi", "timer", "rtc", "disable", "enabled"},
+        "reject": {
+            "uart", "usart", "i2c", "i2s", "spi", "usb", "adc", "timer", "rtc",
+            "disable", "enabled",
+        },
     },
     "clock.enable": {
         "prefer": {"clock", "clk", "rcc", "enable", "enabled", "gate"},
@@ -44,8 +48,11 @@ CONTRACT_TERMS = {
         "reject": {"set", "enable", "disable", "uart", "timer", "sdhc", "spi"},
     },
     "interrupt.initialize": {
-        "prefer": {"interrupt", "irq", "plic", "nvic", "intc", "sysint", "priority", "init"},
-        "reject": {"uart", "timer", "gpio", "sdio", "wifi", "hall", "encoder"},
+        "prefer": {"interrupt", "irq", "plic", "nvic", "intc", "sysint", "config", "init"},
+        "reject": {
+            "uart", "timer", "gpio", "sdio", "wifi", "hall", "encoder",
+            "priority", "claim", "complete", "unregister",
+        },
     },
     "interrupt.enable": {
         "prefer": {"interrupt", "irq", "plic", "nvic", "intc", "sysint", "enable", "unmask"},
@@ -103,6 +110,29 @@ CONTRACT_TERMS = {
         "prefer": {"timer", "tim", "counter", "tcpwm", "base", "period", "interval", "reload", "compare"},
         "reject": {"pwm", "encoder", "hall", "onepulse", "one", "pulse", "alarm", "rtc", "systick", "software"},
     },
+}
+
+_GENERIC_MODE_TOKENS = {
+    "clock": {"uart", "usart", "i2c", "i2s", "spi", "usb", "adc", "timer", "rtc"},
+    "timer": {
+        "pwm", "pwmn", "hall", "sensor", "encoder", "onepulse", "pulse",
+        "lptimer", "oc", "ocn", "ic",
+    },
+}
+
+_PRIMARY_ACTION_TOKENS = {
+    "initialize": {"init", "config", "configure", "setup"},
+    "enable": {"enable", "unmask"},
+    "disable": {"disable", "mask"},
+    "register": {"register", "attach", "vector", "callback"},
+    "configure": {"config", "configure", "setup", "init"},
+    "write": {"write", "send", "transmit", "put"},
+    "read": {"read", "receive", "get"},
+    "attach_irq": {"register", "attach", "callback", "irq", "interrupt"},
+    "start": {"start", "enable"},
+    "stop": {"stop", "disable"},
+    "set_interval": {"interval", "period", "reload", "compare", "set"},
+    "get_frequency": {"get", "frequency", "freq", "hz"},
 }
 
 
@@ -209,6 +239,47 @@ def _operation_contract_score(
     return max(0.0, min(1.0, score))
 
 
+def _generic_operation_fit(group: dict[str, Any], candidate: dict[str, Any]) -> float:
+    """Estimate whether an API implements the generic operation rather than a sub-mode."""
+    capability = group["capability"]
+    operation = group["operation"]
+    ordered_tokens = identifier_tokens(candidate["symbol"])
+    tokens = set(ordered_tokens)
+    action_terms = set(_PRIMARY_ACTION_TOKENS[operation])
+    if capability == "clock" and operation == "initialize":
+        action_terms.update({"set", "select"})
+    action = float(bool(tokens & action_terms))
+    if candidate["features"].get("parameterized-toggle", 0.0):
+        action = max(action, 0.9)
+    capability_terms = set(CAPABILITY_TERMS[capability]) | {capability}
+    if capability == "clock":
+        capability_terms = {"clock", "rcc", "sysctl", "sysclk"}
+    capability_match = float(bool(tokens & capability_terms))
+    mode_hits = tokens & _GENERIC_MODE_TOKENS.get(capability, set())
+    mode_penalty = min(0.60, 0.24 * len(mode_hits))
+    if capability == "clock" and "clk" in tokens and not tokens & capability_terms:
+        mode_penalty = max(mode_penalty, 0.40)
+    if capability == "clock" and operation == "initialize" and "source" in tokens:
+        mode_penalty = max(mode_penalty, 0.32)
+    if operation == "initialize" and tokens & {"enable", "disable"}:
+        mode_penalty = max(mode_penalty, 0.50)
+    controller_bonus = 0.0
+    controllers = {"plic", "nvic", "gic", "intc", "sysint"}
+    if capability == "interrupt" and tokens & controllers:
+        controller_bonus = 0.22
+    if capability == "interrupt" and operation == "register" and not tokens & controllers:
+        generic_tokens = action_terms | {"interrupt", "irq", "isr", "handler"}
+        if any(token not in generic_tokens for token in ordered_tokens[:3]):
+            mode_penalty = max(mode_penalty, 0.32)
+    broad_family_bonus = 0.0
+    if capability == "timer" and tokens & {"timer", "tim", "base", "gptimer", "ctimer", "tcpwm"}:
+        broad_family_bonus = 0.10
+    if capability == "clock" and tokens & {"clock", "rcc", "sysctl", "sysclk"}:
+        broad_family_bonus = 0.10
+    score = 0.52 * action + 0.28 * capability_match + controller_bonus + broad_family_bonus
+    return max(0.0, min(1.0, score - mode_penalty))
+
+
 def api_family_key(capability: str, symbol: str) -> str:
     """Recover a stable public API family from identifier morphology."""
     tokens = identifier_tokens(symbol)
@@ -275,6 +346,7 @@ def enrich_group_with_structured_retrieval(group: dict[str, Any]) -> dict[str, A
         lexical = _symbol_lexical_score(group, candidate)
         signature = _signature_contract_score(group, candidate)
         contract = _operation_contract_score(group, candidate, prior)
+        generic_fit = _generic_operation_fit(group, candidate)
         features = candidate["features"]
         capability_match = float(bool(
             set(identifier_tokens(candidate["symbol"]))
@@ -297,6 +369,7 @@ def enrich_group_with_structured_retrieval(group: dict[str, Any]) -> dict[str, A
         candidate["features"]["symbol-lexical-retrieval"] = round(lexical, 6)
         candidate["features"]["signature-contract-retrieval"] = round(signature, 6)
         candidate["features"]["operation-contract-retrieval"] = round(contract, 6)
+        candidate["features"]["generic-operation-fit"] = round(generic_fit, 6)
         candidate["features"]["layer-route-score"] = round(layer_route, 6)
         channel_scores["static"][entity_id] = float(candidate["static_score"])
         channel_scores["field"][entity_id] = float(
@@ -542,6 +615,18 @@ def complete_structured_scores(
         0.25 * left + 0.25 * semantic + 0.25 * rule + 0.25 * route
         for left, semantic, rule, route in zip(static, field, contract, layer, strict=True)
     ]
+    generic_fit = [
+        float(item["features"].get("generic-operation-fit", 0.0))
+        for item in group["candidates"]
+    ]
+    role = [
+        float(item["features"].get("source-role-prior", 0.0))
+        for item in group["candidates"]
+    ]
+    certified_hierarchy = [
+        value + 0.16 * fit + 0.05 * source_role
+        for value, fit, source_role in zip(hierarchy, generic_fit, role, strict=True)
+    ]
     precision = [
         0.50 * left + 0.50 * semantic
         for left, semantic in zip(static, field, strict=True)
@@ -563,15 +648,55 @@ def complete_structured_scores(
         ),
         default=0.0,
     )
+    hierarchy_leader = max(
+        range(len(certified_hierarchy)),
+        key=lambda index: (
+            certified_hierarchy[index], group["candidates"][index]["entity_id"]
+        ),
+    )
+    hierarchy_candidate = group["candidates"][hierarchy_leader]
+    hierarchy_contract = contract[hierarchy_leader]
+    hierarchy_role = role[hierarchy_leader]
+    precision_gap = precision[leader] - precision[hierarchy_leader]
+    hierarchy_conflict = float(
+        hierarchy_candidate["features"].get("semantic-conflict", 0.0)
+        + hierarchy_candidate["features"].get("opposite-action", 0.0)
+    )
+    stronger_contract = (
+        hierarchy_contract - leader_contract >= 0.15
+        and precision_gap <= 0.10
+        and hierarchy_conflict <= 0.0
+    )
+    stronger_generic_fit = (
+        generic_fit[hierarchy_leader] - generic_fit[leader] >= 0.30
+        and precision_gap <= 0.14
+        and hierarchy_contract >= leader_contract - 0.05
+        and (
+            hierarchy_conflict <= 0.0
+            or (
+                generic_fit[hierarchy_leader] - generic_fit[leader] >= 0.45
+                and hierarchy_contract >= leader_contract + 0.10
+            )
+        )
+    )
+    stronger_public_route = (
+        hierarchy_role >= 0.90
+        and leader_role < 0.90
+        and certified_hierarchy[hierarchy_leader] >= certified_hierarchy[leader] - 0.01
+        and hierarchy_conflict <= 0.0
+    )
     fallback = (
         leader_contract < 0.18
         or leader_role < 0.78
         or (leader_role < 0.90 and best_public_layer >= 0.45)
+        or stronger_contract
+        or stronger_generic_fit
+        or stronger_public_route
     )
     scores = family_diversified_scores(
         group,
-        hierarchy,
-        leader_scores=hierarchy if fallback else precision,
+        certified_hierarchy,
+        leader_scores=certified_hierarchy if fallback else precision,
         family_quota=family_quota,
     )
     scale = max(scores) or 1.0
@@ -583,5 +708,10 @@ def complete_structured_scores(
         "precision_leader_symbol": leader_candidate["symbol"],
         "precision_leader_role": leader_candidate.get("source_role"),
         "precision_leader_contract": round(leader_contract, 6),
+        "certified_hierarchy_leader_entity_id": hierarchy_candidate["entity_id"],
+        "certified_hierarchy_leader_symbol": hierarchy_candidate["symbol"],
+        "contract_fallback": stronger_contract,
+        "generic_fit_fallback": stronger_generic_fit,
+        "public_route_fallback": stronger_public_route,
         "best_public_layer": round(best_public_layer, 6),
     }

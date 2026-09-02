@@ -1,0 +1,7 @@
+{
+  "schema_version": "1.0",
+  "mode": "frozen-encoder",
+  "base_model": "sentence-transformers/all-MiniLM-L6-v2",
+  "base_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "query_format": "raw"
+}

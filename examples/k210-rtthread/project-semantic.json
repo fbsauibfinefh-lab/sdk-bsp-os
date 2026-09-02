@@ -9,9 +9,9 @@
   },
   "resolver": {
     "method": "operation-structured",
-    "model_path": "models/operation-query-adapter-ir-v1.pt",
+    "model_path": "models/frozen-minilm-field-v1.json",
     "semantic_device": "cpu",
-    "semantic_weights": {"static": 0.30, "base": 0.20, "adapted": 0.40, "field": 0.10},
+    "semantic_weights": {"static": 0.50, "base": 0.00, "adapted": 0.00, "field": 0.50},
     "semantic_candidate_top_k": 80,
     "operation_min_margin": 0.0,
     "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],

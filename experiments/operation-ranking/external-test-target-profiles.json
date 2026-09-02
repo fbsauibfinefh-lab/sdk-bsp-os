@@ -1,0 +1,14 @@
+{
+  "schema_version": "operation-ranking-target-profiles-v1",
+  "profiles": {
+    "kendryte-k210-standalone-sdk-0.5.6": {
+      "target_architecture": "riscv64"
+    },
+    "stm32cube-f1": {
+      "target_architecture": "armv7-m-cortex-m3"
+    },
+    "psoc-e84-edgi-talk-sdk": {
+      "target_architecture": "armv8.1-m-cortex-m55"
+    }
+  }
+}

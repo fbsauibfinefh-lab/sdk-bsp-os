@@ -1,0 +1,3863 @@
+{
+  "annotator_id": "H01",
+  "annotator_independence": "confirmed-by-project-owner",
+  "grade_fields": {
+    "0": "irrelevant_symbols",
+    "1": "related_symbols",
+    "2": "alternative_symbols",
+    "3": "symbols"
+  },
+  "schema_version": "operation-truth-set-v1",
+  "sdks": [
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "clock_stop"
+          ]
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "clock_get_hz"
+          ]
+        },
+        "clock.initialize": {
+          "alternative_symbols": [
+            "set_sys_clock_48mhz",
+            "set_sys_clock_pll"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "clock_configure"
+          ]
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "gpio_set_irq_callback"
+          ],
+          "symbols": [
+            "gpio_set_irq_enabled_with_callback"
+          ]
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "gpio_set_dir"
+          ],
+          "symbols": [
+            "gpio_init"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [
+            "gpio_get_all"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_get"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "gpio_put_masked"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_put"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "irq_set_enabled"
+          ]
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "irq_set_enabled"
+          ]
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [
+            "irq_set_priority"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "irq_add_shared_handler",
+            "irq_set_exclusive_handler"
+          ]
+        },
+        "timer.initialize": {
+          "alternative_symbols": [
+            "add_repeating_timer_us"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "hardware_alarm_claim"
+          ],
+          "symbols": []
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [
+            "hardware_alarm_set_target"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "add_repeating_timer_us"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [
+            "add_repeating_timer_us"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "hardware_alarm_set_target"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "cancel_repeating_timer",
+            "hardware_alarm_cancel"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "uart_set_baudrate"
+          ],
+          "symbols": [
+            "uart_init"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [
+            "uart_getc"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "uart_read_blocking"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [
+            "uart_putc_raw"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "uart_write_blocking"
+          ]
+        }
+      },
+      "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+      "source_revision": "a1438dff1d38bd9c65dbd693f0e5db4b9ae91779"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nrfx_clock_disable"
+          ]
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nrfx_clock_enable"
+          ]
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.initialize": {
+          "alternative_symbols": [
+            "nrfx_clock_hfclk_init",
+            "nrfx_clock_lfclk_init"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nrfx_clock_init"
+          ]
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nrfx_gpiote_input_configure"
+          ]
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nrfx_gpiote_input_configure",
+            "nrfx_gpiote_output_configure"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nrfx_gpiote_in_is_set"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "nrfx_gpiote_out_toggle"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nrfx_gpiote_out_clear",
+            "nrfx_gpiote_out_set"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nrfx_timer_init"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nrfx_timer_compare",
+            "nrfx_timer_extended_compare"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nrfx_timer_enable"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nrfx_timer_disable"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nrfx_uart_init",
+            "nrfx_uarte_init"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "nrfx_uarte_rx_buffer_set",
+            "nrfx_uarte_rx_enable"
+          ],
+          "symbols": [
+            "nrfx_uart_rx"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nrfx_uart_tx",
+            "nrfx_uarte_tx"
+          ]
+        }
+      },
+      "sdk_id": "nordic-nrfx-4.2.1",
+      "source_revision": "aa83d4df8d5f41b591f23a8555794632afb3475d"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "esp_clk_apb_freq",
+            "esp_clk_cpu_freq",
+            "esp_clk_xtal_freq"
+          ]
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "esp_clk_init"
+          ]
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_isr_handler_add"
+          ]
+        },
+        "gpio.configure": {
+          "alternative_symbols": [
+            "gpio_set_direction"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_config"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_get_level"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_set_level"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "esp_intr_disable"
+          ]
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "esp_intr_enable"
+          ]
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "esp_intr_alloc"
+          ]
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "esp_intr_alloc",
+            "esp_intr_alloc_intrstatus"
+          ]
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gptimer_new_timer"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gptimer_set_alarm_action"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gptimer_start"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gptimer_stop"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [
+            "uart_driver_install"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "uart_param_config"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "uart_read_bytes"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [
+            "uart_write_bytes_with_break"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "uart_write_bytes"
+          ]
+        }
+      },
+      "sdk_id": "espressif-esp-idf-6.0.1",
+      "source_revision": "8c19b156084a0753687347cca1f5355782893533"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CLOCK_DisableClock"
+          ]
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CLOCK_EnableClock"
+          ]
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CLOCK_GetFreq"
+          ]
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CLOCK_Init"
+          ]
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "GPIO_PinSetInterruptConfig"
+          ],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_PinInit"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_PinRead"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "GPIO_PortClear",
+            "GPIO_PortSet",
+            "GPIO_PortToggle"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_PinWrite"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "DisableIRQ"
+          ]
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "EnableIRQ"
+          ]
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "EnableIRQWithPriority"
+          ]
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "InstallIRQHandler"
+          ]
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CTIMER_Init"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CTIMER_SetupMatch"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CTIMER_StartTimer"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CTIMER_StopTimer"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [
+            "LPUART_Init"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "UART_Init"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [
+            "LPUART_ReadBlocking"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "UART_ReadBlocking"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [
+            "LPUART_WriteBlocking"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "UART_WriteBlocking"
+          ]
+        }
+      },
+      "sdk_id": "nxp-mcuxpresso-sdk-2.16.100",
+      "source_revision": "0420001d787c2c7bb062a2da4c46233d9daf2737"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [
+            "DL_SYSCTL_disableExternalClock"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.enable": {
+          "alternative_symbols": [
+            "DL_SYSCTL_enableExternalClock"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.initialize": {
+          "alternative_symbols": [
+            "DL_SYSCTL_setHFCLKSourceHFXT",
+            "DL_SYSCTL_setSYSOSCFreq"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "GPIO_enableInt",
+            "GPIO_setCallback"
+          ],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_setConfig",
+            "GPIO_setConfigAndMux"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [
+            "DL_GPIO_readPins"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_read"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "DL_GPIO_writePinsVal"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_write"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "DL_Interrupt_registerInterrupt"
+          ]
+        },
+        "timer.initialize": {
+          "alternative_symbols": [
+            "DL_Timer_initTimerMode"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [
+            "DL_Timer_setLoadValue"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.start": {
+          "alternative_symbols": [
+            "DL_Timer_startCounter"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.stop": {
+          "alternative_symbols": [
+            "DL_Timer_stopCounter"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "uart.configure": {
+          "alternative_symbols": [
+            "DL_UART_init"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "UART_open"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [
+            "UART_readBuffered"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "UART_read"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [
+            "UART_writeBuffered"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "UART_write"
+          ]
+        }
+      },
+      "sdk_id": "ti-mspm0-driverlib",
+      "source_revision": "20807db79aa17b49f87ab8ec87f6b6d63ee2cb32"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [
+            "Power_releaseDependency"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.enable": {
+          "alternative_symbols": [
+            "Power_setDependency"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.initialize": {
+          "alternative_symbols": [
+            "Power_init"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "GPIO_enableInt",
+            "GPIO_setCallback"
+          ],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_setConfig",
+            "GPIO_setConfigAndMux"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_read"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_write"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "NVIC_DisableIRQ"
+          ]
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "NVIC_EnableIRQ"
+          ]
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [
+            "NVIC_SetPriority"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "NVIC_SetVector"
+          ]
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "Timer_open"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "Timer_setPeriod"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "Timer_start"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "Timer_stop"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "UART2_open"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [
+            "UART2_readTimeout"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "UART2_read"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [
+            "UART2_writeTimeout"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "UART2_write"
+          ]
+        }
+      },
+      "sdk_id": "ti-simplelink-f2",
+      "source_revision": "3615ad5d3f4f271258d18a2f5ce1785064ff9a58"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_CGC_ClockStop"
+          ]
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_CGC_ClockStart"
+          ]
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_FSP_SystemClockHzGet"
+          ]
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_CGC_ClocksCfg"
+          ]
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [
+            "R_ICU_ExternalIrqOpen"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [
+            "R_IOPORT_PinsCfg"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_IOPORT_PinCfg"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [
+            "R_IOPORT_PortRead"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_IOPORT_PinRead"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "R_IOPORT_PortWrite"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_IOPORT_PinWrite"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_BSP_IrqDisable"
+          ]
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [
+            "R_BSP_IrqCfgEnable"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_BSP_IrqEnable"
+          ]
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_BSP_IrqCfg"
+          ]
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_GPT_Open"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_GPT_PeriodSet"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_GPT_Start"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_GPT_Stop"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_SCI_UART_Open"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_SCI_UART_Read"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "R_SCI_UART_Write"
+          ]
+        }
+      },
+      "sdk_id": "renesas-fsp",
+      "source_revision": "a409855a274402f69360a725656944e17929d1d9"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.write": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "uart.read": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "uart.write": {
+          "alternative_symbols": [],
+          "group_status": "blocked",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        }
+      },
+      "sdk_id": "microchip-harmony-csp",
+      "source_revision": "5499789708c5c91c4908c7dc74d5ea131cc9ebb1"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.write": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "uart.read": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "uart.write": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        }
+      },
+      "sdk_id": "analog-devices-no-os-platform",
+      "source_revision": "c690a3744f081ade785f7de6e25adfa3e97b5dc9"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "board_gpio_read"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "board_gpio_write"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_settimeout"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_start"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_stop"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "uart.read": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "uart.write": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        }
+      },
+      "sdk_id": "sony-spresense-sdk",
+      "source_revision": "7fd61b2c03f06a4ff0302b84c755e58c338788b2"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_RCC_DisableModule"
+          ]
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_RCC_EnableModule"
+          ]
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_RCC_GetHCLKFreq",
+            "HAL_RCC_GetPCLKFreq"
+          ]
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_GPIO_Init"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_GPIO_ReadPin"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "HAL_GPIO_TogglePin"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_GPIO_WritePin"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_NVIC_DisableIRQ"
+          ]
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_NVIC_EnableIRQ"
+          ]
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [
+            "HAL_NVIC_SetPriority"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_LPTIM_Init"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [
+            "HAL_LPTIM_SetOnce_Start"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.start": {
+          "alternative_symbols": [
+            "HAL_LPTIM_SetOnce_Start_IT"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_LPTIM_SetOnce_Start"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [
+            "HAL_LPTIM_SetOnce_Stop_IT"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_LPTIM_SetOnce_Stop"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_UART_Init"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [
+            "HAL_UART_Receive_DMA",
+            "HAL_UART_Receive_IT"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_UART_Receive"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [
+            "HAL_UART_Transmit_DMA",
+            "HAL_UART_Transmit_IT"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HAL_UART_Transmit"
+          ]
+        }
+      },
+      "sdk_id": "sifli-hal",
+      "source_revision": "2de33db1a96952d4f7fa6d8a967d20b0c8eea555"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_clk_get_system_clock"
+          ]
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "bflb_gpio_int_init",
+            "bflb_irq_attach"
+          ],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_gpio_init"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_gpio_read"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_gpio_reset",
+            "bflb_gpio_set"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_irq_disable"
+          ]
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_irq_enable"
+          ]
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_irq_initialize"
+          ]
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_irq_attach"
+          ]
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_timer_init"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_timer_set_compvalue"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_timer_start"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_timer_stop"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_uart_init"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [
+            "bflb_uart_getchar"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_uart_get"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [
+            "bflb_uart_putchar"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "bflb_uart_put"
+          ]
+        }
+      },
+      "sdk_id": "bouffalo-lhal",
+      "source_revision": "5cd17516dfe8d9813e79008aeb29c3f930797804"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "RCC_AHBPeriphClockCmd",
+            "RCC_APB1PeriphClockCmd",
+            "RCC_APB2PeriphClockCmd"
+          ]
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "RCC_AHBPeriphClockCmd",
+            "RCC_APB1PeriphClockCmd",
+            "RCC_APB2PeriphClockCmd"
+          ]
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "RCC_GetClocksFreq"
+          ]
+        },
+        "clock.initialize": {
+          "alternative_symbols": [
+            "RCC_DeInit"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "GPIO_EXTILineConfig"
+          ],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_Init"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_ReadInputDataBit"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "GPIO_ResetBits",
+            "GPIO_SetBits"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_WriteBit"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [
+            "NVIC_Init"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [
+            "NVIC_Init"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "NVIC_Init"
+          ]
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "TIM_TimeBaseInit"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "TIM_SetAutoreload"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "TIM_Cmd"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "TIM_Cmd"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "USART_Init"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "USART_ReceiveData"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "USART_SendData"
+          ]
+        }
+      },
+      "sdk_id": "wch-ch32v307-stdperiph",
+      "source_revision": "69a2eec903b4f919fcb73d1ab6c10c690780e4d1"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "rcu_periph_clock_disable"
+          ]
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "rcu_periph_clock_enable"
+          ]
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "rcu_clock_freq_get"
+          ]
+        },
+        "clock.initialize": {
+          "alternative_symbols": [
+            "SystemCoreClockUpdate"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "gpio_exti_source_select"
+          ],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_init"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_input_bit_get"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "gpio_bit_reset",
+            "gpio_bit_set"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_bit_write"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "eclic_irq_disable"
+          ]
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "eclic_irq_enable"
+          ]
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [
+            "ECLIC_Interrupt_Init"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "ECLIC_Init"
+          ]
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "ECLIC_Register_IRQ"
+          ]
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_init"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_autoreload_value_config"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_enable"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_disable"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "usart_baudrate_set"
+          ],
+          "symbols": []
+        },
+        "uart.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "usart_data_receive"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "usart_data_transmit"
+          ]
+        }
+      },
+      "sdk_id": "nuclei-soc-sdk",
+      "source_revision": "c5d7fda3b7dd487c92d00d082b3166ff69ec3343"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "rcc_periph_clock_disable"
+          ]
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "rcc_periph_clock_enable"
+          ]
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "rcc_clock_setup_pll"
+          ]
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "exti_enable_request",
+            "exti_select_source",
+            "exti_set_trigger"
+          ],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_mode_setup"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [
+            "gpio_get"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_port_read"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "gpio_clear",
+            "gpio_set",
+            "gpio_toggle"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_port_write"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nvic_disable_irq"
+          ]
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "nvic_enable_irq"
+          ]
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [
+            "nvic_set_priority"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "timer_reset"
+          ],
+          "symbols": []
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_set_period"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_enable_counter"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_disable_counter"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "usart_set_baudrate",
+            "usart_set_databits",
+            "usart_set_mode",
+            "usart_set_stopbits"
+          ],
+          "symbols": []
+        },
+        "uart.read": {
+          "alternative_symbols": [
+            "usart_recv"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "usart_recv_blocking"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [
+            "usart_send"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "usart_send_blocking"
+          ]
+        }
+      },
+      "sdk_id": "libopencm3-hal",
+      "source_revision": "2da12dc96e0b9e42a3332348dd9b02a0a17981f8"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [
+            "SystemCoreClockUpdate"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_irq_init"
+          ]
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "gpio_dir",
+            "gpio_mode"
+          ],
+          "symbols": [
+            "gpio_init"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_read"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_write"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "NVIC_DisableIRQ"
+          ]
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "NVIC_EnableIRQ"
+          ]
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [
+            "NVIC_SetPriority"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "NVIC_SetVector"
+          ]
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "us_ticker_init"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "ticker_insert_event"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [
+            "us_ticker_set_interrupt"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "us_ticker_disable_interrupt"
+          ],
+          "symbols": []
+        },
+        "uart.configure": {
+          "alternative_symbols": [
+            "serial_init"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "serial_baud",
+            "serial_format"
+          ],
+          "symbols": []
+        },
+        "uart.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "serial_getc"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "serial_putc"
+          ]
+        }
+      },
+      "sdk_id": "arm-mbed-hal",
+      "source_revision": "d723bf9e55415433e108124ee6d36337feddf1b8"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.write": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [
+            "noInterrupts"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [
+            "interrupts"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "FspTimer::begin"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "FspTimer::set_period"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "FspTimer::start"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "FspTimer::stop"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HardwareSerial::begin"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HardwareSerial::read"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "HardwareSerial::write"
+          ]
+        }
+      },
+      "sdk_id": "arduino-renesas-core",
+      "source_revision": "424e86eff92d37f72123c2b641dd8bbf06a38b47"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [
+            "clock_get_32k_tick"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "clock_init"
+          ]
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "gpio_set_irq"
+          ],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "gpio_function_en",
+            "gpio_set_input_en",
+            "gpio_set_output_en"
+          ],
+          "symbols": []
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_read"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "gpio_set_high_level",
+            "gpio_set_low_level"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_write"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "plic_interrupt_disable"
+          ]
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "plic_interrupt_enable"
+          ]
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "plic_set_feature",
+            "plic_set_threshold"
+          ],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_set_mode"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_set_cap_tick"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_start"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "timer_stop"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "uart_init"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [
+            "uart_read_byte"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "uart_receive_dma"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [
+            "uart_send_byte"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "uart_send"
+          ]
+        }
+      },
+      "sdk_id": "telink-tlsr9-hal",
+      "source_revision": "4226c7fc17d5a34e557d026d428fc766191a0800"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "SERVICES_clocks_enable_clock"
+          ]
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "SERVICES_clocks_enable_clock"
+          ]
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GetSystemAXIClock"
+          ]
+        },
+        "clock.initialize": {
+          "alternative_symbols": [
+            "SERVICES_clocks_select_osc_source"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "board_clocks_config"
+          ]
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "gpio_enable_interrupt"
+          ],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [
+            "gpio_set_direction_input",
+            "gpio_set_direction_output"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.read": {
+          "alternative_symbols": [
+            "gpio_get_value"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "gpio_set_value_high",
+            "gpio_set_value_low"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [
+            "utimer_config_mode"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [
+            "utimer_set_count"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.start": {
+          "alternative_symbols": [
+            "utimer_counter_start"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.stop": {
+          "alternative_symbols": [
+            "utimer_counter_stop"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "uart.read": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "uart.write": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        }
+      },
+      "sdk_id": "alif-ensemble-dfp",
+      "source_revision": "908f59cbd1fa9031570f8cd8aee72348415f7984"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CMU_ClockEnable"
+          ]
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CMU_ClockEnable"
+          ]
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CMU_ClockFreqGet"
+          ]
+        },
+        "clock.initialize": {
+          "alternative_symbols": [
+            "CMU_ClockSelectSet"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CMU_HFXOInit"
+          ]
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "GPIO_ExtIntConfig"
+          ],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_PinModeSet"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_PinInGet"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "GPIO_PinOutClear",
+            "GPIO_PinOutSet",
+            "GPIO_PinOutToggle"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "TIMER_Init"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "TIMER_TopSet"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "TIMER_Enable"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "TIMER_Enable"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "USART_InitAsync"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [
+            "USART_RxDouble"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "USART_Rx"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [
+            "USART_TxDouble"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "USART_Tx"
+          ]
+        }
+      },
+      "sdk_id": "silabs-emlib",
+      "source_revision": "28eb6670caf3486321a033c7f08687867a7ef4f4"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "gpio_config_pin_interrupt"
+          ],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [
+            "gpio_set_pin_input",
+            "gpio_set_pin_output"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_read_pin"
+          ]
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "gpio_toggle_pin"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gpio_write_pin"
+          ]
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gptmr_channel_config"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gptmr_update_cmp"
+          ]
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gptmr_start_counter"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "gptmr_stop_counter"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "uart_init"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "uart_receive_byte"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "uart_send_byte"
+          ]
+        }
+      },
+      "sdk_id": "hpmicro-hpm-sdk",
+      "source_revision": "88b01b43900d8c30844a1e5cdd3f3b7aff6db40e"
+    },
+    {
+      "operations": {
+        "clock.disable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CLK_DisableModuleClock"
+          ]
+        },
+        "clock.enable": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CLK_EnableModuleClock"
+          ]
+        },
+        "clock.get_frequency": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CLK_GetCPUFreq",
+            "CLK_GetHCLKFreq"
+          ]
+        },
+        "clock.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "CLK_SetCoreClock"
+          ]
+        },
+        "gpio.attach_irq": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [
+            "GPIO_EnableInt"
+          ],
+          "symbols": []
+        },
+        "gpio.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "GPIO_SetMode"
+          ]
+        },
+        "gpio.read": {
+          "alternative_symbols": [
+            "GPIO_GET_IN_DATA"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "gpio.write": {
+          "alternative_symbols": [
+            "GPIO_SET_OUT_DATA"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.disable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.enable": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.initialize": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "interrupt.register": {
+          "alternative_symbols": [],
+          "group_status": "no_public_api",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.initialize": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "TIMER_Open"
+          ]
+        },
+        "timer.set_interval": {
+          "alternative_symbols": [
+            "TIMER_SET_CMP_VALUE"
+          ],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": []
+        },
+        "timer.start": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "TIMER_Start"
+          ]
+        },
+        "timer.stop": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "TIMER_Stop"
+          ]
+        },
+        "uart.configure": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "UART_Open"
+          ]
+        },
+        "uart.read": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "UART_Read"
+          ]
+        },
+        "uart.write": {
+          "alternative_symbols": [],
+          "group_status": "complete",
+          "irrelevant_symbols": [],
+          "related_symbols": [],
+          "symbols": [
+            "UART_Write"
+          ]
+        }
+      },
+      "sdk_id": "nuvoton-std-driver",
+      "source_revision": "0f411a85da7d17a612d54450f608f4d30cdb971f"
+    }
+  ],
+  "source_audit": {
+    "file": "source-audits/human-engineer-1-audit.json",
+    "sha256": "cec165ff230c966988b18f783f1fc63ddf09adfc8a9116057ed30de5a7fef489"
+  },
+  "source_metadata_annotator_id": "A01",
+  "summary": {
+    "grade_counts": {
+      "0": 0,
+      "1": 39,
+      "2": 106,
+      "3": 265
+    },
+    "group_status_counts": {
+      "blocked": 19,
+      "complete": 286,
+      "no_public_api": 113
+    },
+    "query_groups": 418,
+    "training_sdks": 22
+  },
+  "truth_set_id": "human-engineer-1",
+  "truth_source": "independent-human-source-audit"
+}

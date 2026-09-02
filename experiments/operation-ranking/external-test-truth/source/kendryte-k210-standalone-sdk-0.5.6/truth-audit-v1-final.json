@@ -1,0 +1,1590 @@
+{
+  "schema_version": "truth-audit-v1-final",
+  "truth_set": "3-test-board-external-evaluation",
+  "sdk_id": "kendryte-k210-standalone-sdk-0.5.6",
+  "display_name": "K210",
+  "vendor": "Kendryte",
+  "role": "external-test",
+  "training_included": false,
+  "source_revision": "02576ba67e8797444f3ee3f34c625b5ed048e707",
+  "source_root": "/mnt/d/Wuhk/AIOT/k210sdk/kendryte-standalone-sdk",
+  "annotator_id": "H03-external-adjudication",
+  "review_method": "manual source audit against public headers, definitions, and 1-2 level call chains",
+  "policy": {
+    "grade_3": "正式或首选 callable API，可直接完成操作契约。",
+    "grade_2": "可独立完成契约但层级更低、模式更专用或接口更重。",
+    "grade_1": "相关前置/后置/分步动作，不能独立完成契约。",
+    "grade_0": "名称或模块相关但行为不满足契约。",
+    "macro_rule": "纯宏名不进入真值；若宏包装真实 function/static inline，则记录真实 callable 目标。"
+  },
+  "operations": [
+    {
+      "operation_id": "clock.initialize",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "clock init",
+        "clock configure",
+        "pll",
+        "oscillator",
+        "clock source"
+      ],
+      "items": [
+        {
+          "symbol": "sysctl_pll_set_freq",
+          "canonical_symbol": "sysctl_pll_set_freq",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/sysctl.h",
+          "declaration_line": 1048,
+          "definition_file": "lib/drivers/sysctl.c",
+          "definition_line": 1812,
+          "signature": "uint32_t sysctl_pll_set_freq(sysctl_pll_t pll, uint32_t pll_freq)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "配置 PLL 目标频率并完成对应时钟源设置，是 K210 时钟初始化的直接入口。",
+          "evidence_snippet": "lib/drivers/sysctl.c:1812 — cpu_freq = sysctl_pll_set_freq(SYSCTL_PLL0, (sysctl->clk_sel0.aclk_divider_sel + 1) * 2 * freq)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "sysctl_clock_set_clock_select",
+          "canonical_symbol": "sysctl_clock_set_clock_select",
+          "grade": 2,
+          "declaration_file": "lib/drivers/include/sysctl.h",
+          "declaration_line": 932,
+          "definition_file": "lib/drivers/sysctl.c",
+          "definition_line": 617,
+          "signature": "int sysctl_clock_set_clock_select(sysctl_clock_select_t which, int select)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "可独立选择指定时钟的来源，但只覆盖时钟树初始化的一部分。",
+          "evidence_snippet": "lib/drivers/sysctl.c:617 — int sysctl_clock_set_clock_select(sysctl_clock_select_t which, int select)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "sysctl_clock_set_threshold",
+          "canonical_symbol": "sysctl_clock_set_threshold",
+          "grade": 2,
+          "declaration_file": "lib/drivers/include/sysctl.h",
+          "declaration_line": 909,
+          "definition_file": "lib/drivers/sysctl.c",
+          "definition_line": 406,
+          "signature": "int sysctl_clock_set_threshold(sysctl_threshold_t which, int threshold)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "可独立设置时钟分频阈值，属于较低层的时钟树配置入口。",
+          "evidence_snippet": "lib/drivers/sysctl.c:406 — int sysctl_clock_set_threshold(sysctl_threshold_t which, int threshold)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "sysctl_pll_enable",
+          "canonical_symbol": "sysctl_pll_enable",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/sysctl.h",
+          "declaration_line": 979,
+          "definition_file": "lib/drivers/sysctl.c",
+          "definition_line": 804,
+          "signature": "int sysctl_pll_enable(sysctl_pll_t pll)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只使能 PLL，不完成频率和来源配置。",
+          "evidence_snippet": "lib/drivers/sysctl.c:804 — int sysctl_pll_enable(sysctl_pll_t pll)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "clock.enable",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "clock enable",
+        "gate enable",
+        "pll enable"
+      ],
+      "items": [
+        {
+          "symbol": "sysctl_clock_enable",
+          "canonical_symbol": "sysctl_clock_enable",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/sysctl.h",
+          "declaration_line": 886,
+          "definition_file": "lib/drivers/sysctl.c",
+          "definition_line": 389,
+          "signature": "int sysctl_clock_enable(sysctl_clock_t clock)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按时钟标识直接打开外设/总线时钟门控。",
+          "evidence_snippet": "lib/drivers/sysctl.c:389 — int sysctl_clock_enable(sysctl_clock_t clock)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "sysctl_pll_enable",
+          "canonical_symbol": "sysctl_pll_enable",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/sysctl.h",
+          "declaration_line": 979,
+          "definition_file": "lib/drivers/sysctl.c",
+          "definition_line": 804,
+          "signature": "int sysctl_pll_enable(sysctl_pll_t pll)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按 PLL 标识直接开启指定 PLL。",
+          "evidence_snippet": "lib/drivers/sysctl.c:804 — int sysctl_pll_enable(sysctl_pll_t pll)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "sysctl_clock_set_clock_select",
+          "canonical_symbol": "sysctl_clock_set_clock_select",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/sysctl.h",
+          "declaration_line": 932,
+          "definition_file": "lib/drivers/sysctl.c",
+          "definition_line": 617,
+          "signature": "int sysctl_clock_set_clock_select(sysctl_clock_select_t which, int select)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只选择来源，不保证目标时钟进入使能状态。",
+          "evidence_snippet": "lib/drivers/sysctl.c:617 — int sysctl_clock_set_clock_select(sysctl_clock_select_t which, int select)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "clock.disable",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "clock disable",
+        "gate disable",
+        "pll disable"
+      ],
+      "items": [
+        {
+          "symbol": "sysctl_clock_disable",
+          "canonical_symbol": "sysctl_clock_disable",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/sysctl.h",
+          "declaration_line": 897,
+          "definition_file": "lib/drivers/sysctl.c",
+          "definition_line": 398,
+          "signature": "int sysctl_clock_disable(sysctl_clock_t clock)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按时钟标识直接关闭外设/总线时钟门控。",
+          "evidence_snippet": "lib/drivers/sysctl.c:398 — int sysctl_clock_disable(sysctl_clock_t clock)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "sysctl_pll_disable",
+          "canonical_symbol": "sysctl_pll_disable",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/sysctl.h",
+          "declaration_line": 990,
+          "definition_file": "lib/drivers/sysctl.c",
+          "definition_line": 898,
+          "signature": "int sysctl_pll_disable(sysctl_pll_t pll)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按 PLL 标识直接关闭指定 PLL。",
+          "evidence_snippet": "lib/drivers/sysctl.c:898 — int sysctl_pll_disable(sysctl_pll_t pll)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "clock.get_frequency",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "clock frequency",
+        "get freq",
+        "clock rate",
+        "Hz"
+      ],
+      "items": [
+        {
+          "symbol": "sysctl_clock_get_freq",
+          "canonical_symbol": "sysctl_clock_get_freq",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/sysctl.h",
+          "declaration_line": 961,
+          "definition_file": "lib/drivers/sysctl.c",
+          "definition_line": 734,
+          "signature": "uint32_t sysctl_clock_get_freq(sysctl_clock_t clock)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "返回指定系统/外设时钟的实际频率值。",
+          "evidence_snippet": "lib/drivers/sysctl.c:734 — result = sysctl_clock_get_freq(SYSCTL_CLOCK_ACLK)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "sysctl_pll_get_freq",
+          "canonical_symbol": "sysctl_pll_get_freq",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/sysctl.h",
+          "declaration_line": 952,
+          "definition_file": "lib/drivers/sysctl.c",
+          "definition_line": 725,
+          "signature": "uint32_t sysctl_pll_get_freq(sysctl_pll_t pll)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "返回指定 PLL 的频率值。",
+          "evidence_snippet": "lib/drivers/sysctl.c:725 — result = sysctl_pll_get_freq(SYSCTL_PLL0)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "sysctl_clock_get_threshold",
+          "canonical_symbol": "sysctl_clock_get_threshold",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/sysctl.h",
+          "declaration_line": 920,
+          "definition_file": "lib/drivers/sysctl.c",
+          "definition_line": 519,
+          "signature": "int sysctl_clock_get_threshold(sysctl_threshold_t which)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只返回分频阈值，不能独立给出目标时钟频率。",
+          "evidence_snippet": "lib/drivers/sysctl.c:519 — int sysctl_clock_get_threshold(sysctl_threshold_t which)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "sysctl_clock_get_clock_select",
+          "canonical_symbol": "sysctl_clock_get_clock_select",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/sysctl.h",
+          "declaration_line": 943,
+          "definition_file": "lib/drivers/sysctl.c",
+          "definition_line": 668,
+          "signature": "int sysctl_clock_get_clock_select(sysctl_clock_select_t which)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只返回时钟源选择，不返回频率。",
+          "evidence_snippet": "lib/drivers/sysctl.c:668 — int sysctl_clock_get_clock_select(sysctl_clock_select_t which)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "interrupt.initialize",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "interrupt init",
+        "priority grouping",
+        "controller init"
+      ],
+      "items": [
+        {
+          "symbol": "plic_init",
+          "canonical_symbol": "plic_init",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/plic.h",
+          "declaration_line": 387,
+          "definition_file": "lib/drivers/plic.c",
+          "definition_line": 26,
+          "signature": "void plic_init(void)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "初始化 PLIC 全局状态，是中断控制器的直接初始化入口。",
+          "evidence_snippet": "lib/drivers/plic.c:26 — void plic_init(void)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "plic_set_priority",
+          "canonical_symbol": "plic_set_priority",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/plic.h",
+          "declaration_line": 422,
+          "definition_file": "lib/drivers/plic.c",
+          "definition_line": 106,
+          "signature": "int plic_set_priority(plic_irq_t irq_number, uint32_t priority)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只设置单个中断优先级，不能独立初始化控制器。",
+          "evidence_snippet": "lib/drivers/plic.c:106 — int plic_set_priority(plic_irq_t irq_number, uint32_t priority)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "interrupt.enable",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "irq enable",
+        "interrupt enable",
+        "NVIC",
+        "PLIC"
+      ],
+      "items": [
+        {
+          "symbol": "plic_irq_enable",
+          "canonical_symbol": "plic_irq_enable",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/plic.h",
+          "declaration_line": 399,
+          "definition_file": "lib/drivers/plic.c",
+          "definition_line": 76,
+          "signature": "int plic_irq_enable(plic_irq_t irq_number)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按中断号直接使能 PLIC 中断。",
+          "evidence_snippet": "lib/drivers/plic.c:76 — int plic_irq_enable(plic_irq_t irq_number)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "plic_set_priority",
+          "canonical_symbol": "plic_set_priority",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/plic.h",
+          "declaration_line": 422,
+          "definition_file": "lib/drivers/plic.c",
+          "definition_line": 106,
+          "signature": "int plic_set_priority(plic_irq_t irq_number, uint32_t priority)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "设置优先级与可响应性相关，但不打开中断使能位。",
+          "evidence_snippet": "lib/drivers/plic.c:106 — int plic_set_priority(plic_irq_t irq_number, uint32_t priority)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "interrupt.disable",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "irq disable",
+        "interrupt disable",
+        "NVIC",
+        "PLIC"
+      ],
+      "items": [
+        {
+          "symbol": "plic_irq_disable",
+          "canonical_symbol": "plic_irq_disable",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/plic.h",
+          "declaration_line": 410,
+          "definition_file": "lib/drivers/plic.c",
+          "definition_line": 91,
+          "signature": "int plic_irq_disable(plic_irq_t irq_number)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按中断号直接禁止 PLIC 中断。",
+          "evidence_snippet": "lib/drivers/plic.c:91 — int plic_irq_disable(plic_irq_t irq_number)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "interrupt.register",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "irq register",
+        "set vector",
+        "ISR",
+        "callback"
+      ],
+      "items": [
+        {
+          "symbol": "plic_irq_register",
+          "canonical_symbol": "plic_irq_register",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/plic.h",
+          "declaration_line": 462,
+          "definition_file": "lib/drivers/plic.c",
+          "definition_line": 140,
+          "signature": "void plic_irq_register(plic_irq_t irq, plic_irq_callback_t callback, void *ctx)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "将中断号、回调和上下文直接绑定并注册到 PLIC 分发层。",
+          "evidence_snippet": "lib/drivers/plic.c:140 — void plic_irq_register(plic_irq_t irq, plic_irq_callback_t callback, void *ctx)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "plic_irq_unregister",
+          "canonical_symbol": "plic_irq_unregister",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/plic.h",
+          "declaration_line": 484,
+          "definition_file": "lib/drivers/plic.c",
+          "definition_line": 150,
+          "signature": "void plic_irq_unregister(plic_irq_t irq)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "执行解除绑定，是 register 的反向相关接口。",
+          "evidence_snippet": "lib/drivers/plic.c:150 — void plic_irq_unregister(plic_irq_t irq)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "plic_irq_claim",
+          "canonical_symbol": "plic_irq_claim",
+          "grade": 0,
+          "declaration_file": "lib/drivers/include/plic.h",
+          "declaration_line": 438,
+          "definition_file": "lib/drivers/plic.c",
+          "definition_line": 125,
+          "signature": "uint32_t plic_irq_claim(void)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "领取待处理中断号，不建立 ISR/回调绑定。",
+          "evidence_snippet": "lib/drivers/plic.c:125 — uint32_t plic_irq_claim(void)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "uart.configure",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "uart init",
+        "uart configure",
+        "baud",
+        "word length",
+        "parity"
+      ],
+      "items": [
+        {
+          "symbol": "uart_configure",
+          "canonical_symbol": "uart_configure",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/uart.h",
+          "declaration_line": 303,
+          "definition_file": "lib/drivers/uart.c",
+          "definition_line": 136,
+          "signature": "void uart_configure(uart_device_number_t channel, uint32_t baud_rate, uart_bitwidth_t data_width, uart_stopbit_t stopbit, uart_parity_t parity)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "配置波特率、数据位、停止位和校验等 UART 帧参数。",
+          "evidence_snippet": "lib/drivers/uart.c:136 — uart_configure(s_uart_debug_channel, 115200, 8, UART_STOP_1, UART_PARITY_NONE)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "uart_set_work_mode",
+          "canonical_symbol": "uart_set_work_mode",
+          "grade": 2,
+          "declaration_file": "lib/drivers/include/uart.h",
+          "declaration_line": 419,
+          "definition_file": "lib/drivers/uart.c",
+          "definition_line": 480,
+          "signature": "void uart_set_work_mode(uart_device_number_t uart_channel, uart_work_mode_t work_mode)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "可独立设置 UART 工作模式，但配置范围窄于完整 configure。",
+          "evidence_snippet": "lib/drivers/uart.c:480 — void uart_set_work_mode(uart_device_number_t uart_channel, uart_work_mode_t work_mode)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "uart_init",
+          "canonical_symbol": "uart_init",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/uart.h",
+          "declaration_line": 279,
+          "definition_file": "lib/drivers/uart.c",
+          "definition_line": 135,
+          "signature": "void uart_init(uart_device_number_t channel)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只处理 UART 时钟/复位等基础准备，不完成帧格式配置。",
+          "evidence_snippet": "lib/drivers/uart.c:135 — uart_init(s_uart_debug_channel)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "uart_set_send_trigger",
+          "canonical_symbol": "uart_set_send_trigger",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/uart.h",
+          "declaration_line": 333,
+          "definition_file": "lib/drivers/uart.c",
+          "definition_line": 367,
+          "signature": "void uart_set_send_trigger(uart_device_number_t channel, uart_send_trigger_t trigger)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只配置发送 FIFO 触发阈值。",
+          "evidence_snippet": "lib/drivers/uart.c:367 — void uart_set_send_trigger(uart_device_number_t channel, uart_send_trigger_t trigger)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "uart_set_receive_trigger",
+          "canonical_symbol": "uart_set_receive_trigger",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/uart.h",
+          "declaration_line": 342,
+          "definition_file": "lib/drivers/uart.c",
+          "definition_line": 137,
+          "signature": "void uart_set_receive_trigger(uart_device_number_t channel, uart_receive_trigger_t trigger)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只配置接收 FIFO 触发阈值。",
+          "evidence_snippet": "lib/drivers/uart.c:137 — uart_set_receive_trigger(s_uart_debug_channel, UART_RECEIVE_FIFO_1)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "uart.write",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "uart write",
+        "send",
+        "transmit",
+        "DMA"
+      ],
+      "items": [
+        {
+          "symbol": "uart_send_data",
+          "canonical_symbol": "uart_send_data",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/uart.h",
+          "declaration_line": 260,
+          "definition_file": "lib/drivers/uart.c",
+          "definition_line": 245,
+          "signature": "int uart_send_data(uart_device_number_t channel, const char *buffer, size_t buf_len)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "同步提交给定缓冲区并发送字节流。",
+          "evidence_snippet": "lib/drivers/uart.c:245 — int uart_send_data(uart_device_number_t channel, const char *buffer, size_t buf_len)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "uart_send_data_dma",
+          "canonical_symbol": "uart_send_data_dma",
+          "grade": 2,
+          "declaration_file": "lib/drivers/include/uart.h",
+          "declaration_line": 353,
+          "definition_file": "lib/drivers/uart.c",
+          "definition_line": 256,
+          "signature": "void uart_send_data_dma(uart_device_number_t uart_channel, dmac_channel_number_t dmac_channel, const uint8_t *buffer, size_t buf_len)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "通过 DMA 完成同一发送契约，需要额外 DMA 通道前提。",
+          "evidence_snippet": "lib/drivers/uart.c:256 — void uart_send_data_dma(uart_device_number_t uart_channel, dmac_channel_number_t dmac_channel, const uint8_t *buffer, size_t buf_len)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "uart_send_data_dma_irq",
+          "canonical_symbol": "uart_send_data_dma_irq",
+          "grade": 2,
+          "declaration_file": "lib/drivers/include/uart.h",
+          "declaration_line": 378,
+          "definition_file": "lib/drivers/uart.c",
+          "definition_line": 280,
+          "signature": "void uart_send_data_dma_irq(uart_device_number_t uart_channel, dmac_channel_number_t dmac_channel, const uint8_t *buffer, size_t buf_len, plic_irq_callback_t uart_callback, void *ctx, uint32_t priority)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "通过 DMA 和完成中断发送，模式更专用但可独立完成发送。",
+          "evidence_snippet": "lib/drivers/uart.c:280 — void uart_send_data_dma_irq(uart_device_number_t uart_channel, dmac_channel_number_t dmac_channel, const uint8_t *buffer, size_t buf_len, plic_irq_callback_t uart_callback, void *ctx, uint32_t priority)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "uart.read",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "uart read",
+        "receive",
+        "DMA",
+        "idle"
+      ],
+      "items": [
+        {
+          "symbol": "uart_receive_data",
+          "canonical_symbol": "uart_receive_data",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/uart.h",
+          "declaration_line": 271,
+          "definition_file": "lib/drivers/uart.c",
+          "definition_line": 179,
+          "signature": "int uart_receive_data(uart_device_number_t channel, char *buffer, size_t buf_len)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "同步从 UART 接收给定长度的数据。",
+          "evidence_snippet": "lib/drivers/uart.c:179 — int uart_receive_data(uart_device_number_t channel, char *buffer, size_t buf_len)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "uart_receive_data_dma",
+          "canonical_symbol": "uart_receive_data_dma",
+          "grade": 2,
+          "declaration_file": "lib/drivers/include/uart.h",
+          "declaration_line": 364,
+          "definition_file": "lib/drivers/uart.c",
+          "definition_line": 192,
+          "signature": "void uart_receive_data_dma(uart_device_number_t uart_channel, dmac_channel_number_t dmac_channel, uint8_t *buffer, size_t buf_len)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "通过 DMA 完成接收，需要额外 DMA 通道前提。",
+          "evidence_snippet": "lib/drivers/uart.c:192 — void uart_receive_data_dma(uart_device_number_t uart_channel, dmac_channel_number_t dmac_channel, uint8_t *buffer, size_t buf_len)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "uart_receive_data_dma_irq",
+          "canonical_symbol": "uart_receive_data_dma_irq",
+          "grade": 2,
+          "declaration_file": "lib/drivers/include/uart.h",
+          "declaration_line": 394,
+          "definition_file": "lib/drivers/uart.c",
+          "definition_line": 218,
+          "signature": "void uart_receive_data_dma_irq(uart_device_number_t uart_channel, dmac_channel_number_t dmac_channel, uint8_t *buffer, size_t buf_len, plic_irq_callback_t uart_callback, void *ctx, uint32_t priority)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "通过 DMA 和完成中断接收，模式更专用但可独立完成接收。",
+          "evidence_snippet": "lib/drivers/uart.c:218 — void uart_receive_data_dma_irq(uart_device_number_t uart_channel, dmac_channel_number_t dmac_channel, uint8_t *buffer, size_t buf_len, plic_irq_callback_t uart_callback, void *ctx, uint32_t priority)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "gpio.configure",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "gpio init",
+        "pin configure",
+        "drive mode",
+        "direction"
+      ],
+      "items": [
+        {
+          "symbol": "gpiohs_set_drive_mode",
+          "canonical_symbol": "gpiohs_set_drive_mode",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/gpiohs.h",
+          "declaration_line": 207,
+          "definition_file": "lib/drivers/gpiohs.c",
+          "definition_line": 34,
+          "signature": "void gpiohs_set_drive_mode(uint8_t pin, gpio_drive_mode_t mode)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接配置高速 GPIO 引脚的输入/输出及驱动模式。",
+          "evidence_snippet": "lib/drivers/gpiohs.c:34 — void gpiohs_set_drive_mode(uint8_t pin, gpio_drive_mode_t mode)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "gpio_set_drive_mode",
+          "canonical_symbol": "gpio_set_drive_mode",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/gpio.h",
+          "declaration_line": 142,
+          "definition_file": "lib/drivers/gpio.c",
+          "definition_line": 28,
+          "signature": "void gpio_set_drive_mode(uint8_t pin, gpio_drive_mode_t mode)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接配置普通 GPIO 引脚的输入/输出及驱动模式。",
+          "evidence_snippet": "lib/drivers/gpio.c:28 — void gpio_set_drive_mode(uint8_t pin, gpio_drive_mode_t mode)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "gpiohs_set_pin_edge",
+          "canonical_symbol": "gpiohs_set_pin_edge",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/gpiohs.h",
+          "declaration_line": 234,
+          "definition_file": "lib/drivers/gpiohs.c",
+          "definition_line": 84,
+          "signature": "void gpiohs_set_pin_edge(uint8_t pin, gpio_pin_edge_t edge)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只配置中断触发边沿，不完成一般 GPIO 模式配置。",
+          "evidence_snippet": "lib/drivers/gpiohs.c:84 — void gpiohs_set_pin_edge(uint8_t pin, gpio_pin_edge_t edge)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "gpio.write",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "gpio write",
+        "set pin",
+        "clear pin",
+        "toggle"
+      ],
+      "items": [
+        {
+          "symbol": "gpiohs_set_pin",
+          "canonical_symbol": "gpiohs_set_pin",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/gpiohs.h",
+          "declaration_line": 226,
+          "definition_file": "lib/drivers/gpiohs.c",
+          "definition_line": 78,
+          "signature": "void gpiohs_set_pin(uint8_t pin, gpio_pin_value_t value)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按逻辑值直接写高速 GPIO 引脚。",
+          "evidence_snippet": "lib/drivers/gpiohs.c:78 — void gpiohs_set_pin(uint8_t pin, gpio_pin_value_t value)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "gpio_set_pin",
+          "canonical_symbol": "gpio_set_pin",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/gpio.h",
+          "declaration_line": 161,
+          "definition_file": "lib/drivers/gpio.c",
+          "definition_line": 71,
+          "signature": "void gpio_set_pin(uint8_t pin, gpio_pin_value_t value)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按逻辑值直接写普通 GPIO 引脚。",
+          "evidence_snippet": "lib/drivers/gpio.c:71 — void gpio_set_pin(uint8_t pin, gpio_pin_value_t value)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "gpio.read",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "gpio read",
+        "get pin",
+        "input state"
+      ],
+      "items": [
+        {
+          "symbol": "gpiohs_get_pin",
+          "canonical_symbol": "gpiohs_get_pin",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/gpiohs.h",
+          "declaration_line": 218,
+          "definition_file": "lib/drivers/gpiohs.c",
+          "definition_line": 72,
+          "signature": "gpio_pin_value_t gpiohs_get_pin(uint8_t pin)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "返回高速 GPIO 引脚当前逻辑电平。",
+          "evidence_snippet": "lib/drivers/gpiohs.c:72 — gpio_pin_value_t gpiohs_get_pin(uint8_t pin)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "gpio_get_pin",
+          "canonical_symbol": "gpio_get_pin",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/gpio.h",
+          "declaration_line": 153,
+          "definition_file": "lib/drivers/gpio.c",
+          "definition_line": 63,
+          "signature": "gpio_pin_value_t gpio_get_pin(uint8_t pin)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "返回普通 GPIO 引脚当前逻辑电平。",
+          "evidence_snippet": "lib/drivers/gpio.c:63 — gpio_pin_value_t gpio_get_pin(uint8_t pin)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "gpio.attach_irq",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "gpio interrupt",
+        "register callback",
+        "edge",
+        "event"
+      ],
+      "items": [
+        {
+          "symbol": "gpiohs_set_irq",
+          "canonical_symbol": "gpiohs_set_irq",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/gpiohs.h",
+          "declaration_line": 243,
+          "definition_file": "lib/drivers/gpiohs.c",
+          "definition_line": 174,
+          "signature": "void gpiohs_set_irq(uint8_t pin, uint32_t priority, void (*func)())",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "为高速 GPIO 中断配置回调并完成 PLIC 注册/使能。",
+          "evidence_snippet": "lib/drivers/gpiohs.c:174 — void gpiohs_set_irq(uint8_t pin, uint32_t priority, void (*func)())",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "gpiohs_irq_register",
+          "canonical_symbol": "gpiohs_irq_register",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/gpiohs.h",
+          "declaration_line": 253,
+          "definition_file": "lib/drivers/gpiohs.c",
+          "definition_line": 185,
+          "signature": "void gpiohs_irq_register(uint8_t pin, uint32_t priority, plic_irq_callback_t callback, void *ctx)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "将高速 GPIO 引脚中断与回调直接绑定。",
+          "evidence_snippet": "lib/drivers/gpiohs.c:185 — void gpiohs_irq_register(uint8_t pin, uint32_t priority, plic_irq_callback_t callback, void *ctx)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "gpiohs_set_pin_edge",
+          "canonical_symbol": "gpiohs_set_pin_edge",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/gpiohs.h",
+          "declaration_line": 234,
+          "definition_file": "lib/drivers/gpiohs.c",
+          "definition_line": 84,
+          "signature": "void gpiohs_set_pin_edge(uint8_t pin, gpio_pin_edge_t edge)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只设置触发边沿，不绑定处理函数。",
+          "evidence_snippet": "lib/drivers/gpiohs.c:84 — void gpiohs_set_pin_edge(uint8_t pin, gpio_pin_edge_t edge)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "gpiohs_irq_unregister",
+          "canonical_symbol": "gpiohs_irq_unregister",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/gpiohs.h",
+          "declaration_line": 260,
+          "definition_file": "lib/drivers/gpiohs.c",
+          "definition_line": 196,
+          "signature": "void gpiohs_irq_unregister(uint8_t pin)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "解除 GPIO 中断回调，是 attach 的反向相关接口。",
+          "evidence_snippet": "lib/drivers/gpiohs.c:196 — void gpiohs_irq_unregister(uint8_t pin)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "timer.initialize",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "timer init",
+        "timer setup",
+        "base init"
+      ],
+      "items": [
+        {
+          "symbol": "timer_init",
+          "canonical_symbol": "timer_init",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/timer.h",
+          "declaration_line": 106,
+          "definition_file": "lib/drivers/timer.c",
+          "definition_line": 44,
+          "signature": "void timer_init(timer_device_number_t timer_number)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "初始化指定 K210 硬件定时器设备。",
+          "evidence_snippet": "lib/drivers/timer.c:44 — void timer_init(timer_device_number_t timer_number)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "timer_set_irq",
+          "canonical_symbol": "timer_set_irq",
+          "grade": 1,
+          "declaration_file": "lib/drivers/include/timer.h",
+          "declaration_line": 117,
+          "definition_file": "lib/drivers/timer.c",
+          "definition_line": 198,
+          "signature": "void timer_set_irq(timer_device_number_t timer_number, timer_channel_number_t channel, void (*func)(), uint32_t priority)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只配置定时器中断处理，不完成定时器初始化。",
+          "evidence_snippet": "lib/drivers/timer.c:198 — void timer_set_irq(timer_device_number_t timer_number, timer_channel_number_t channel, void (*func)(), uint32_t priority)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "timer.start",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "timer start",
+        "timer enable",
+        "trigger start"
+      ],
+      "items": [
+        {
+          "symbol": "timer_set_enable",
+          "canonical_symbol": "timer_set_enable",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/timer.h",
+          "declaration_line": 155,
+          "definition_file": "lib/drivers/timer.c",
+          "definition_line": 149,
+          "signature": "void timer_set_enable(timer_device_number_t timer_number, timer_channel_number_t channel, uint32_t enable)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启",
+            "enable 参数为 true"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "以 enable=true 直接使已配置定时器开始运行。",
+          "evidence_snippet": "lib/drivers/timer.c:149 — void timer_set_enable(timer_device_number_t timer_number, timer_channel_number_t channel, uint32_t enable)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "timer.stop",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "timer stop",
+        "timer disable",
+        "pause"
+      ],
+      "items": [
+        {
+          "symbol": "timer_set_enable",
+          "canonical_symbol": "timer_set_enable",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/timer.h",
+          "declaration_line": 155,
+          "definition_file": "lib/drivers/timer.c",
+          "definition_line": 149,
+          "signature": "void timer_set_enable(timer_device_number_t timer_number, timer_channel_number_t channel, uint32_t enable)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启",
+            "enable 参数为 false"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "以 enable=false 直接停止指定定时器。",
+          "evidence_snippet": "lib/drivers/timer.c:149 — void timer_set_enable(timer_device_number_t timer_number, timer_channel_number_t channel, uint32_t enable)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "timer.set_interval",
+      "group_status": "complete",
+      "search_scope": [
+        "lib/drivers/",
+        "lib/drivers/include/"
+      ],
+      "search_terms": [
+        "timer interval",
+        "period",
+        "autoreload",
+        "timeout"
+      ],
+      "items": [
+        {
+          "symbol": "timer_set_interval",
+          "canonical_symbol": "timer_set_interval",
+          "grade": 3,
+          "declaration_file": "lib/drivers/include/timer.h",
+          "declaration_line": 99,
+          "definition_file": "lib/drivers/timer.c",
+          "definition_line": 157,
+          "signature": "size_t timer_set_interval(timer_device_number_t timer_number, timer_channel_number_t channel, size_t nanoseconds)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按纳秒间隔配置并返回实际定时周期。",
+          "evidence_snippet": "lib/drivers/timer.c:157 — size_t timer_set_interval(timer_device_number_t timer_number, timer_channel_number_t channel, size_t nanoseconds)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    }
+  ]
+}

@@ -1,0 +1,314 @@
+{
+  "conclusion": {
+    "gate_reaches_final_method_targets": false,
+    "human_truth_improves_external_gate": true,
+    "recommended_role": "negative ablation retained; excluded from final method"
+  },
+  "experiment_date": "2026-08-28",
+  "legacy_original_result": {
+    "adaptive_field_gate": {
+      "map": 0.661858,
+      "ndcg_at_10": 0.697449,
+      "precision_at_1": 0.68,
+      "recall_at_5": 0.699
+    },
+    "warning": "旧结果使用全局随机负例流，外部候选集与公平复跑不完全相同，仅供历史对照。"
+  },
+  "paired_bootstrap_vs_automatic": {
+    "human-engineer-1-vs-automatic-v0.9": {
+      "map": {
+        "bootstrap_samples": 10000,
+        "ci95": [
+          -0.023333,
+          0.090296
+        ],
+        "groups": 50,
+        "mean_delta": 0.035391
+      },
+      "ndcg_at_10": {
+        "bootstrap_samples": 10000,
+        "ci95": [
+          -0.006476,
+          0.102618
+        ],
+        "groups": 50,
+        "mean_delta": 0.048511
+      },
+      "precision_at_1": {
+        "bootstrap_samples": 10000,
+        "ci95": [
+          -0.06,
+          0.14
+        ],
+        "groups": 50,
+        "mean_delta": 0.04
+      },
+      "recall_at_5": {
+        "bootstrap_samples": 10000,
+        "ci95": [
+          -0.013333,
+          0.123333
+        ],
+        "groups": 50,
+        "mean_delta": 0.053333
+      }
+    },
+    "human-engineer-2-vs-automatic-v0.9": {
+      "map": {
+        "bootstrap_samples": 10000,
+        "ci95": [
+          -0.024894,
+          0.086691
+        ],
+        "groups": 50,
+        "mean_delta": 0.033093
+      },
+      "ndcg_at_10": {
+        "bootstrap_samples": 10000,
+        "ci95": [
+          -0.016318,
+          0.093758
+        ],
+        "groups": 50,
+        "mean_delta": 0.038248
+      },
+      "precision_at_1": {
+        "bootstrap_samples": 10000,
+        "ci95": [
+          -0.06,
+          0.14
+        ],
+        "groups": 50,
+        "mean_delta": 0.04
+      },
+      "recall_at_5": {
+        "bootstrap_samples": 10000,
+        "ci95": [
+          -0.016667,
+          0.123333
+        ],
+        "groups": 50,
+        "mean_delta": 0.053333
+      }
+    }
+  },
+  "protocol": {
+    "external_candidate_sets_identical": true,
+    "external_groups": 50,
+    "model_parameters": 461,
+    "seed": 20260828,
+    "status": "single-seed exploratory rerun",
+    "training_seed": 20260826,
+    "truth_sets": [
+      "automatic-v0.9",
+      "human-engineer-1",
+      "human-engineer-2"
+    ]
+  },
+  "schema_version": "adaptive-truth-rerun-summary-v1",
+  "truth_results": {
+    "automatic-v0.9": {
+      "dataset": {
+        "candidates": 39346,
+        "groups": 450,
+        "groups_by_role": {
+          "external-test": 50,
+          "train": 400
+        },
+        "positive_candidates": 3989,
+        "randomization_scope": "per-sdk-operation-group",
+        "sdks": 25,
+        "skipped_groups": 25,
+        "training_independence_groups": 20,
+        "training_sdks": 22,
+        "truth_alignment_groups": 0,
+        "truth_set_id": "automatic-v0.9",
+        "unretrievable_truth_symbols": 0
+      },
+      "external_adaptive_gate": {
+        "map": 0.679728,
+        "ndcg_at_10": 0.71643,
+        "precision_at_1": 0.68,
+        "recall_at_5": 0.719
+      },
+      "external_complete_method": {
+        "map": 0.701712,
+        "ndcg_at_10": 0.738125,
+        "precision_at_1": 0.74,
+        "recall_at_5": 0.733667
+      },
+      "external_final_method": {
+        "map": 0.803143,
+        "ndcg_at_10": 0.864493,
+        "precision_at_1": 0.8,
+        "recall_at_5": 0.926333
+      },
+      "selected_on_development": {
+        "adaptive_weight": 0.5,
+        "linear_weights": {
+          "field": 0.0,
+          "static": 1.0,
+          "structured_rrf": 0.0
+        }
+      },
+      "selective_calibration": {
+        "development": {
+          "accepted": 6,
+          "coverage": 0.069767,
+          "precision": 1
+        },
+        "external": {
+          "accepted": 17,
+          "coverage": 0.34,
+          "precision": 1
+        },
+        "status": "calibrated-on-development-only",
+        "target_precision": 0.95,
+        "threshold": 0.408814
+      },
+      "training": {
+        "best_epoch": 52,
+        "development": {
+          "map": 0.710347,
+          "mrr": 0.854156,
+          "ndcg_at_10": 0.767162,
+          "precision_at_1": 0.77907,
+          "recall_at_3": 0.453876,
+          "recall_at_5": 0.631395
+        },
+        "development_groups": 86,
+        "epochs_completed": 66,
+        "parameters": 461,
+        "training_groups": 314
+      }
+    },
+    "human-engineer-1": {
+      "dataset": {
+        "candidates": 28446,
+        "groups": 328,
+        "groups_by_role": {
+          "external-test": 50,
+          "train": 278
+        },
+        "positive_candidates": 2206,
+        "randomization_scope": "per-sdk-operation-group",
+        "sdks": 23,
+        "skipped_groups": 147,
+        "training_independence_groups": 18,
+        "training_sdks": 20,
+        "truth_alignment_groups": 10,
+        "truth_set_id": "human-engineer-1",
+        "unretrievable_truth_symbols": 10
+      },
+      "external_adaptive_gate": {
+        "map": 0.715119,
+        "ndcg_at_10": 0.764941,
+        "precision_at_1": 0.72,
+        "recall_at_5": 0.772333
+      },
+      "external_complete_method": {
+        "map": 0.724337,
+        "ndcg_at_10": 0.776115,
+        "precision_at_1": 0.74,
+        "recall_at_5": 0.782333
+      },
+      "external_final_method": {
+        "map": 0.803143,
+        "ndcg_at_10": 0.864493,
+        "precision_at_1": 0.8,
+        "recall_at_5": 0.926333
+      },
+      "selected_on_development": {
+        "adaptive_weight": 0.5,
+        "linear_weights": {
+          "field": 0.9,
+          "static": 0.0,
+          "structured_rrf": 0.09999999999999998
+        }
+      },
+      "selective_calibration": {
+        "status": "no-feasible-threshold",
+        "target_precision": 0.95
+      },
+      "training": {
+        "best_epoch": 49,
+        "development": {
+          "map": 0.347591,
+          "mrr": 0.369854,
+          "ndcg_at_10": 0.408483,
+          "precision_at_1": 0.246575,
+          "recall_at_3": 0.326484,
+          "recall_at_5": 0.474886
+        },
+        "development_groups": 73,
+        "epochs_completed": 63,
+        "parameters": 461,
+        "training_groups": 205
+      }
+    },
+    "human-engineer-2": {
+      "dataset": {
+        "candidates": 29904,
+        "groups": 331,
+        "groups_by_role": {
+          "external-test": 50,
+          "train": 281
+        },
+        "positive_candidates": 3424,
+        "randomization_scope": "per-sdk-operation-group",
+        "sdks": 23,
+        "skipped_groups": 144,
+        "training_independence_groups": 18,
+        "training_sdks": 20,
+        "truth_alignment_groups": 0,
+        "truth_set_id": "human-engineer-2",
+        "unretrievable_truth_symbols": 0
+      },
+      "external_adaptive_gate": {
+        "map": 0.71282,
+        "ndcg_at_10": 0.754678,
+        "precision_at_1": 0.72,
+        "recall_at_5": 0.772333
+      },
+      "external_complete_method": {
+        "map": 0.724297,
+        "ndcg_at_10": 0.771149,
+        "precision_at_1": 0.74,
+        "recall_at_5": 0.782333
+      },
+      "external_final_method": {
+        "map": 0.803143,
+        "ndcg_at_10": 0.864493,
+        "precision_at_1": 0.8,
+        "recall_at_5": 0.926333
+      },
+      "selected_on_development": {
+        "adaptive_weight": 0.5,
+        "linear_weights": {
+          "field": 0.9,
+          "static": 0.0,
+          "structured_rrf": 0.09999999999999998
+        }
+      },
+      "selective_calibration": {
+        "status": "no-feasible-threshold",
+        "target_precision": 0.95
+      },
+      "training": {
+        "best_epoch": 76,
+        "development": {
+          "map": 0.39752,
+          "mrr": 0.42206,
+          "ndcg_at_10": 0.436748,
+          "precision_at_1": 0.293333,
+          "recall_at_3": 0.35097,
+          "recall_at_5": 0.445192
+        },
+        "development_groups": 75,
+        "epochs_completed": 80,
+        "parameters": 461,
+        "training_groups": 206
+      }
+    }
+  }
+}

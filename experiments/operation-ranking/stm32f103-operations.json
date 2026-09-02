@@ -1,26 +1,270 @@
 {
-  "schema_version": "1.0",
-  "sdk_id": "stm32cube-f1",
-  "annotation": {"status": "single-curator-source-audited", "second_reviewer_required_for_publication": true, "revision": "2026-08-25-completeness-audit", "policy": "primary HAL bindings and semantically valid lower-level alternatives are graded separately"},
+  "annotator_id": "H03-external-adjudication",
+  "grade_fields": {
+    "0": "irrelevant_symbols",
+    "1": "related_symbols",
+    "2": "alternative_symbols",
+    "3": "symbols"
+  },
   "operations": {
-    "clock.initialize": {"symbols": ["HAL_RCC_OscConfig", "HAL_RCC_ClockConfig"]},
-    "clock.enable": {"supported": false, "symbols": []},
-    "clock.disable": {"supported": false, "symbols": []},
-    "clock.get_frequency": {"symbols": ["HAL_RCC_GetSysClockFreq", "HAL_RCC_GetHCLKFreq", "HAL_RCC_GetPCLK1Freq", "HAL_RCC_GetPCLK2Freq"], "alternative_symbols": ["RCC_PLL2_GetFreqClockFreq"]},
-    "interrupt.initialize": {"symbols": ["HAL_NVIC_SetPriority"]},
-    "interrupt.enable": {"symbols": ["HAL_NVIC_EnableIRQ"]},
-    "interrupt.disable": {"symbols": ["HAL_NVIC_DisableIRQ"]},
-    "interrupt.register": {"supported": false, "symbols": []},
-    "uart.configure": {"symbols": ["HAL_UART_Init", "HAL_UART_DeInit"]},
-    "uart.write": {"symbols": ["HAL_UART_Transmit", "HAL_UART_Transmit_IT"]},
-    "uart.read": {"symbols": ["HAL_UART_Receive", "HAL_UART_Receive_IT"]},
-    "gpio.configure": {"symbols": ["HAL_GPIO_Init", "HAL_GPIO_DeInit"]},
-    "gpio.write": {"symbols": ["HAL_GPIO_WritePin", "HAL_GPIO_TogglePin"]},
-    "gpio.read": {"symbols": ["HAL_GPIO_ReadPin"]},
-    "gpio.attach_irq": {"supported": false, "symbols": []},
-    "timer.initialize": {"symbols": ["HAL_TIM_Base_Init"]},
-    "timer.start": {"symbols": ["HAL_TIM_Base_Start", "HAL_TIM_Base_Start_IT"]},
-    "timer.stop": {"symbols": ["HAL_TIM_Base_Stop", "HAL_TIM_Base_Stop_IT"]},
-    "timer.set_interval": {"supported": false, "symbols": []}
-  }
+    "clock.disable": {
+      "alternative_symbols": [
+        "HAL_RCCEx_DisablePLL2",
+        "HAL_RCCEx_DisablePLLI2S",
+        "HAL_RCC_OscConfig"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [
+        "HAL_RCC_DisableCSS"
+      ],
+      "related_symbols": [],
+      "symbols": []
+    },
+    "clock.enable": {
+      "alternative_symbols": [
+        "HAL_RCCEx_EnablePLL2",
+        "HAL_RCCEx_EnablePLLI2S",
+        "HAL_RCC_OscConfig",
+        "LL_RCC_PLL_Enable"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [
+        "HAL_RCC_EnableCSS"
+      ],
+      "related_symbols": [],
+      "symbols": []
+    },
+    "clock.get_frequency": {
+      "alternative_symbols": [],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "HAL_RCCEx_GetPeriphCLKFreq",
+        "HAL_RCC_GetHCLKFreq",
+        "HAL_RCC_GetPCLK1Freq",
+        "HAL_RCC_GetPCLK2Freq",
+        "HAL_RCC_GetSysClockFreq"
+      ]
+    },
+    "clock.initialize": {
+      "alternative_symbols": [
+        "HAL_RCCEx_PeriphCLKConfig"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [
+        "HAL_RCC_DeInit"
+      ],
+      "symbols": [
+        "HAL_RCC_ClockConfig",
+        "HAL_RCC_OscConfig"
+      ]
+    },
+    "gpio.attach_irq": {
+      "alternative_symbols": [],
+      "group_status": "no_public_api",
+      "irrelevant_symbols": [],
+      "related_symbols": [
+        "HAL_EXTI_RegisterCallback",
+        "HAL_EXTI_SetConfigLine",
+        "HAL_GPIO_Init"
+      ],
+      "symbols": []
+    },
+    "gpio.configure": {
+      "alternative_symbols": [],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [
+        "HAL_GPIO_DeInit"
+      ],
+      "symbols": [
+        "HAL_GPIO_Init"
+      ]
+    },
+    "gpio.read": {
+      "alternative_symbols": [],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "HAL_GPIO_ReadPin"
+      ]
+    },
+    "gpio.write": {
+      "alternative_symbols": [],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [
+        "HAL_GPIO_TogglePin"
+      ],
+      "symbols": [
+        "HAL_GPIO_WritePin"
+      ]
+    },
+    "interrupt.disable": {
+      "alternative_symbols": [
+        "__NVIC_DisableIRQ"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "HAL_NVIC_DisableIRQ"
+      ]
+    },
+    "interrupt.enable": {
+      "alternative_symbols": [
+        "__NVIC_EnableIRQ"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "HAL_NVIC_EnableIRQ"
+      ]
+    },
+    "interrupt.initialize": {
+      "alternative_symbols": [
+        "__NVIC_SetPriorityGrouping"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [
+        "HAL_NVIC_SetPriority",
+        "__NVIC_SetPriority"
+      ],
+      "symbols": [
+        "HAL_NVIC_SetPriorityGrouping"
+      ]
+    },
+    "interrupt.register": {
+      "alternative_symbols": [
+        "__NVIC_SetVector"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": []
+    },
+    "timer.initialize": {
+      "alternative_symbols": [],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [
+        "HAL_TIM_Base_DeInit"
+      ],
+      "symbols": [
+        "HAL_TIM_Base_Init"
+      ]
+    },
+    "timer.set_interval": {
+      "alternative_symbols": [
+        "HAL_TIM_Base_Init"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": []
+    },
+    "timer.start": {
+      "alternative_symbols": [
+        "HAL_TIM_Base_Start_DMA",
+        "HAL_TIM_Base_Start_IT"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "HAL_TIM_Base_Start"
+      ]
+    },
+    "timer.stop": {
+      "alternative_symbols": [
+        "HAL_TIM_Base_Stop_DMA",
+        "HAL_TIM_Base_Stop_IT",
+        "LL_TIM_DisableCounter"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "HAL_TIM_Base_Stop"
+      ]
+    },
+    "uart.configure": {
+      "alternative_symbols": [
+        "HAL_HalfDuplex_Init",
+        "HAL_LIN_Init",
+        "HAL_MultiProcessor_Init"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [
+        "HAL_UART_DeInit"
+      ],
+      "symbols": [
+        "HAL_UART_Init"
+      ]
+    },
+    "uart.read": {
+      "alternative_symbols": [
+        "HAL_UARTEx_ReceiveToIdle",
+        "HAL_UARTEx_ReceiveToIdle_DMA",
+        "HAL_UARTEx_ReceiveToIdle_IT",
+        "HAL_UART_Receive_DMA",
+        "HAL_UART_Receive_IT"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "HAL_UART_Receive"
+      ]
+    },
+    "uart.write": {
+      "alternative_symbols": [
+        "HAL_UART_Transmit_DMA",
+        "HAL_UART_Transmit_IT"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "HAL_UART_Transmit"
+      ]
+    }
+  },
+  "post_error_adjudication": {
+    "external_labels_used_for_training": false,
+    "file": "external-test-truth/source/equivalence-adjudication-20260902.json",
+    "items_applied": 2,
+    "sha256": "ba087a5e108736b9a65963bf137dda69d8b1972472a7061f2ade52ab2e462dd0"
+  },
+  "review_method": "manual source audit against public headers, definitions, and 1-2 level call chains",
+  "role": "external-test",
+  "schema_version": "operation-truth-v1",
+  "sdk_id": "stm32cube-f1",
+  "source_audit": {
+    "file": "external-test-truth/source/stm32cube-f1/truth-audit-v1-final.json",
+    "sha256": "490503f660863720c31f104b374c6255374a89472066f82fa0139bcbbc5616b3"
+  },
+  "source_revision": "bb2016eaa0004f74b5bd2369709415cae1fc88b2",
+  "summary": {
+    "grade_counts": {
+      "0": 2,
+      "1": 10,
+      "2": 28,
+      "3": 19
+    },
+    "group_status_counts": {
+      "complete": 18,
+      "no_public_api": 1
+    },
+    "query_groups": 19
+  },
+  "training_included": false,
+  "truth_set_id": "external-board-h03-equivalence-r1",
+  "truth_source": "human-source-audited-external-adjudication"
 }

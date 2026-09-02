@@ -1,0 +1,39 @@
+{
+  "schema_version": "external-evaluation-manifest-v1",
+  "separation_policy": "These SDKs are external-test only and MUST NOT be included in training/validation truth.",
+  "sdks": [
+    {
+      "sdk_id": "kendryte-k210-standalone-sdk-0.5.6",
+      "display_name": "K210",
+      "vendor": "Kendryte",
+      "role": "external-test",
+      "training_included": false,
+      "source_revision": "02576ba67e8797444f3ee3f34c625b5ed048e707",
+      "source_root": "/mnt/d/Wuhk/AIOT/k210sdk/kendryte-standalone-sdk",
+      "truth_file": "operation-truth/kendryte-k210-standalone-sdk-0.5.6-operations.json",
+      "audit_file": "kendryte-k210-standalone-sdk-0.5.6/truth-audit-v1-final.json"
+    },
+    {
+      "sdk_id": "stm32cube-f1",
+      "display_name": "STM32F103 / STM32CubeF1",
+      "vendor": "STMicroelectronics",
+      "role": "external-test",
+      "training_included": false,
+      "source_revision": "bb2016eaa0004f74b5bd2369709415cae1fc88b2",
+      "source_root": "/home/whk/RTT-porting/STM32CubeF1",
+      "truth_file": "operation-truth/stm32cube-f1-operations.json",
+      "audit_file": "stm32cube-f1/truth-audit-v1-final.json"
+    },
+    {
+      "sdk_id": "psoc-e84-edgi-talk-sdk",
+      "display_name": "PSoC E84 / Edge AI Talk",
+      "vendor": "Infineon",
+      "role": "external-test",
+      "training_included": false,
+      "source_revision": "1c6964a67ffb3925e9731c2e29e14b99a3534ee2",
+      "source_root": "/home/whk/RTT-porting/sdk-bsp-psoc_e84-edgi-talk/libraries",
+      "truth_file": "operation-truth/psoc-e84-edgi-talk-sdk-operations.json",
+      "audit_file": "psoc-e84-edgi-talk-sdk/truth-audit-v1-final.json"
+    }
+  ]
+}

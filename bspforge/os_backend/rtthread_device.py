@@ -11,7 +11,7 @@ DEFAULT_DEVICE_CONFIG: dict[str, Any] = {
     "uart": [
         {"name": "bspuart1", "channel": 0, "baud_rate": 115200},
     ],
-    "pin": {"name": "bsppin", "max_pins": 32},
+    "pin": {"name": "bsppin", "max_pins": 32, "skip_if_device_exists": "pin"},
     "hwtimer": [
         {"name": "bsptim0", "device": 0, "channel": 0, "frequency": 1_000_000},
     ],
@@ -75,6 +75,7 @@ class RTThreadDeviceModelGenerator:
                     "pin_irq_enable",
                 ],
                 "registration": "rt_device_pin_register",
+                "skip_if_device_exists": pin_device["skip_if_device_exists"],
             })
 
         timer_devices = normalized["hwtimer"] if "timer" in capabilities else []
@@ -150,7 +151,14 @@ class RTThreadDeviceModelGenerator:
             max_pins = int(merged["pin"].get("max_pins", 32))
             if max_pins < 1 or max_pins > 32:
                 raise ValueError("K210 GPIOHS max_pins must be between 1 and 32")
-            pin = {"name": merged["pin"]["name"], "max_pins": max_pins}
+            skip_if_device_exists = merged["pin"].get("skip_if_device_exists", "pin")
+            if skip_if_device_exists is not None:
+                cls._validate_device_name(skip_if_device_exists)
+            pin = {
+                "name": merged["pin"]["name"],
+                "max_pins": max_pins,
+                "skip_if_device_exists": skip_if_device_exists,
+            }
 
         hwtimer = []
         occupied: set[tuple[int, int]] = set()
@@ -176,11 +184,15 @@ class RTThreadDeviceModelGenerator:
 
     @staticmethod
     def _validate_name(name: str, existing: set[str]) -> None:
-        if not isinstance(name, str) or not re.fullmatch(r"[A-Za-z0-9_.-]{1,15}", name):
-            raise ValueError(f"Invalid RT-Thread device name: {name!r}")
+        RTThreadDeviceModelGenerator._validate_device_name(name)
         if name in existing:
             raise ValueError(f"Duplicate RT-Thread device name: {name}")
         existing.add(name)
+
+    @staticmethod
+    def _validate_device_name(name: str) -> None:
+        if not isinstance(name, str) or not re.fullmatch(r"[A-Za-z0-9_.-]{1,15}", name):
+            raise ValueError(f"Invalid RT-Thread device name: {name!r}")
 
     @staticmethod
     def _board_source(uarts: list[dict[str, Any]], pin: dict[str, Any] | None) -> str:
@@ -271,6 +283,14 @@ static const struct rt_uart_ops bspforge_uart_ops =
 
         if pin:
             max_pins = pin["max_pins"]
+            guard_begin = ""
+            guard_end = ""
+            if pin["skip_if_device_exists"] is not None:
+                guard_begin = (
+                    f'    if (rt_device_find("{pin["skip_if_device_exists"]}") == RT_NULL)\n'
+                    "    {\n"
+                )
+                guard_end = "    }\n"
             sections.append(f"""
 #ifdef RT_USING_PIN
 #define BSPFORGE_PIN_COUNT {max_pins}U
@@ -411,9 +431,11 @@ static const struct rt_pin_ops bspforge_pin_ops =
 """.strip())
             registrations.append(f"""
 #ifdef RT_USING_PIN
+{guard_begin.rstrip()}
     result = rt_device_pin_register("{pin['name']}", &bspforge_pin_ops, RT_NULL);
     if (result != RT_EOK)
         return result;
+{guard_end.rstrip()}
 #endif
 """.strip())
 

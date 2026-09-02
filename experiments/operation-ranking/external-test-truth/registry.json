@@ -1,0 +1,117 @@
+{
+  "post_error_adjudication": {
+    "file": "external-test-truth/source/equivalence-adjudication-20260902.json",
+    "items": 3,
+    "protocol": {
+      "external_labels_used_for_training": false,
+      "note": "This revision is reported separately from the untouched H03 result and is not an untouched test set.",
+      "rejected_disagreements_are_not_modified": true,
+      "scope": "only predicted symbols whose callable behavior independently satisfies the operation contract",
+      "trigger": "post-error source audit after frozen external evaluation"
+    },
+    "sha256": "ba087a5e108736b9a65963bf137dda69d8b1972472a7061f2ade52ab2e462dd0"
+  },
+  "role": "external-test",
+  "schema_version": "external-operation-truth-registry-v1",
+  "sdks": {
+    "kendryte-k210-standalone-sdk-0.5.6": {
+      "file": "k210-operations.json",
+      "post_error_adjudication": {
+        "external_labels_used_for_training": false,
+        "file": "external-test-truth/source/equivalence-adjudication-20260902.json",
+        "items_applied": 1,
+        "sha256": "ba087a5e108736b9a65963bf137dda69d8b1972472a7061f2ade52ab2e462dd0"
+      },
+      "source_audit": {
+        "file": "external-test-truth/source/kendryte-k210-standalone-sdk-0.5.6/truth-audit-v1-final.json",
+        "sha256": "6968a1ea7464dec782c8c3b150d74f1d1601c48118a2fe3c1b6d1455cc4c0fcb"
+      },
+      "source_revision": "02576ba67e8797444f3ee3f34c625b5ed048e707",
+      "summary": {
+        "grade_counts": {
+          "0": 1,
+          "1": 14,
+          "2": 7,
+          "3": 27
+        },
+        "group_status_counts": {
+          "complete": 19
+        },
+        "query_groups": 19
+      }
+    },
+    "psoc-e84-edgi-talk-sdk": {
+      "file": "psoc-e84-operations.json",
+      "source_audit": {
+        "file": "external-test-truth/source/psoc-e84-edgi-talk-sdk/truth-audit-v1-final.json",
+        "sha256": "67dd358037e03d71ec378ae1ef9587a10b5b6577888ce9af63845f995f99737f"
+      },
+      "source_revision": "1c6964a67ffb3925e9731c2e29e14b99a3534ee2",
+      "summary": {
+        "grade_counts": {
+          "0": 1,
+          "1": 12,
+          "2": 28,
+          "3": 18
+        },
+        "group_status_counts": {
+          "complete": 18,
+          "no_public_api": 1
+        },
+        "query_groups": 19
+      }
+    },
+    "stm32cube-f1": {
+      "file": "stm32f103-operations.json",
+      "post_error_adjudication": {
+        "external_labels_used_for_training": false,
+        "file": "external-test-truth/source/equivalence-adjudication-20260902.json",
+        "items_applied": 2,
+        "sha256": "ba087a5e108736b9a65963bf137dda69d8b1972472a7061f2ade52ab2e462dd0"
+      },
+      "source_audit": {
+        "file": "external-test-truth/source/stm32cube-f1/truth-audit-v1-final.json",
+        "sha256": "490503f660863720c31f104b374c6255374a89472066f82fa0139bcbbc5616b3"
+      },
+      "source_revision": "bb2016eaa0004f74b5bd2369709415cae1fc88b2",
+      "summary": {
+        "grade_counts": {
+          "0": 2,
+          "1": 10,
+          "2": 28,
+          "3": 19
+        },
+        "group_status_counts": {
+          "complete": 18,
+          "no_public_api": 1
+        },
+        "query_groups": 19
+      }
+    }
+  },
+  "source_manifest": {
+    "file": "external-test-truth/source/evaluation-manifest.json",
+    "sha256": "9a889b4304d59195478f07ca63b87282c82a4bfc03571da4518a986350a10051"
+  },
+  "source_validation": {
+    "file": "external-test-truth/source/validation.json",
+    "sha256": "16d364e2b6586b3df50b555c8597614e1933a6e5eac6a1b0b6dbc0e755927447",
+    "status": "pass"
+  },
+  "summary": {
+    "external_test_sdks": 3,
+    "grade_counts": {
+      "0": 4,
+      "1": 36,
+      "2": 63,
+      "3": 64
+    },
+    "group_status_counts": {
+      "complete": 55,
+      "no_public_api": 2
+    },
+    "query_groups": 57
+  },
+  "training_included": false,
+  "truth_set_id": "external-board-h03-equivalence-r1"
+}

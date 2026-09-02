@@ -1,0 +1,66 @@
+{
+  "schema_version": "external-truth-equivalence-adjudication-v1",
+  "created_at": "2026-09-02",
+  "base_truth_set_id": "external-board-h03",
+  "result_truth_set_id": "external-board-h03-equivalence-r1",
+  "protocol": {
+    "trigger": "post-error source audit after frozen external evaluation",
+    "scope": "only predicted symbols whose callable behavior independently satisfies the operation contract",
+    "external_labels_used_for_training": false,
+    "rejected_disagreements_are_not_modified": true,
+    "note": "This revision is reported separately from the untouched H03 result and is not an untouched test set."
+  },
+  "items": [
+    {
+      "sdk_id": "kendryte-k210-standalone-sdk-0.5.6",
+      "source_revision": "02576ba67e8797444f3ee3f34c625b5ed048e707",
+      "operation_id": "timer.stop",
+      "symbol": "timer_disable",
+      "grade": 3,
+      "declaration_file": "lib/drivers/include/timer.h",
+      "declaration_line": 136,
+      "definition_file": "lib/drivers/timer.c",
+      "definition_line": 68,
+      "signature": "void timer_disable(timer_device_number_t timer_number, timer_channel_number_t channel)",
+      "api_layer": "public_sdk_driver",
+      "callable_kind": "function",
+      "preconditions": ["timer number and channel are valid"],
+      "rationale": "The public SDK driver directly clears TIMER_CR_ENABLE and independently stops the selected timer channel.",
+      "evidence_snippet": "lib/drivers/timer.c:70 - control &= (~TIMER_CR_ENABLE)"
+    },
+    {
+      "sdk_id": "stm32cube-f1",
+      "source_revision": "bb2016eaa0004f74b5bd2369709415cae1fc88b2",
+      "operation_id": "clock.enable",
+      "symbol": "LL_RCC_PLL_Enable",
+      "grade": 2,
+      "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_rcc.h",
+      "declaration_line": 1385,
+      "definition_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_rcc.h",
+      "definition_line": 1385,
+      "signature": "__STATIC_INLINE void LL_RCC_PLL_Enable(void)",
+      "api_layer": "public_ll_driver",
+      "callable_kind": "static_inline",
+      "preconditions": ["PLL source and multiplier are configured"],
+      "rationale": "The public LL callable directly sets RCC_CR_PLLON and independently enables the main PLL.",
+      "evidence_snippet": "stm32f1xx_ll_rcc.h:1387 - SET_BIT(RCC->CR, RCC_CR_PLLON)"
+    },
+    {
+      "sdk_id": "stm32cube-f1",
+      "source_revision": "bb2016eaa0004f74b5bd2369709415cae1fc88b2",
+      "operation_id": "timer.stop",
+      "symbol": "LL_TIM_DisableCounter",
+      "grade": 2,
+      "declaration_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_tim.h",
+      "declaration_line": 1062,
+      "definition_file": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_tim.h",
+      "definition_line": 1062,
+      "signature": "__STATIC_INLINE void LL_TIM_DisableCounter(TIM_TypeDef *TIMx)",
+      "api_layer": "public_ll_driver",
+      "callable_kind": "static_inline",
+      "preconditions": ["TIMx identifies a valid timer instance"],
+      "rationale": "The public LL callable directly clears TIM_CR1_CEN and independently stops the timer counter.",
+      "evidence_snippet": "stm32f1xx_ll_tim.h:1064 - CLEAR_BIT(TIMx->CR1, TIM_CR1_CEN)"
+    }
+  ]
+}

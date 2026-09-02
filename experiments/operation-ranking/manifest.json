@@ -2,7 +2,14 @@
   "schema_version": "1.0",
   "description": "操作级语义排序语料；训练语料与三块实板外部测试严格隔离",
   "training_policy": {
-    "label_source": "auditable-weak-supervision",
+    "label_source": "selectable-operation-truth-set",
+    "default_truth_set": "automatic-v0.9",
+    "truth_sets": {
+      "human-engineer-1": "truth-sets/human-engineer-1.json",
+      "human-engineer-2": "truth-sets/human-engineer-2.json",
+      "human-adjudicated-h03": "truth-sets/human-adjudicated-h03.json",
+      "automatic-v0.9": "truth-sets/automatic-v0.9.json"
+    },
     "external_test_excluded_from_training": true,
     "split_unit": "independence_group"
   },
@@ -29,8 +36,8 @@
     {"sdk_id": "silabs-emlib", "vendor": "Silicon Labs", "independence_group": "silabs", "role": "train", "source_path": "/home/whk/RTT-porting/evaluation-sdks/silabs-hal/gecko/emlib", "source_url": "https://github.com/zephyrproject-rtos/hal_silabs", "revision": "28eb6670caf3486321a033c7f08687867a7ef4f4"},
     {"sdk_id": "hpmicro-hpm-sdk", "vendor": "HPMicro", "independence_group": "hpmicro", "role": "train", "source_path": "/home/whk/RTT-porting/evaluation-sdks/hpm-sdk/drivers", "source_url": "https://github.com/hpmicro/hpm_sdk", "revision": "88b01b43900d8c30844a1e5cdd3f3b7aff6db40e"},
     {"sdk_id": "nuvoton-std-driver", "vendor": "Nuvoton", "independence_group": "nuvoton", "role": "train", "source_path": "/home/whk/RTT-porting/evaluation-sdks/nuvoton-hal", "source_url": "https://github.com/zephyrproject-rtos/hal_nuvoton", "revision": "0f411a85da7d17a612d54450f608f4d30cdb971f"},
-    {"sdk_id": "kendryte-k210-standalone-sdk-0.5.6", "vendor": "Kendryte", "independence_group": "kendryte-board-test", "role": "external-test", "source_path": "/mnt/d/Wuhk/AIOT/k210sdk/kendryte-standalone-sdk", "ground_truth": "k210-operations.json"},
-    {"sdk_id": "stm32cube-f1", "vendor": "STMicroelectronics", "independence_group": "stm32-board-test", "role": "external-test", "source_path": "/home/whk/RTT-porting/STM32CubeF1", "ground_truth": "stm32f103-operations.json"},
-    {"sdk_id": "psoc-e84-edgi-talk-sdk", "vendor": "Infineon/Cypress", "independence_group": "psoc-board-test", "role": "external-test", "source_path": "/home/whk/RTT-porting/sdk-bsp-psoc_e84-edgi-talk/libraries", "ground_truth": "psoc-e84-operations.json"}
+    {"sdk_id": "kendryte-k210-standalone-sdk-0.5.6", "vendor": "Kendryte", "independence_group": "kendryte-board-test", "role": "external-test", "training_included": false, "source_path": "/mnt/d/Wuhk/AIOT/k210sdk/kendryte-standalone-sdk", "revision": "02576ba67e8797444f3ee3f34c625b5ed048e707", "ground_truth": "k210-operations.json"},
+    {"sdk_id": "stm32cube-f1", "vendor": "STMicroelectronics", "independence_group": "stm32-board-test", "role": "external-test", "training_included": false, "source_path": "/home/whk/RTT-porting/STM32CubeF1", "revision": "bb2016eaa0004f74b5bd2369709415cae1fc88b2", "ground_truth": "stm32f103-operations.json"},
+    {"sdk_id": "psoc-e84-edgi-talk-sdk", "vendor": "Infineon/Cypress", "independence_group": "psoc-board-test", "role": "external-test", "training_included": false, "source_path": "/home/whk/RTT-porting/sdk-bsp-psoc_e84-edgi-talk/libraries", "revision": "1c6964a67ffb3925e9731c2e29e14b99a3534ee2", "ground_truth": "psoc-e84-operations.json"}
   ]
 }

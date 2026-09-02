@@ -15,7 +15,12 @@ dependencies = []
 [project.optional-dependencies]
 analysis = ["tree-sitter>=0.24", "tree-sitter-c>=0.23"]
 learning = ["lightgbm>=4.5", "scikit-learn>=1.5"]
-retrieval = ["sentence-transformers>=3.0,<7", "numpy>=1.26", "einops>=0.8,<1"]
+retrieval = [
+    "sentence-transformers>=3.0,<4",
+    "transformers>=4.34,<5",
+    "numpy>=1.26",
+    "einops>=0.8,<1",
+]
 hardware = ["pyserial>=3.5"]
 dev = ["tree-sitter>=0.24", "tree-sitter-c>=0.23", "pyserial>=3.5", "pytest>=8,<10"]
 

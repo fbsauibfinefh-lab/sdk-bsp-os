@@ -14,7 +14,7 @@ CAPABILITY_SCHEMA: dict[str, dict[str, Any]] = {
     },
     "interrupt": {
         "operations": {
-            "initialize": ["init", "priority", "configure"],
+            "initialize": ["init", "configure"],
             "enable": ["enable"],
             "disable": ["disable"],
             "register": ["register", "attach", "setvector"],

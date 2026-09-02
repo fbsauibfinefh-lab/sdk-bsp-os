@@ -8,6 +8,7 @@ from bspforge.capability_schema import CAPABILITY_SCHEMA
 from bspforge.common import stable_id, utc_now
 from bspforge.compile_feedback import feedback_index
 from bspforge.operation_constraints import compatibility, contract_adjustment
+from bspforge.ranking_diagnostics import deterministic_ranking_evidence
 from bspforge.operation_ranking import operation_feature_map, operation_static_score
 from bspforge.operation_ranking import candidate_code_text
 from bspforge.semantic_adapter import OperationSemanticRanker
@@ -287,6 +288,9 @@ class SemanticResolver:
         }
         selected_for_capability: list[tuple[str, dict[str, Any]]] = []
         for operation in operations:
+            ranking_evidence = None
+            structured_group = None
+            structured_policy = None
             ranked = []
             for candidate in candidates:
                 item = dict(candidate)
@@ -346,7 +350,7 @@ class SemanticResolver:
                     )
                     structured_group["candidates"].append(row)
                 retrieval_report = enrich_group_with_structured_retrieval(structured_group)
-                structured_scores, policy = complete_structured_scores(
+                structured_scores, structured_policy = complete_structured_scores(
                     structured_group, family_quota=4
                 )
                 for row, score in zip(
@@ -362,13 +366,14 @@ class SemanticResolver:
                             name: row["features"].get(name, 0.0)
                             for name in (
                                 "operation-contract-retrieval",
+                                "generic-operation-fit",
                                 "layer-route-score",
                                 "graph-neighbor-support",
                                 "api-family-support",
                                 "multi-channel-rrf",
                             )
                         },
-                        "policy": policy,
+                        "policy": structured_policy,
                         "graph_edges": retrieval_report["graph_edges"],
                     }
             if operation_constraint_weight:
@@ -401,6 +406,17 @@ class SemanticResolver:
                         + compile_feedback_weight * feedback_score,
                         6,
                     )
+            if structured_group is not None and structured_policy is not None:
+                scores_by_entity = {
+                    item["entity_id"]: float(item["score"]) for item in ranked
+                }
+                final_scores = [
+                    scores_by_entity[row["entity_id"]]
+                    for row in structured_group["candidates"]
+                ]
+                ranking_evidence = deterministic_ranking_evidence(
+                    structured_group, final_scores, structured_policy
+                )
             if semantic_scores is not None:
                 ranked.sort(
                     key=lambda item: (
@@ -421,18 +437,22 @@ class SemanticResolver:
                 if top and runner_up is not None
                 else top[0]["score"] if top else 0.0
             )
-            selected = (
-                top[0]
-                if top
-                and top[0]["score"] >= min(threshold, 0.30)
-                and margin >= minimum_margin
-                else None
-            )
+            if structured_retrieval:
+                selected = top[0] if top else None
+            else:
+                selected = (
+                    top[0]
+                    if top
+                    and top[0]["score"] >= min(threshold, 0.30)
+                    and margin >= minimum_margin
+                    else None
+                )
             operation_rankings.append({
                 "operation": operation,
                 "selected_entity_id": selected["entity_id"] if selected else None,
                 "selected_symbol": selected["symbol"] if selected else None,
                 "confidence_margin": round(margin, 6),
+                "ranking_evidence": ranking_evidence,
                 "abstained": bool(top and selected is None),
                 "candidates": top,
             })

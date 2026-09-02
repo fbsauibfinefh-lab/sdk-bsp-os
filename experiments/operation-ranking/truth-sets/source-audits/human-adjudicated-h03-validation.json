@@ -1,0 +1,14 @@
+{
+  "schema_version": "truth3-validation-v1",
+  "passed": true,
+  "errors": [],
+  "warnings": [],
+  "checks": {
+    "training_sdks": 22,
+    "query_groups": 418,
+    "external_sdk_leakage": 0,
+    "file_path_checks": 2018,
+    "positive_evidence_path_checks": 1176,
+    "macro_leakage": 0
+  }
+}

@@ -1,0 +1,4089 @@
+{
+  "call_equivalence": {
+    "cases": [
+      {
+        "direct_relation": "predicted-wrapper-calls-positive",
+        "group_id": "ti-mspm0-driverlib::gpio.configure",
+        "operation_id": "gpio.configure",
+        "positive_symbols": [
+          "DL_GPIO_initDigitalInput",
+          "DL_GPIO_initDigitalOutput",
+          "GPIO_setConfig",
+          "GPIO_setConfigAndMux"
+        ],
+        "predicted_symbol": "GPIO_init",
+        "safe_predicted_wrapper_upper_bound": true,
+        "sdk_id": "ti-mspm0-driverlib",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.044011,
+            "symbol": "GPIO_init"
+          },
+          {
+            "label": 0,
+            "score": 0.676402,
+            "symbol": "HAL_configurePin"
+          },
+          {
+            "label": 0,
+            "score": -0.527558,
+            "symbol": "DL_GPIO_initDigitalInputFeatures"
+          },
+          {
+            "label": 0,
+            "score": -0.889887,
+            "symbol": "HAL_configurePWMPin"
+          },
+          {
+            "label": 3,
+            "score": -1.015398,
+            "symbol": "DL_GPIO_initDigitalOutput"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "predicted-wrapper-calls-positive",
+        "group_id": "ti-mspm0-driverlib::timer.set_interval",
+        "operation_id": "timer.set_interval",
+        "positive_symbols": [
+          "DL_TimerB_setLoadValue",
+          "DL_Timer_setLoadValue"
+        ],
+        "predicted_symbol": "DL_Timer_initCompareMode",
+        "safe_predicted_wrapper_upper_bound": true,
+        "sdk_id": "ti-mspm0-driverlib",
+        "top5": [
+          {
+            "label": 0,
+            "score": -0.385151,
+            "symbol": "DL_Timer_initCompareMode"
+          },
+          {
+            "label": 0,
+            "score": -0.410151,
+            "symbol": "DL_Timer_setCaptureCompareAction"
+          },
+          {
+            "label": 0,
+            "score": -0.731275,
+            "symbol": "DL_Timer_initCompareTriggerMode"
+          },
+          {
+            "label": 0,
+            "score": -0.916838,
+            "symbol": "DL_Timer_setCaptureCompareValue"
+          },
+          {
+            "label": 3,
+            "score": -1.05611,
+            "symbol": "DL_Timer_setLoadValue"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "ti-simplelink-f2::clock.enable",
+        "operation_id": "clock.enable",
+        "positive_symbols": [
+          "Power_setDependency"
+        ],
+        "predicted_symbol": "enableExternalClock",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "ti-simplelink-f2",
+        "top5": [
+          {
+            "label": 0,
+            "score": -0.575707,
+            "symbol": "enableExternalClock"
+          },
+          {
+            "label": 0,
+            "score": -0.748178,
+            "symbol": "PowerCC26X2_enableTCXOQual"
+          },
+          {
+            "label": 2,
+            "score": -0.830542,
+            "symbol": "Power_setDependency"
+          },
+          {
+            "label": 0,
+            "score": -0.878165,
+            "symbol": "SysCtrlClockLossResetEnable"
+          },
+          {
+            "label": 0,
+            "score": -0.950376,
+            "symbol": "enableClocks"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "ti-simplelink-f2::clock.disable",
+        "operation_id": "clock.disable",
+        "positive_symbols": [
+          "Power_releaseDependency"
+        ],
+        "predicted_symbol": "PRCMAudioClockDisable",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "ti-simplelink-f2",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.163713,
+            "symbol": "PRCMAudioClockDisable"
+          },
+          {
+            "label": 0,
+            "score": -0.073355,
+            "symbol": "disableLFClockQualifiers"
+          },
+          {
+            "label": 0,
+            "score": -0.734519,
+            "symbol": "PowerCC26X2_oscDisableQualifiers"
+          },
+          {
+            "label": 0,
+            "score": -0.738857,
+            "symbol": "SysCtrlClockLossResetDisable"
+          },
+          {
+            "label": 0,
+            "score": -0.849039,
+            "symbol": "PowerCC26X2_disableTCXOQual"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "positive-calls-predicted-helper",
+        "group_id": "ti-simplelink-f2::interrupt.register",
+        "operation_id": "interrupt.register",
+        "positive_symbols": [
+          "AESIntRegister",
+          "__NVIC_SetVector"
+        ],
+        "predicted_symbol": "IntRegister",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "ti-simplelink-f2",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.932674,
+            "symbol": "IntRegister"
+          },
+          {
+            "label": 0,
+            "score": -0.072521,
+            "symbol": "SysTickIntRegister"
+          },
+          {
+            "label": 1,
+            "score": -0.160566,
+            "symbol": "AESIntRegister"
+          },
+          {
+            "label": 0,
+            "score": -0.431694,
+            "symbol": "AUXCOMPAIntRegister"
+          },
+          {
+            "label": 0,
+            "score": -0.468426,
+            "symbol": "TRNGIntRegister"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "ti-simplelink-f2::gpio.configure",
+        "operation_id": "gpio.configure",
+        "positive_symbols": [
+          "GPIO_setConfig",
+          "GPIO_setConfigAndMux"
+        ],
+        "predicted_symbol": "GPIO_init",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "ti-simplelink-f2",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.739516,
+            "symbol": "GPIO_init"
+          },
+          {
+            "label": 0,
+            "score": -1.17211,
+            "symbol": "sid_pal_gpio_pull_mode"
+          },
+          {
+            "label": 0,
+            "score": -1.188235,
+            "symbol": "sid_pal_gpio_output_mode"
+          },
+          {
+            "label": 0,
+            "score": -1.188235,
+            "symbol": "sid_pal_gpio_input_mode"
+          },
+          {
+            "label": 3,
+            "score": -1.616636,
+            "symbol": "GPIO_setConfig"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "ti-simplelink-f2::timer.initialize",
+        "operation_id": "timer.initialize",
+        "positive_symbols": [
+          "GPTimerCC26XX_open",
+          "Timer_open"
+        ],
+        "predicted_symbol": "TimerConfigure",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "ti-simplelink-f2",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.266905,
+            "symbol": "TimerConfigure"
+          },
+          {
+            "label": 3,
+            "score": 1.215617,
+            "symbol": "Timer_open"
+          },
+          {
+            "label": 0,
+            "score": 1.152967,
+            "symbol": "osal_CbTimerInit"
+          },
+          {
+            "label": 0,
+            "score": 0.968418,
+            "symbol": "TimerLevelControl"
+          },
+          {
+            "label": 0,
+            "score": 0.951006,
+            "symbol": "sid_pal_timer_init"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "ti-simplelink-f2::timer.start",
+        "operation_id": "timer.start",
+        "positive_symbols": [
+          "GPTimerCC26XX_start",
+          "Timer_start"
+        ],
+        "predicted_symbol": "UtilTimer_start",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "ti-simplelink-f2",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.555158,
+            "symbol": "UtilTimer_start"
+          },
+          {
+            "label": 0,
+            "score": 1.993732,
+            "symbol": "TimerEnable"
+          },
+          {
+            "label": 3,
+            "score": 1.593466,
+            "symbol": "Timer_start"
+          },
+          {
+            "label": 0,
+            "score": 1.229854,
+            "symbol": "port_timerStart"
+          },
+          {
+            "label": 0,
+            "score": 1.034986,
+            "symbol": "TimerIntEnable"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "ti-simplelink-f2::timer.stop",
+        "operation_id": "timer.stop",
+        "positive_symbols": [
+          "GPTimerCC26XX_stop",
+          "Timer_stop"
+        ],
+        "predicted_symbol": "UtilTimer_stop",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "ti-simplelink-f2",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.488038,
+            "symbol": "UtilTimer_stop"
+          },
+          {
+            "label": 3,
+            "score": 2.070936,
+            "symbol": "Timer_stop"
+          },
+          {
+            "label": 0,
+            "score": 2.021445,
+            "symbol": "TimerDisable"
+          },
+          {
+            "label": 0,
+            "score": 1.552553,
+            "symbol": "TimerIntDisable"
+          },
+          {
+            "label": 0,
+            "score": 1.024907,
+            "symbol": "port_timerStop"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "ti-simplelink-f2::timer.set_interval",
+        "operation_id": "timer.set_interval",
+        "positive_symbols": [
+          "GPTimerCC26XX_setLoadValue",
+          "GPTimerCC26XX_setMatchValue",
+          "Timer_setPeriod"
+        ],
+        "predicted_symbol": "timer_settime",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "ti-simplelink-f2",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.853253,
+            "symbol": "timer_settime"
+          },
+          {
+            "label": 3,
+            "score": 2.281077,
+            "symbol": "Timer_setPeriod"
+          },
+          {
+            "label": 0,
+            "score": 1.278606,
+            "symbol": "TimerIntervalLoadMode"
+          },
+          {
+            "label": 0,
+            "score": -0.974507,
+            "symbol": "PWMTimerCC26XX_setPeriod"
+          },
+          {
+            "label": 3,
+            "score": -1.061268,
+            "symbol": "GPTimerCC26XX_setLoadValue"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "arm-mbed-hal::clock.initialize",
+        "operation_id": "clock.initialize",
+        "positive_symbols": [
+          "SystemInit",
+          "mbed_sdk_init"
+        ],
+        "predicted_symbol": "CLOCK_InitSysPll",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "arm-mbed-hal",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.088965,
+            "symbol": "CLOCK_InitSysPll"
+          },
+          {
+            "label": 0,
+            "score": 2.020608,
+            "symbol": "CLOCK_InitArmPll"
+          },
+          {
+            "label": 0,
+            "score": 1.534582,
+            "symbol": "CLOCK_InitAudioPll"
+          },
+          {
+            "label": 0,
+            "score": 1.489141,
+            "symbol": "CLOCK_InitVideoPll"
+          },
+          {
+            "label": 0,
+            "score": 1.213662,
+            "symbol": "CLOCK_InitOsc0"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "positive-calls-predicted-helper",
+        "group_id": "arm-mbed-hal::interrupt.register",
+        "operation_id": "interrupt.register",
+        "positive_symbols": [
+          "NVIC_SetVector"
+        ],
+        "predicted_symbol": "InterruptHandlerRegister",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "arm-mbed-hal",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.42039,
+            "symbol": "InterruptHandlerRegister"
+          },
+          {
+            "label": 3,
+            "score": 1.314449,
+            "symbol": "NVIC_SetVector"
+          },
+          {
+            "label": 0,
+            "score": -0.480395,
+            "symbol": "whd_bus_spi_irq_register"
+          },
+          {
+            "label": 0,
+            "score": -0.508251,
+            "symbol": "whd_bus_irq_register"
+          },
+          {
+            "label": 0,
+            "score": -0.62046,
+            "symbol": "cyhal_usb_dev_register_irq_callback"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "nuvoton-std-driver::uart.write",
+        "operation_id": "uart.write",
+        "positive_symbols": [
+          "LPUART_Write",
+          "UART_Write",
+          "UUART_Write"
+        ],
+        "predicted_symbol": "UART_WRITE",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "nuvoton-std-driver",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.752897,
+            "symbol": "UART_WRITE"
+          },
+          {
+            "label": 3,
+            "score": 1.585277,
+            "symbol": "UART_Write"
+          },
+          {
+            "label": 3,
+            "score": -0.371733,
+            "symbol": "UUART_Write"
+          },
+          {
+            "label": 0,
+            "score": -0.641856,
+            "symbol": "UUART_WRITE"
+          },
+          {
+            "label": 3,
+            "score": -0.669422,
+            "symbol": "LPUART_Write"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "nuvoton-std-driver::gpio.configure",
+        "operation_id": "gpio.configure",
+        "positive_symbols": [
+          "GPIO_SetMode"
+        ],
+        "predicted_symbol": "LPGPIO_MODE_OUTPUT",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "nuvoton-std-driver",
+        "top5": [
+          {
+            "label": 0,
+            "score": -0.733179,
+            "symbol": "LPGPIO_MODE_OUTPUT"
+          },
+          {
+            "label": 0,
+            "score": -0.759381,
+            "symbol": "LPGPIO_MODE_INPUT"
+          },
+          {
+            "label": 0,
+            "score": -3.556378,
+            "symbol": "LPUART_SelectAutoOperationMode"
+          },
+          {
+            "label": 0,
+            "score": -3.727223,
+            "symbol": "PSIO_SWITCH_MODE"
+          },
+          {
+            "label": 3,
+            "score": -3.905055,
+            "symbol": "GPIO_SetMode"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "positive-calls-predicted-helper",
+        "group_id": "renesas-fsp::clock.initialize",
+        "operation_id": "clock.initialize",
+        "positive_symbols": [
+          "R_CGC_ClocksCfg",
+          "R_CGC_Open"
+        ],
+        "predicted_symbol": "bsp_prv_clock_set",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "renesas-fsp",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.017899,
+            "symbol": "bsp_prv_clock_set"
+          },
+          {
+            "label": 0,
+            "score": 0.315498,
+            "symbol": "bsp_clock_freq_var_init"
+          },
+          {
+            "label": 0,
+            "score": -0.415835,
+            "symbol": "bsp_clock_set_prechange"
+          },
+          {
+            "label": 0,
+            "score": -0.878846,
+            "symbol": "bsp_prv_rtc_register_clock_set"
+          },
+          {
+            "label": 0,
+            "score": -1.006212,
+            "symbol": "bsp_clock_set_postchange"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "renesas-fsp::interrupt.enable",
+        "operation_id": "interrupt.enable",
+        "positive_symbols": [
+          "R_BSP_IrqCfgEnable",
+          "R_BSP_IrqEnable"
+        ],
+        "predicted_symbol": "nvic_interrupt_enable",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "renesas-fsp",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.900693,
+            "symbol": "nvic_interrupt_enable"
+          },
+          {
+            "label": 3,
+            "score": 1.350124,
+            "symbol": "R_BSP_IrqEnable"
+          },
+          {
+            "label": 3,
+            "score": 0.317376,
+            "symbol": "R_BSP_IrqCfgEnable"
+          },
+          {
+            "label": 0,
+            "score": 0.142948,
+            "symbol": "R_BSP_IrqEnableNoClear"
+          },
+          {
+            "label": 0,
+            "score": -0.451571,
+            "symbol": "dsi_isr_enable"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "renesas-fsp::gpio.write",
+        "operation_id": "gpio.write",
+        "positive_symbols": [
+          "R_IOPORT_PinWrite",
+          "R_IOPORT_PortWrite"
+        ],
+        "predicted_symbol": "tfm_platform_gpio_port_write",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "renesas-fsp",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.39981,
+            "symbol": "tfm_platform_gpio_port_write"
+          },
+          {
+            "label": 0,
+            "score": 0.34542,
+            "symbol": "ptxPLAT_GPIO_WriteLevel"
+          },
+          {
+            "label": 0,
+            "score": 0.270891,
+            "symbol": "tfm_platform_gpio_pin_write"
+          },
+          {
+            "label": 3,
+            "score": 0.23177,
+            "symbol": "R_IOPORT_PinWrite"
+          },
+          {
+            "label": 0,
+            "score": -0.073726,
+            "symbol": "R_IOPORT_PinEventOutputWrite"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "renesas-fsp::gpio.read",
+        "operation_id": "gpio.read",
+        "positive_symbols": [
+          "R_IOPORT_PinRead",
+          "R_IOPORT_PortRead"
+        ],
+        "predicted_symbol": "tfm_platform_gpio_port_read",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "renesas-fsp",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.452491,
+            "symbol": "tfm_platform_gpio_port_read"
+          },
+          {
+            "label": 0,
+            "score": 0.198527,
+            "symbol": "ptxPLAT_GPIO_ReadLevel"
+          },
+          {
+            "label": 0,
+            "score": 0.00935,
+            "symbol": "tfm_platform_gpio_pin_read"
+          },
+          {
+            "label": 3,
+            "score": -0.241508,
+            "symbol": "R_IOPORT_PinRead"
+          },
+          {
+            "label": 0,
+            "score": -0.895907,
+            "symbol": "R_BSP_PinRead"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "renesas-fsp::gpio.attach_irq",
+        "operation_id": "gpio.attach_irq",
+        "positive_symbols": [
+          "R_ICU_ExternalIrqCallbackSet",
+          "R_ICU_ExternalIrqEnable",
+          "R_ICU_ExternalIrqOpen"
+        ],
+        "predicted_symbol": "ptxPLAT_GPIO_EnableInterrupt",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "renesas-fsp",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.037506,
+            "symbol": "ptxPLAT_GPIO_EnableInterrupt"
+          },
+          {
+            "label": 0,
+            "score": -0.155801,
+            "symbol": "ptxPLAT_GPIO_DisableInterrupt"
+          },
+          {
+            "label": 0,
+            "score": -2.019843,
+            "symbol": "R_BSP_IrqEnable"
+          },
+          {
+            "label": 0,
+            "score": -2.155654,
+            "symbol": "R_BSP_IrqCfgEnable"
+          },
+          {
+            "label": 0,
+            "score": -2.213959,
+            "symbol": "ethercat_ssc_port_enable_interrupt"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "renesas-fsp::timer.initialize",
+        "operation_id": "timer.initialize",
+        "positive_symbols": [
+          "R_AGT_Open",
+          "R_GPT_Open"
+        ],
+        "predicted_symbol": "rm_gptp_sys_baremetal_timer_setup",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "renesas-fsp",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.275805,
+            "symbol": "rm_gptp_sys_baremetal_timer_setup"
+          },
+          {
+            "label": 0,
+            "score": -0.534545,
+            "symbol": "ble_abs_timer_init"
+          },
+          {
+            "label": 0,
+            "score": -1.153742,
+            "symbol": "ptxPERIPH_APPTIMER_IsrCallback"
+          },
+          {
+            "label": 0,
+            "score": -1.521577,
+            "symbol": "rm_lwip_sys_baremetal_timer_setup"
+          },
+          {
+            "label": 0,
+            "score": -1.794273,
+            "symbol": "ble_abs_init_hw_timer"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "renesas-fsp::timer.start",
+        "operation_id": "timer.start",
+        "positive_symbols": [
+          "R_AGT_Start",
+          "R_GPT_Start"
+        ],
+        "predicted_symbol": "ptxPLAT_TIMER_Start",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "renesas-fsp",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.142043,
+            "symbol": "ptxPLAT_TIMER_Start"
+          },
+          {
+            "label": 0,
+            "score": 2.00963,
+            "symbol": "gptp_timer_start"
+          },
+          {
+            "label": 0,
+            "score": 1.420139,
+            "symbol": "ptxPLAT_TimerStart"
+          },
+          {
+            "label": 0,
+            "score": 0.518522,
+            "symbol": "ptxPERIPH_APPTIMER_Start"
+          },
+          {
+            "label": 0,
+            "score": -0.818494,
+            "symbol": "ble_abs_timer_start"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "renesas-fsp::timer.stop",
+        "operation_id": "timer.stop",
+        "positive_symbols": [
+          "R_AGT_Stop",
+          "R_GPT_Stop"
+        ],
+        "predicted_symbol": "gptp_timer_stop",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "renesas-fsp",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.404081,
+            "symbol": "gptp_timer_stop"
+          },
+          {
+            "label": 0,
+            "score": 1.843301,
+            "symbol": "ptxPLAT_TIMER_Stop"
+          },
+          {
+            "label": 0,
+            "score": 0.439181,
+            "symbol": "ptxPERIPH_APPTIMER_Stop"
+          },
+          {
+            "label": 0,
+            "score": -0.40755,
+            "symbol": "ble_abs_timer_stop"
+          },
+          {
+            "label": 0,
+            "score": -1.149781,
+            "symbol": "ble_abs_timer_stop_timer"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "renesas-fsp::timer.set_interval",
+        "operation_id": "timer.set_interval",
+        "positive_symbols": [
+          "R_AGT_PeriodSet",
+          "R_GPT_PeriodSet"
+        ],
+        "predicted_symbol": "gptp_timer_change_period",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "renesas-fsp",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.440221,
+            "symbol": "gptp_timer_change_period"
+          },
+          {
+            "label": 0,
+            "score": 0.808004,
+            "symbol": "gptp_timer_create"
+          },
+          {
+            "label": 0,
+            "score": -0.172202,
+            "symbol": "rm_gptp_sys_baremetal_timer_setup"
+          },
+          {
+            "label": 0,
+            "score": -0.250683,
+            "symbol": "ptxPLAT_TIMER_Deinit"
+          },
+          {
+            "label": 0,
+            "score": -1.443682,
+            "symbol": "sys_timeouts_init"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "positive-calls-predicted-helper",
+        "group_id": "sifli-hal::uart.configure",
+        "operation_id": "uart.configure",
+        "positive_symbols": [
+          "HAL_UART_Init"
+        ],
+        "predicted_symbol": "UART_InitCallbacksToDefault",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "sifli-hal",
+        "top5": [
+          {
+            "label": 0,
+            "score": -0.854443,
+            "symbol": "UART_InitCallbacksToDefault"
+          },
+          {
+            "label": 3,
+            "score": -0.947194,
+            "symbol": "HAL_UART_Init"
+          },
+          {
+            "label": 0,
+            "score": -1.236491,
+            "symbol": "HAL_UART_MspInit"
+          },
+          {
+            "label": 0,
+            "score": -2.272603,
+            "symbol": "HAL_UART_RegisterCallback"
+          },
+          {
+            "label": 0,
+            "score": -2.543914,
+            "symbol": "HAL_LIN_Init"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "positive-calls-predicted-helper",
+        "group_id": "sifli-hal::gpio.read",
+        "operation_id": "gpio.read",
+        "positive_symbols": [
+          "HAL_GPIO_ReadPin"
+        ],
+        "predicted_symbol": "GPIO_GetInstance",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "sifli-hal",
+        "top5": [
+          {
+            "label": 0,
+            "score": -0.741189,
+            "symbol": "GPIO_GetInstance"
+          },
+          {
+            "label": 0,
+            "score": -0.755844,
+            "symbol": "ll_gpio_bank_read_input_port"
+          },
+          {
+            "label": 0,
+            "score": -0.783148,
+            "symbol": "ll_gpio_bank_read_output_port"
+          },
+          {
+            "label": 3,
+            "score": -1.342481,
+            "symbol": "HAL_GPIO_ReadPin"
+          },
+          {
+            "label": 0,
+            "score": -1.880847,
+            "symbol": "port_read_page"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "sifli-hal::timer.initialize",
+        "operation_id": "timer.initialize",
+        "positive_symbols": [
+          "HAL_LPTIM_Init"
+        ],
+        "predicted_symbol": "HAL_InitTick",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "sifli-hal",
+        "top5": [
+          {
+            "label": 0,
+            "score": -2.309696,
+            "symbol": "HAL_InitTick"
+          },
+          {
+            "label": 0,
+            "score": -2.327873,
+            "symbol": "HAL_GPT_Base_Init"
+          },
+          {
+            "label": 0,
+            "score": -2.375305,
+            "symbol": "HAL_GPT_OC_Init"
+          },
+          {
+            "label": 0,
+            "score": -2.520901,
+            "symbol": "HAL_GPT_IC_Init"
+          },
+          {
+            "label": 0,
+            "score": -2.955373,
+            "symbol": "HAL_GPT_OnePulse_Init"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "sifli-hal::timer.set_interval",
+        "operation_id": "timer.set_interval",
+        "positive_symbols": [
+          "HAL_LPTIM_PWM_Set_Period",
+          "HAL_LPTIM_SetOnce_Start"
+        ],
+        "predicted_symbol": "HAL_LPTIM_Init",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "sifli-hal",
+        "top5": [
+          {
+            "label": 0,
+            "score": -2.025969,
+            "symbol": "HAL_LPTIM_Init"
+          },
+          {
+            "label": 0,
+            "score": -2.286385,
+            "symbol": "HAL_InitTick"
+          },
+          {
+            "label": 0,
+            "score": -2.506045,
+            "symbol": "HAL_RTC_SetWakeUpTimer"
+          },
+          {
+            "label": 0,
+            "score": -2.530077,
+            "symbol": "HAL_LPTIM_IRQHandler"
+          },
+          {
+            "label": 3,
+            "score": -2.643445,
+            "symbol": "HAL_LPTIM_PWM_Set_Period"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "predicted-wrapper-calls-positive",
+        "group_id": "arduino-renesas-core::timer.initialize",
+        "operation_id": "timer.initialize",
+        "positive_symbols": [
+          "FspTimer::begin"
+        ],
+        "predicted_symbol": "FspTimer",
+        "safe_predicted_wrapper_upper_bound": true,
+        "sdk_id": "arduino-renesas-core",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.42232,
+            "symbol": "FspTimer"
+          },
+          {
+            "label": 3,
+            "score": 0.645715,
+            "symbol": "FspTimer::begin"
+          },
+          {
+            "label": 0,
+            "score": 0.388409,
+            "symbol": "FspTimer::open"
+          },
+          {
+            "label": 0,
+            "score": 0.241767,
+            "symbol": "GPTimer"
+          },
+          {
+            "label": 0,
+            "score": 0.11082,
+            "symbol": "AGTimer"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "arduino-renesas-core::timer.set_interval",
+        "operation_id": "timer.set_interval",
+        "positive_symbols": [
+          "FspTimer::set_period"
+        ],
+        "predicted_symbol": "FspTimer",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "arduino-renesas-core",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.121779,
+            "symbol": "FspTimer"
+          },
+          {
+            "label": 3,
+            "score": 0.794458,
+            "symbol": "FspTimer::set_period"
+          },
+          {
+            "label": 0,
+            "score": 0.068,
+            "symbol": "FspTimer::set_frequency"
+          },
+          {
+            "label": 0,
+            "score": 0.05467,
+            "symbol": "FspTimer::begin"
+          },
+          {
+            "label": 0,
+            "score": -0.163871,
+            "symbol": "FspTimer::set_period_ms"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "alif-ensemble-dfp::clock.initialize",
+        "operation_id": "clock.initialize",
+        "positive_symbols": [
+          "SERVICES_clocks_select_osc_source",
+          "board_clocks_config",
+          "set_dphy_pll_configuration"
+        ],
+        "predicted_symbol": "clock_init",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "alif-ensemble-dfp",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.91264,
+            "symbol": "clock_init"
+          },
+          {
+            "label": 0,
+            "score": -1.259541,
+            "symbol": "ch_set_frequency"
+          },
+          {
+            "label": 0,
+            "score": -1.269439,
+            "symbol": "SERVICES_clocks_set_aclk"
+          },
+          {
+            "label": 3,
+            "score": -1.39643,
+            "symbol": "board_clocks_config"
+          },
+          {
+            "label": 0,
+            "score": -1.427477,
+            "symbol": "ch_set_pmut_clock"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "alif-ensemble-dfp::clock.disable",
+        "operation_id": "clock.disable",
+        "positive_symbols": [
+          "SERVICES_clocks_enable_clock"
+        ],
+        "predicted_symbol": "canfd_clock_disable",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "alif-ensemble-dfp",
+        "top5": [
+          {
+            "label": 0,
+            "score": -0.130141,
+            "symbol": "canfd_clock_disable"
+          },
+          {
+            "label": 0,
+            "score": -0.978396,
+            "symbol": "disable_i3c_clock"
+          },
+          {
+            "label": 0,
+            "score": -1.045012,
+            "symbol": "disable_lprtc_clk"
+          },
+          {
+            "label": 0,
+            "score": -1.239712,
+            "symbol": "utimer_clock_disable"
+          },
+          {
+            "label": 0,
+            "score": -1.24263,
+            "symbol": "disable_txdphy_configure_clock"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "alif-ensemble-dfp::clock.get_frequency",
+        "operation_id": "clock.get_frequency",
+        "positive_symbols": [
+          "GetSystemAXIClock",
+          "SERVICES_clocks_setting_get",
+          "SystemCoreClockUpdate"
+        ],
+        "predicted_symbol": "ch_get_frequency",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "alif-ensemble-dfp",
+        "top5": [
+          {
+            "label": 0,
+            "score": -0.363016,
+            "symbol": "ch_get_frequency"
+          },
+          {
+            "label": 0,
+            "score": -0.530578,
+            "symbol": "ch_measure_pmut_frequency"
+          },
+          {
+            "label": 1,
+            "score": -1.087273,
+            "symbol": "SystemCoreClockUpdate"
+          },
+          {
+            "label": 0,
+            "score": -1.244038,
+            "symbol": "GetSystemREFClock"
+          },
+          {
+            "label": 0,
+            "score": -1.33405,
+            "symbol": "ARM_CAN_GetClock"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "predicted-wrapper-calls-positive",
+        "group_id": "alif-ensemble-dfp::uart.write",
+        "operation_id": "uart.write",
+        "positive_symbols": [
+          "uart_send_blocking"
+        ],
+        "predicted_symbol": "ARM_USART_Send",
+        "safe_predicted_wrapper_upper_bound": true,
+        "sdk_id": "alif-ensemble-dfp",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.736833,
+            "symbol": "ARM_USART_Send"
+          },
+          {
+            "label": 0,
+            "score": 0.064419,
+            "symbol": "UART0_Send"
+          },
+          {
+            "label": 3,
+            "score": -0.088517,
+            "symbol": "uart_send_blocking"
+          },
+          {
+            "label": 0,
+            "score": -0.405199,
+            "symbol": "UART4_Send"
+          },
+          {
+            "label": 0,
+            "score": -0.431159,
+            "symbol": "UART1_Send"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "predicted-wrapper-calls-positive",
+        "group_id": "alif-ensemble-dfp::uart.read",
+        "operation_id": "uart.read",
+        "positive_symbols": [
+          "uart_receive_blocking"
+        ],
+        "predicted_symbol": "ARM_USART_Receive",
+        "safe_predicted_wrapper_upper_bound": true,
+        "sdk_id": "alif-ensemble-dfp",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.397332,
+            "symbol": "ARM_USART_Receive"
+          },
+          {
+            "label": 3,
+            "score": 0.688433,
+            "symbol": "uart_receive_blocking"
+          },
+          {
+            "label": 0,
+            "score": 0.557944,
+            "symbol": "UART7_Receive"
+          },
+          {
+            "label": 0,
+            "score": 0.295522,
+            "symbol": "UART3_Receive"
+          },
+          {
+            "label": 0,
+            "score": 0.107244,
+            "symbol": "UART2_Receive"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "predicted-wrapper-calls-positive",
+        "group_id": "alif-ensemble-dfp::gpio.configure",
+        "operation_id": "gpio.configure",
+        "positive_symbols": [
+          "GPIO_Control",
+          "GPIO_Initialize",
+          "gpio_set_direction_input",
+          "gpio_set_direction_output"
+        ],
+        "predicted_symbol": "GPIO_Setup",
+        "safe_predicted_wrapper_upper_bound": true,
+        "sdk_id": "alif-ensemble-dfp",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.266907,
+            "symbol": "GPIO_Setup"
+          },
+          {
+            "label": 0,
+            "score": 0.844875,
+            "symbol": "gpio_init"
+          },
+          {
+            "label": 1,
+            "score": 0.792153,
+            "symbol": "GPIO_Control"
+          },
+          {
+            "label": 1,
+            "score": 0.699257,
+            "symbol": "GPIO_Initialize"
+          },
+          {
+            "label": 0,
+            "score": -0.238965,
+            "symbol": "pinmux_setup"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "positive-calls-predicted-helper",
+        "group_id": "nordic-nrfx-4.2.1::clock.disable",
+        "operation_id": "clock.disable",
+        "positive_symbols": [
+          "nrfx_clock_disable",
+          "nrfx_clock_hfclk_stop",
+          "nrfx_clock_lfclk_stop"
+        ],
+        "predicted_symbol": "nrf_clock_int_disable",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "nordic-nrfx-4.2.1",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.593681,
+            "symbol": "nrf_clock_int_disable"
+          },
+          {
+            "label": 3,
+            "score": 2.068975,
+            "symbol": "nrfx_clock_disable"
+          },
+          {
+            "label": 2,
+            "score": 0.18385,
+            "symbol": "nrfx_clock_lfclk_stop"
+          },
+          {
+            "label": 2,
+            "score": 0.126083,
+            "symbol": "nrfx_clock_hfclk_stop"
+          },
+          {
+            "label": 0,
+            "score": 0.013102,
+            "symbol": "nrfx_clock_lfclk_calibration_timer_stop"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "nordic-nrfx-4.2.1::gpio.write",
+        "operation_id": "gpio.write",
+        "positive_symbols": [
+          "nrfx_gpiote_out_clear",
+          "nrfx_gpiote_out_set",
+          "nrfx_gpiote_out_toggle"
+        ],
+        "predicted_symbol": "nrfy_gpio_pin_write",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "nordic-nrfx-4.2.1",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.657169,
+            "symbol": "nrfy_gpio_pin_write"
+          },
+          {
+            "label": 0,
+            "score": 2.435633,
+            "symbol": "nrf_gpio_pin_write"
+          },
+          {
+            "label": 0,
+            "score": 2.090485,
+            "symbol": "nrfy_gpio_port_out_write"
+          },
+          {
+            "label": 0,
+            "score": 1.812495,
+            "symbol": "nrf_gpio_port_pin_write"
+          },
+          {
+            "label": 0,
+            "score": 1.766565,
+            "symbol": "nrf_gpio_pin_set"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "positive-calls-predicted-helper",
+        "group_id": "nordic-nrfx-4.2.1::gpio.read",
+        "operation_id": "gpio.read",
+        "positive_symbols": [
+          "nrfx_gpiote_in_is_set"
+        ],
+        "predicted_symbol": "nrfy_gpio_pin_read",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "nordic-nrfx-4.2.1",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.020407,
+            "symbol": "nrfy_gpio_pin_read"
+          },
+          {
+            "label": 0,
+            "score": 1.662348,
+            "symbol": "nrf_gpio_pin_read"
+          },
+          {
+            "label": 0,
+            "score": 1.658801,
+            "symbol": "nrf_gpio_pin_out_read"
+          },
+          {
+            "label": 0,
+            "score": 1.296673,
+            "symbol": "nrf_gpio_port_pin_read"
+          },
+          {
+            "label": 0,
+            "score": 1.196577,
+            "symbol": "nrfy_gpio_pin_out_read"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "nordic-nrfx-4.2.1::gpio.attach_irq",
+        "operation_id": "gpio.attach_irq",
+        "positive_symbols": [
+          "nrfx_gpiote_input_configure",
+          "nrfx_gpiote_trigger_enable"
+        ],
+        "predicted_symbol": "nrfx_gpiote_irq_handler",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "nordic-nrfx-4.2.1",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.927556,
+            "symbol": "nrfx_gpiote_irq_handler"
+          },
+          {
+            "label": 0,
+            "score": -0.495963,
+            "symbol": "irq_handler"
+          },
+          {
+            "label": 0,
+            "score": -1.774173,
+            "symbol": "nrfx_grtc_irq_handler"
+          },
+          {
+            "label": 0,
+            "score": -1.798243,
+            "symbol": "nrfx_uart_irq_handler"
+          },
+          {
+            "label": 0,
+            "score": -1.87747,
+            "symbol": "nrfx_twim_irq_handler"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "nordic-nrfx-4.2.1::timer.set_interval",
+        "operation_id": "timer.set_interval",
+        "positive_symbols": [
+          "nrfx_timer_compare",
+          "nrfx_timer_extended_compare"
+        ],
+        "predicted_symbol": "nrfx_timer_reconfigure",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "nordic-nrfx-4.2.1",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.737996,
+            "symbol": "nrfx_timer_reconfigure"
+          },
+          {
+            "label": 3,
+            "score": 0.176168,
+            "symbol": "nrfx_timer_extended_compare"
+          },
+          {
+            "label": 3,
+            "score": 0.080257,
+            "symbol": "nrfx_timer_compare"
+          },
+          {
+            "label": 0,
+            "score": -0.021299,
+            "symbol": "nrfx_timer_init"
+          },
+          {
+            "label": 0,
+            "score": -0.060961,
+            "symbol": "timer_configure"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "espressif-esp-idf-6.0.1::gpio.attach_irq",
+        "operation_id": "gpio.attach_irq",
+        "positive_symbols": [
+          "gpio_intr_enable",
+          "gpio_isr_handler_add",
+          "gpio_set_intr_type"
+        ],
+        "predicted_symbol": "dedic_gpio_bundle_set_interrupt_and_callback",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "espressif-esp-idf-6.0.1",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.774208,
+            "symbol": "dedic_gpio_bundle_set_interrupt_and_callback"
+          },
+          {
+            "label": 3,
+            "score": 1.709148,
+            "symbol": "gpio_isr_handler_add"
+          },
+          {
+            "label": 0,
+            "score": 1.302347,
+            "symbol": "gpio_isr_register"
+          },
+          {
+            "label": 1,
+            "score": 1.102065,
+            "symbol": "gpio_intr_enable"
+          },
+          {
+            "label": 1,
+            "score": 1.00863,
+            "symbol": "gpio_set_intr_type"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "nxp-mcuxpresso-sdk-2.16.100::interrupt.register",
+        "operation_id": "interrupt.register",
+        "positive_symbols": [
+          "InstallIRQHandler"
+        ],
+        "predicted_symbol": "FLEXIO_RegisterHandleIRQ",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "nxp-mcuxpresso-sdk-2.16.100",
+        "top5": [
+          {
+            "label": 0,
+            "score": -0.472706,
+            "symbol": "FLEXIO_RegisterHandleIRQ"
+          },
+          {
+            "label": 3,
+            "score": -0.477352,
+            "symbol": "InstallIRQHandler"
+          },
+          {
+            "label": 0,
+            "score": -1.374086,
+            "symbol": "TSC_DIG_IRQHandler"
+          },
+          {
+            "label": 0,
+            "score": -1.562964,
+            "symbol": "DMA0_IRQHandler"
+          },
+          {
+            "label": 0,
+            "score": -1.831043,
+            "symbol": "SPIFI0_IRQHandler"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "predicted-wrapper-calls-positive",
+        "group_id": "nxp-mcuxpresso-sdk-2.16.100::gpio.read",
+        "operation_id": "gpio.read",
+        "positive_symbols": [
+          "GPIO_PinRead"
+        ],
+        "predicted_symbol": "HAL_GpioGetInput",
+        "safe_predicted_wrapper_upper_bound": true,
+        "sdk_id": "nxp-mcuxpresso-sdk-2.16.100",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.277927,
+            "symbol": "HAL_GpioGetInput"
+          },
+          {
+            "label": 3,
+            "score": 1.192698,
+            "symbol": "GPIO_PinRead"
+          },
+          {
+            "label": 0,
+            "score": 0.888498,
+            "symbol": "FGPIO_PinRead"
+          },
+          {
+            "label": 0,
+            "score": 0.267313,
+            "symbol": "GPIO_PinReadPadStatus"
+          },
+          {
+            "label": 0,
+            "score": 0.244666,
+            "symbol": "GPIO_ReadPinInput"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "predicted-wrapper-calls-positive",
+        "group_id": "nxp-mcuxpresso-sdk-2.16.100::timer.stop",
+        "operation_id": "timer.stop",
+        "positive_symbols": [
+          "CTIMER_StopTimer",
+          "FTM_StopTimer",
+          "LPTMR_StopTimer",
+          "QTMR_StopTimer",
+          "TPM_StopTimer"
+        ],
+        "predicted_symbol": "HAL_TimerDisable",
+        "safe_predicted_wrapper_upper_bound": true,
+        "sdk_id": "nxp-mcuxpresso-sdk-2.16.100",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.804507,
+            "symbol": "HAL_TimerDisable"
+          },
+          {
+            "label": 3,
+            "score": 1.223875,
+            "symbol": "CTIMER_StopTimer"
+          },
+          {
+            "label": 0,
+            "score": 1.033924,
+            "symbol": "NETC_TimerStopAlarm"
+          },
+          {
+            "label": 0,
+            "score": 0.925371,
+            "symbol": "sc_timer_stop_wdog"
+          },
+          {
+            "label": 0,
+            "score": 0.77669,
+            "symbol": "TimerStop"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "hpmicro-hpm-sdk::gpio.configure",
+        "operation_id": "gpio.configure",
+        "positive_symbols": [
+          "gpio_set_pin_input",
+          "gpio_set_pin_output",
+          "gpio_set_pin_output_with_initial"
+        ],
+        "predicted_symbol": "qeo_pwm_config_mode",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "hpmicro-hpm-sdk",
+        "top5": [
+          {
+            "label": 0,
+            "score": -2.44584,
+            "symbol": "qeo_pwm_config_mode"
+          },
+          {
+            "label": 0,
+            "score": -2.780222,
+            "symbol": "ewdg_init"
+          },
+          {
+            "label": 0,
+            "score": -3.035177,
+            "symbol": "qeo_wave_config_mode"
+          },
+          {
+            "label": 0,
+            "score": -3.143504,
+            "symbol": "sdxc_execute_tuning"
+          },
+          {
+            "label": 0,
+            "score": -3.172237,
+            "symbol": "mtg_setup_tra_software_pos_one_way_mode"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "hpmicro-hpm-sdk::timer.initialize",
+        "operation_id": "timer.initialize",
+        "positive_symbols": [
+          "gptmr_channel_config"
+        ],
+        "predicted_symbol": "mchtmr_init_counter",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "hpmicro-hpm-sdk",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.834876,
+            "symbol": "mchtmr_init_counter"
+          },
+          {
+            "label": 0,
+            "score": 0.369918,
+            "symbol": "ptpc_init"
+          },
+          {
+            "label": 0,
+            "score": -0.44284,
+            "symbol": "ptpc_init_timer"
+          },
+          {
+            "label": 3,
+            "score": -0.660709,
+            "symbol": "gptmr_channel_config"
+          },
+          {
+            "label": 0,
+            "score": -0.833903,
+            "symbol": "ptpc_init_timer_with_initial"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "hpmicro-hpm-sdk::timer.set_interval",
+        "operation_id": "timer.set_interval",
+        "positive_symbols": [
+          "gptmr_channel_update_count",
+          "gptmr_update_cmp"
+        ],
+        "predicted_symbol": "tsw_tsync_timer_control",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "hpmicro-hpm-sdk",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.108027,
+            "symbol": "tsw_tsync_timer_control"
+          },
+          {
+            "label": 0,
+            "score": -0.628364,
+            "symbol": "pwmv2_set_reload_update_time"
+          },
+          {
+            "label": 0,
+            "score": -0.937473,
+            "symbol": "mchtmr_delay"
+          },
+          {
+            "label": 0,
+            "score": -1.325738,
+            "symbol": "mchtmr_set_compare_value"
+          },
+          {
+            "label": 0,
+            "score": -1.942653,
+            "symbol": "gptmr_channel_set_counter_mode"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "wch-ch32v307-stdperiph::clock.enable",
+        "operation_id": "clock.enable",
+        "positive_symbols": [
+          "RCC_AHBPeriphClockCmd",
+          "RCC_APB1PeriphClockCmd",
+          "RCC_APB2PeriphClockCmd"
+        ],
+        "predicted_symbol": "FLASH_Access_Clock_Cfg",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "wch-ch32v307-stdperiph",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.190452,
+            "symbol": "FLASH_Access_Clock_Cfg"
+          },
+          {
+            "label": 0,
+            "score": 0.012661,
+            "symbol": "RCC_HSEConfig"
+          },
+          {
+            "label": 0,
+            "score": -0.033065,
+            "symbol": "RCC_ClockSecuritySystemCmd"
+          },
+          {
+            "label": 0,
+            "score": -0.129755,
+            "symbol": "RCC_SYSCLKConfig"
+          },
+          {
+            "label": 0,
+            "score": -0.209523,
+            "symbol": "RCC_ADCCLKADJcmd"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "wch-ch32v307-stdperiph::clock.disable",
+        "operation_id": "clock.disable",
+        "positive_symbols": [
+          "RCC_AHBPeriphClockCmd",
+          "RCC_APB1PeriphClockCmd",
+          "RCC_APB2PeriphClockCmd"
+        ],
+        "predicted_symbol": "RCC_DeInit",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "wch-ch32v307-stdperiph",
+        "top5": [
+          {
+            "label": 0,
+            "score": -0.005275,
+            "symbol": "RCC_DeInit"
+          },
+          {
+            "label": 0,
+            "score": -0.131433,
+            "symbol": "FLASH_Access_Clock_Cfg"
+          },
+          {
+            "label": 0,
+            "score": -0.136507,
+            "symbol": "RCC_ClockSecuritySystemCmd"
+          },
+          {
+            "label": 0,
+            "score": -0.198952,
+            "symbol": "RCC_ClearFlag"
+          },
+          {
+            "label": 0,
+            "score": -0.304439,
+            "symbol": "RCC_USBHSPHYPLLALIVEcmd"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "wch-ch32v307-stdperiph::timer.start",
+        "operation_id": "timer.start",
+        "positive_symbols": [
+          "TIM_Cmd"
+        ],
+        "predicted_symbol": "TIM_OC1Init",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "wch-ch32v307-stdperiph",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.382898,
+            "symbol": "TIM_OC1Init"
+          },
+          {
+            "label": 0,
+            "score": 0.34278,
+            "symbol": "TIM_TimeBaseInit"
+          },
+          {
+            "label": 0,
+            "score": 0.148045,
+            "symbol": "TIM_OC2Init"
+          },
+          {
+            "label": 0,
+            "score": 0.148045,
+            "symbol": "TIM_OC3Init"
+          },
+          {
+            "label": 0,
+            "score": 0.094589,
+            "symbol": "TIM_OC4Init"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "wch-ch32v307-stdperiph::timer.stop",
+        "operation_id": "timer.stop",
+        "positive_symbols": [
+          "TIM_Cmd"
+        ],
+        "predicted_symbol": "TIM_DeInit",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "wch-ch32v307-stdperiph",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.120609,
+            "symbol": "TIM_DeInit"
+          },
+          {
+            "label": 0,
+            "score": 0.059078,
+            "symbol": "TIM_TimeBaseInit"
+          },
+          {
+            "label": 0,
+            "score": -0.453195,
+            "symbol": "TIM_UpdateDisableConfig"
+          },
+          {
+            "label": 0,
+            "score": -0.473732,
+            "symbol": "TIM_PWMIConfig"
+          },
+          {
+            "label": 0,
+            "score": -0.657908,
+            "symbol": "TIM_ICInit"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "wch-ch32v307-stdperiph::timer.set_interval",
+        "operation_id": "timer.set_interval",
+        "positive_symbols": [
+          "TIM_SetAutoreload",
+          "TIM_SetCompare1",
+          "TIM_SetCompare2",
+          "TIM_SetCompare3",
+          "TIM_SetCompare4"
+        ],
+        "predicted_symbol": "TIM_TimeBaseInit",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "wch-ch32v307-stdperiph",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.299186,
+            "symbol": "TIM_TimeBaseInit"
+          },
+          {
+            "label": 0,
+            "score": -0.070878,
+            "symbol": "TIM_OCStructInit"
+          },
+          {
+            "label": 0,
+            "score": -0.153599,
+            "symbol": "TIM_OC1Init"
+          },
+          {
+            "label": 0,
+            "score": -0.408761,
+            "symbol": "TIM_PWMIConfig"
+          },
+          {
+            "label": 0,
+            "score": -0.454757,
+            "symbol": "TIM_ICInit"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "nuclei-soc-sdk::interrupt.initialize",
+        "operation_id": "interrupt.initialize",
+        "positive_symbols": [
+          "ECLIC_Init"
+        ],
+        "predicted_symbol": "PLIC_Interrupt_Init",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "nuclei-soc-sdk",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.762568,
+            "symbol": "PLIC_Interrupt_Init"
+          },
+          {
+            "label": 0,
+            "score": -0.529728,
+            "symbol": "Interrupt_Init"
+          },
+          {
+            "label": 0,
+            "score": -2.226347,
+            "symbol": "can_interrupt_flag_get"
+          },
+          {
+            "label": 0,
+            "score": -2.349401,
+            "symbol": "exti_init"
+          },
+          {
+            "label": 0,
+            "score": -2.445187,
+            "symbol": "CLINT_Interrupt_Init"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "nuclei-soc-sdk::interrupt.register",
+        "operation_id": "interrupt.register",
+        "positive_symbols": [
+          "Core_Register_IRQ",
+          "Core_Register_IRQ_S",
+          "ECLIC_Register_IRQ",
+          "ECLIC_Register_IRQ_S"
+        ],
+        "predicted_symbol": "PLIC_Register_IRQ",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "nuclei-soc-sdk",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.795564,
+            "symbol": "PLIC_Register_IRQ"
+          },
+          {
+            "label": 0,
+            "score": 0.484511,
+            "symbol": "PLIC_Register_IRQ_S"
+          },
+          {
+            "label": 0,
+            "score": -0.105956,
+            "symbol": "usbh_isr"
+          },
+          {
+            "label": 0,
+            "score": -1.00148,
+            "symbol": "Interrupt_Register_ExtIRQ_S"
+          },
+          {
+            "label": 0,
+            "score": -1.115369,
+            "symbol": "PLIC_Interrupt_Init"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "predicted-wrapper-calls-positive",
+        "group_id": "nuclei-soc-sdk::uart.read",
+        "operation_id": "uart.read",
+        "positive_symbols": [
+          "uart_read",
+          "usart_data_receive"
+        ],
+        "predicted_symbol": "usart_read",
+        "safe_predicted_wrapper_upper_bound": true,
+        "sdk_id": "nuclei-soc-sdk",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.448112,
+            "symbol": "usart_read"
+          },
+          {
+            "label": 3,
+            "score": 1.200759,
+            "symbol": "uart_read"
+          },
+          {
+            "label": 3,
+            "score": 0.412972,
+            "symbol": "usart_data_receive"
+          },
+          {
+            "label": 0,
+            "score": -0.703023,
+            "symbol": "usart_receive_config"
+          },
+          {
+            "label": 0,
+            "score": -0.985338,
+            "symbol": "usart_receive_fifo_disable"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "nuclei-soc-sdk::timer.set_interval",
+        "operation_id": "timer.set_interval",
+        "positive_symbols": [
+          "timer_autoreload_value_config"
+        ],
+        "predicted_symbol": "timer_init",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "nuclei-soc-sdk",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.121098,
+            "symbol": "timer_init"
+          },
+          {
+            "label": 0,
+            "score": -0.030353,
+            "symbol": "timer_prescaler_config"
+          },
+          {
+            "label": 0,
+            "score": -0.033291,
+            "symbol": "timer_external_trigger_config"
+          },
+          {
+            "label": 0,
+            "score": -0.141075,
+            "symbol": "timer_input_capture_config"
+          },
+          {
+            "label": 3,
+            "score": -0.40611,
+            "symbol": "timer_autoreload_value_config"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "silabs-emlib::clock.initialize",
+        "operation_id": "clock.initialize",
+        "positive_symbols": [
+          "CMU_ClockSelectSet",
+          "CMU_HFXOInit"
+        ],
+        "predicted_symbol": "CMU_ClockPrescSet",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "silabs-emlib",
+        "top5": [
+          {
+            "label": 0,
+            "score": -0.070435,
+            "symbol": "CMU_ClockPrescSet"
+          },
+          {
+            "label": 0,
+            "score": -0.304944,
+            "symbol": "CMU_ClockDivSet"
+          },
+          {
+            "label": 2,
+            "score": -0.411728,
+            "symbol": "CMU_ClockSelectSet"
+          },
+          {
+            "label": 0,
+            "score": -0.956034,
+            "symbol": "CHIP_Init"
+          },
+          {
+            "label": 0,
+            "score": -1.117952,
+            "symbol": "CMU_RFFPLLInit"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "silabs-emlib::clock.disable",
+        "operation_id": "clock.disable",
+        "positive_symbols": [
+          "CMU_ClockEnable"
+        ],
+        "predicted_symbol": "CMU_ClockSelectSet",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "silabs-emlib",
+        "top5": [
+          {
+            "label": 0,
+            "score": -0.206994,
+            "symbol": "CMU_ClockSelectSet"
+          },
+          {
+            "label": 0,
+            "score": -1.44537,
+            "symbol": "RTC_IntDisable"
+          },
+          {
+            "label": 0,
+            "score": -1.462275,
+            "symbol": "EBI_Disable"
+          },
+          {
+            "label": 0,
+            "score": -1.765772,
+            "symbol": "OPAMP_Disable"
+          },
+          {
+            "label": 0,
+            "score": -1.814523,
+            "symbol": "ACMP_Disable"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "silabs-emlib::uart.write",
+        "operation_id": "uart.write",
+        "positive_symbols": [
+          "USART_Tx",
+          "USART_TxDouble",
+          "USART_TxExt"
+        ],
+        "predicted_symbol": "USART_Enable",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "silabs-emlib",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.689044,
+            "symbol": "USART_Enable"
+          },
+          {
+            "label": 3,
+            "score": 0.268015,
+            "symbol": "USART_Tx"
+          },
+          {
+            "label": 0,
+            "score": -0.014722,
+            "symbol": "USART_Reset"
+          },
+          {
+            "label": 2,
+            "score": -0.073518,
+            "symbol": "USART_TxExt"
+          },
+          {
+            "label": 0,
+            "score": -0.607255,
+            "symbol": "USART_TxDoubleExt"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "silabs-emlib::uart.read",
+        "operation_id": "uart.read",
+        "positive_symbols": [
+          "USART_Rx",
+          "USART_RxDataGet",
+          "USART_RxDouble"
+        ],
+        "predicted_symbol": "USART_BaudrateGet",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "silabs-emlib",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.291806,
+            "symbol": "USART_BaudrateGet"
+          },
+          {
+            "label": 0,
+            "score": -0.409313,
+            "symbol": "USART_BaudrateCalc"
+          },
+          {
+            "label": 3,
+            "score": -1.46624,
+            "symbol": "USART_Rx"
+          },
+          {
+            "label": 0,
+            "score": -1.482011,
+            "symbol": "USART_Tx"
+          },
+          {
+            "label": 0,
+            "score": -1.580247,
+            "symbol": "LEUART_TxExt"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "silabs-emlib::gpio.configure",
+        "operation_id": "gpio.configure",
+        "positive_symbols": [
+          "GPIO_PinModeSet"
+        ],
+        "predicted_symbol": "ACMP_GPIOSetup",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "silabs-emlib",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.568388,
+            "symbol": "ACMP_GPIOSetup"
+          },
+          {
+            "label": 0,
+            "score": 0.404422,
+            "symbol": "GPIO_PinOutToggle"
+          },
+          {
+            "label": 0,
+            "score": -1.166598,
+            "symbol": "CHIP_Init"
+          },
+          {
+            "label": 0,
+            "score": -1.295295,
+            "symbol": "CMU_HFXOCrystalSharingFollowerInit"
+          },
+          {
+            "label": 0,
+            "score": -1.480843,
+            "symbol": "EMU_BUPDInit"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "silabs-emlib::timer.stop",
+        "operation_id": "timer.stop",
+        "positive_symbols": [
+          "TIMER_Enable"
+        ],
+        "predicted_symbol": "TIMER_IntDisable",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "silabs-emlib",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.86395,
+            "symbol": "TIMER_IntDisable"
+          },
+          {
+            "label": 0,
+            "score": -0.514834,
+            "symbol": "LETIMER_IntDisable"
+          },
+          {
+            "label": 0,
+            "score": -1.795271,
+            "symbol": "CRYOTIMER_IntDisable"
+          },
+          {
+            "label": 0,
+            "score": -1.949003,
+            "symbol": "RTCC_Stop"
+          },
+          {
+            "label": 0,
+            "score": -2.567906,
+            "symbol": "BURTC_Stop"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "silabs-emlib::timer.set_interval",
+        "operation_id": "timer.set_interval",
+        "positive_symbols": [
+          "TIMER_TopSet"
+        ],
+        "predicted_symbol": "TIMER_CounterSet",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "silabs-emlib",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.005782,
+            "symbol": "TIMER_CounterSet"
+          },
+          {
+            "label": 0,
+            "score": 0.987653,
+            "symbol": "TIMER_Reset"
+          },
+          {
+            "label": 0,
+            "score": 0.844729,
+            "symbol": "LETIMER_RepeatSet"
+          },
+          {
+            "label": 0,
+            "score": 0.825718,
+            "symbol": "TIMER_InitDTI"
+          },
+          {
+            "label": 0,
+            "score": 0.821546,
+            "symbol": "TIMER_Init"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "positive-calls-predicted-helper",
+        "group_id": "raspberry-pi-pico-sdk-2.2.0::uart.read",
+        "operation_id": "uart.read",
+        "positive_symbols": [
+          "uart_getc",
+          "uart_read_blocking"
+        ],
+        "predicted_symbol": "uart_get_hw",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.152687,
+            "symbol": "uart_get_hw"
+          },
+          {
+            "label": 3,
+            "score": 0.918229,
+            "symbol": "uart_read_blocking"
+          },
+          {
+            "label": 2,
+            "score": -0.059196,
+            "symbol": "uart_getc"
+          },
+          {
+            "label": 0,
+            "score": -0.131429,
+            "symbol": "uart_get_dreq"
+          },
+          {
+            "label": 0,
+            "score": -0.243829,
+            "symbol": "uart_is_readable"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "raspberry-pi-pico-sdk-2.2.0::gpio.write",
+        "operation_id": "gpio.write",
+        "positive_symbols": [
+          "gpio_clr_mask",
+          "gpio_put",
+          "gpio_put_masked",
+          "gpio_set_mask",
+          "gpio_xor_mask"
+        ],
+        "predicted_symbol": "gpio_set_function",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.6102,
+            "symbol": "gpio_set_function"
+          },
+          {
+            "label": 0,
+            "score": 1.290727,
+            "symbol": "gpio_set_pulls"
+          },
+          {
+            "label": 3,
+            "score": 1.107649,
+            "symbol": "gpio_put"
+          },
+          {
+            "label": 0,
+            "score": 0.390534,
+            "symbol": "gpio_set_outover"
+          },
+          {
+            "label": 0,
+            "score": 0.337934,
+            "symbol": "gpio_set_oeover"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "raspberry-pi-pico-sdk-2.2.0::gpio.attach_irq",
+        "operation_id": "gpio.attach_irq",
+        "positive_symbols": [
+          "gpio_add_raw_irq_handler",
+          "gpio_add_raw_irq_handler_with_order_priority",
+          "gpio_set_irq_callback",
+          "gpio_set_irq_enabled",
+          "gpio_set_irq_enabled_with_callback"
+        ],
+        "predicted_symbol": "gpio_acknowledge_irq",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.547014,
+            "symbol": "gpio_acknowledge_irq"
+          },
+          {
+            "label": 1,
+            "score": 1.451352,
+            "symbol": "gpio_set_irq_enabled"
+          },
+          {
+            "label": 1,
+            "score": 1.195004,
+            "symbol": "gpio_set_irq_callback"
+          },
+          {
+            "label": 0,
+            "score": 0.696672,
+            "symbol": "gpio_set_irqover"
+          },
+          {
+            "label": 0,
+            "score": -0.239072,
+            "symbol": "gpio_add_raw_irq_handler_with_order_priority_masked"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "positive-calls-predicted-helper",
+        "group_id": "raspberry-pi-pico-sdk-2.2.0::timer.initialize",
+        "operation_id": "timer.initialize",
+        "positive_symbols": [
+          "add_repeating_timer_us",
+          "alarm_pool_create",
+          "alarm_pool_create_with_unused_hardware_alarm",
+          "hardware_alarm_claim",
+          "hardware_alarm_claim_unused"
+        ],
+        "predicted_symbol": "timer_hardware_alarm_claim",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.736896,
+            "symbol": "timer_hardware_alarm_claim"
+          },
+          {
+            "label": 0,
+            "score": 0.319115,
+            "symbol": "timer_busy_wait_us"
+          },
+          {
+            "label": 0,
+            "score": 0.200101,
+            "symbol": "alarm_pool_init_default"
+          },
+          {
+            "label": 1,
+            "score": 0.022611,
+            "symbol": "hardware_alarm_claim_unused"
+          },
+          {
+            "label": 0,
+            "score": -0.012667,
+            "symbol": "runtime_init_clocks"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "raspberry-pi-pico-sdk-2.2.0::timer.start",
+        "operation_id": "timer.start",
+        "positive_symbols": [
+          "add_alarm_at",
+          "add_alarm_in_ms",
+          "add_alarm_in_us",
+          "add_repeating_timer_ms",
+          "add_repeating_timer_us",
+          "hardware_alarm_set_target"
+        ],
+        "predicted_symbol": "aon_timer_start",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.815343,
+            "symbol": "aon_timer_start"
+          },
+          {
+            "label": 0,
+            "score": 1.235122,
+            "symbol": "aon_timer_enable_alarm"
+          },
+          {
+            "label": 3,
+            "score": 1.120888,
+            "symbol": "hardware_alarm_set_target"
+          },
+          {
+            "label": 0,
+            "score": 0.88901,
+            "symbol": "hardware_alarm_set_callback"
+          },
+          {
+            "label": 0,
+            "score": 0.705363,
+            "symbol": "aon_timer_start_calendar"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "raspberry-pi-pico-sdk-2.2.0::timer.stop",
+        "operation_id": "timer.stop",
+        "positive_symbols": [
+          "cancel_alarm",
+          "cancel_repeating_timer",
+          "hardware_alarm_cancel"
+        ],
+        "predicted_symbol": "aon_timer_stop",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.73116,
+            "symbol": "aon_timer_stop"
+          },
+          {
+            "label": 3,
+            "score": 1.662291,
+            "symbol": "cancel_repeating_timer"
+          },
+          {
+            "label": 0,
+            "score": 1.293111,
+            "symbol": "aon_timer_disable_alarm"
+          },
+          {
+            "label": 0,
+            "score": 1.018715,
+            "symbol": "tick_stop"
+          },
+          {
+            "label": 3,
+            "score": 0.996858,
+            "symbol": "hardware_alarm_cancel"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "positive-calls-predicted-helper",
+        "group_id": "bouffalo-lhal::clock.get_frequency",
+        "operation_id": "clock.get_frequency",
+        "positive_symbols": [
+          "bflb_clk_get_peripheral_clock",
+          "bflb_clk_get_system_clock"
+        ],
+        "predicted_symbol": "Clock_System_Clock_Get",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "bouffalo-lhal",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.028741,
+            "symbol": "Clock_System_Clock_Get"
+          },
+          {
+            "label": 0,
+            "score": 0.662242,
+            "symbol": "Clock_Peripheral_Clock_Get"
+          },
+          {
+            "label": 0,
+            "score": 0.492257,
+            "symbol": "Clock_PWM_Clk_Get"
+          },
+          {
+            "label": 0,
+            "score": -0.290249,
+            "symbol": "bflb_pwm_v1_get_frequency"
+          },
+          {
+            "label": 0,
+            "score": -0.290249,
+            "symbol": "bflb_pwm_v2_get_frequency"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "bouffalo-lhal::gpio.write",
+        "operation_id": "gpio.write",
+        "positive_symbols": [
+          "bflb_gpio_pin0_31_output",
+          "bflb_gpio_pin0_31_reset",
+          "bflb_gpio_pin0_31_set",
+          "bflb_gpio_pin32_63_output",
+          "bflb_gpio_pin32_63_reset",
+          "bflb_gpio_pin32_63_set",
+          "bflb_gpio_reset",
+          "bflb_gpio_set"
+        ],
+        "predicted_symbol": "GLB_GPIO_Write",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "bouffalo-lhal",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.760412,
+            "symbol": "GLB_GPIO_Write"
+          },
+          {
+            "label": 2,
+            "score": 1.17132,
+            "symbol": "bflb_gpio_set"
+          },
+          {
+            "label": 0,
+            "score": 0.759884,
+            "symbol": "PDS_GPIO_Write"
+          },
+          {
+            "label": 0,
+            "score": 0.457396,
+            "symbol": "GLB_GPIO_Set"
+          },
+          {
+            "label": 2,
+            "score": 0.291716,
+            "symbol": "bflb_gpio_reset"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "bouffalo-lhal::timer.set_interval",
+        "operation_id": "timer.set_interval",
+        "positive_symbols": [
+          "bflb_timer_set_compvalue",
+          "bflb_timer_set_preloadvalue"
+        ],
+        "predicted_symbol": "bflb_mtimer_config",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "bouffalo-lhal",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.093001,
+            "symbol": "bflb_mtimer_config"
+          },
+          {
+            "label": 3,
+            "score": 0.877818,
+            "symbol": "bflb_timer_set_compvalue"
+          },
+          {
+            "label": 3,
+            "score": 0.59589,
+            "symbol": "bflb_timer_set_preloadvalue"
+          },
+          {
+            "label": 0,
+            "score": -1.40739,
+            "symbol": "SysTick_Config_S"
+          },
+          {
+            "label": 0,
+            "score": -1.531292,
+            "symbol": "SysTimer_SetMsipValue"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "libopencm3-hal::clock.disable",
+        "operation_id": "clock.disable",
+        "positive_symbols": [
+          "rcc_periph_clock_disable"
+        ],
+        "predicted_symbol": "rcc_disable_rtc_clock",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "libopencm3-hal",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.022378,
+            "symbol": "rcc_disable_rtc_clock"
+          },
+          {
+            "label": 3,
+            "score": 0.962277,
+            "symbol": "rcc_periph_clock_disable"
+          },
+          {
+            "label": 0,
+            "score": 0.513538,
+            "symbol": "rcc_peripheral_disable_clock"
+          },
+          {
+            "label": 0,
+            "score": 0.401345,
+            "symbol": "sysctl_periph_clock_disable"
+          },
+          {
+            "label": 0,
+            "score": 0.356332,
+            "symbol": "rcc_pll_bypass_disable"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "libopencm3-hal::uart.write",
+        "operation_id": "uart.write",
+        "positive_symbols": [
+          "usart_send",
+          "usart_send_blocking"
+        ],
+        "predicted_symbol": "uart_send",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "libopencm3-hal",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.235126,
+            "symbol": "uart_send"
+          },
+          {
+            "label": 0,
+            "score": 1.684109,
+            "symbol": "uart_write"
+          },
+          {
+            "label": 0,
+            "score": 0.688636,
+            "symbol": "uart_send_blocking"
+          },
+          {
+            "label": 0,
+            "score": -0.133345,
+            "symbol": "uart_set_flow_control"
+          },
+          {
+            "label": 2,
+            "score": -0.163763,
+            "symbol": "usart_send"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "libopencm3-hal::uart.read",
+        "operation_id": "uart.read",
+        "positive_symbols": [
+          "usart_recv",
+          "usart_recv_blocking"
+        ],
+        "predicted_symbol": "uart_read",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "libopencm3-hal",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.659314,
+            "symbol": "uart_read"
+          },
+          {
+            "label": 0,
+            "score": 1.178234,
+            "symbol": "uart_get_baudrate"
+          },
+          {
+            "label": 0,
+            "score": 0.744319,
+            "symbol": "uart_wait_recv_ready"
+          },
+          {
+            "label": 0,
+            "score": 0.661461,
+            "symbol": "uart_get_databits"
+          },
+          {
+            "label": 0,
+            "score": 0.278123,
+            "symbol": "uart_read_timeout"
+          }
+        ],
+        "top5_contains_positive": false
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "libopencm3-hal::timer.start",
+        "operation_id": "timer.start",
+        "positive_symbols": [
+          "timer_enable_counter"
+        ],
+        "predicted_symbol": "timer_start",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "libopencm3-hal",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.968024,
+            "symbol": "timer_start"
+          },
+          {
+            "label": 0,
+            "score": 1.105465,
+            "symbol": "timer_enable"
+          },
+          {
+            "label": 3,
+            "score": 0.871368,
+            "symbol": "timer_enable_counter"
+          },
+          {
+            "label": 0,
+            "score": 0.291652,
+            "symbol": "lptimer_start_counter"
+          },
+          {
+            "label": 0,
+            "score": 0.253218,
+            "symbol": "timer_int_enable"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "libopencm3-hal::timer.stop",
+        "operation_id": "timer.stop",
+        "positive_symbols": [
+          "timer_disable_counter"
+        ],
+        "predicted_symbol": "timer_stop",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "libopencm3-hal",
+        "top5": [
+          {
+            "label": 0,
+            "score": 2.112543,
+            "symbol": "timer_stop"
+          },
+          {
+            "label": 3,
+            "score": 1.370247,
+            "symbol": "timer_disable_counter"
+          },
+          {
+            "label": 0,
+            "score": 0.194566,
+            "symbol": "timer_disable_break"
+          },
+          {
+            "label": 0,
+            "score": 0.139056,
+            "symbol": "lptimer_disable"
+          },
+          {
+            "label": 0,
+            "score": -0.108568,
+            "symbol": "timer_ic_disable"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "libopencm3-hal::timer.set_interval",
+        "operation_id": "timer.set_interval",
+        "positive_symbols": [
+          "timer_set_period"
+        ],
+        "predicted_symbol": "timer_set_compare",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "libopencm3-hal",
+        "top5": [
+          {
+            "label": 0,
+            "score": 0.67432,
+            "symbol": "timer_set_compare"
+          },
+          {
+            "label": 3,
+            "score": 0.66686,
+            "symbol": "timer_set_period"
+          },
+          {
+            "label": 0,
+            "score": -0.128434,
+            "symbol": "lptimer_set_period"
+          },
+          {
+            "label": 0,
+            "score": -0.59291,
+            "symbol": "timer_pwm_target_value"
+          },
+          {
+            "label": 0,
+            "score": -0.772742,
+            "symbol": "timer_counter_target_value"
+          }
+        ],
+        "top5_contains_positive": true
+      },
+      {
+        "direct_relation": "none",
+        "group_id": "telink-tlsr9-hal::timer.initialize",
+        "operation_id": "timer.initialize",
+        "positive_symbols": [
+          "stimer_set_tick",
+          "timer_set_mode"
+        ],
+        "predicted_symbol": "timer_set_init_tick",
+        "safe_predicted_wrapper_upper_bound": false,
+        "sdk_id": "telink-tlsr9-hal",
+        "top5": [
+          {
+            "label": 0,
+            "score": 1.21867,
+            "symbol": "timer_set_init_tick"
+          },
+          {
+            "label": 0,
+            "score": 0.563878,
+            "symbol": "timer_gpio_init"
+          },
+          {
+            "label": 0,
+            "score": -0.247284,
+            "symbol": "timer_set_cap_tick"
+          },
+          {
+            "label": 2,
+            "score": -0.256556,
+            "symbol": "timer_set_mode"
+          },
+          {
+            "label": 0,
+            "score": -0.381836,
+            "symbol": "sys_init"
+          }
+        ],
+        "top5_contains_positive": true
+      }
+    ],
+    "method": "all-top5",
+    "metrics": {
+      "any_direct_call_relation_upper_bound_at_1": 0.788732,
+      "hit_at_5": 0.901408,
+      "mean_recall_at_5_theoretical_ceiling": 0.986608,
+      "mean_unique_positive_symbols": 2.366197,
+      "safe_direct_wrapper_upper_bound_at_1": 0.753521,
+      "strict_precision_at_1": 0.721831
+    },
+    "schema_version": "top1-call-equivalence-v1",
+    "scope": {
+      "groups": 284,
+      "note": "调用关系仅用于定位可能漏标的包装函数，不自动改写正式正确性。",
+      "strict_failures": 79
+    },
+    "strict_failure_relation_counts": {
+      "none": 60,
+      "positive-calls-predicted-helper": 10,
+      "predicted-wrapper-calls-positive": 9
+    },
+    "truth_set": "human-adjudicated-h03"
+  },
+  "methods": {
+    "all-default": {
+      "hit_at_5": {
+        "mean": 0.902582,
+        "population_std": 0.004392,
+        "values": [
+          0.908451,
+          0.901408,
+          0.897887
+        ]
+      },
+      "map": {
+        "mean": 0.685696,
+        "population_std": 0.000993,
+        "values": [
+          0.684554,
+          0.686975,
+          0.68556
+        ]
+      },
+      "ndcg_at_10": {
+        "mean": 0.747296,
+        "population_std": 0.002452,
+        "values": [
+          0.747006,
+          0.750434,
+          0.744448
+        ]
+      },
+      "precision_at_1": {
+        "mean": 0.685446,
+        "population_std": 0.005985,
+        "values": [
+          0.683099,
+          0.693662,
+          0.679577
+        ]
+      },
+      "recall_at_5": {
+        "mean": 0.739888,
+        "population_std": 0.001162,
+        "values": [
+          0.741122,
+          0.738332,
+          0.74021
+        ]
+      }
+    },
+    "all-top5": {
+      "hit_at_5": {
+        "mean": 0.899061,
+        "population_std": 0.005985,
+        "values": [
+          0.901408,
+          0.90493,
+          0.890845
+        ]
+      },
+      "map": {
+        "mean": 0.696581,
+        "population_std": 0.002823,
+        "values": [
+          0.692913,
+          0.699781,
+          0.697048
+        ]
+      },
+      "ndcg_at_10": {
+        "mean": 0.754899,
+        "population_std": 0.003668,
+        "values": [
+          0.750577,
+          0.759544,
+          0.754577
+        ]
+      },
+      "precision_at_1": {
+        "mean": 0.719484,
+        "population_std": 0.005985,
+        "values": [
+          0.721831,
+          0.725352,
+          0.711268
+        ]
+      },
+      "recall_at_5": {
+        "mean": 0.737445,
+        "population_std": 0.002338,
+        "values": [
+          0.740362,
+          0.737337,
+          0.734637
+        ]
+      }
+    },
+    "hard20-top5": {
+      "hit_at_5": {
+        "mean": 0.890845,
+        "population_std": 0.004979,
+        "values": [
+          0.887324,
+          0.897887,
+          0.887324
+        ]
+      },
+      "map": {
+        "mean": 0.66023,
+        "population_std": 0.004051,
+        "values": [
+          0.655591,
+          0.659638,
+          0.665461
+        ]
+      },
+      "ndcg_at_10": {
+        "mean": 0.723513,
+        "population_std": 0.002543,
+        "values": [
+          0.720392,
+          0.723527,
+          0.726621
+        ]
+      },
+      "precision_at_1": {
+        "mean": 0.651408,
+        "population_std": 0.008625,
+        "values": [
+          0.640845,
+          0.651408,
+          0.661972
+        ]
+      },
+      "recall_at_5": {
+        "mean": 0.727688,
+        "population_std": 0.003522,
+        "values": [
+          0.728684,
+          0.731417,
+          0.722964
+        ]
+      }
+    },
+    "hard40-top10": {
+      "hit_at_5": {
+        "mean": 0.897887,
+        "population_std": 0.002875,
+        "values": [
+          0.897887,
+          0.894366,
+          0.901408
+        ]
+      },
+      "map": {
+        "mean": 0.687174,
+        "population_std": 0.003994,
+        "values": [
+          0.691635,
+          0.681943,
+          0.687944
+        ]
+      },
+      "ndcg_at_10": {
+        "mean": 0.747186,
+        "population_std": 0.00166,
+        "values": [
+          0.748984,
+          0.74498,
+          0.747593
+        ]
+      },
+      "precision_at_1": {
+        "mean": 0.685446,
+        "population_std": 0.004392,
+        "values": [
+          0.68662,
+          0.679577,
+          0.690141
+        ]
+      },
+      "recall_at_5": {
+        "mean": 0.739783,
+        "population_std": 0.0039,
+        "values": [
+          0.74212,
+          0.734288,
+          0.742941
+        ]
+      }
+    },
+    "hard40-top5": {
+      "hit_at_5": {
+        "mean": 0.901408,
+        "population_std": 0.002875,
+        "values": [
+          0.90493,
+          0.897887,
+          0.901408
+        ]
+      },
+      "map": {
+        "mean": 0.689552,
+        "population_std": 0.004067,
+        "values": [
+          0.686196,
+          0.687185,
+          0.695276
+        ]
+      },
+      "ndcg_at_10": {
+        "mean": 0.752416,
+        "population_std": 0.004434,
+        "values": [
+          0.751592,
+          0.747444,
+          0.758211
+        ]
+      },
+      "precision_at_1": {
+        "mean": 0.693662,
+        "population_std": 0.012532,
+        "values": [
+          0.683099,
+          0.68662,
+          0.711268
+        ]
+      },
+      "recall_at_5": {
+        "mean": 0.740254,
+        "population_std": 0.003115,
+        "values": [
+          0.741682,
+          0.74315,
+          0.735931
+        ]
+      }
+    },
+    "hard40-top5-invariant": {
+      "hit_at_5": {
+        "mean": 0.902582,
+        "population_std": 0.00166,
+        "values": [
+          0.901408,
+          0.901408,
+          0.90493
+        ]
+      },
+      "map": {
+        "mean": 0.6934,
+        "population_std": 0.001592,
+        "values": [
+          0.69498,
+          0.691221,
+          0.693998
+        ]
+      },
+      "ndcg_at_10": {
+        "mean": 0.755181,
+        "population_std": 0.001671,
+        "values": [
+          0.755893,
+          0.752873,
+          0.756777
+        ]
+      },
+      "precision_at_1": {
+        "mean": 0.68662,
+        "population_std": 0.002875,
+        "values": [
+          0.68662,
+          0.683099,
+          0.690141
+        ]
+      },
+      "recall_at_5": {
+        "mean": 0.744302,
+        "population_std": 0.002491,
+        "values": [
+          0.745524,
+          0.740829,
+          0.746553
+        ]
+      }
+    },
+    "hard80-top5": {
+      "hit_at_5": {
+        "mean": 0.897887,
+        "population_std": 0.002875,
+        "values": [
+          0.894366,
+          0.901408,
+          0.897887
+        ]
+      },
+      "map": {
+        "mean": 0.695561,
+        "population_std": 0.004553,
+        "values": [
+          0.701961,
+          0.691746,
+          0.692976
+        ]
+      },
+      "ndcg_at_10": {
+        "mean": 0.755401,
+        "population_std": 0.003313,
+        "values": [
+          0.760064,
+          0.753467,
+          0.752672
+        ]
+      },
+      "precision_at_1": {
+        "mean": 0.706573,
+        "population_std": 0.010885,
+        "values": [
+          0.721831,
+          0.700704,
+          0.697183
+        ]
+      },
+      "recall_at_5": {
+        "mean": 0.74618,
+        "population_std": 0.006264,
+        "values": [
+          0.743528,
+          0.754825,
+          0.740186
+        ]
+      }
+    },
+    "unique-top5": {
+      "hit_at_5": {
+        "mean": 0.899061,
+        "population_std": 0.00166,
+        "values": [
+          0.901408,
+          0.897887,
+          0.897887
+        ]
+      },
+      "map": {
+        "mean": 0.690727,
+        "population_std": 0.001332,
+        "values": [
+          0.690876,
+          0.689027,
+          0.692279
+        ]
+      },
+      "ndcg_at_10": {
+        "mean": 0.752321,
+        "population_std": 0.001441,
+        "values": [
+          0.752013,
+          0.750731,
+          0.75422
+        ]
+      },
+      "precision_at_1": {
+        "mean": 0.698357,
+        "population_std": 0.005985,
+        "values": [
+          0.700704,
+          0.690141,
+          0.704225
+        ]
+      },
+      "recall_at_5": {
+        "mean": 0.743315,
+        "population_std": 0.003647,
+        "values": [
+          0.742797,
+          0.748018,
+          0.73913
+        ]
+      }
+    }
+  },
+  "paired_all_top5_vs_h03": [
+    {
+      "run": 1,
+      "vs_fixed_small_reg": {
+        "metrics": {
+          "map": {
+            "bootstrap_95_ci": [
+              -0.012479,
+              0.018226
+            ],
+            "mean_difference": 0.002717,
+            "wins_ties_losses": [
+              68,
+              147,
+              69
+            ]
+          },
+          "mrr": {
+            "bootstrap_95_ci": [
+              -0.007621,
+              0.031284
+            ],
+            "mean_difference": 0.011701,
+            "wins_ties_losses": [
+              33,
+              227,
+              24
+            ]
+          },
+          "ndcg_at_10": {
+            "bootstrap_95_ci": [
+              -0.012063,
+              0.013651
+            ],
+            "mean_difference": 0.000541,
+            "wins_ties_losses": [
+              51,
+              179,
+              54
+            ]
+          },
+          "precision_at_1": {
+            "bootstrap_95_ci": [
+              -0.010563,
+              0.052817
+            ],
+            "mean_difference": 0.021127,
+            "wins_ties_losses": [
+              14,
+              262,
+              8
+            ]
+          },
+          "recall_at_3": {
+            "bootstrap_95_ci": [
+              -0.005203,
+              0.028409
+            ],
+            "mean_difference": 0.010635,
+            "wins_ties_losses": [
+              14,
+              259,
+              11
+            ]
+          },
+          "recall_at_5": {
+            "bootstrap_95_ci": [
+              -0.015429,
+              0.021127
+            ],
+            "mean_difference": 0.002764,
+            "wins_ties_losses": [
+              11,
+              259,
+              14
+            ]
+          }
+        },
+        "paired_groups": 284
+      },
+      "vs_nested": {
+        "metrics": {
+          "map": {
+            "bootstrap_95_ci": [
+              -0.010872,
+              0.019158
+            ],
+            "mean_difference": 0.003745,
+            "wins_ties_losses": [
+              68,
+              143,
+              73
+            ]
+          },
+          "mrr": {
+            "bootstrap_95_ci": [
+              -0.006251,
+              0.032217
+            ],
+            "mean_difference": 0.012803,
+            "wins_ties_losses": [
+              28,
+              229,
+              27
+            ]
+          },
+          "ndcg_at_10": {
+            "bootstrap_95_ci": [
+              -0.013274,
+              0.012882
+            ],
+            "mean_difference": -0.000409,
+            "wins_ties_losses": [
+              59,
+              168,
+              57
+            ]
+          },
+          "precision_at_1": {
+            "bootstrap_95_ci": [
+              -0.007042,
+              0.056338
+            ],
+            "mean_difference": 0.024648,
+            "wins_ties_losses": [
+              14,
+              263,
+              7
+            ]
+          },
+          "recall_at_3": {
+            "bootstrap_95_ci": [
+              -0.008607,
+              0.028918
+            ],
+            "mean_difference": 0.009754,
+            "wins_ties_losses": [
+              17,
+              255,
+              12
+            ]
+          },
+          "recall_at_5": {
+            "bootstrap_95_ci": [
+              -0.015882,
+              0.019861
+            ],
+            "mean_difference": 0.001908,
+            "wins_ties_losses": [
+              13,
+              257,
+              14
+            ]
+          }
+        },
+        "paired_groups": 284
+      }
+    },
+    {
+      "run": 2,
+      "vs_fixed_small_reg": {
+        "metrics": {
+          "map": {
+            "bootstrap_95_ci": [
+              -0.004663,
+              0.023962
+            ],
+            "mean_difference": 0.009585,
+            "wins_ties_losses": [
+              69,
+              151,
+              64
+            ]
+          },
+          "mrr": {
+            "bootstrap_95_ci": [
+              0.000591,
+              0.035511
+            ],
+            "mean_difference": 0.017437,
+            "wins_ties_losses": [
+              34,
+              228,
+              22
+            ]
+          },
+          "ndcg_at_10": {
+            "bootstrap_95_ci": [
+              -0.002207,
+              0.021689
+            ],
+            "mean_difference": 0.009508,
+            "wins_ties_losses": [
+              53,
+              178,
+              53
+            ]
+          },
+          "precision_at_1": {
+            "bootstrap_95_ci": [
+              -0.003521,
+              0.056338
+            ],
+            "mean_difference": 0.024648,
+            "wins_ties_losses": [
+              13,
+              265,
+              6
+            ]
+          },
+          "recall_at_3": {
+            "bootstrap_95_ci": [
+              -0.000587,
+              0.033842
+            ],
+            "mean_difference": 0.01621,
+            "wins_ties_losses": [
+              16,
+              259,
+              9
+            ]
+          },
+          "recall_at_5": {
+            "bootstrap_95_ci": [
+              -0.020156,
+              0.018929
+            ],
+            "mean_difference": -0.000261,
+            "wins_ties_losses": [
+              11,
+              256,
+              17
+            ]
+          }
+        },
+        "paired_groups": 284
+      },
+      "vs_nested": {
+        "metrics": {
+          "map": {
+            "bootstrap_95_ci": [
+              -0.004097,
+              0.026255
+            ],
+            "mean_difference": 0.010614,
+            "wins_ties_losses": [
+              75,
+              141,
+              68
+            ]
+          },
+          "mrr": {
+            "bootstrap_95_ci": [
+              0.001258,
+              0.036958
+            ],
+            "mean_difference": 0.018539,
+            "wins_ties_losses": [
+              29,
+              228,
+              27
+            ]
+          },
+          "ndcg_at_10": {
+            "bootstrap_95_ci": [
+              -0.003975,
+              0.021158
+            ],
+            "mean_difference": 0.008558,
+            "wins_ties_losses": [
+              64,
+              164,
+              56
+            ]
+          },
+          "precision_at_1": {
+            "bootstrap_95_ci": [
+              -0.003521,
+              0.059859
+            ],
+            "mean_difference": 0.028169,
+            "wins_ties_losses": [
+              14,
+              264,
+              6
+            ]
+          },
+          "recall_at_3": {
+            "bootstrap_95_ci": [
+              -0.004428,
+              0.035211
+            ],
+            "mean_difference": 0.015329,
+            "wins_ties_losses": [
+              20,
+              253,
+              11
+            ]
+          },
+          "recall_at_5": {
+            "bootstrap_95_ci": [
+              -0.022797,
+              0.022188
+            ],
+            "mean_difference": -0.001117,
+            "wins_ties_losses": [
+              13,
+              255,
+              16
+            ]
+          }
+        },
+        "paired_groups": 284
+      }
+    },
+    {
+      "run": 3,
+      "vs_fixed_small_reg": {
+        "metrics": {
+          "map": {
+            "bootstrap_95_ci": [
+              -0.008917,
+              0.022337
+            ],
+            "mean_difference": 0.006852,
+            "wins_ties_losses": [
+              64,
+              150,
+              70
+            ]
+          },
+          "mrr": {
+            "bootstrap_95_ci": [
+              -0.012209,
+              0.027144
+            ],
+            "mean_difference": 0.00706,
+            "wins_ties_losses": [
+              26,
+              229,
+              29
+            ]
+          },
+          "ndcg_at_10": {
+            "bootstrap_95_ci": [
+              -0.008486,
+              0.017952
+            ],
+            "mean_difference": 0.004541,
+            "wins_ties_losses": [
+              47,
+              181,
+              56
+            ]
+          },
+          "precision_at_1": {
+            "bootstrap_95_ci": [
+              -0.021127,
+              0.042254
+            ],
+            "mean_difference": 0.010563,
+            "wins_ties_losses": [
+              13,
+              261,
+              10
+            ]
+          },
+          "recall_at_3": {
+            "bootstrap_95_ci": [
+              -0.001907,
+              0.035065
+            ],
+            "mean_difference": 0.015288,
+            "wins_ties_losses": [
+              14,
+              260,
+              10
+            ]
+          },
+          "recall_at_5": {
+            "bootstrap_95_ci": [
+              -0.022594,
+              0.017115
+            ],
+            "mean_difference": -0.002961,
+            "wins_ties_losses": [
+              13,
+              251,
+              20
+            ]
+          }
+        },
+        "paired_groups": 284
+      },
+      "vs_nested": {
+        "metrics": {
+          "map": {
+            "bootstrap_95_ci": [
+              -0.008475,
+              0.023877
+            ],
+            "mean_difference": 0.007881,
+            "wins_ties_losses": [
+              73,
+              145,
+              66
+            ]
+          },
+          "mrr": {
+            "bootstrap_95_ci": [
+              -0.01032,
+              0.027452
+            ],
+            "mean_difference": 0.008162,
+            "wins_ties_losses": [
+              24,
+              231,
+              29
+            ]
+          },
+          "ndcg_at_10": {
+            "bootstrap_95_ci": [
+              -0.009208,
+              0.016877
+            ],
+            "mean_difference": 0.003591,
+            "wins_ties_losses": [
+              56,
+              173,
+              55
+            ]
+          },
+          "precision_at_1": {
+            "bootstrap_95_ci": [
+              -0.017606,
+              0.045775
+            ],
+            "mean_difference": 0.014085,
+            "wins_ties_losses": [
+              13,
+              262,
+              9
+            ]
+          },
+          "recall_at_3": {
+            "bootstrap_95_ci": [
+              -0.005399,
+              0.035681
+            ],
+            "mean_difference": 0.014407,
+            "wins_ties_losses": [
+              19,
+              252,
+              13
+            ]
+          },
+          "recall_at_5": {
+            "bootstrap_95_ci": [
+              -0.021655,
+              0.014252
+            ],
+            "mean_difference": -0.003816,
+            "wins_ties_losses": [
+              13,
+              253,
+              18
+            ]
+          }
+        },
+        "paired_groups": 284
+      }
+    }
+  ],
+  "retained_method": {
+    "name": "all-top5",
+    "reason": "三随机种子P@1稳定提升；硬负样本最优值未跨种子复现。"
+  },
+  "schema_version": "lambdamart-h03-multiseed-summary-v1",
+  "seeds": [
+    20260905,
+    "results-lambdamart-optimization-h03-v0.5-seed20260917",
+    "results-lambdamart-optimization-h03-v0.5-seed20260929"
+  ],
+  "truth_calibration": {
+    "h02": {
+      "map": 0.681085,
+      "mrr": 0.751597,
+      "ndcg_at_10": 0.742638,
+      "precision_at_1": 0.651246,
+      "recall_at_3": 0.648902,
+      "recall_at_5": 0.747853
+    },
+    "h03": {
+      "map": 0.689167,
+      "mrr": 0.787577,
+      "ndcg_at_10": 0.750986,
+      "precision_at_1": 0.697183,
+      "recall_at_3": 0.634982,
+      "recall_at_5": 0.738454
+    },
+    "h03_minus_h02": {
+      "map": 0.008082,
+      "ndcg_at_10": 0.008348,
+      "precision_at_1": 0.045937,
+      "recall_at_5": -0.009399
+    }
+  }
+}

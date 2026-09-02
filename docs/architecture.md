@@ -42,7 +42,7 @@ OS Backend ----------- RT-Thread BSP / Zephyr 应用 + 功能绑定
 
 ### Semantic Resolver
 
-基于名称、操作词、路径、函数签名、包含文件、调用和宏等独立证据恢复候选。固定权重排序是可审计基线，学习排序从独立 SDK 标注训练 LightGBM LambdaRank；`hybrid` 将固定证据作为先验并使用模型重排序。候选随后映射为 OS 无关的规范化操作计划，缺失和多解不会由人工 profile 静默填充。训练和评测以 SDK 为分组边界，禁止同一 SDK 的实体随机泄漏到两侧。
+基于名称、操作词、路径、函数签名、包含文件、调用和宏等独立证据恢复候选。当前主路径使用冻结的 MiniLM 字段语义、确定性源码层级、操作契约、通用操作适配度和 API 家族解码，不进行 SDK 监督训练。候选随后映射为 OS 无关的规范化操作计划，缺失和多解不会由人工 profile 静默填充。
 
 ### Closure Solver
 
@@ -135,7 +135,7 @@ K210 端口定义 RV64 CPU、6 MiB SRAM、PLIC、机器定时器和 UARTHS，并
 
 ## v0.7 操作级排序与拒答数据流
 
-`experiments/operation-ranking/manifest.json` 把 22 套开发 SDK 和 3 套板卡外部测试 SDK 固定为不同角色。`ingest_operation_corpus.py` 生成独立操作 IR，`build_operation_dataset.py` 将五类能力展开为 19 个操作查询，并分别产生弱监督训练标签和源码审计外部标签。板卡真值不进入训练。
+`experiments/operation-ranking/manifest.json` 固定 22 套开发 SDK 和 3 套板卡 SDK 的来源与独立性边界。`ingest_operation_corpus.py` 生成操作 IR，`build_operation_dataset.py` 将五类能力展开为 19 个操作查询。真值只用于离线评测，不进入当前主路径的参数更新或运行时决策。
 
 操作排序在能力候选池内部增加动作、签名、HAL 层次、中断控制器、参数化开关、冲突操作和适配方向证据。可选嵌入脚本只增加 `code-embedding` 特征，不改变 IR 或解析输出模式。`evaluate_operation_ranker.py` 统一计算 BM25、静态规则、弱监督 LambdaRank、语义嵌入和融合结果，并保存 bootstrap 区间、前五候选和置信拒答曲线。
 
@@ -145,7 +145,7 @@ Resolver 的 `operation_min_margin` 对每个操作比较前两名不同符号�
 
 `operation-semantic` 在 `operation-weighted` 的候选和证据之上增加两个冻结 MiniLM 分支。基础分支把 IR 中的操作契约作为简洁查询；适配分支把 capability、operation 和 contract 序列化为 `ir-operation-v1`，再经过秩 16 的查询残差适配器。SDK 函数实体统一序列化为文件、符号、签名、包含和调用文本，候选向量只计算一次。
 
-基础模型为固定提交的 22.7M 参数 all-MiniLM-L6-v2。主体参数不进入训练，适配器只有 12,288 个参数，并以近似恒等映射初始化。运行时输出静态、基础语义和适配语义三项证据；均衡模式在全候选中融合，精度模式先用静态证据建立 Top-10 池，再在池内重排。
+基础模型为固定提交的 22.7M 参数 all-MiniLM-L6-v2，运行时只做冻结推理。源码的 symbol、signature、calls、file 和 includes 分字段编码并执行迟交互；字段语义与静态证据、操作契约和层级证据共同进入确定性排序。
 
 语义模型只扩展 Semantic Resolver。其输出仍是稳定实体 ID、操作、分数和证据，Binding Planner、Closure Solver、Build Diagnoser 与两个 OS Backend 的输入契约不变。K210 完整回归已经验证该输出能够形成 19 操作绑定、触发一次链接诊断修复并生成 RISC-V ELF/BIN。详细算法、负向消融、指标与复现命令见 `docs/ir-semantic-reranking-v0.8.md`。
 
@@ -153,13 +153,13 @@ Resolver 的 `operation_min_margin` 对每个操作比较前两名不同符号�
 
 v0.9 将候选函数 IR 拆为 `symbol`、`signature`、`calls`、`file` 和 `includes` 五个字段。每个字段使用不同的操作查询，经冻结 MiniLM 生成 token 表示后，以 MaxSim 计算迟交互分数。系统同时保留五个字段分数和聚合分数，使 LambdaMART、手工权重及字段消融共享同一份输入证据。
 
-训练真值改为 0 至 3 的分级标签。每条标签包含规则证据和置信度；外部板卡真值区分首选 HAL 绑定与功能等价的次级驱动层实现。数据审计器检查 20 个训练独立组、外部组隔离、标签来源和强正例覆盖。自动分级标签仍不是人工金标准，正式投稿前需要第二标注者复核。
+评测真值使用 0 至 3 的分级标签，区分首选 HAL 绑定与功能等价的次级驱动层实现。数据审计器检查 SDK 独立组、标签来源、候选可达性和强正例覆盖。真值不参与当前方法训练；正式投稿前仍需要双人复核、仲裁和冻结后的独立确认集。
 
 独立操作分数进入能力级组合解码。解码器先施加操作冲突、API 可见性和适配方向等一元契约，再用共享 API 族、目录、签名类型、HAL 层级和参数化互补函数计算成对兼容。离线实验使用 beam search；Resolver 运行时采用有界贪心，并在 `constraint_scores` 中保存调整证据。
 
 构建结束后，`compile_feedback.py` 将结果写入 `08b-semantic-compile-feedback.json`。直接被诊断提及、完整编译并通过产物检查、构建失败但不可归因和未观测绑定采用不同校准值。历史反馈可在同一 SDK 的后续解析中按稳定实体 ID 融合。该反馈只说明可编译、可链接和产物结构，不声明硬件语义正确。
 
-选择性自动接受使用分差、静态/语义一致性、契约准入和候选分数建立置信度。阈值按开发 SDK 分组校准并取保守值；外部集不允许重新选阈值。详细公式、约束表、保证边界和复现命令见 `docs/field-aware-structured-ranking-v0.9.md`，文献与许可边界见 `docs/related-work-citation-and-ip-risk-v0.9.md`。
+历史 v1.1 曾用真实决策分差、八通道实体/家族一致性、源码可调用层、操作契约和 RRF 支持进行选择性接受。v1.2 已取消拒答：`operation-structured` 对每个存在候选的能力操作始终输出最终分数最高的 Top1，并将最终分数、分差、通道一致性和弱证据原因记录为诊断字段。诊断只决定人工复核优先级，不影响绑定计划。当前规则和复现命令见 `docs/deterministic-ranking-low-score-diagnostics-v1.2.md`，文献与许可边界见 `docs/related-work-citation-and-ip-risk-v0.9.md`。
 
 ## v1.0 层级约束结构化排序数据流
 
@@ -173,11 +173,36 @@ Migration IR 函数实体
   -> 调用图邻域与 API 家族通道
   -> 多通道 RRF 和层级契约融合
   -> q4 API 家族覆盖解码
+  -> Top1 固定选择与低分/弱证据标记
   -> 规范化操作绑定计划
 ```
 
 源码角色由路径、符号和包含关系共同识别；操作契约使用 capability/operation 专用的必要词、冲突词、签名形态和参数化开关规则。API 家族归一时保留影响设备子模式的标记，例如 `HAL_TIM_Base` 与 `HAL_TIMEx` 属于不同家族，避免扩展定时器接口挤占基础定时器候选。
 
-最终解码先冻结高精度首位，再以同族高契约兄弟、高抽象层兼容家族代表和多通道剩余候选补齐 Top5。每个候选的 `structured_retrieval` 证据包含源码角色、家族、各通道分数和解码分数，可以从最终绑定反查方法选择过程。轻量自适应字段门控不参与最终路径，仅作为自动弱真值跨域泛化不足的消融实验。
+最终解码先冻结高精度首位，再以同族高契约兄弟、高抽象层兼容家族代表和多通道剩余候选补齐 Top5。v1.1 额外计算 `generic-operation-fit`，抑制 PWM/Hall/LPTimer、外设专用时钟和领域专用中断处理器对通用 RTOS 操作的抢占。每个候选的结构化证据包含源码角色、家族、各通道分数和解码分数，可以从最终绑定反查方法选择过程。
 
 OS Backend、Closure Solver 和 Build Diagnoser 不感知具体排序算法。它们继续消费稳定实体 ID、操作、签名和证据位置，因此 v1.0 不需要改动 RT-Thread/Zephyr 后端契约。完整方法边界、实验主表和论文写法见 `docs/core-method-v1.0.md`。
+
+## v1.7 硬件效果多视图离线候选
+
+v1.7 在不修改下游契约的前提下，为 Semantic Resolver 增加一个尚未启用的监督候选路径：
+
+```text
+Migration IR 函数、调用边、宏和寄存器证据
+  -> 完整函数代码冻结向量
+  -> 操作条件局部代码冻结向量
+  -> 直接/跨过程硬件效果图
+  -> 源码角色、签名、层级和操作契约
+  -> 分级 LambdaMART 与动作硬约束
+  -> 稳定实体 ID 排序
+```
+
+训练和评测只处理 H02 中具有可达函数正例的 281 个查询，按 18 个厂商或上游独立组做外层五折。`label > 0` 是分级正例，`label == 0` 是未标注项；非单函数目标和三板卡诊断不参与模型或配置选择。严格嵌套结果为 P@1 0.651、Recall@5 0.748、MAP 0.681、nDCG@10 0.743。
+
+固定通道消融表明，显著增益来自硬件效果图和结构契约，当前词法式局部切片没有独立显著增益。多视图神经融合和冻结查询-候选联合编码也未超过树模型，因此均保留为负向消融。默认 `operation-structured` 仍运行 q4；只有新确认 SDK 和多随机种子继续支持 v1.7 后，才允许把它接入绑定计划。完整数据流、缓存、参数搜索和复现命令见 `docs/effect-slice-multiview-ranking-v0.3.md`。
+
+## v1.8 跨操作结构纠错离线分支
+
+v1.8 在 v1.7 数据集之后增加一个纯离线、无标签的结构纠错层。它按稳定实体 ID 聚合同一 SDK 中19个操作的效果证据，计算目标动作相对竞争动作的效果差，并可选统计动作无关 API 家族的一致性。该层不改变 IR schema、Resolver 输出、闭包或后端输入。
+
+严格嵌套没有证明该分支稳定优于 v1.7，因此默认数据流仍停在 v1.7 候选排序，运行时仍为 q4。`effect-contrast`、多信号对比、家族一致性和双专家融合均保留为可复现研究分支，不进入六套固件的默认生成路径。

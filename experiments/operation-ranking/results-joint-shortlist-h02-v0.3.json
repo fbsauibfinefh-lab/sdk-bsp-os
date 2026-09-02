@@ -1,0 +1,74 @@
+{
+  "external_diagnostic": [
+    {
+      "group_positive_coverage": 1.0,
+      "groups": 50,
+      "groups_with_positive": 50,
+      "mean_shortlist_size": 18.24,
+      "per_channel": 8,
+      "positive_symbol_recall": 0.988889,
+      "positive_symbols": 90,
+      "selected_positive_symbols": 89,
+      "selected_rows": 912
+    },
+    {
+      "group_positive_coverage": 1.0,
+      "groups": 50,
+      "groups_with_positive": 50,
+      "mean_shortlist_size": 21.9,
+      "per_channel": 10,
+      "positive_symbol_recall": 1.0,
+      "positive_symbols": 90,
+      "selected_positive_symbols": 90,
+      "selected_rows": 1095
+    },
+    {
+      "group_positive_coverage": 1.0,
+      "groups": 50,
+      "groups_with_positive": 50,
+      "mean_shortlist_size": 30.78,
+      "per_channel": 15,
+      "positive_symbol_recall": 1.0,
+      "positive_symbols": 90,
+      "selected_positive_symbols": 90,
+      "selected_rows": 1539
+    }
+  ],
+  "schema_version": "0.3-shortlist",
+  "selection": "union of label-free full-code zero-shot, q4 structured, and hardware graph rankings",
+  "training": [
+    {
+      "group_positive_coverage": 0.932384,
+      "groups": 281,
+      "groups_with_positive": 262,
+      "mean_shortlist_size": 18.338078,
+      "per_channel": 8,
+      "positive_symbol_recall": 0.786062,
+      "positive_symbols": 617,
+      "selected_positive_symbols": 485,
+      "selected_rows": 5153
+    },
+    {
+      "group_positive_coverage": 0.964413,
+      "groups": 281,
+      "groups_with_positive": 271,
+      "mean_shortlist_size": 22.338078,
+      "per_channel": 10,
+      "positive_symbol_recall": 0.841167,
+      "positive_symbols": 617,
+      "selected_positive_symbols": 519,
+      "selected_rows": 6277
+    },
+    {
+      "group_positive_coverage": 0.975089,
+      "groups": 281,
+      "groups_with_positive": 274,
+      "mean_shortlist_size": 31.672598,
+      "per_channel": 15,
+      "positive_symbol_recall": 0.915721,
+      "positive_symbols": 617,
+      "selected_positive_symbols": 565,
+      "selected_rows": 8900
+    }
+  ]
+}

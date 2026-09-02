@@ -28,6 +28,7 @@
     "sdk_profile": "k210",
     "rtthread_root": "third_party/rt-thread",
     "output": "workspace/generated/k210-rtthread",
+    "disabled_rtthread_features": ["RT_USING_SMP"],
     "devices": {
       "uart": [
         {"name": "bspuart1", "channel": 0, "baud_rate": 115200},
@@ -37,6 +38,14 @@
       "hwtimer": [
         {"name": "bsptim0", "device": 0, "channel": 0, "frequency": 1000000}
       ]
+    },
+    "validation": {
+      "binding_validation": true,
+      "hwtimer": "bsptim0",
+      "gpio_fpioa_io": 35,
+      "gpio_binding_pin": 31,
+      "gpio_input_fpioa_io": 16,
+      "gpio_input_binding_pin": 30
     }
   },
   "build": {

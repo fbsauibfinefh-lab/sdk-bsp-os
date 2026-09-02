@@ -1,0 +1,6795 @@
+{
+  "errors": [
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "ti-mspm0-driverlib::clock.enable",
+      "independence_group": "ti",
+      "operation_id": "clock.enable",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "driverlib/m0p/sysctl/dl_sysctl_mspm0g352x.h",
+        "score": 0.177643,
+        "symbol": "DL_SYSCTL_enableExternalClock"
+      },
+      "sdk_id": "ti-mspm0-driverlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.177643,
+          "symbol": "DL_SYSCTL_enableExternalClock"
+        },
+        {
+          "label": 0,
+          "score": -0.254503,
+          "symbol": "DL_SYSCTL_enableInterrupt"
+        },
+        {
+          "label": 3,
+          "score": -0.391072,
+          "symbol": "DL_SYSCTL_enableSYSPLL"
+        },
+        {
+          "label": 0,
+          "score": -0.502084,
+          "symbol": "DL_SYSCTL_enableSYSOSCFCL"
+        },
+        {
+          "label": 3,
+          "score": -0.649443,
+          "symbol": "DL_SYSCTL_enableMFPCLK"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "driverlib/m0p/sysctl/dl_sysctl_mspm0l211x_l112x.h",
+          "grade": 3,
+          "rank": 6,
+          "symbol": "DL_SYSCTL_enableMFCLK"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "driverlib/m0p/sysctl/dl_sysctl_mspm0g352x.h",
+          "grade": 3,
+          "rank": 5,
+          "symbol": "DL_SYSCTL_enableMFPCLK"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "driverlib/m0p/sysctl/dl_sysctl_mspm0gx218_gx207.h",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "DL_SYSCTL_enableSYSPLL"
+        }
+      ]
+    },
+    {
+      "cause": "abstraction-level-mismatch",
+      "explanation": "直接效果层与 H02 指定的可迁移 API 层级不一致",
+      "group_id": "ti-mspm0-driverlib::uart.write",
+      "independence_group": "ti",
+      "operation_id": "uart.write",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "UART_write"
+        ],
+        "file": "drivers/UART.c",
+        "score": 2.825074,
+        "symbol": "UART_write"
+      },
+      "sdk_id": "ti-mspm0-driverlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.825074,
+          "symbol": "UART_write"
+        },
+        {
+          "label": 0,
+          "score": 2.187154,
+          "symbol": "UART_writeCallback"
+        },
+        {
+          "label": 0,
+          "score": 1.575168,
+          "symbol": "UART_writeBuffered"
+        },
+        {
+          "label": 0,
+          "score": 1.394368,
+          "symbol": "UART_writeTimeout"
+        },
+        {
+          "label": 0,
+          "score": 1.16965,
+          "symbol": "UART_sendCommand"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "DL_UART_transmitDataBlocking",
+            "DL_UART_transmitData"
+          ],
+          "file": "driverlib/dl_unicommuart.c",
+          "grade": 3,
+          "rank": 13,
+          "symbol": "DL_UART_transmitDataBlocking"
+        },
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "DL_UART_fillTXFIFO",
+            "DL_UART_transmitData"
+          ],
+          "file": "driverlib/dl_unicommuart.c",
+          "grade": 2,
+          "rank": 10,
+          "symbol": "DL_UART_fillTXFIFO"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "DL_UART_transmitData"
+          ],
+          "file": "driverlib/dl_uart.h",
+          "grade": 2,
+          "rank": 11,
+          "symbol": "DL_UART_transmitData"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "ti-mspm0-driverlib::uart.read",
+      "independence_group": "ti",
+      "operation_id": "uart.read",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "UART_read"
+        ],
+        "file": "drivers/UART.c",
+        "score": 2.400273,
+        "symbol": "UART_read"
+      },
+      "sdk_id": "ti-mspm0-driverlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.400273,
+          "symbol": "UART_read"
+        },
+        {
+          "label": 0,
+          "score": 1.732107,
+          "symbol": "UART_readTimeout"
+        },
+        {
+          "label": 0,
+          "score": 1.366235,
+          "symbol": "UART_readCancel"
+        },
+        {
+          "label": 0,
+          "score": 1.200479,
+          "symbol": "UART_readCallback"
+        },
+        {
+          "label": 0,
+          "score": 1.158074,
+          "symbol": "UART_readBuffered"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "DL_UART_receiveDataBlocking"
+          ],
+          "file": "driverlib/dl_uart.c",
+          "grade": 3,
+          "rank": 14,
+          "symbol": "DL_UART_receiveDataBlocking"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "DL_UART_drainRXFIFO"
+          ],
+          "file": "driverlib/dl_unicommuart.c",
+          "grade": 2,
+          "rank": 9,
+          "symbol": "DL_UART_drainRXFIFO"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "DL_UART_receiveData"
+          ],
+          "file": "driverlib/dl_unicommuart.h",
+          "grade": 2,
+          "rank": 6,
+          "symbol": "DL_UART_receiveData"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "ti-mspm0-driverlib::gpio.configure",
+      "independence_group": "ti",
+      "operation_id": "gpio.configure",
+      "prediction": {
+        "anchor_depth": 2,
+        "effect_path": [
+          "GPIO_init",
+          "GPIO_setConfig",
+          "GPIO_setConfigAndMux"
+        ],
+        "file": "drivers/gpio/GPIOMSPM0.c",
+        "score": 2.019441,
+        "symbol": "GPIO_init"
+      },
+      "sdk_id": "ti-mspm0-driverlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.019441,
+          "symbol": "GPIO_init"
+        },
+        {
+          "label": 0,
+          "score": 0.637548,
+          "symbol": "HAL_configurePin"
+        },
+        {
+          "label": 0,
+          "score": -0.742987,
+          "symbol": "DL_GPIO_initDigitalInputFeatures"
+        },
+        {
+          "label": 0,
+          "score": -0.82683,
+          "symbol": "HAL_configurePWMPin"
+        },
+        {
+          "label": 3,
+          "score": -0.999524,
+          "symbol": "DL_GPIO_initDigitalOutput"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "DL_GPIO_initDigitalInput"
+          ],
+          "file": "driverlib/dl_gpio.h",
+          "grade": 3,
+          "rank": 7,
+          "symbol": "DL_GPIO_initDigitalInput"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "DL_GPIO_initDigitalOutput"
+          ],
+          "file": "driverlib/dl_gpio.h",
+          "grade": 3,
+          "rank": 5,
+          "symbol": "DL_GPIO_initDigitalOutput"
+        }
+      ]
+    },
+    {
+      "cause": "effect-strength-confusion",
+      "explanation": "错误候选的寄存器效果强度压过了接口契约",
+      "group_id": "ti-mspm0-driverlib::gpio.write",
+      "independence_group": "ti",
+      "operation_id": "gpio.write",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "GPIO_write"
+        ],
+        "file": "drivers/gpio/GPIOMSPM0.c",
+        "score": 2.496775,
+        "symbol": "GPIO_write"
+      },
+      "sdk_id": "ti-mspm0-driverlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.496775,
+          "symbol": "GPIO_write"
+        },
+        {
+          "label": 0,
+          "score": 1.345738,
+          "symbol": "GPIO_setConfig"
+        },
+        {
+          "label": 0,
+          "score": 0.58944,
+          "symbol": "HAL_writeGPIOPin"
+        },
+        {
+          "label": 2,
+          "score": 0.566705,
+          "symbol": "DL_GPIO_togglePins"
+        },
+        {
+          "label": 3,
+          "score": 0.340206,
+          "symbol": "DL_GPIO_setPins"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "DL_GPIO_clearPins"
+          ],
+          "file": "driverlib/dl_gpio.h",
+          "grade": 3,
+          "rank": 10,
+          "symbol": "DL_GPIO_clearPins"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "DL_GPIO_setPins"
+          ],
+          "file": "driverlib/dl_gpio.h",
+          "grade": 3,
+          "rank": 5,
+          "symbol": "DL_GPIO_setPins"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "DL_GPIO_togglePins"
+          ],
+          "file": "driverlib/dl_gpio.h",
+          "grade": 2,
+          "rank": 4,
+          "symbol": "DL_GPIO_togglePins"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "ti-mspm0-driverlib::gpio.read",
+      "independence_group": "ti",
+      "operation_id": "gpio.read",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "GPIO_read"
+        ],
+        "file": "drivers/gpio/GPIOMSPM0.c",
+        "score": 2.118209,
+        "symbol": "GPIO_read"
+      },
+      "sdk_id": "ti-mspm0-driverlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.118209,
+          "symbol": "GPIO_read"
+        },
+        {
+          "label": 3,
+          "score": 1.683112,
+          "symbol": "DL_GPIO_readPins"
+        },
+        {
+          "label": 0,
+          "score": 0.469785,
+          "symbol": "HAL_readGPIOPin"
+        },
+        {
+          "label": 0,
+          "score": -0.216778,
+          "symbol": "GPIO_resetConfig"
+        },
+        {
+          "label": 0,
+          "score": -0.22439,
+          "symbol": "HAL_readGPIOVal"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "driverlib/dl_gpio.h",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "DL_GPIO_readPins"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "ti-mspm0-driverlib::timer.set_interval",
+      "independence_group": "ti",
+      "operation_id": "timer.set_interval",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "DL_Timer_initCompareMode"
+        ],
+        "file": "driverlib/dl_timer.c",
+        "score": -0.046973,
+        "symbol": "DL_Timer_initCompareMode"
+      },
+      "sdk_id": "ti-mspm0-driverlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.046973,
+          "symbol": "DL_Timer_initCompareMode"
+        },
+        {
+          "label": 0,
+          "score": -0.113901,
+          "symbol": "DL_Timer_setCaptureCompareAction"
+        },
+        {
+          "label": 0,
+          "score": -0.344901,
+          "symbol": "DL_Timer_initCompareTriggerMode"
+        },
+        {
+          "label": 0,
+          "score": -0.627035,
+          "symbol": "DL_Timer_setCaptureCompareValue"
+        },
+        {
+          "label": 0,
+          "score": -0.821323,
+          "symbol": "DL_Timer_setCaptureCompareCtl"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "driverlib/dl_timerb.h",
+          "grade": 3,
+          "rank": 10,
+          "symbol": "DL_TimerB_setLoadValue"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "driverlib/dl_timer.h",
+          "grade": 3,
+          "rank": 8,
+          "symbol": "DL_Timer_setLoadValue"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "ti-simplelink-f2::clock.enable",
+      "independence_group": "ti",
+      "operation_id": "clock.enable",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "enableExternalClock"
+        ],
+        "file": "ble5stack/hal/src/target/_common/system_init.c",
+        "score": -0.145425,
+        "symbol": "enableExternalClock"
+      },
+      "sdk_id": "ti-simplelink-f2",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.145425,
+          "symbol": "enableExternalClock"
+        },
+        {
+          "label": 2,
+          "score": -0.273606,
+          "symbol": "Power_setDependency"
+        },
+        {
+          "label": 0,
+          "score": -0.585231,
+          "symbol": "enableClocks"
+        },
+        {
+          "label": 0,
+          "score": -0.932602,
+          "symbol": "PowerCC26X2_enableTCXOQual"
+        },
+        {
+          "label": 0,
+          "score": -0.963871,
+          "symbol": "PowerCC26X2_enableHposcRtcCompensation"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "drivers/power/PowerCC26X4_stubs.c",
+          "grade": 2,
+          "rank": 2,
+          "symbol": "Power_setDependency"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "ti-simplelink-f2::clock.disable",
+      "independence_group": "ti",
+      "operation_id": "clock.disable",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "disableLFClockQualifiers"
+        ],
+        "file": "drivers/power/PowerCC26X2.c",
+        "score": 0.045158,
+        "symbol": "disableLFClockQualifiers"
+      },
+      "sdk_id": "ti-simplelink-f2",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.045158,
+          "symbol": "disableLFClockQualifiers"
+        },
+        {
+          "label": 0,
+          "score": -0.039533,
+          "symbol": "PRCMAudioClockDisable"
+        },
+        {
+          "label": 0,
+          "score": -0.424916,
+          "symbol": "SysCtrlClockLossResetDisable"
+        },
+        {
+          "label": 0,
+          "score": -0.932336,
+          "symbol": "PowerCC26X2_disableTCXOQual"
+        },
+        {
+          "label": 0,
+          "score": -0.950479,
+          "symbol": "PowerCC26X2_oscDisableQualifiers"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "Power_releaseDependency"
+          ],
+          "file": "drivers/power/PowerCC26X2.c",
+          "grade": 2,
+          "rank": 13,
+          "symbol": "Power_releaseDependency"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "ti-simplelink-f2::interrupt.enable",
+      "independence_group": "ti",
+      "operation_id": "interrupt.enable",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "__NVIC_EnableIRQ"
+        ],
+        "file": "devices/cc13x4_cc26x4/cmsis/cc26xx_thor1m_1_0/core/core_cm33.h",
+        "score": 0.902197,
+        "symbol": "__NVIC_EnableIRQ"
+      },
+      "sdk_id": "ti-simplelink-f2",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.902197,
+          "symbol": "__NVIC_EnableIRQ"
+        },
+        {
+          "label": 0,
+          "score": 0.28916,
+          "symbol": "enableInterrupt"
+        },
+        {
+          "label": 0,
+          "score": -0.445266,
+          "symbol": "__NVIC_GetEnableIRQ"
+        },
+        {
+          "label": 3,
+          "score": -0.596508,
+          "symbol": "TZ_NVIC_EnableIRQ_NS"
+        },
+        {
+          "label": 0,
+          "score": -1.147122,
+          "symbol": "TZ_NVIC_GetEnableIRQ_NS"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "TZ_NVIC_EnableIRQ_NS"
+          ],
+          "file": "devices/cc13x4_cc26x4/cmsis/cc26xx_thor1m_1_0/core/core_cm33.h",
+          "grade": 3,
+          "rank": 4,
+          "symbol": "TZ_NVIC_EnableIRQ_NS"
+        }
+      ]
+    },
+    {
+      "cause": "effect-strength-confusion",
+      "explanation": "错误候选的寄存器效果强度压过了接口契约",
+      "group_id": "ti-simplelink-f2::interrupt.disable",
+      "independence_group": "ti",
+      "operation_id": "interrupt.disable",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "IntDisable"
+        ],
+        "file": "devices/cc13x4_cc26x4/driverlib/interrupt.c",
+        "score": 1.276489,
+        "symbol": "IntDisable"
+      },
+      "sdk_id": "ti-simplelink-f2",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.276489,
+          "symbol": "IntDisable"
+        },
+        {
+          "label": 0,
+          "score": 1.276266,
+          "symbol": "__NVIC_DisableIRQ"
+        },
+        {
+          "label": 0,
+          "score": 0.631395,
+          "symbol": "disableInterrupt"
+        },
+        {
+          "label": 3,
+          "score": -0.367594,
+          "symbol": "TZ_NVIC_DisableIRQ_NS"
+        },
+        {
+          "label": 0,
+          "score": -0.968707,
+          "symbol": "MB_DisableInts"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "TZ_NVIC_DisableIRQ_NS"
+          ],
+          "file": "devices/cc13x4_cc26x4/cmsis/cc26xx_thor1m_1_0/core/core_cm33.h",
+          "grade": 3,
+          "rank": 4,
+          "symbol": "TZ_NVIC_DisableIRQ_NS"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "ti-simplelink-f2::gpio.configure",
+      "independence_group": "ti",
+      "operation_id": "gpio.configure",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "GPIO_init"
+        ],
+        "file": "drivers/gpio/GPIOCC26X4.c",
+        "score": 3.050405,
+        "symbol": "GPIO_init"
+      },
+      "sdk_id": "ti-simplelink-f2",
+      "top5": [
+        {
+          "label": 0,
+          "score": 3.050405,
+          "symbol": "GPIO_init"
+        },
+        {
+          "label": 0,
+          "score": -0.451619,
+          "symbol": "sid_pal_gpio_pull_mode"
+        },
+        {
+          "label": 0,
+          "score": -0.583153,
+          "symbol": "sid_pal_gpio_output_mode"
+        },
+        {
+          "label": 0,
+          "score": -0.583153,
+          "symbol": "sid_pal_gpio_input_mode"
+        },
+        {
+          "label": 3,
+          "score": -1.205719,
+          "symbol": "GPIO_setConfig"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "GPIO_setConfig",
+            "GPIO_setConfigAndMux"
+          ],
+          "file": "drivers/gpio/GPIOCC26XX.c",
+          "grade": 3,
+          "rank": 5,
+          "symbol": "GPIO_setConfig"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "GPIO_setConfigAndMux"
+          ],
+          "file": "drivers/gpio/GPIOCC26XX.c",
+          "grade": 3,
+          "rank": 19,
+          "symbol": "GPIO_setConfigAndMux"
+        }
+      ]
+    },
+    {
+      "cause": "effect-strength-confusion",
+      "explanation": "错误候选的寄存器效果强度压过了接口契约",
+      "group_id": "ti-simplelink-f2::timer.initialize",
+      "independence_group": "ti",
+      "operation_id": "timer.initialize",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "TimerConfigure"
+        ],
+        "file": "devices/cc13x2_cc26x2/driverlib/timer.c",
+        "score": 2.479125,
+        "symbol": "TimerConfigure"
+      },
+      "sdk_id": "ti-simplelink-f2",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.479125,
+          "symbol": "TimerConfigure"
+        },
+        {
+          "label": 0,
+          "score": 1.668123,
+          "symbol": "Timer_init"
+        },
+        {
+          "label": 0,
+          "score": 1.498308,
+          "symbol": "osal_CbTimerInit"
+        },
+        {
+          "label": 0,
+          "score": 1.302849,
+          "symbol": "sid_pal_timer_init"
+        },
+        {
+          "label": 0,
+          "score": 1.241426,
+          "symbol": "osalTimerInit"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "GPTimerCC26XX_open"
+          ],
+          "file": "drivers/timer/GPTimerCC26XX.c",
+          "grade": 3,
+          "rank": 10,
+          "symbol": "GPTimerCC26XX_open"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "ti-simplelink-f2::timer.start",
+      "independence_group": "ti",
+      "operation_id": "timer.start",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "ti_wisunfan/wisunfan_mac/common/util/util_timer.c",
+        "score": 2.66346,
+        "symbol": "UtilTimer_start"
+      },
+      "sdk_id": "ti-simplelink-f2",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.66346,
+          "symbol": "UtilTimer_start"
+        },
+        {
+          "label": 0,
+          "score": 2.347242,
+          "symbol": "Timer_start"
+        },
+        {
+          "label": 0,
+          "score": 1.941048,
+          "symbol": "TimerEnable"
+        },
+        {
+          "label": 0,
+          "score": 1.611425,
+          "symbol": "port_timerStart"
+        },
+        {
+          "label": 0,
+          "score": 1.265323,
+          "symbol": "TimerSupport_timerEnable"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "GPTimerCC26XX_start",
+            "TimerEnable"
+          ],
+          "file": "drivers/timer/GPTimerCC26XX.c",
+          "grade": 3,
+          "rank": 13,
+          "symbol": "GPTimerCC26XX_start"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "ti-simplelink-f2::timer.stop",
+      "independence_group": "ti",
+      "operation_id": "timer.stop",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "ti154stack/common/util/util_timer.c",
+        "score": 2.628703,
+        "symbol": "UtilTimer_stop"
+      },
+      "sdk_id": "ti-simplelink-f2",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.628703,
+          "symbol": "UtilTimer_stop"
+        },
+        {
+          "label": 0,
+          "score": 2.382588,
+          "symbol": "Timer_stop"
+        },
+        {
+          "label": 0,
+          "score": 1.88187,
+          "symbol": "TimerDisable"
+        },
+        {
+          "label": 0,
+          "score": 1.713919,
+          "symbol": "port_timerStop"
+        },
+        {
+          "label": 0,
+          "score": 1.282347,
+          "symbol": "TimerSupport_timerDisable"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "GPTimerCC26XX_stop",
+            "GPTimerCC26XXThreadsafeConstraintClr"
+          ],
+          "file": "drivers/timer/GPTimerCC26XX.c",
+          "grade": 3,
+          "rank": 11,
+          "symbol": "GPTimerCC26XX_stop"
+        }
+      ]
+    },
+    {
+      "cause": "abstraction-level-mismatch",
+      "explanation": "直接效果层与 H02 指定的可迁移 API 层级不一致",
+      "group_id": "ti-simplelink-f2::timer.set_interval",
+      "independence_group": "ti",
+      "operation_id": "timer.set_interval",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "Timer_setPeriod"
+        ],
+        "file": "drivers/Timer.c",
+        "score": 2.173222,
+        "symbol": "Timer_setPeriod"
+      },
+      "sdk_id": "ti-simplelink-f2",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.173222,
+          "symbol": "Timer_setPeriod"
+        },
+        {
+          "label": 0,
+          "score": 1.270769,
+          "symbol": "TimerIntervalLoadMode"
+        },
+        {
+          "label": 0,
+          "score": -0.150676,
+          "symbol": "TimerMatchUpdateMode"
+        },
+        {
+          "label": 0,
+          "score": -0.334251,
+          "symbol": "PWMTimerCC26XX_setPeriod"
+        },
+        {
+          "label": 0,
+          "score": -0.555876,
+          "symbol": "PWMTimerCC26XX_setDutyAndPeriod"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "GPTimerCC26XX_setLoadValue",
+            "GPTimerCC26XXSetLoadMatch"
+          ],
+          "file": "drivers/timer/GPTimerCC26XX.c",
+          "grade": 3,
+          "rank": 6,
+          "symbol": "GPTimerCC26XX_setLoadValue"
+        },
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "GPTimerCC26XX_setMatchValue",
+            "GPTimerCC26XXSetLoadMatch"
+          ],
+          "file": "drivers/timer/GPTimerCC26XX.c",
+          "grade": 3,
+          "rank": 8,
+          "symbol": "GPTimerCC26XX_setMatchValue"
+        }
+      ]
+    },
+    {
+      "cause": "composite-entry-overranked",
+      "explanation": "复合初始化或多能力入口的硬件效果过强",
+      "group_id": "arm-mbed-hal::clock.initialize",
+      "independence_group": "arm-mbed",
+      "operation_id": "clock.initialize",
+      "prediction": {
+        "anchor_depth": 2,
+        "effect_path": [
+          "CLOCK_InitSysPll",
+          "while",
+          "scard_fifo_write"
+        ],
+        "file": "targets/TARGET_NXP/TARGET_MCUXpresso_MCUS/TARGET_MIMXRT1050/drivers/fsl_clock.c",
+        "score": 1.485899,
+        "symbol": "CLOCK_InitSysPll"
+      },
+      "sdk_id": "arm-mbed-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.485899,
+          "symbol": "CLOCK_InitSysPll"
+        },
+        {
+          "label": 0,
+          "score": 1.195802,
+          "symbol": "CLOCK_InitArmPll"
+        },
+        {
+          "label": 0,
+          "score": 1.149681,
+          "symbol": "CLOCK_InitAudioPll"
+        },
+        {
+          "label": 0,
+          "score": 1.115072,
+          "symbol": "CLOCK_InitVideoPll"
+        },
+        {
+          "label": 0,
+          "score": 0.680044,
+          "symbol": "CLOCK_InitOsc0"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "SystemInit"
+          ],
+          "file": "targets/TARGET_Cypress/TARGET_PSOC6/TARGET_CYSBSYSKIT_01/COMPONENT_CM4/system_psoc6_cm4.c",
+          "grade": 2,
+          "rank": 13,
+          "symbol": "SystemInit"
+        },
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "mbed_sdk_init",
+            "BOARD_BootClockFROHF48M"
+          ],
+          "file": "targets/TARGET_NXP/TARGET_MCUXpresso_MCUS/TARGET_LPC54114/TARGET_LPCXpresso/mbed_overrides.c",
+          "grade": 2,
+          "rank": 14,
+          "symbol": "mbed_sdk_init"
+        }
+      ]
+    },
+    {
+      "cause": "internal-role-overranked",
+      "explanation": "内部 handler/callback/dispatch 角色被排到公共接口之前",
+      "group_id": "arm-mbed-hal::interrupt.register",
+      "independence_group": "arm-mbed",
+      "operation_id": "interrupt.register",
+      "prediction": {
+        "anchor_depth": 1,
+        "effect_path": [
+          "InterruptHandlerRegister",
+          "IRQ_SetHandler"
+        ],
+        "file": "targets/TARGET_RENESAS/TARGET_RZ_A1XX/TARGET_GR_LYCHEE/device/system_RZ_A1LU.c",
+        "score": 2.567475,
+        "symbol": "InterruptHandlerRegister"
+      },
+      "sdk_id": "arm-mbed-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.567475,
+          "symbol": "InterruptHandlerRegister"
+        },
+        {
+          "label": 3,
+          "score": 1.629116,
+          "symbol": "NVIC_SetVector"
+        },
+        {
+          "label": 0,
+          "score": -0.183351,
+          "symbol": "whd_bus_irq_register"
+        },
+        {
+          "label": 0,
+          "score": -0.321986,
+          "symbol": "cyhal_usb_dev_register_irq_callback"
+        },
+        {
+          "label": 0,
+          "score": -0.362845,
+          "symbol": "whd_bus_spi_irq_register"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 2,
+          "effect_path": [
+            "NVIC_SetVector",
+            "InterruptHandlerRegister",
+            "IRQ_SetHandler"
+          ],
+          "file": "targets/TARGET_RENESAS/TARGET_RZ_A1XX/TARGET_GR_LYCHEE/device/cmsis_nvic.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "NVIC_SetVector"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "telink-tlsr9-hal::gpio.write",
+      "independence_group": "telink",
+      "operation_id": "gpio.write",
+      "prediction": {
+        "anchor_depth": 1,
+        "effect_path": [
+          "gpio_set_output",
+          "gpio_output_dis"
+        ],
+        "file": "drivers/B91/gpio.h",
+        "score": 1.869736,
+        "symbol": "gpio_set_output"
+      },
+      "sdk_id": "telink-tlsr9-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.869736,
+          "symbol": "gpio_set_output"
+        },
+        {
+          "label": 0,
+          "score": 1.603039,
+          "symbol": "gpio_set_input"
+        },
+        {
+          "label": 2,
+          "score": 1.449991,
+          "symbol": "gpio_toggle"
+        },
+        {
+          "label": 3,
+          "score": 1.06524,
+          "symbol": "gpio_set_level"
+        },
+        {
+          "label": 2,
+          "score": 0.630576,
+          "symbol": "gpio_set_high_level"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "gpio_set_level",
+            "gpio_set_high_level"
+          ],
+          "file": "drivers/B91/gpio.h",
+          "grade": 3,
+          "rank": 4,
+          "symbol": "gpio_set_level"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gpio_set_high_level"
+          ],
+          "file": "drivers/B91/gpio.h",
+          "grade": 2,
+          "rank": 5,
+          "symbol": "gpio_set_high_level"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gpio_set_low_level"
+          ],
+          "file": "drivers/B91/gpio.h",
+          "grade": 2,
+          "rank": 6,
+          "symbol": "gpio_set_low_level"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gpio_toggle"
+          ],
+          "file": "drivers/B91/gpio.h",
+          "grade": 2,
+          "rank": 3,
+          "symbol": "gpio_toggle"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "telink-tlsr9-hal::gpio.read",
+      "independence_group": "telink",
+      "operation_id": "gpio.read",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [],
+        "file": "drivers/B91/ext_driver/ext_gpio.h",
+        "score": 1.645671,
+        "symbol": "gpio_read_all"
+      },
+      "sdk_id": "telink-tlsr9-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.645671,
+          "symbol": "gpio_read_all"
+        },
+        {
+          "label": 3,
+          "score": 1.599326,
+          "symbol": "gpio_get_level"
+        },
+        {
+          "label": 0,
+          "score": 1.572323,
+          "symbol": "gpio_read_cache"
+        },
+        {
+          "label": 2,
+          "score": -0.108975,
+          "symbol": "gpio_get_level_all"
+        },
+        {
+          "label": 0,
+          "score": -0.48553,
+          "symbol": "gpio_is_input_en"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gpio_get_level"
+          ],
+          "file": "drivers/B91/gpio.h",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "gpio_get_level"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gpio_get_level_all"
+          ],
+          "file": "drivers/B91/gpio.h",
+          "grade": 2,
+          "rank": 4,
+          "symbol": "gpio_get_level_all"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "telink-tlsr9-hal::timer.set_interval",
+      "independence_group": "telink",
+      "operation_id": "timer.set_interval",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "drivers/B91/timer.h",
+        "score": 1.295438,
+        "symbol": "timer_set_cap_tick"
+      },
+      "sdk_id": "telink-tlsr9-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.295438,
+          "symbol": "timer_set_cap_tick"
+        },
+        {
+          "label": 0,
+          "score": 0.630264,
+          "symbol": "timer_set_init_tick"
+        },
+        {
+          "label": 0,
+          "score": 0.110528,
+          "symbol": "stimer_set_tick"
+        },
+        {
+          "label": 0,
+          "score": 0.035137,
+          "symbol": "timer_set_mode"
+        },
+        {
+          "label": 0,
+          "score": -0.473659,
+          "symbol": "timer0_set_tick"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "stimer_set_irq_capture"
+          ],
+          "file": "drivers/B91/stimer.h",
+          "grade": 3,
+          "rank": 9,
+          "symbol": "stimer_set_irq_capture"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "renesas-fsp::clock.initialize",
+      "independence_group": "renesas",
+      "operation_id": "clock.initialize",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "bsp_prv_clock_set"
+        ],
+        "file": "src/bsp/mcu/all/bsp_clocks.c",
+        "score": 1.106375,
+        "symbol": "bsp_prv_clock_set"
+      },
+      "sdk_id": "renesas-fsp",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.106375,
+          "symbol": "bsp_prv_clock_set"
+        },
+        {
+          "label": 0,
+          "score": -0.501618,
+          "symbol": "bsp_prv_rtc_register_clock_set"
+        },
+        {
+          "label": 0,
+          "score": -1.155782,
+          "symbol": "bsp_clock_set_postchange"
+        },
+        {
+          "label": 0,
+          "score": -1.181016,
+          "symbol": "r_bsp_clock_update_callback_set"
+        },
+        {
+          "label": 0,
+          "score": -1.197795,
+          "symbol": "R_CGC_SystemClockSet"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "R_CGC_ClocksCfg"
+          ],
+          "file": "src/r_cgc/r_cgc.c",
+          "grade": 3,
+          "rank": 7,
+          "symbol": "R_CGC_ClocksCfg"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [],
+          "file": "src/r_cgc/r_cgc.c",
+          "grade": 3,
+          "rank": 31,
+          "symbol": "R_CGC_Open"
+        }
+      ]
+    },
+    {
+      "cause": "composite-entry-overranked",
+      "explanation": "复合初始化或多能力入口的硬件效果过强",
+      "group_id": "renesas-fsp::clock.enable",
+      "independence_group": "renesas",
+      "operation_id": "clock.enable",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "R_I3C_Enable"
+        ],
+        "file": "src/r_i3c/r_i3c.c",
+        "score": -1.155536,
+        "symbol": "R_I3C_Enable"
+      },
+      "sdk_id": "renesas-fsp",
+      "top5": [
+        {
+          "label": 0,
+          "score": -1.155536,
+          "symbol": "R_I3C_Enable"
+        },
+        {
+          "label": 0,
+          "score": -1.260876,
+          "symbol": "R_DTC_Enable"
+        },
+        {
+          "label": 3,
+          "score": -1.360011,
+          "symbol": "R_CGC_ClockStart"
+        },
+        {
+          "label": 0,
+          "score": -1.731788,
+          "symbol": "R_TML_Enable"
+        },
+        {
+          "label": 0,
+          "score": -1.962777,
+          "symbol": "R_GPT_Enable"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "R_CGC_ClockStart"
+          ],
+          "file": "src/r_cgc/r_cgc.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "R_CGC_ClockStart"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "renesas-fsp::clock.disable",
+      "independence_group": "renesas",
+      "operation_id": "clock.disable",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "src/r_dtc/r_dtc.c",
+        "score": -1.023098,
+        "symbol": "R_DTC_Disable"
+      },
+      "sdk_id": "renesas-fsp",
+      "top5": [
+        {
+          "label": 0,
+          "score": -1.023098,
+          "symbol": "R_DTC_Disable"
+        },
+        {
+          "label": 3,
+          "score": -1.216526,
+          "symbol": "R_CGC_ClockStop"
+        },
+        {
+          "label": 0,
+          "score": -1.399756,
+          "symbol": "R_DMAC_Disable"
+        },
+        {
+          "label": 0,
+          "score": -1.446866,
+          "symbol": "R_CGC_OscStopDetectDisable"
+        },
+        {
+          "label": 0,
+          "score": -1.53991,
+          "symbol": "R_TML_Disable"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "R_CGC_ClockStop"
+          ],
+          "file": "src/r_cgc/r_cgc.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "R_CGC_ClockStop"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "renesas-fsp::interrupt.initialize",
+      "independence_group": "renesas",
+      "operation_id": "interrupt.initialize",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "d1_initirq_intern"
+        ],
+        "file": "src/r_drw/r_drw_irq.c",
+        "score": 0.832817,
+        "symbol": "d1_initirq_intern"
+      },
+      "sdk_id": "renesas-fsp",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.832817,
+          "symbol": "d1_initirq_intern"
+        },
+        {
+          "label": 0,
+          "score": -0.477917,
+          "symbol": "SystemInit"
+        },
+        {
+          "label": 0,
+          "score": -1.160754,
+          "symbol": "tfm_hal_platform_init"
+        },
+        {
+          "label": 2,
+          "score": -1.218115,
+          "symbol": "R_BSP_IrqCfg"
+        },
+        {
+          "label": 0,
+          "score": -1.681989,
+          "symbol": "rm_rrh46410_irq_open"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "src/bsp/mcu/all/bsp_irq.h",
+          "grade": 2,
+          "rank": 4,
+          "symbol": "R_BSP_IrqCfg"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "renesas-fsp::interrupt.enable",
+      "independence_group": "renesas",
+      "operation_id": "interrupt.enable",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "nvic_interrupt_enable"
+        ],
+        "file": "src/rm_tfm_port/ra/target_cfg.c",
+        "score": 1.878038,
+        "symbol": "nvic_interrupt_enable"
+      },
+      "sdk_id": "renesas-fsp",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.878038,
+          "symbol": "nvic_interrupt_enable"
+        },
+        {
+          "label": 3,
+          "score": 1.421362,
+          "symbol": "R_BSP_IrqEnable"
+        },
+        {
+          "label": 3,
+          "score": 0.79121,
+          "symbol": "R_BSP_IrqCfgEnable"
+        },
+        {
+          "label": 0,
+          "score": 0.65105,
+          "symbol": "R_BSP_IrqEnableNoClear"
+        },
+        {
+          "label": 0,
+          "score": -0.427424,
+          "symbol": "ptxPLAT_EnableInterrupts"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "R_BSP_IrqCfgEnable"
+          ],
+          "file": "src/bsp/mcu/all/bsp_irq.h",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "R_BSP_IrqCfgEnable"
+        },
+        {
+          "anchor_depth": 2,
+          "effect_path": [
+            "R_BSP_IrqEnable",
+            "R_BSP_IrqClearPending",
+            "R_BSP_IrqStatusClear"
+          ],
+          "file": "src/bsp/mcu/all/bsp_irq.h",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "R_BSP_IrqEnable"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "renesas-fsp::gpio.read",
+      "independence_group": "renesas",
+      "operation_id": "gpio.read",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "ptxPLAT_GPIO_ReadLevel"
+        ],
+        "file": "src/rm_nfc_reader_ptx/ptxPLAT_GPIO.c",
+        "score": 0.594798,
+        "symbol": "ptxPLAT_GPIO_ReadLevel"
+      },
+      "sdk_id": "renesas-fsp",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.594798,
+          "symbol": "ptxPLAT_GPIO_ReadLevel"
+        },
+        {
+          "label": 0,
+          "score": 0.306269,
+          "symbol": "tfm_platform_gpio_port_read"
+        },
+        {
+          "label": 3,
+          "score": 0.258382,
+          "symbol": "R_IOPORT_PinRead"
+        },
+        {
+          "label": 0,
+          "score": -0.28373,
+          "symbol": "tfm_platform_gpio_pin_read"
+        },
+        {
+          "label": 0,
+          "score": -0.55173,
+          "symbol": "R_IOPORT_PortRead"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "R_IOPORT_PinRead"
+          ],
+          "file": "src/r_ioport/r_ioport.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "R_IOPORT_PinRead"
+        }
+      ]
+    },
+    {
+      "cause": "abstraction-level-mismatch",
+      "explanation": "直接效果层与 H02 指定的可迁移 API 层级不一致",
+      "group_id": "renesas-fsp::gpio.attach_irq",
+      "independence_group": "renesas",
+      "operation_id": "gpio.attach_irq",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "ptxPLAT_GPIO_EnableInterrupt"
+        ],
+        "file": "src/rm_nfc_reader_ptx/ptxPLAT_GPIO.c",
+        "score": 0.195755,
+        "symbol": "ptxPLAT_GPIO_EnableInterrupt"
+      },
+      "sdk_id": "renesas-fsp",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.195755,
+          "symbol": "ptxPLAT_GPIO_EnableInterrupt"
+        },
+        {
+          "label": 0,
+          "score": -0.089784,
+          "symbol": "ptxPLAT_GPIO_DisableInterrupt"
+        },
+        {
+          "label": 0,
+          "score": -0.901648,
+          "symbol": "usb_otg_irq_callback"
+        },
+        {
+          "label": 0,
+          "score": -1.317337,
+          "symbol": "usb2_otg_irq_callback"
+        },
+        {
+          "label": 0,
+          "score": -1.383847,
+          "symbol": "R_BSP_IrqCfgEnable"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 3,
+          "effect_path": [
+            "R_ICU_ExternalIrqCallbackSet",
+            "FSP_ASSERT",
+            "if",
+            "usb_pstd_ctrl_read"
+          ],
+          "file": "src/r_icu/r_icu.c",
+          "grade": 3,
+          "rank": 15,
+          "symbol": "R_ICU_ExternalIrqCallbackSet"
+        },
+        {
+          "anchor_depth": 3,
+          "effect_path": [
+            "R_ICU_ExternalIrqOpen",
+            "FSP_ASSERT",
+            "if",
+            "usb_pstd_ctrl_read"
+          ],
+          "file": "src/r_icu/r_icu.c",
+          "grade": 3,
+          "rank": 7,
+          "symbol": "R_ICU_ExternalIrqOpen"
+        },
+        {
+          "anchor_depth": 3,
+          "effect_path": [
+            "R_ICU_ExternalIrqEnable",
+            "FSP_ASSERT",
+            "if",
+            "usb_pstd_ctrl_read"
+          ],
+          "file": "src/r_icu/r_icu.c",
+          "grade": 1,
+          "rank": 8,
+          "symbol": "R_ICU_ExternalIrqEnable"
+        }
+      ]
+    },
+    {
+      "cause": "abstraction-level-mismatch",
+      "explanation": "直接效果层与 H02 指定的可迁移 API 层级不一致",
+      "group_id": "renesas-fsp::timer.initialize",
+      "independence_group": "renesas",
+      "operation_id": "timer.initialize",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "rm_gptp_sys_baremetal_timer_setup"
+        ],
+        "file": "src/rm_gptp_sys_port/baremetal/rm_gptp_sys_baremetal_timer.c",
+        "score": 0.344198,
+        "symbol": "rm_gptp_sys_baremetal_timer_setup"
+      },
+      "sdk_id": "renesas-fsp",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.344198,
+          "symbol": "rm_gptp_sys_baremetal_timer_setup"
+        },
+        {
+          "label": 0,
+          "score": -0.866978,
+          "symbol": "ble_abs_timer_init"
+        },
+        {
+          "label": 0,
+          "score": -0.886338,
+          "symbol": "ptxPERIPH_APPTIMER_IsrCallback"
+        },
+        {
+          "label": 3,
+          "score": -1.067495,
+          "symbol": "R_GPT_Open"
+        },
+        {
+          "label": 0,
+          "score": -1.138551,
+          "symbol": "sys_timeouts_init"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "R_AGT_Open"
+          ],
+          "file": "src/r_agt/r_agt.c",
+          "grade": 3,
+          "rank": 13,
+          "symbol": "R_AGT_Open"
+        },
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "R_GPT_Open",
+            "gpt_hardware_initialize"
+          ],
+          "file": "src/r_gpt/r_gpt.c",
+          "grade": 3,
+          "rank": 4,
+          "symbol": "R_GPT_Open"
+        }
+      ]
+    },
+    {
+      "cause": "composite-entry-overranked",
+      "explanation": "复合初始化或多能力入口的硬件效果过强",
+      "group_id": "renesas-fsp::timer.start",
+      "independence_group": "renesas",
+      "operation_id": "timer.start",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "ptxPLAT_TIMER_Start"
+        ],
+        "file": "src/rm_nfc_reader_ptx/ptxPLAT_TIMER.c",
+        "score": 2.045162,
+        "symbol": "ptxPLAT_TIMER_Start"
+      },
+      "sdk_id": "renesas-fsp",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.045162,
+          "symbol": "ptxPLAT_TIMER_Start"
+        },
+        {
+          "label": 0,
+          "score": 1.932076,
+          "symbol": "gptp_timer_start"
+        },
+        {
+          "label": 0,
+          "score": 1.537184,
+          "symbol": "ptxPLAT_TimerStart"
+        },
+        {
+          "label": 0,
+          "score": 0.682299,
+          "symbol": "ptxPERIPH_APPTIMER_Start"
+        },
+        {
+          "label": 3,
+          "score": -0.675359,
+          "symbol": "R_GPT_Start"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "R_AGT_Start"
+          ],
+          "file": "src/r_agt/r_agt.c",
+          "grade": 3,
+          "rank": 11,
+          "symbol": "R_AGT_Start"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "R_GPT_Start"
+          ],
+          "file": "src/r_gpt/r_gpt.c",
+          "grade": 3,
+          "rank": 5,
+          "symbol": "R_GPT_Start"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "renesas-fsp::timer.stop",
+      "independence_group": "renesas",
+      "operation_id": "timer.stop",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "gptp_timer_stop"
+        ],
+        "file": "src/rm_gptp_sys_port/baremetal/rm_gptp_sys_baremetal_timer.c",
+        "score": 2.179119,
+        "symbol": "gptp_timer_stop"
+      },
+      "sdk_id": "renesas-fsp",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.179119,
+          "symbol": "gptp_timer_stop"
+        },
+        {
+          "label": 0,
+          "score": 1.749445,
+          "symbol": "ptxPLAT_TIMER_Stop"
+        },
+        {
+          "label": 0,
+          "score": 0.550466,
+          "symbol": "ptxPERIPH_APPTIMER_Stop"
+        },
+        {
+          "label": 0,
+          "score": -0.64928,
+          "symbol": "ble_abs_timer_stop"
+        },
+        {
+          "label": 0,
+          "score": -0.688175,
+          "symbol": "R_TML_Stop"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "R_AGT_Stop"
+          ],
+          "file": "src/r_agt/r_agt.c",
+          "grade": 3,
+          "rank": 9,
+          "symbol": "R_AGT_Stop"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "R_GPT_Stop"
+          ],
+          "file": "src/r_gpt/r_gpt.c",
+          "grade": 3,
+          "rank": 10,
+          "symbol": "R_GPT_Stop"
+        }
+      ]
+    },
+    {
+      "cause": "effect-strength-confusion",
+      "explanation": "错误候选的寄存器效果强度压过了接口契约",
+      "group_id": "renesas-fsp::timer.set_interval",
+      "independence_group": "renesas",
+      "operation_id": "timer.set_interval",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "gptp_timer_change_period"
+        ],
+        "file": "src/rm_gptp_sys_port/baremetal/rm_gptp_sys_baremetal_timer.c",
+        "score": 1.250372,
+        "symbol": "gptp_timer_change_period"
+      },
+      "sdk_id": "renesas-fsp",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.250372,
+          "symbol": "gptp_timer_change_period"
+        },
+        {
+          "label": 0,
+          "score": 0.924358,
+          "symbol": "ptxPLAT_TIMER_Deinit"
+        },
+        {
+          "label": 0,
+          "score": 0.353519,
+          "symbol": "gptp_timer_create"
+        },
+        {
+          "label": 0,
+          "score": 0.248323,
+          "symbol": "rm_gptp_sys_baremetal_timer_setup"
+        },
+        {
+          "label": 0,
+          "score": -0.556728,
+          "symbol": "sys_timeouts_init"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "R_AGT_PeriodSet"
+          ],
+          "file": "src/r_agt/r_agt.c",
+          "grade": 3,
+          "rank": 14,
+          "symbol": "R_AGT_PeriodSet"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "R_GPT_PeriodSet"
+          ],
+          "file": "src/r_gpt/r_gpt.c",
+          "grade": 3,
+          "rank": 20,
+          "symbol": "R_GPT_PeriodSet"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "wch-ch32v307-stdperiph::clock.initialize",
+      "independence_group": "wch",
+      "operation_id": "clock.initialize",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "RCC_APB2PeriphResetCmd"
+        ],
+        "file": "src/ch32v30x_rcc.c",
+        "score": -0.013185,
+        "symbol": "RCC_APB2PeriphResetCmd"
+      },
+      "sdk_id": "wch-ch32v307-stdperiph",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.013185,
+          "symbol": "RCC_APB2PeriphResetCmd"
+        },
+        {
+          "label": 2,
+          "score": -0.120982,
+          "symbol": "RCC_HSEConfig"
+        },
+        {
+          "label": 0,
+          "score": -0.16036,
+          "symbol": "RCC_AHBPeriphResetCmd"
+        },
+        {
+          "label": 0,
+          "score": -0.216346,
+          "symbol": "RCC_BackupResetCmd"
+        },
+        {
+          "label": 3,
+          "score": -0.218738,
+          "symbol": "RCC_SYSCLKConfig"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "RCC_PLLConfig"
+          ],
+          "file": "src/ch32v30x_rcc.c",
+          "grade": 3,
+          "rank": 7,
+          "symbol": "RCC_PLLConfig"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "RCC_SYSCLKConfig"
+          ],
+          "file": "src/ch32v30x_rcc.c",
+          "grade": 3,
+          "rank": 5,
+          "symbol": "RCC_SYSCLKConfig"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "RCC_HSEConfig"
+          ],
+          "file": "src/ch32v30x_rcc.c",
+          "grade": 2,
+          "rank": 2,
+          "symbol": "RCC_HSEConfig"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "wch-ch32v307-stdperiph::clock.enable",
+      "independence_group": "wch",
+      "operation_id": "clock.enable",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "RCC_ClockSecuritySystemCmd"
+        ],
+        "file": "src/ch32v30x_rcc.c",
+        "score": 0.418124,
+        "symbol": "RCC_ClockSecuritySystemCmd"
+      },
+      "sdk_id": "wch-ch32v307-stdperiph",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.418124,
+          "symbol": "RCC_ClockSecuritySystemCmd"
+        },
+        {
+          "label": 3,
+          "score": 0.05133,
+          "symbol": "RCC_AHBPeriphClockCmd"
+        },
+        {
+          "label": 0,
+          "score": 0.04934,
+          "symbol": "RCC_ADCCLKADJcmd"
+        },
+        {
+          "label": 0,
+          "score": -0.023035,
+          "symbol": "RCC_AHBPeriphResetCmd"
+        },
+        {
+          "label": 0,
+          "score": -0.037219,
+          "symbol": "RCC_HSEConfig"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "RCC_AHBPeriphClockCmd"
+          ],
+          "file": "src/ch32v30x_rcc.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "RCC_AHBPeriphClockCmd"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "RCC_APB1PeriphClockCmd"
+          ],
+          "file": "src/ch32v30x_rcc.c",
+          "grade": 3,
+          "rank": 22,
+          "symbol": "RCC_APB1PeriphClockCmd"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "RCC_APB2PeriphClockCmd"
+          ],
+          "file": "src/ch32v30x_rcc.c",
+          "grade": 3,
+          "rank": 16,
+          "symbol": "RCC_APB2PeriphClockCmd"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "wch-ch32v307-stdperiph::clock.disable",
+      "independence_group": "wch",
+      "operation_id": "clock.disable",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "RCC_DeInit"
+        ],
+        "file": "src/ch32v30x_rcc.c",
+        "score": 0.204608,
+        "symbol": "RCC_DeInit"
+      },
+      "sdk_id": "wch-ch32v307-stdperiph",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.204608,
+          "symbol": "RCC_DeInit"
+        },
+        {
+          "label": 0,
+          "score": 0.101888,
+          "symbol": "RCC_AHBPeriphResetCmd"
+        },
+        {
+          "label": 0,
+          "score": -0.016655,
+          "symbol": "RCC_APB1PeriphResetCmd"
+        },
+        {
+          "label": 0,
+          "score": -0.039696,
+          "symbol": "RCC_ClearFlag"
+        },
+        {
+          "label": 0,
+          "score": -0.039797,
+          "symbol": "RCC_APB2PeriphResetCmd"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "RCC_AHBPeriphClockCmd"
+          ],
+          "file": "src/ch32v30x_rcc.c",
+          "grade": 3,
+          "rank": 9,
+          "symbol": "RCC_AHBPeriphClockCmd"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "RCC_APB1PeriphClockCmd"
+          ],
+          "file": "src/ch32v30x_rcc.c",
+          "grade": 3,
+          "rank": 21,
+          "symbol": "RCC_APB1PeriphClockCmd"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "RCC_APB2PeriphClockCmd"
+          ],
+          "file": "src/ch32v30x_rcc.c",
+          "grade": 3,
+          "rank": 20,
+          "symbol": "RCC_APB2PeriphClockCmd"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "wch-ch32v307-stdperiph::timer.stop",
+      "independence_group": "wch",
+      "operation_id": "timer.stop",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "TIM_TimeBaseInit"
+        ],
+        "file": "src/ch32v30x_tim.c",
+        "score": 0.284893,
+        "symbol": "TIM_TimeBaseInit"
+      },
+      "sdk_id": "wch-ch32v307-stdperiph",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.284893,
+          "symbol": "TIM_TimeBaseInit"
+        },
+        {
+          "label": 0,
+          "score": 0.253524,
+          "symbol": "TIM_DeInit"
+        },
+        {
+          "label": 3,
+          "score": -0.246763,
+          "symbol": "TIM_Cmd"
+        },
+        {
+          "label": 0,
+          "score": -0.369126,
+          "symbol": "TIM_OCStructInit"
+        },
+        {
+          "label": 0,
+          "score": -0.415411,
+          "symbol": "TIM_ClearFlag"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "TIM_Cmd"
+          ],
+          "file": "src/ch32v30x_tim.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "TIM_Cmd"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "wch-ch32v307-stdperiph::timer.set_interval",
+      "independence_group": "wch",
+      "operation_id": "timer.set_interval",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "TIM_TimeBaseInit"
+        ],
+        "file": "src/ch32v30x_tim.c",
+        "score": 0.626001,
+        "symbol": "TIM_TimeBaseInit"
+      },
+      "sdk_id": "wch-ch32v307-stdperiph",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.626001,
+          "symbol": "TIM_TimeBaseInit"
+        },
+        {
+          "label": 0,
+          "score": -0.019206,
+          "symbol": "TIM_PWMIConfig"
+        },
+        {
+          "label": 0,
+          "score": -0.026239,
+          "symbol": "TIM_SetCounter"
+        },
+        {
+          "label": 0,
+          "score": -0.113057,
+          "symbol": "TIM_OCStructInit"
+        },
+        {
+          "label": 0,
+          "score": -0.136805,
+          "symbol": "TIM_TimeBaseStructInit"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "src/ch32v30x_tim.c",
+          "grade": 3,
+          "rank": 49,
+          "symbol": "TIM_SetAutoreload"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "src/ch32v30x_tim.c",
+          "grade": 2,
+          "rank": 59,
+          "symbol": "TIM_SetCompare1"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "src/ch32v30x_tim.c",
+          "grade": 2,
+          "rank": 61,
+          "symbol": "TIM_SetCompare2"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "src/ch32v30x_tim.c",
+          "grade": 2,
+          "rank": 60,
+          "symbol": "TIM_SetCompare3"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "src/ch32v30x_tim.c",
+          "grade": 2,
+          "rank": 63,
+          "symbol": "TIM_SetCompare4"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "arduino-renesas-core::interrupt.enable",
+      "independence_group": "renesas",
+      "operation_id": "interrupt.enable",
+      "prediction": {
+        "anchor_depth": 1,
+        "effect_path": [
+          "IRQManager",
+          "IRQManager::addPeripheral"
+        ],
+        "file": "arduino/IRQManager.h",
+        "score": 1.136758,
+        "symbol": "IRQManager"
+      },
+      "sdk_id": "arduino-renesas-core",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.136758,
+          "symbol": "IRQManager"
+        },
+        {
+          "label": 0,
+          "score": 0.595107,
+          "symbol": "detachIrq2Link"
+        },
+        {
+          "label": 0,
+          "score": 0.161871,
+          "symbol": "IRQManager::getInstance"
+        },
+        {
+          "label": 0,
+          "score": 0.056324,
+          "symbol": "IRQManager::addPeripheral"
+        },
+        {
+          "label": 0,
+          "score": -0.170321,
+          "symbol": "IRQManager::addGenericInterrupt"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "interrupts"
+          ],
+          "file": "arduino/Arduino.h",
+          "grade": 2,
+          "rank": 8,
+          "symbol": "interrupts"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "arduino-renesas-core::interrupt.disable",
+      "independence_group": "renesas",
+      "operation_id": "interrupt.disable",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "detachIrq2Link"
+        ],
+        "file": "arduino/Interrupts.cpp",
+        "score": 1.010625,
+        "symbol": "detachIrq2Link"
+      },
+      "sdk_id": "arduino-renesas-core",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.010625,
+          "symbol": "detachIrq2Link"
+        },
+        {
+          "label": 0,
+          "score": 0.794437,
+          "symbol": "IRQManager"
+        },
+        {
+          "label": 0,
+          "score": 0.1192,
+          "symbol": "IRQManager::addGenericInterrupt"
+        },
+        {
+          "label": 0,
+          "score": 0.066,
+          "symbol": "IRQManager::getInstance"
+        },
+        {
+          "label": 0,
+          "score": 0.013485,
+          "symbol": "IRQManager::addPeripheral"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "noInterrupts"
+          ],
+          "file": "arduino/Arduino.h",
+          "grade": 2,
+          "rank": 9,
+          "symbol": "noInterrupts"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "arduino-renesas-core::timer.initialize",
+      "independence_group": "renesas",
+      "operation_id": "timer.initialize",
+      "prediction": {
+        "anchor_depth": 2,
+        "effect_path": [
+          "FspTimer",
+          "FspTimer::begin_pwm",
+          "FspTimer::begin"
+        ],
+        "file": "arduino/FspTimer.h",
+        "score": 0.717171,
+        "symbol": "FspTimer"
+      },
+      "sdk_id": "arduino-renesas-core",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.717171,
+          "symbol": "FspTimer"
+        },
+        {
+          "label": 3,
+          "score": 0.03165,
+          "symbol": "FspTimer::begin"
+        },
+        {
+          "label": 0,
+          "score": -0.104158,
+          "symbol": "FspTimer::open"
+        },
+        {
+          "label": 0,
+          "score": -0.190998,
+          "symbol": "GPTimer"
+        },
+        {
+          "label": 0,
+          "score": -0.408332,
+          "symbol": "FspTimer::FspTimer"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "FspTimer::begin"
+          ],
+          "file": "arduino/FspTimer.cpp",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "FspTimer::begin"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "arduino-renesas-core::timer.set_interval",
+      "independence_group": "renesas",
+      "operation_id": "timer.set_interval",
+      "prediction": {
+        "anchor_depth": 2,
+        "effect_path": [
+          "FspTimer",
+          "FspTimer::begin_pwm",
+          "FspTimer::begin"
+        ],
+        "file": "arduino/FspTimer.h",
+        "score": 0.556286,
+        "symbol": "FspTimer"
+      },
+      "sdk_id": "arduino-renesas-core",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.556286,
+          "symbol": "FspTimer"
+        },
+        {
+          "label": 3,
+          "score": 0.118355,
+          "symbol": "FspTimer::set_period"
+        },
+        {
+          "label": 0,
+          "score": -0.003106,
+          "symbol": "FspTimer::begin"
+        },
+        {
+          "label": 0,
+          "score": -0.185979,
+          "symbol": "FspTimer::set_duty_cycle"
+        },
+        {
+          "label": 0,
+          "score": -0.19397,
+          "symbol": "FspTimer::set_frequency"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "FspTimer::set_period",
+            "if"
+          ],
+          "file": "arduino/FspTimer.cpp",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "FspTimer::set_period"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "silabs-emlib::clock.initialize",
+      "independence_group": "silabs",
+      "operation_id": "clock.initialize",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "TIMER_Init"
+        ],
+        "file": "src/em_timer.c",
+        "score": -0.363903,
+        "symbol": "TIMER_Init"
+      },
+      "sdk_id": "silabs-emlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.363903,
+          "symbol": "TIMER_Init"
+        },
+        {
+          "label": 3,
+          "score": -0.62546,
+          "symbol": "CMU_ClockSelectSet"
+        },
+        {
+          "label": 0,
+          "score": -0.6825,
+          "symbol": "CRYOTIMER_Init"
+        },
+        {
+          "label": 0,
+          "score": -0.72097,
+          "symbol": "CHIP_Init"
+        },
+        {
+          "label": 0,
+          "score": -0.765826,
+          "symbol": "CMU_ClockDivSet"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "CMU_ClockSelectSet"
+          ],
+          "file": "src/em_cmu.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "CMU_ClockSelectSet"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "silabs-emlib::clock.disable",
+      "independence_group": "silabs",
+      "operation_id": "clock.disable",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "CMU_ClockSelectSet"
+        ],
+        "file": "src/em_cmu.c",
+        "score": -0.991738,
+        "symbol": "CMU_ClockSelectSet"
+      },
+      "sdk_id": "silabs-emlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.991738,
+          "symbol": "CMU_ClockSelectSet"
+        },
+        {
+          "label": 0,
+          "score": -1.421161,
+          "symbol": "OPAMP_Disable"
+        },
+        {
+          "label": 0,
+          "score": -1.449446,
+          "symbol": "ACMP_Disable"
+        },
+        {
+          "label": 0,
+          "score": -1.55557,
+          "symbol": "EUSART_Disable"
+        },
+        {
+          "label": 0,
+          "score": -1.678924,
+          "symbol": "EBI_Disable"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "CMU_ClockEnable"
+          ],
+          "file": "src/em_cmu.c",
+          "grade": 3,
+          "rank": 70,
+          "symbol": "CMU_ClockEnable"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "silabs-emlib::uart.write",
+      "independence_group": "silabs",
+      "operation_id": "uart.write",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "USART_Enable"
+        ],
+        "file": "src/em_usart.c",
+        "score": 0.904031,
+        "symbol": "USART_Enable"
+      },
+      "sdk_id": "silabs-emlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.904031,
+          "symbol": "USART_Enable"
+        },
+        {
+          "label": 3,
+          "score": 0.569125,
+          "symbol": "USART_Tx"
+        },
+        {
+          "label": 0,
+          "score": 0.098297,
+          "symbol": "USART_Reset"
+        },
+        {
+          "label": 0,
+          "score": -0.230956,
+          "symbol": "USART_BaudrateCalc"
+        },
+        {
+          "label": 2,
+          "score": -0.493419,
+          "symbol": "USART_TxExt"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "USART_Tx"
+          ],
+          "file": "src/em_usart.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "USART_Tx"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "USART_TxDouble"
+          ],
+          "file": "src/em_usart.c",
+          "grade": 2,
+          "rank": 9,
+          "symbol": "USART_TxDouble"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "USART_TxExt"
+          ],
+          "file": "src/em_usart.c",
+          "grade": 2,
+          "rank": 5,
+          "symbol": "USART_TxExt"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "silabs-emlib::uart.read",
+      "independence_group": "silabs",
+      "operation_id": "uart.read",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "USART_BaudrateCalc"
+        ],
+        "file": "src/em_usart.c",
+        "score": 0.211779,
+        "symbol": "USART_BaudrateCalc"
+      },
+      "sdk_id": "silabs-emlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.211779,
+          "symbol": "USART_BaudrateCalc"
+        },
+        {
+          "label": 0,
+          "score": 0.012009,
+          "symbol": "USART_BaudrateGet"
+        },
+        {
+          "label": 3,
+          "score": -0.117242,
+          "symbol": "USART_Rx"
+        },
+        {
+          "label": 0,
+          "score": -1.180282,
+          "symbol": "USART_Tx"
+        },
+        {
+          "label": 0,
+          "score": -1.354386,
+          "symbol": "USART_RxDoubleExt"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "USART_Rx"
+          ],
+          "file": "src/em_usart.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "USART_Rx"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "inc/em_usart.h",
+          "grade": 2,
+          "rank": 11,
+          "symbol": "USART_RxDataGet"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "USART_RxDouble"
+          ],
+          "file": "src/em_usart.c",
+          "grade": 2,
+          "rank": 7,
+          "symbol": "USART_RxDouble"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "silabs-emlib::gpio.configure",
+      "independence_group": "silabs",
+      "operation_id": "gpio.configure",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "ACMP_GPIOSetup"
+        ],
+        "file": "src/em_acmp.c",
+        "score": 1.192036,
+        "symbol": "ACMP_GPIOSetup"
+      },
+      "sdk_id": "silabs-emlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.192036,
+          "symbol": "ACMP_GPIOSetup"
+        },
+        {
+          "label": 0,
+          "score": -0.070181,
+          "symbol": "GPIO_PinOutToggle"
+        },
+        {
+          "label": 0,
+          "score": -0.464383,
+          "symbol": "CHIP_Init"
+        },
+        {
+          "label": 0,
+          "score": -1.756182,
+          "symbol": "CMU_HFXOCrystalSharingFollowerInit"
+        },
+        {
+          "label": 3,
+          "score": -2.189742,
+          "symbol": "GPIO_PinModeSet"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "GPIO_PinModeSet"
+          ],
+          "file": "src/em_gpio.c",
+          "grade": 3,
+          "rank": 5,
+          "symbol": "GPIO_PinModeSet"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "silabs-emlib::timer.stop",
+      "independence_group": "silabs",
+      "operation_id": "timer.stop",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "TIMER_IntDisable"
+        ],
+        "file": "inc/em_timer.h",
+        "score": 1.133583,
+        "symbol": "TIMER_IntDisable"
+      },
+      "sdk_id": "silabs-emlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.133583,
+          "symbol": "TIMER_IntDisable"
+        },
+        {
+          "label": 0,
+          "score": -0.796302,
+          "symbol": "LETIMER_IntDisable"
+        },
+        {
+          "label": 0,
+          "score": -1.512899,
+          "symbol": "CRYOTIMER_IntDisable"
+        },
+        {
+          "label": 0,
+          "score": -1.75022,
+          "symbol": "RTCC_Stop"
+        },
+        {
+          "label": 0,
+          "score": -1.935361,
+          "symbol": "BURTC_Stop"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "TIMER_Enable"
+          ],
+          "file": "inc/em_timer.h",
+          "grade": 3,
+          "rank": 6,
+          "symbol": "TIMER_Enable"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "silabs-emlib::timer.set_interval",
+      "independence_group": "silabs",
+      "operation_id": "timer.set_interval",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "TIMER_Init"
+        ],
+        "file": "src/em_timer.c",
+        "score": 1.45396,
+        "symbol": "TIMER_Init"
+      },
+      "sdk_id": "silabs-emlib",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.45396,
+          "symbol": "TIMER_Init"
+        },
+        {
+          "label": 0,
+          "score": 1.415762,
+          "symbol": "TIMER_Reset"
+        },
+        {
+          "label": 0,
+          "score": 1.259591,
+          "symbol": "LETIMER_Init"
+        },
+        {
+          "label": 0,
+          "score": 1.156938,
+          "symbol": "CRYOTIMER_Init"
+        },
+        {
+          "label": 0,
+          "score": 1.011651,
+          "symbol": "LETIMER_RepeatSet"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "TIMER_TopSet"
+          ],
+          "file": "inc/em_timer.h",
+          "grade": 3,
+          "rank": 20,
+          "symbol": "TIMER_TopSet"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "nxp-mcuxpresso-sdk-2.16.100::interrupt.enable",
+      "independence_group": "nxp",
+      "operation_id": "interrupt.enable",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "EnableGlobalIRQ"
+        ],
+        "file": "drivers/common/fsl_common_arm.h",
+        "score": 1.633905,
+        "symbol": "EnableGlobalIRQ"
+      },
+      "sdk_id": "nxp-mcuxpresso-sdk-2.16.100",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.633905,
+          "symbol": "EnableGlobalIRQ"
+        },
+        {
+          "label": 3,
+          "score": 1.181638,
+          "symbol": "IRQ_EnableInterrupt"
+        },
+        {
+          "label": 3,
+          "score": 1.097112,
+          "symbol": "IRQ_Enable"
+        },
+        {
+          "label": 3,
+          "score": 1.068813,
+          "symbol": "EnableIRQ"
+        },
+        {
+          "label": 0,
+          "score": 0.785212,
+          "symbol": "IRQSTEER_EnableInterrupt"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "drivers/common/fsl_common_dsp.h",
+          "grade": 3,
+          "rank": 4,
+          "symbol": "EnableIRQ"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "EnableIRQWithPriority"
+          ],
+          "file": "drivers/common/fsl_common_arm.h",
+          "grade": 3,
+          "rank": 8,
+          "symbol": "EnableIRQWithPriority"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "IRQ_Enable"
+          ],
+          "file": "drivers/irq/fsl_irq.h",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "IRQ_Enable"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "IRQ_EnableInterrupt"
+          ],
+          "file": "drivers/irq/fsl_irq.h",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "IRQ_EnableInterrupt"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "nxp-mcuxpresso-sdk-2.16.100::gpio.attach_irq",
+      "independence_group": "nxp",
+      "operation_id": "gpio.attach_irq",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "SEC_GPIO_INT0_IRQ0_DriverIRQHandler",
+          "PINT_PinInterruptClrStatus"
+        ],
+        "file": "drivers/pint/fsl_pint.c",
+        "score": 1.545687,
+        "symbol": "SEC_GPIO_INT0_IRQ0_DriverIRQHandler"
+      },
+      "sdk_id": "nxp-mcuxpresso-sdk-2.16.100",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.545687,
+          "symbol": "SEC_GPIO_INT0_IRQ0_DriverIRQHandler"
+        },
+        {
+          "label": 0,
+          "score": 1.43884,
+          "symbol": "SEC_GPIO_INT0_IRQ1_DriverIRQHandler"
+        },
+        {
+          "label": 0,
+          "score": 1.254596,
+          "symbol": "GPIO_SetPinInterruptConfig"
+        },
+        {
+          "label": 1,
+          "score": 0.766886,
+          "symbol": "GPIO_PinSetInterruptConfig"
+        },
+        {
+          "label": 0,
+          "score": 0.251745,
+          "symbol": "GPIO_SetPinInterruptChannel"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "PINT_PinInterruptConfig"
+          ],
+          "file": "drivers/pint/fsl_pint.c",
+          "grade": 3,
+          "rank": 13,
+          "symbol": "PINT_PinInterruptConfig"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "GPIO_PinSetInterruptConfig"
+          ],
+          "file": "drivers/igpio/fsl_gpio.c",
+          "grade": 1,
+          "rank": 4,
+          "symbol": "GPIO_PinSetInterruptConfig"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "nxp-mcuxpresso-sdk-2.16.100::timer.stop",
+      "independence_group": "nxp",
+      "operation_id": "timer.stop",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "NETC_TimerStopAlarm"
+        ],
+        "file": "drivers/netc/fsl_netc_timer.c",
+        "score": 0.936975,
+        "symbol": "NETC_TimerStopAlarm"
+      },
+      "sdk_id": "nxp-mcuxpresso-sdk-2.16.100",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.936975,
+          "symbol": "NETC_TimerStopAlarm"
+        },
+        {
+          "label": 3,
+          "score": 0.894283,
+          "symbol": "CTIMER_StopTimer"
+        },
+        {
+          "label": 0,
+          "score": 0.811069,
+          "symbol": "sc_timer_stop_wdog"
+        },
+        {
+          "label": 2,
+          "score": 0.626704,
+          "symbol": "LPTMR_StopTimer"
+        },
+        {
+          "label": 0,
+          "score": 0.626665,
+          "symbol": "TimerStop"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "drivers/ctimer/fsl_ctimer.h",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "CTIMER_StopTimer"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "FTM_StopTimer"
+          ],
+          "file": "drivers/ftm/fsl_ftm.h",
+          "grade": 2,
+          "rank": 18,
+          "symbol": "FTM_StopTimer"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "drivers/lptmr/fsl_lptmr.h",
+          "grade": 2,
+          "rank": 4,
+          "symbol": "LPTMR_StopTimer"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [],
+          "file": "drivers/qtmr_2/fsl_qtmr.h",
+          "grade": 2,
+          "rank": 6,
+          "symbol": "QTMR_StopTimer"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "TPM_StopTimer"
+          ],
+          "file": "drivers/tpm/fsl_tpm.h",
+          "grade": 2,
+          "rank": 11,
+          "symbol": "TPM_StopTimer"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "sifli-hal::clock.initialize",
+      "independence_group": "sifli",
+      "operation_id": "clock.initialize",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "HAL_RCC_Reset_and_Halt_LCPU"
+        ],
+        "file": "hal/bf0_hal_rcc.c",
+        "score": -0.455957,
+        "symbol": "HAL_RCC_Reset_and_Halt_LCPU"
+      },
+      "sdk_id": "sifli-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.455957,
+          "symbol": "HAL_RCC_Reset_and_Halt_LCPU"
+        },
+        {
+          "label": 3,
+          "score": -0.780489,
+          "symbol": "HAL_RCC_Init"
+        },
+        {
+          "label": 0,
+          "score": -1.191317,
+          "symbol": "HAL_RCC_ResetModule"
+        },
+        {
+          "label": 0,
+          "score": -1.375696,
+          "symbol": "HAL_RCC_ResetACPU"
+        },
+        {
+          "label": 0,
+          "score": -2.002628,
+          "symbol": "HAL_RCC_HCPU_EnableDLL2"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "HAL_RCC_Init",
+            "HAL_RCC_HCPU_ClockSelect"
+          ],
+          "file": "hal/bf0_hal_rcc.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "HAL_RCC_Init"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "sifli-hal::interrupt.enable",
+      "independence_group": "sifli",
+      "operation_id": "interrupt.enable",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "Include/bf0_hal_math.h",
+        "score": -0.153016,
+        "symbol": "HAL_MATH_EnableInterrupt"
+      },
+      "sdk_id": "sifli-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.153016,
+          "symbol": "HAL_MATH_EnableInterrupt"
+        },
+        {
+          "label": 0,
+          "score": -0.582965,
+          "symbol": "I2C_Enable_IRQ"
+        },
+        {
+          "label": 0,
+          "score": -0.718632,
+          "symbol": "ll_gpio_pb_enable_irq"
+        },
+        {
+          "label": 0,
+          "score": -0.842078,
+          "symbol": "ll_gpio_bank_enable_irq"
+        },
+        {
+          "label": 0,
+          "score": -0.865987,
+          "symbol": "ll_gpio_pa_enable_irq"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "HAL_NVIC_EnableIRQ"
+          ],
+          "file": "hal/bf0_hal_cortex.c",
+          "grade": 3,
+          "rank": 6,
+          "symbol": "HAL_NVIC_EnableIRQ"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "sifli-hal::interrupt.disable",
+      "independence_group": "sifli",
+      "operation_id": "interrupt.disable",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "Include/bf0_hal_math.h",
+        "score": 0.012581,
+        "symbol": "HAL_MATH_DisableInterrupt"
+      },
+      "sdk_id": "sifli-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.012581,
+          "symbol": "HAL_MATH_DisableInterrupt"
+        },
+        {
+          "label": 0,
+          "score": -0.029508,
+          "symbol": "ll_gpio_pb_disable_irq"
+        },
+        {
+          "label": 0,
+          "score": -0.28667,
+          "symbol": "ll_gpio_pa_disable_irq"
+        },
+        {
+          "label": 0,
+          "score": -0.365991,
+          "symbol": "I2C_Disable_IRQ"
+        },
+        {
+          "label": 0,
+          "score": -0.434028,
+          "symbol": "ll_gpio_bank_disable_irq"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "HAL_NVIC_DisableIRQ"
+          ],
+          "file": "hal/bf0_hal_cortex.c",
+          "grade": 3,
+          "rank": 7,
+          "symbol": "HAL_NVIC_DisableIRQ"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "sifli-hal::uart.configure",
+      "independence_group": "sifli",
+      "operation_id": "uart.configure",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "hal/bf0_hal_uart.c",
+        "score": -0.330311,
+        "symbol": "HAL_UART_MspInit"
+      },
+      "sdk_id": "sifli-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.330311,
+          "symbol": "HAL_UART_MspInit"
+        },
+        {
+          "label": 3,
+          "score": -0.6099,
+          "symbol": "HAL_UART_Init"
+        },
+        {
+          "label": 0,
+          "score": -0.77517,
+          "symbol": "UART_InitCallbacksToDefault"
+        },
+        {
+          "label": 0,
+          "score": -1.810079,
+          "symbol": "HAL_UART_RegisterCallback"
+        },
+        {
+          "label": 0,
+          "score": -2.074804,
+          "symbol": "ll_cfg_config_usart1_pinr"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "HAL_UART_Init"
+          ],
+          "file": "hal/bf0_hal_uart.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "HAL_UART_Init"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "sifli-hal::uart.write",
+      "independence_group": "sifli",
+      "operation_id": "uart.write",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "ll_usart_clear_flag_cts"
+        ],
+        "file": "ll/sf32lb52x/ll_usart.h",
+        "score": -1.053595,
+        "symbol": "ll_usart_clear_flag_cts"
+      },
+      "sdk_id": "sifli-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": -1.053595,
+          "symbol": "ll_usart_clear_flag_cts"
+        },
+        {
+          "label": 3,
+          "score": -1.072627,
+          "symbol": "HAL_UART_Transmit"
+        },
+        {
+          "label": 2,
+          "score": -1.295857,
+          "symbol": "HAL_UART_Transmit_IT"
+        },
+        {
+          "label": 2,
+          "score": -1.418249,
+          "symbol": "HAL_UART_Transmit_DMA"
+        },
+        {
+          "label": 0,
+          "score": -1.418946,
+          "symbol": "ll_usart_transmit_data9"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "HAL_UART_Transmit",
+            "UART_WaitOnFlagUntilTimeout"
+          ],
+          "file": "hal/bf0_hal_uart.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "HAL_UART_Transmit"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "HAL_UART_Transmit_DMA"
+          ],
+          "file": "hal/bf0_hal_uart.c",
+          "grade": 2,
+          "rank": 4,
+          "symbol": "HAL_UART_Transmit_DMA"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "HAL_UART_Transmit_IT"
+          ],
+          "file": "hal/bf0_hal_uart.c",
+          "grade": 2,
+          "rank": 3,
+          "symbol": "HAL_UART_Transmit_IT"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "sifli-hal::uart.read",
+      "independence_group": "sifli",
+      "operation_id": "uart.read",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "ll/sf32lb52x/ll_usart.h",
+        "score": -0.636676,
+        "symbol": "ll_usart_receive_data9"
+      },
+      "sdk_id": "sifli-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.636676,
+          "symbol": "ll_usart_receive_data9"
+        },
+        {
+          "label": 0,
+          "score": -0.6563,
+          "symbol": "ll_usart_receive_data8"
+        },
+        {
+          "label": 3,
+          "score": -1.012329,
+          "symbol": "HAL_UART_Receive"
+        },
+        {
+          "label": 0,
+          "score": -1.581474,
+          "symbol": "HAL_UART_GetState"
+        },
+        {
+          "label": 2,
+          "score": -1.958599,
+          "symbol": "HAL_UART_Receive_IT"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "HAL_UART_Receive"
+          ],
+          "file": "hal/bf0_hal_uart.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "HAL_UART_Receive"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "HAL_UART_Receive_DMA"
+          ],
+          "file": "hal/bf0_hal_uart.c",
+          "grade": 2,
+          "rank": 6,
+          "symbol": "HAL_UART_Receive_DMA"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "HAL_UART_Receive_IT"
+          ],
+          "file": "hal/bf0_hal_uart.c",
+          "grade": 2,
+          "rank": 5,
+          "symbol": "HAL_UART_Receive_IT"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "sifli-hal::gpio.configure",
+      "independence_group": "sifli",
+      "operation_id": "gpio.configure",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "ll_gpio_bank_clear_output_mode"
+        ],
+        "file": "ll/sf32lb52x/ll_gpio.h",
+        "score": -0.489392,
+        "symbol": "ll_gpio_bank_clear_output_mode"
+      },
+      "sdk_id": "sifli-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.489392,
+          "symbol": "ll_gpio_bank_clear_output_mode"
+        },
+        {
+          "label": 0,
+          "score": -0.565848,
+          "symbol": "ll_gpio_bank_clear_output_mode_pin"
+        },
+        {
+          "label": 0,
+          "score": -1.040378,
+          "symbol": "ll_pinmux_config_drive"
+        },
+        {
+          "label": 3,
+          "score": -1.375656,
+          "symbol": "HAL_GPIO_Init"
+        },
+        {
+          "label": 0,
+          "score": -3.065447,
+          "symbol": "bt_hop_infinite_tx"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "HAL_GPIO_Init"
+          ],
+          "file": "hal/bf0_hal_gpio.c",
+          "grade": 3,
+          "rank": 4,
+          "symbol": "HAL_GPIO_Init"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "sifli-hal::gpio.write",
+      "independence_group": "sifli",
+      "operation_id": "gpio.write",
+      "prediction": {
+        "anchor_depth": 1,
+        "effect_path": [
+          "ll_gpio_bank_set_high_pin",
+          "ll_gpio_bank_set_high"
+        ],
+        "file": "ll/sf32lb52x/ll_gpio.h",
+        "score": -0.451478,
+        "symbol": "ll_gpio_bank_set_high_pin"
+      },
+      "sdk_id": "sifli-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.451478,
+          "symbol": "ll_gpio_bank_set_high_pin"
+        },
+        {
+          "label": 0,
+          "score": -0.652325,
+          "symbol": "ll_gpio_bank_set_low_pin"
+        },
+        {
+          "label": 0,
+          "score": -0.796245,
+          "symbol": "ll_gpio_bank_set_high"
+        },
+        {
+          "label": 0,
+          "score": -1.051974,
+          "symbol": "ll_gpio_bank_set_low"
+        },
+        {
+          "label": 0,
+          "score": -1.120945,
+          "symbol": "ll_gpio_pa_set_high"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "HAL_GPIO_WritePin"
+          ],
+          "file": "hal/bf0_hal_gpio.c",
+          "grade": 3,
+          "rank": 10,
+          "symbol": "HAL_GPIO_WritePin"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "HAL_GPIO_TogglePin"
+          ],
+          "file": "hal/bf0_hal_gpio.c",
+          "grade": 2,
+          "rank": 11,
+          "symbol": "HAL_GPIO_TogglePin"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "sifli-hal::gpio.read",
+      "independence_group": "sifli",
+      "operation_id": "gpio.read",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "ll_gpio_bank_read_output_port"
+        ],
+        "file": "ll/sf32lb52x/ll_gpio.h",
+        "score": -0.253038,
+        "symbol": "ll_gpio_bank_read_output_port"
+      },
+      "sdk_id": "sifli-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.253038,
+          "symbol": "ll_gpio_bank_read_output_port"
+        },
+        {
+          "label": 0,
+          "score": -0.427731,
+          "symbol": "ll_gpio_bank_read_input_port"
+        },
+        {
+          "label": 3,
+          "score": -0.868426,
+          "symbol": "HAL_GPIO_ReadPin"
+        },
+        {
+          "label": 0,
+          "score": -1.533727,
+          "symbol": "GPIO_GetInstance"
+        },
+        {
+          "label": 0,
+          "score": -1.781705,
+          "symbol": "HAL_PIN_Get"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "HAL_GPIO_ReadPin"
+          ],
+          "file": "hal/bf0_hal_gpio.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "HAL_GPIO_ReadPin"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "sifli-hal::timer.initialize",
+      "independence_group": "sifli",
+      "operation_id": "timer.initialize",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "HAL_InitTick"
+        ],
+        "file": "hal/bf0_hal.c",
+        "score": -2.046475,
+        "symbol": "HAL_InitTick"
+      },
+      "sdk_id": "sifli-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": -2.046475,
+          "symbol": "HAL_InitTick"
+        },
+        {
+          "label": 0,
+          "score": -2.19248,
+          "symbol": "HAL_SDADC_SetTimer"
+        },
+        {
+          "label": 3,
+          "score": -2.7252,
+          "symbol": "HAL_LPTIM_Init"
+        },
+        {
+          "label": 0,
+          "score": -2.784659,
+          "symbol": "HAL_ResumeTick"
+        },
+        {
+          "label": 0,
+          "score": -2.799626,
+          "symbol": "HAL_LPTIM_InitDefault"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "HAL_LPTIM_Init"
+          ],
+          "file": "hal/bf0_hal_lptim.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "HAL_LPTIM_Init"
+        }
+      ]
+    },
+    {
+      "cause": "composite-entry-overranked",
+      "explanation": "复合初始化或多能力入口的硬件效果过强",
+      "group_id": "sifli-hal::timer.set_interval",
+      "independence_group": "sifli",
+      "operation_id": "timer.set_interval",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "HAL_RTC_SetWakeUpTimer"
+        ],
+        "file": "hal/bf0_hal_rtc.c",
+        "score": -0.97771,
+        "symbol": "HAL_RTC_SetWakeUpTimer"
+      },
+      "sdk_id": "sifli-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.97771,
+          "symbol": "HAL_RTC_SetWakeUpTimer"
+        },
+        {
+          "label": 0,
+          "score": -1.908078,
+          "symbol": "HAL_RTC_SetTime"
+        },
+        {
+          "label": 0,
+          "score": -2.062257,
+          "symbol": "HAL_TIMEx_HallSensor_Init"
+        },
+        {
+          "label": 3,
+          "score": -2.157749,
+          "symbol": "HAL_LPTIM_PWM_Set_Period"
+        },
+        {
+          "label": 0,
+          "score": -2.539534,
+          "symbol": "HAL_LPTIM_Init"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "HAL_LPTIM_PWM_Set_Period"
+          ],
+          "file": "hal/bf0_hal_lptim.c",
+          "grade": 3,
+          "rank": 4,
+          "symbol": "HAL_LPTIM_PWM_Set_Period"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "nuvoton-std-driver::clock.get_frequency",
+      "independence_group": "nuvoton",
+      "operation_id": "clock.get_frequency",
+      "prediction": {
+        "anchor_depth": 1,
+        "effect_path": [
+          "CLK_GetHCLK0Freq",
+          "CLK_SystemClockUpdate"
+        ],
+        "file": "m55m1x/StdDriver/src/clk.c",
+        "score": 2.080332,
+        "symbol": "CLK_GetHCLK0Freq"
+      },
+      "sdk_id": "nuvoton-std-driver",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.080332,
+          "symbol": "CLK_GetHCLK0Freq"
+        },
+        {
+          "label": 0,
+          "score": 2.059935,
+          "symbol": "CLK_GetPLLClockFreq"
+        },
+        {
+          "label": 3,
+          "score": 1.921794,
+          "symbol": "CLK_GetPCLK1Freq"
+        },
+        {
+          "label": 3,
+          "score": 1.808795,
+          "symbol": "CLK_GetPCLK0Freq"
+        },
+        {
+          "label": 0,
+          "score": 1.575753,
+          "symbol": "CLK_GetAPLL0ClockFreq"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "CLK_GetCPUFreq",
+            "SystemCoreClockUpdate"
+          ],
+          "file": "m2l31x/StdDriver/src/clk.c",
+          "grade": 3,
+          "rank": 18,
+          "symbol": "CLK_GetCPUFreq"
+        },
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "CLK_GetHCLKFreq",
+            "SystemCoreClockUpdate"
+          ],
+          "file": "m48x/StdDriver/src/clk.c",
+          "grade": 3,
+          "rank": 7,
+          "symbol": "CLK_GetHCLKFreq"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "CLK_GetPCLK0Freq"
+          ],
+          "file": "m333x/StdDriver/src/clk.c",
+          "grade": 3,
+          "rank": 4,
+          "symbol": "CLK_GetPCLK0Freq"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "CLK_GetPCLK1Freq"
+          ],
+          "file": "m55m1x/StdDriver/src/clk.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "CLK_GetPCLK1Freq"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "CLK_GetPCLK2Freq"
+          ],
+          "file": "m55m1x/StdDriver/src/clk.c",
+          "grade": 3,
+          "rank": 11,
+          "symbol": "CLK_GetPCLK2Freq"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "CLK_GetPCLK3Freq"
+          ],
+          "file": "m55m1x/StdDriver/src/clk.c",
+          "grade": 3,
+          "rank": 10,
+          "symbol": "CLK_GetPCLK3Freq"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "CLK_GetPCLK4Freq"
+          ],
+          "file": "m55m1x/StdDriver/src/clk.c",
+          "grade": 3,
+          "rank": 8,
+          "symbol": "CLK_GetPCLK4Freq"
+        },
+        {
+          "anchor_depth": 3,
+          "effect_path": [
+            "CLK_GetPCLK5Freq",
+            "CLK_GetACLKFreq",
+            "SystemCoreClockUpdate",
+            "CLK_SystemClockUpdate"
+          ],
+          "file": "m55m1x/StdDriver/src/clk.c",
+          "grade": 3,
+          "rank": 13,
+          "symbol": "CLK_GetPCLK5Freq"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "nuvoton-std-driver::uart.write",
+      "independence_group": "nuvoton",
+      "operation_id": "uart.write",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "m48x/StdDriver/inc/uart.h",
+        "score": 1.435978,
+        "symbol": "UART_WRITE"
+      },
+      "sdk_id": "nuvoton-std-driver",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.435978,
+          "symbol": "UART_WRITE"
+        },
+        {
+          "label": 3,
+          "score": 1.104239,
+          "symbol": "UART_Write"
+        },
+        {
+          "label": 3,
+          "score": 0.252078,
+          "symbol": "UUART_Write"
+        },
+        {
+          "label": 3,
+          "score": -0.068586,
+          "symbol": "LPUART_Write"
+        },
+        {
+          "label": 0,
+          "score": -0.165081,
+          "symbol": "UUART_WRITE"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "LPUART_Write"
+          ],
+          "file": "m55m1x/StdDriver/src/lpuart.c",
+          "grade": 3,
+          "rank": 4,
+          "symbol": "LPUART_Write"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "UART_Write"
+          ],
+          "file": "m333x/StdDriver/src/uart.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "UART_Write"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "UUART_Write"
+          ],
+          "file": "m48x/StdDriver/src/usci_uart.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "UUART_Write"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "nuvoton-std-driver::uart.read",
+      "independence_group": "nuvoton",
+      "operation_id": "uart.read",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "m333x/StdDriver/inc/uart.h",
+        "score": 1.37901,
+        "symbol": "UART_READ"
+      },
+      "sdk_id": "nuvoton-std-driver",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.37901,
+          "symbol": "UART_READ"
+        },
+        {
+          "label": 3,
+          "score": 1.33813,
+          "symbol": "UART_Read"
+        },
+        {
+          "label": 0,
+          "score": -0.001789,
+          "symbol": "SCUART_Read"
+        },
+        {
+          "label": 3,
+          "score": -0.068586,
+          "symbol": "LPUART_Read"
+        },
+        {
+          "label": 0,
+          "score": -0.123517,
+          "symbol": "UUART_READ"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "LPUART_Read"
+          ],
+          "file": "m55m1x/StdDriver/src/lpuart.c",
+          "grade": 3,
+          "rank": 4,
+          "symbol": "LPUART_Read"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "UART_Read"
+          ],
+          "file": "m46x/StdDriver/src/uart.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "UART_Read"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [],
+          "file": "m335x/StdDriver/src/usci_uart.c",
+          "grade": 3,
+          "rank": 6,
+          "symbol": "UUART_Read"
+        }
+      ]
+    },
+    {
+      "cause": "effect-strength-confusion",
+      "explanation": "错误候选的寄存器效果强度压过了接口契约",
+      "group_id": "nuvoton-std-driver::gpio.configure",
+      "independence_group": "nuvoton",
+      "operation_id": "gpio.configure",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "LPGPIO_MODE_INPUT"
+        ],
+        "file": "m2l31x/StdDriver/inc/lpgpio.h",
+        "score": -0.575625,
+        "symbol": "LPGPIO_MODE_INPUT"
+      },
+      "sdk_id": "nuvoton-std-driver",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.575625,
+          "symbol": "LPGPIO_MODE_INPUT"
+        },
+        {
+          "label": 0,
+          "score": -0.761207,
+          "symbol": "LPGPIO_MODE_OUTPUT"
+        },
+        {
+          "label": 0,
+          "score": -3.079041,
+          "symbol": "PSIO_SWITCH_MODE"
+        },
+        {
+          "label": 0,
+          "score": -3.374196,
+          "symbol": "RNG_EntropyPoll"
+        },
+        {
+          "label": 3,
+          "score": -3.410349,
+          "symbol": "GPIO_SetMode"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "GPIO_SetMode"
+          ],
+          "file": "m48x/StdDriver/src/gpio.c",
+          "grade": 3,
+          "rank": 5,
+          "symbol": "GPIO_SetMode"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "raspberry-pi-pico-sdk-2.2.0::uart.read",
+      "independence_group": "raspberry-pi",
+      "operation_id": "uart.read",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "uart_get_hw"
+        ],
+        "file": "src/rp2_common/hardware_uart/include/hardware/uart.h",
+        "score": 0.957347,
+        "symbol": "uart_get_hw"
+      },
+      "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.957347,
+          "symbol": "uart_get_hw"
+        },
+        {
+          "label": 3,
+          "score": 0.48558,
+          "symbol": "uart_read_blocking"
+        },
+        {
+          "label": 0,
+          "score": -0.106948,
+          "symbol": "uart_is_readable_within_us"
+        },
+        {
+          "label": 2,
+          "score": -0.239864,
+          "symbol": "uart_getc"
+        },
+        {
+          "label": 0,
+          "score": -0.292208,
+          "symbol": "uart_get_dreq"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "uart_read_blocking"
+          ],
+          "file": "src/rp2_common/hardware_uart/include/hardware/uart.h",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "uart_read_blocking"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "uart_getc",
+            "uart_read_blocking"
+          ],
+          "file": "src/rp2_common/hardware_uart/include/hardware/uart.h",
+          "grade": 2,
+          "rank": 4,
+          "symbol": "uart_getc"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "raspberry-pi-pico-sdk-2.2.0::gpio.write",
+      "independence_group": "raspberry-pi",
+      "operation_id": "gpio.write",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "gpio_set_function"
+        ],
+        "file": "src/rp2_common/hardware_gpio/gpio.c",
+        "score": 1.973475,
+        "symbol": "gpio_set_function"
+      },
+      "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.973475,
+          "symbol": "gpio_set_function"
+        },
+        {
+          "label": 0,
+          "score": 1.509573,
+          "symbol": "gpio_set_pulls"
+        },
+        {
+          "label": 3,
+          "score": 1.269752,
+          "symbol": "gpio_put"
+        },
+        {
+          "label": 0,
+          "score": 0.79755,
+          "symbol": "gpio_set_dir"
+        },
+        {
+          "label": 0,
+          "score": 0.484803,
+          "symbol": "gpio_set_input_enabled"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "src/host/hardware_gpio/gpio.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "gpio_put"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gpio_clr_mask"
+          ],
+          "file": "src/rp2_common/hardware_gpio/include/hardware/gpio.h",
+          "grade": 2,
+          "rank": 13,
+          "symbol": "gpio_clr_mask"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "src/host/hardware_gpio/gpio.c",
+          "grade": 2,
+          "rank": 11,
+          "symbol": "gpio_put_masked"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gpio_set_mask"
+          ],
+          "file": "src/rp2_common/hardware_gpio/include/hardware/gpio.h",
+          "grade": 2,
+          "rank": 9,
+          "symbol": "gpio_set_mask"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "src/host/hardware_gpio/gpio.c",
+          "grade": 2,
+          "rank": 18,
+          "symbol": "gpio_xor_mask"
+        }
+      ]
+    },
+    {
+      "cause": "abstraction-level-mismatch",
+      "explanation": "直接效果层与 H02 指定的可迁移 API 层级不一致",
+      "group_id": "raspberry-pi-pico-sdk-2.2.0::timer.initialize",
+      "independence_group": "raspberry-pi",
+      "operation_id": "timer.initialize",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "timer_hardware_alarm_set_target"
+        ],
+        "file": "src/rp2_common/hardware_timer/timer.c",
+        "score": 0.53581,
+        "symbol": "timer_hardware_alarm_set_target"
+      },
+      "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.53581,
+          "symbol": "timer_hardware_alarm_set_target"
+        },
+        {
+          "label": 0,
+          "score": 0.407047,
+          "symbol": "runtime_init_clocks"
+        },
+        {
+          "label": 0,
+          "score": 0.246214,
+          "symbol": "runtime_init_default_alarm_pool"
+        },
+        {
+          "label": 1,
+          "score": 0.233455,
+          "symbol": "hardware_alarm_claim_unused"
+        },
+        {
+          "label": 0,
+          "score": 0.194013,
+          "symbol": "alarm_pool_init_default"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "alarm_pool_create",
+            "alarm_pool_create_on_timer"
+          ],
+          "file": "src/common/pico_time/include/pico/time.h",
+          "grade": 2,
+          "rank": 8,
+          "symbol": "alarm_pool_create"
+        },
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "alarm_pool_create_with_unused_hardware_alarm",
+            "alarm_pool_create_on_timer_with_unused_hardware_alarm"
+          ],
+          "file": "src/common/pico_time/include/pico/time.h",
+          "grade": 2,
+          "rank": 13,
+          "symbol": "alarm_pool_create_with_unused_hardware_alarm"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "hardware_alarm_claim"
+          ],
+          "file": "src/rp2_common/hardware_timer/timer.c",
+          "grade": 1,
+          "rank": 6,
+          "symbol": "hardware_alarm_claim"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "hardware_alarm_claim_unused"
+          ],
+          "file": "src/host/hardware_timer/timer.c",
+          "grade": 1,
+          "rank": 4,
+          "symbol": "hardware_alarm_claim_unused"
+        }
+      ]
+    },
+    {
+      "cause": "composite-entry-overranked",
+      "explanation": "复合初始化或多能力入口的硬件效果过强",
+      "group_id": "raspberry-pi-pico-sdk-2.2.0::timer.start",
+      "independence_group": "raspberry-pi",
+      "operation_id": "timer.start",
+      "prediction": {
+        "anchor_depth": 1,
+        "effect_path": [
+          "aon_timer_start",
+          "powman_timer_start"
+        ],
+        "file": "src/rp2_common/pico_aon_timer/aon_timer.c",
+        "score": 1.973313,
+        "symbol": "aon_timer_start"
+      },
+      "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.973313,
+          "symbol": "aon_timer_start"
+        },
+        {
+          "label": 0,
+          "score": 1.586484,
+          "symbol": "aon_timer_enable_alarm"
+        },
+        {
+          "label": 3,
+          "score": 0.762803,
+          "symbol": "hardware_alarm_set_target"
+        },
+        {
+          "label": 0,
+          "score": 0.687108,
+          "symbol": "tick_start"
+        },
+        {
+          "label": 0,
+          "score": 0.667994,
+          "symbol": "aon_timer_enable_alarm_calendar"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 3,
+          "effect_path": [
+            "add_alarm_at",
+            "alarm_pool_add_alarm_at",
+            "alarm_pool_add_alarm_at_force_in_context",
+            "ta_force_irq"
+          ],
+          "file": "src/common/pico_time/include/pico/time.h",
+          "grade": 3,
+          "rank": 21,
+          "symbol": "add_alarm_at"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "src/common/pico_time/include/pico/time.h",
+          "grade": 3,
+          "rank": 22,
+          "symbol": "add_alarm_in_ms"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "src/common/pico_time/include/pico/time.h",
+          "grade": 3,
+          "rank": 23,
+          "symbol": "add_alarm_in_us"
+        },
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "add_repeating_timer_ms",
+            "alarm_pool_add_repeating_timer_us"
+          ],
+          "file": "src/common/pico_time/include/pico/time.h",
+          "grade": 3,
+          "rank": 16,
+          "symbol": "add_repeating_timer_ms"
+        },
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "add_repeating_timer_us",
+            "alarm_pool_add_repeating_timer_us"
+          ],
+          "file": "src/common/pico_time/include/pico/time.h",
+          "grade": 3,
+          "rank": 15,
+          "symbol": "add_repeating_timer_us"
+        },
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "hardware_alarm_set_target",
+            "timer_hardware_alarm_set_target"
+          ],
+          "file": "src/rp2_common/hardware_timer/timer.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "hardware_alarm_set_target"
+        }
+      ]
+    },
+    {
+      "cause": "abstraction-level-mismatch",
+      "explanation": "直接效果层与 H02 指定的可迁移 API 层级不一致",
+      "group_id": "raspberry-pi-pico-sdk-2.2.0::timer.stop",
+      "independence_group": "raspberry-pi",
+      "operation_id": "timer.stop",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "aon_timer_stop"
+        ],
+        "file": "src/rp2_common/pico_aon_timer/aon_timer.c",
+        "score": 1.855891,
+        "symbol": "aon_timer_stop"
+      },
+      "sdk_id": "raspberry-pi-pico-sdk-2.2.0",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.855891,
+          "symbol": "aon_timer_stop"
+        },
+        {
+          "label": 3,
+          "score": 1.241859,
+          "symbol": "cancel_repeating_timer"
+        },
+        {
+          "label": 0,
+          "score": 0.987792,
+          "symbol": "aon_timer_disable_alarm"
+        },
+        {
+          "label": 0,
+          "score": 0.955284,
+          "symbol": "tick_stop"
+        },
+        {
+          "label": 3,
+          "score": 0.851688,
+          "symbol": "hardware_alarm_cancel"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "cancel_alarm",
+            "alarm_pool_cancel_alarm"
+          ],
+          "file": "src/common/pico_time/include/pico/time.h",
+          "grade": 3,
+          "rank": 12,
+          "symbol": "cancel_alarm"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "cancel_repeating_timer"
+          ],
+          "file": "src/common/pico_time/time.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "cancel_repeating_timer"
+        },
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "hardware_alarm_cancel",
+            "timer_hardware_alarm_cancel"
+          ],
+          "file": "src/rp2_common/hardware_timer/timer.c",
+          "grade": 3,
+          "rank": 5,
+          "symbol": "hardware_alarm_cancel"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "nordic-nrfx-4.2.1::clock.disable",
+      "independence_group": "nordic",
+      "operation_id": "clock.disable",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "hal/nrf_clock.h",
+        "score": 3.006769,
+        "symbol": "nrf_clock_int_disable"
+      },
+      "sdk_id": "nordic-nrfx-4.2.1",
+      "top5": [
+        {
+          "label": 0,
+          "score": 3.006769,
+          "symbol": "nrf_clock_int_disable"
+        },
+        {
+          "label": 3,
+          "score": 1.728626,
+          "symbol": "nrfx_clock_disable"
+        },
+        {
+          "label": 2,
+          "score": 0.741464,
+          "symbol": "nrfx_clock_lfclk_stop"
+        },
+        {
+          "label": 0,
+          "score": 0.675339,
+          "symbol": "nrfx_clock_lfclk_calibration_timer_stop"
+        },
+        {
+          "label": 2,
+          "score": 0.640639,
+          "symbol": "nrfx_clock_hfclk_stop"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "nrfx_clock_disable"
+          ],
+          "file": "drivers/src/nrfx_clock.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "nrfx_clock_disable"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "nrfx_clock_hfclk_stop",
+            "clock_stop"
+          ],
+          "file": "drivers/src/nrfx_clock_hfclk.c",
+          "grade": 2,
+          "rank": 5,
+          "symbol": "nrfx_clock_hfclk_stop"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "nrfx_clock_lfclk_stop"
+          ],
+          "file": "drivers/src/nrfx_clock_lfclk.c",
+          "grade": 2,
+          "rank": 3,
+          "symbol": "nrfx_clock_lfclk_stop"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "nordic-nrfx-4.2.1::gpio.write",
+      "independence_group": "nordic",
+      "operation_id": "gpio.write",
+      "prediction": {
+        "anchor_depth": 3,
+        "effect_path": [
+          "nrf_gpio_pin_write",
+          "nrf_gpio_pin_clear",
+          "nrf_gpio_pin_port_decode",
+          "nrf_gpio_pin_present_check"
+        ],
+        "file": "hal/nrf_gpio.h",
+        "score": 2.409572,
+        "symbol": "nrf_gpio_pin_write"
+      },
+      "sdk_id": "nordic-nrfx-4.2.1",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.409572,
+          "symbol": "nrf_gpio_pin_write"
+        },
+        {
+          "label": 0,
+          "score": 2.194132,
+          "symbol": "nrf_gpio_pin_set"
+        },
+        {
+          "label": 0,
+          "score": 1.795052,
+          "symbol": "nrfy_gpio_pin_write"
+        },
+        {
+          "label": 0,
+          "score": 1.692437,
+          "symbol": "nrf_gpio_port_pin_write"
+        },
+        {
+          "label": 0,
+          "score": 1.484154,
+          "symbol": "nrfy_gpio_pin_set"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 3,
+          "effect_path": [
+            "nrfx_gpiote_out_clear",
+            "pin_out_clear",
+            "nrf_gpio_pin_port_decode",
+            "nrf_gpio_pin_present_check"
+          ],
+          "file": "drivers/src/nrfx_gpiote.c",
+          "grade": 3,
+          "rank": 24,
+          "symbol": "nrfx_gpiote_out_clear"
+        },
+        {
+          "anchor_depth": 3,
+          "effect_path": [
+            "nrfx_gpiote_out_set",
+            "pin_out_set",
+            "nrf_gpio_pin_port_decode",
+            "nrf_gpio_pin_present_check"
+          ],
+          "file": "drivers/src/nrfx_gpiote.c",
+          "grade": 3,
+          "rank": 19,
+          "symbol": "nrfx_gpiote_out_set"
+        },
+        {
+          "anchor_depth": 3,
+          "effect_path": [
+            "nrfx_gpiote_out_toggle",
+            "pin_out_toggle",
+            "nrf_gpio_pin_port_decode",
+            "nrf_gpio_pin_present_check"
+          ],
+          "file": "drivers/src/nrfx_gpiote.c",
+          "grade": 2,
+          "rank": 16,
+          "symbol": "nrfx_gpiote_out_toggle"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "nordic-nrfx-4.2.1::gpio.read",
+      "independence_group": "nordic",
+      "operation_id": "gpio.read",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "nrf_gpio_pin_read"
+        ],
+        "file": "hal/nrf_gpio.h",
+        "score": 1.917102,
+        "symbol": "nrf_gpio_pin_read"
+      },
+      "sdk_id": "nordic-nrfx-4.2.1",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.917102,
+          "symbol": "nrf_gpio_pin_read"
+        },
+        {
+          "label": 0,
+          "score": 1.758523,
+          "symbol": "nrfy_gpio_pin_read"
+        },
+        {
+          "label": 0,
+          "score": 1.39142,
+          "symbol": "nrf_gpio_pin_out_read"
+        },
+        {
+          "label": 0,
+          "score": 1.266453,
+          "symbol": "nrf_gpio_port_pin_read"
+        },
+        {
+          "label": 0,
+          "score": 0.911497,
+          "symbol": "nrfy_gpio_pin_out_read"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "nrfx_gpiote_in_is_set"
+          ],
+          "file": "drivers/src/nrfx_gpiote.c",
+          "grade": 3,
+          "rank": 74,
+          "symbol": "nrfx_gpiote_in_is_set"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "nordic-nrfx-4.2.1::gpio.attach_irq",
+      "independence_group": "nordic",
+      "operation_id": "gpio.attach_irq",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "nrfx_gpiote_irq_handler",
+          "irq_handler"
+        ],
+        "file": "drivers/src/nrfx_gpiote.c",
+        "score": 0.514966,
+        "symbol": "nrfx_gpiote_irq_handler"
+      },
+      "sdk_id": "nordic-nrfx-4.2.1",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.514966,
+          "symbol": "nrfx_gpiote_irq_handler"
+        },
+        {
+          "label": 1,
+          "score": -0.584352,
+          "symbol": "nrfx_gpiote_trigger_enable"
+        },
+        {
+          "label": 0,
+          "score": -1.101318,
+          "symbol": "irq_handler"
+        },
+        {
+          "label": 0,
+          "score": -1.443694,
+          "symbol": "nrfx_uart_irq_handler"
+        },
+        {
+          "label": 0,
+          "score": -1.826975,
+          "symbol": "nrfx_uarte_irq_handler"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "nrfx_gpiote_input_configure",
+            "gpiote_input_configure"
+          ],
+          "file": "drivers/src/nrfx_gpiote.c",
+          "grade": 3,
+          "rank": 19,
+          "symbol": "nrfx_gpiote_input_configure"
+        },
+        {
+          "anchor_depth": 1,
+          "effect_path": [
+            "nrfx_gpiote_trigger_enable",
+            "pin_trigger_enable"
+          ],
+          "file": "drivers/src/nrfx_gpiote.c",
+          "grade": 1,
+          "rank": 2,
+          "symbol": "nrfx_gpiote_trigger_enable"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "nordic-nrfx-4.2.1::timer.set_interval",
+      "independence_group": "nordic",
+      "operation_id": "timer.set_interval",
+      "prediction": {
+        "anchor_depth": 2,
+        "effect_path": [
+          "nrfx_timer_init",
+          "timer_configure",
+          "nrfy_timer_int_init"
+        ],
+        "file": "drivers/src/nrfx_timer.c",
+        "score": 0.917668,
+        "symbol": "nrfx_timer_init"
+      },
+      "sdk_id": "nordic-nrfx-4.2.1",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.917668,
+          "symbol": "nrfx_timer_init"
+        },
+        {
+          "label": 0,
+          "score": 0.874045,
+          "symbol": "nrfx_timer_uninit"
+        },
+        {
+          "label": 0,
+          "score": 0.598454,
+          "symbol": "nrfx_timer_reconfigure"
+        },
+        {
+          "label": 3,
+          "score": 0.478132,
+          "symbol": "nrfx_timer_compare"
+        },
+        {
+          "label": 0,
+          "score": 0.220328,
+          "symbol": "nrfx_timer_us_to_ticks"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "nrfx_timer_compare"
+          ],
+          "file": "drivers/src/nrfx_timer.c",
+          "grade": 3,
+          "rank": 4,
+          "symbol": "nrfx_timer_compare"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "nrfx_timer_extended_compare"
+          ],
+          "file": "drivers/src/nrfx_timer.c",
+          "grade": 3,
+          "rank": 8,
+          "symbol": "nrfx_timer_extended_compare"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "nuclei-soc-sdk::clock.initialize",
+      "independence_group": "nuclei",
+      "operation_id": "clock.initialize",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "rcu_rtc_clock_config"
+        ],
+        "file": "gd32vw55x/Common/Source/Drivers/gd32vw55x_rcu.c",
+        "score": -0.960605,
+        "symbol": "rcu_rtc_clock_config"
+      },
+      "sdk_id": "nuclei-soc-sdk",
+      "top5": [
+        {
+          "label": 0,
+          "score": -0.960605,
+          "symbol": "rcu_rtc_clock_config"
+        },
+        {
+          "label": 3,
+          "score": -1.393851,
+          "symbol": "SystemInit"
+        },
+        {
+          "label": 0,
+          "score": -1.406166,
+          "symbol": "rcu_timer_clock_prescaler_config"
+        },
+        {
+          "label": 0,
+          "score": -1.951629,
+          "symbol": "gd_com_init"
+        },
+        {
+          "label": 0,
+          "score": -2.429208,
+          "symbol": "rtc_init"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "SystemInit"
+          ],
+          "file": "gd32vw55x/Common/Source/system_gd32vw55x.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "SystemInit"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "nuclei-soc-sdk::clock.get_frequency",
+      "independence_group": "nuclei",
+      "operation_id": "clock.get_frequency",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "rcu_clock_freq_get"
+        ],
+        "file": "gd32vw55x/Common/Source/Drivers/gd32vw55x_rcu.c",
+        "score": 0.851746,
+        "symbol": "rcu_clock_freq_get"
+      },
+      "sdk_id": "nuclei-soc-sdk",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.851746,
+          "symbol": "rcu_clock_freq_get"
+        },
+        {
+          "label": 3,
+          "score": -0.777873,
+          "symbol": "get_cpu_freq"
+        },
+        {
+          "label": 0,
+          "score": -1.472995,
+          "symbol": "clock"
+        },
+        {
+          "label": 1,
+          "score": -1.7487,
+          "symbol": "SystemCoreClockUpdate"
+        },
+        {
+          "label": 0,
+          "score": -2.186248,
+          "symbol": "get_system_clock"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "get_cpu_freq",
+            "measure_cpu_freq"
+          ],
+          "file": "gd32vw55x/Common/Source/gd32vw55x_soc.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "get_cpu_freq"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "SystemCoreClockUpdate"
+          ],
+          "file": "gd32vw55x/Common/Source/system_gd32vw55x.c",
+          "grade": 1,
+          "rank": 4,
+          "symbol": "SystemCoreClockUpdate"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "nuclei-soc-sdk::interrupt.initialize",
+      "independence_group": "nuclei",
+      "operation_id": "interrupt.initialize",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "PLIC_Interrupt_Init"
+        ],
+        "file": "evalsoc/Common/Source/system_evalsoc.c",
+        "score": 0.737569,
+        "symbol": "PLIC_Interrupt_Init"
+      },
+      "sdk_id": "nuclei-soc-sdk",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.737569,
+          "symbol": "PLIC_Interrupt_Init"
+        },
+        {
+          "label": 0,
+          "score": 0.705776,
+          "symbol": "Interrupt_Init"
+        },
+        {
+          "label": 0,
+          "score": -1.646087,
+          "symbol": "CLINT_Interrupt_Init"
+        },
+        {
+          "label": 3,
+          "score": -1.920222,
+          "symbol": "ECLIC_Init"
+        },
+        {
+          "label": 0,
+          "score": -2.132482,
+          "symbol": "system_mmode_extirq_handler"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "gd32vw55x/Common/Source/system_gd32vw55x.c",
+          "grade": 3,
+          "rank": 4,
+          "symbol": "ECLIC_Init"
+        }
+      ]
+    },
+    {
+      "cause": "effect-strength-confusion",
+      "explanation": "错误候选的寄存器效果强度压过了接口契约",
+      "group_id": "nuclei-soc-sdk::interrupt.register",
+      "independence_group": "nuclei",
+      "operation_id": "interrupt.register",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "PLIC_Register_IRQ"
+        ],
+        "file": "evalsoc/Common/Source/system_evalsoc.c",
+        "score": 0.8886,
+        "symbol": "PLIC_Register_IRQ"
+      },
+      "sdk_id": "nuclei-soc-sdk",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.8886,
+          "symbol": "PLIC_Register_IRQ"
+        },
+        {
+          "label": 0,
+          "score": 0.738929,
+          "symbol": "PLIC_Register_IRQ_S"
+        },
+        {
+          "label": 0,
+          "score": 0.166953,
+          "symbol": "Interrupt_Register_ExtIRQ_S"
+        },
+        {
+          "label": 0,
+          "score": -0.19244,
+          "symbol": "Interrupt_Register_ExtIRQ"
+        },
+        {
+          "label": 0,
+          "score": -0.409037,
+          "symbol": "usbh_isr"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "Core_Register_IRQ"
+          ],
+          "file": "evalsoc/Common/Source/system_evalsoc.c",
+          "grade": 3,
+          "rank": 11,
+          "symbol": "Core_Register_IRQ"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "Core_Register_IRQ_S"
+          ],
+          "file": "evalsoc/Common/Source/system_evalsoc.c",
+          "grade": 3,
+          "rank": 12,
+          "symbol": "Core_Register_IRQ_S"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "ECLIC_Register_IRQ"
+          ],
+          "file": "evalsoc/Common/Source/system_evalsoc.c",
+          "grade": 3,
+          "rank": 9,
+          "symbol": "ECLIC_Register_IRQ"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "ECLIC_Register_IRQ_S"
+          ],
+          "file": "evalsoc/Common/Source/system_evalsoc.c",
+          "grade": 3,
+          "rank": 13,
+          "symbol": "ECLIC_Register_IRQ_S"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "nuclei-soc-sdk::uart.read",
+      "independence_group": "nuclei",
+      "operation_id": "uart.read",
+      "prediction": {
+        "anchor_depth": 1,
+        "effect_path": [
+          "usart_read",
+          "usart_data_receive"
+        ],
+        "file": "gd32vf103/Common/Source/Drivers/gd32vf103_usart.c",
+        "score": 1.012267,
+        "symbol": "usart_read"
+      },
+      "sdk_id": "nuclei-soc-sdk",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.012267,
+          "symbol": "usart_read"
+        },
+        {
+          "label": 3,
+          "score": 0.715291,
+          "symbol": "uart_read"
+        },
+        {
+          "label": 3,
+          "score": -0.049785,
+          "symbol": "usart_data_receive"
+        },
+        {
+          "label": 0,
+          "score": -0.408259,
+          "symbol": "usart_receive_config"
+        },
+        {
+          "label": 0,
+          "score": -1.208892,
+          "symbol": "usart_receive_fifo_disable"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "uart_read"
+          ],
+          "file": "evalsoc/Common/Source/Drivers/evalsoc_uart.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "uart_read"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "usart_data_receive"
+          ],
+          "file": "gd32vw55x/Common/Source/Drivers/gd32vw55x_usart.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "usart_data_receive"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "nuclei-soc-sdk::timer.set_interval",
+      "independence_group": "nuclei",
+      "operation_id": "timer.set_interval",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "timer_init"
+        ],
+        "file": "gd32vf103/Common/Source/Drivers/gd32vf103_timer.c",
+        "score": 0.053566,
+        "symbol": "timer_init"
+      },
+      "sdk_id": "nuclei-soc-sdk",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.053566,
+          "symbol": "timer_init"
+        },
+        {
+          "label": 0,
+          "score": -0.04617,
+          "symbol": "timer_counter_down_direction"
+        },
+        {
+          "label": 0,
+          "score": -0.055515,
+          "symbol": "timer_counter_up_direction"
+        },
+        {
+          "label": 0,
+          "score": -0.515373,
+          "symbol": "timer_external_trigger_config"
+        },
+        {
+          "label": 0,
+          "score": -0.626562,
+          "symbol": "timer_input_capture_config"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "timer_autoreload_value_config"
+          ],
+          "file": "gd32vf103/Common/Source/Drivers/gd32vf103_timer.c",
+          "grade": 3,
+          "rank": 8,
+          "symbol": "timer_autoreload_value_config"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "hpmicro-hpm-sdk::gpio.configure",
+      "independence_group": "hpmicro",
+      "operation_id": "gpio.configure",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "src/hpm_qeov2_drv.c",
+        "score": -2.409397,
+        "symbol": "qeo_pwm_config_mode"
+      },
+      "sdk_id": "hpmicro-hpm-sdk",
+      "top5": [
+        {
+          "label": 0,
+          "score": -2.409397,
+          "symbol": "qeo_pwm_config_mode"
+        },
+        {
+          "label": 0,
+          "score": -2.475178,
+          "symbol": "mtg_setup_tra_hardware_pos_one_way_mode"
+        },
+        {
+          "label": 0,
+          "score": -2.504446,
+          "symbol": "sdxc_execute_tuning"
+        },
+        {
+          "label": 0,
+          "score": -2.634637,
+          "symbol": "ewdg_init"
+        },
+        {
+          "label": 0,
+          "score": -2.635303,
+          "symbol": "mtg_setup_tra_software_pos_one_way_mode"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "gpio_set_pin_input"
+          ],
+          "file": "inc/hpm_gpio_drv.h",
+          "grade": 3,
+          "rank": 43,
+          "symbol": "gpio_set_pin_input"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "gpio_set_pin_output"
+          ],
+          "file": "inc/hpm_gpio_drv.h",
+          "grade": 3,
+          "rank": 42,
+          "symbol": "gpio_set_pin_output"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "gpio_set_pin_output_with_initial"
+          ],
+          "file": "src/hpm_gpio_drv.c",
+          "grade": 3,
+          "rank": 27,
+          "symbol": "gpio_set_pin_output_with_initial"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "hpmicro-hpm-sdk::timer.initialize",
+      "independence_group": "hpmicro",
+      "operation_id": "timer.initialize",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [],
+        "file": "src/hpm_mchtmr_drv.c",
+        "score": 1.232839,
+        "symbol": "mchtmr_init_counter"
+      },
+      "sdk_id": "hpmicro-hpm-sdk",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.232839,
+          "symbol": "mchtmr_init_counter"
+        },
+        {
+          "label": 0,
+          "score": 0.063328,
+          "symbol": "ptpc_init"
+        },
+        {
+          "label": 0,
+          "score": -0.259753,
+          "symbol": "ptpc_init_timer_with_initial"
+        },
+        {
+          "label": 0,
+          "score": -0.277734,
+          "symbol": "ptpc_init_timer"
+        },
+        {
+          "label": 0,
+          "score": -1.302869,
+          "symbol": "mtg_setup_time"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gptmr_channel_config"
+          ],
+          "file": "src/hpm_gptmrv2_drv.c",
+          "grade": 3,
+          "rank": 6,
+          "symbol": "gptmr_channel_config"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "hpmicro-hpm-sdk::timer.set_interval",
+      "independence_group": "hpmicro",
+      "operation_id": "timer.set_interval",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "mchtmr_delay"
+        ],
+        "file": "inc/hpm_mchtmr_drv.h",
+        "score": 0.481503,
+        "symbol": "mchtmr_delay"
+      },
+      "sdk_id": "hpmicro-hpm-sdk",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.481503,
+          "symbol": "mchtmr_delay"
+        },
+        {
+          "label": 0,
+          "score": 0.173066,
+          "symbol": "tsw_tsync_timer_control"
+        },
+        {
+          "label": 0,
+          "score": -0.784758,
+          "symbol": "pwmv2_set_reload_update_time"
+        },
+        {
+          "label": 0,
+          "score": -0.983223,
+          "symbol": "mchtmr_set_compare_value"
+        },
+        {
+          "label": 0,
+          "score": -1.014415,
+          "symbol": "pwmv2_set_counter_reload_trigmux_index"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [],
+          "file": "inc/hpm_gptmrv2_drv.h",
+          "grade": 3,
+          "rank": 11,
+          "symbol": "gptmr_channel_update_count"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [],
+          "file": "inc/hpm_gptmr_drv.h",
+          "grade": 3,
+          "rank": 12,
+          "symbol": "gptmr_update_cmp"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "espressif-esp-idf-6.0.1::gpio.write",
+      "independence_group": "espressif",
+      "operation_id": "gpio.write",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "gpio_set_direction"
+        ],
+        "file": "components/esp_driver_gpio/src/gpio.c",
+        "score": 1.530844,
+        "symbol": "gpio_set_direction"
+      },
+      "sdk_id": "espressif-esp-idf-6.0.1",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.530844,
+          "symbol": "gpio_set_direction"
+        },
+        {
+          "label": 3,
+          "score": 1.44724,
+          "symbol": "gpio_set_level"
+        },
+        {
+          "label": 0,
+          "score": 1.11069,
+          "symbol": "rtc_gpio_set_direction"
+        },
+        {
+          "label": 0,
+          "score": 0.785863,
+          "symbol": "rtc_gpio_set_level"
+        },
+        {
+          "label": 0,
+          "score": 0.554654,
+          "symbol": "gpio_sleep_set_direction"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gpio_set_level"
+          ],
+          "file": "components/esp_driver_gpio/src/gpio.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "gpio_set_level"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "bouffalo-lhal::clock.get_frequency",
+      "independence_group": "bouffalo",
+      "operation_id": "clock.get_frequency",
+      "prediction": {
+        "anchor_depth": 1,
+        "effect_path": [
+          "Clock_System_Clock_Get",
+          "Clock_MCU_Root_Clk_Mux_Output"
+        ],
+        "file": "soc/bl602/std/src/bl602_clock.c",
+        "score": 1.543078,
+        "symbol": "Clock_System_Clock_Get"
+      },
+      "sdk_id": "bouffalo-lhal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.543078,
+          "symbol": "Clock_System_Clock_Get"
+        },
+        {
+          "label": 0,
+          "score": 0.775457,
+          "symbol": "Clock_Peripheral_Clock_Get"
+        },
+        {
+          "label": 0,
+          "score": 0.603115,
+          "symbol": "bflb_pwm_v1_get_frequency"
+        },
+        {
+          "label": 0,
+          "score": 0.603115,
+          "symbol": "bflb_pwm_v2_get_frequency"
+        },
+        {
+          "label": 0,
+          "score": 0.593181,
+          "symbol": "Clock_PWM_Clk_Get"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "bflb_clk_get_peripheral_clock"
+          ],
+          "file": "soc/bl618dg/std/src/bl618dg_romapi_e907.c",
+          "grade": 3,
+          "rank": 9,
+          "symbol": "bflb_clk_get_peripheral_clock"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "bflb_clk_get_system_clock"
+          ],
+          "file": "soc/bl616cl/std/port/bl616cl_clock.c",
+          "grade": 3,
+          "rank": 8,
+          "symbol": "bflb_clk_get_system_clock"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "bouffalo-lhal::gpio.write",
+      "independence_group": "bouffalo",
+      "operation_id": "gpio.write",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "GLB_GPIO_Write"
+        ],
+        "file": "soc/bl616/std/src/bl616_glb_gpio.c",
+        "score": 1.861255,
+        "symbol": "GLB_GPIO_Write"
+      },
+      "sdk_id": "bouffalo-lhal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.861255,
+          "symbol": "GLB_GPIO_Write"
+        },
+        {
+          "label": 3,
+          "score": 1.351944,
+          "symbol": "bflb_gpio_set"
+        },
+        {
+          "label": 0,
+          "score": 1.224915,
+          "symbol": "PDS_GPIO_Write"
+        },
+        {
+          "label": 0,
+          "score": 0.959394,
+          "symbol": "GLB_GPIO_Set"
+        },
+        {
+          "label": 0,
+          "score": 0.777068,
+          "symbol": "MD_GPIO_Write"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "bflb_gpio_reset"
+          ],
+          "file": "lhal/src/bflb_gpio.c",
+          "grade": 3,
+          "rank": 8,
+          "symbol": "bflb_gpio_reset"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "bflb_gpio_set"
+          ],
+          "file": "lhal/src/bflb_gpio.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "bflb_gpio_set"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "bflb_gpio_pin0_31_output"
+          ],
+          "file": "lhal/src/bflb_gpio.c",
+          "grade": 2,
+          "rank": 6,
+          "symbol": "bflb_gpio_pin0_31_output"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "bflb_gpio_pin0_31_reset"
+          ],
+          "file": "lhal/src/bflb_gpio.c",
+          "grade": 2,
+          "rank": 19,
+          "symbol": "bflb_gpio_pin0_31_reset"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "bflb_gpio_pin0_31_set"
+          ],
+          "file": "lhal/src/bflb_gpio.c",
+          "grade": 2,
+          "rank": 10,
+          "symbol": "bflb_gpio_pin0_31_set"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "bflb_gpio_pin32_63_output"
+          ],
+          "file": "lhal/src/bflb_gpio.c",
+          "grade": 2,
+          "rank": 7,
+          "symbol": "bflb_gpio_pin32_63_output"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "bflb_gpio_pin32_63_reset"
+          ],
+          "file": "lhal/src/bflb_gpio.c",
+          "grade": 2,
+          "rank": 20,
+          "symbol": "bflb_gpio_pin32_63_reset"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "bflb_gpio_pin32_63_set"
+          ],
+          "file": "lhal/src/bflb_gpio.c",
+          "grade": 2,
+          "rank": 11,
+          "symbol": "bflb_gpio_pin32_63_set"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "bouffalo-lhal::timer.initialize",
+      "independence_group": "bouffalo",
+      "operation_id": "timer.initialize",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "TIMER_Init"
+        ],
+        "file": "soc/bl702l/std/src/bl702l_romapi.c",
+        "score": 1.801943,
+        "symbol": "TIMER_Init"
+      },
+      "sdk_id": "bouffalo-lhal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.801943,
+          "symbol": "TIMER_Init"
+        },
+        {
+          "label": 3,
+          "score": 1.795725,
+          "symbol": "bflb_timer_init"
+        },
+        {
+          "label": 0,
+          "score": 1.259137,
+          "symbol": "bflb_timer_capture_init"
+        },
+        {
+          "label": 0,
+          "score": -1.125563,
+          "symbol": "SysTimer_SetSWIRQ"
+        },
+        {
+          "label": 0,
+          "score": -1.125563,
+          "symbol": "SysTimer_ClearSWIRQ"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "bflb_timer_init"
+          ],
+          "file": "lhal/src/bflb_timer.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "bflb_timer_init"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "libopencm3-hal::clock.initialize",
+      "independence_group": "libopencm3",
+      "operation_id": "clock.initialize",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "ccs_configure_clocks"
+        ],
+        "file": "lib/pac55xx/ccs.c",
+        "score": 0.13041,
+        "symbol": "ccs_configure_clocks"
+      },
+      "sdk_id": "libopencm3-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.13041,
+          "symbol": "ccs_configure_clocks"
+        },
+        {
+          "label": 0,
+          "score": -0.040076,
+          "symbol": "rcc_configure_pll"
+        },
+        {
+          "label": 3,
+          "score": -0.167304,
+          "symbol": "rcc_clock_setup_hse"
+        },
+        {
+          "label": 3,
+          "score": -0.382017,
+          "symbol": "rcc_clock_setup_hsi"
+        },
+        {
+          "label": 3,
+          "score": -0.792029,
+          "symbol": "rcc_clock_setup_hse_3v3"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "rcc_clock_setup_hse"
+          ],
+          "file": "lib/stm32/f7/rcc.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "rcc_clock_setup_hse"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "rcc_clock_setup_hse_3v3"
+          ],
+          "file": "lib/stm32/f2/rcc.c",
+          "grade": 3,
+          "rank": 5,
+          "symbol": "rcc_clock_setup_hse_3v3"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "rcc_clock_setup_hsi"
+          ],
+          "file": "lib/stm32/f3/rcc.c",
+          "grade": 3,
+          "rank": 4,
+          "symbol": "rcc_clock_setup_hsi"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "lib/stm32/u5/rcc.c",
+          "grade": 3,
+          "rank": 19,
+          "symbol": "rcc_clock_setup_hsi48"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "lib/stm32/h7/rcc.c",
+          "grade": 1,
+          "rank": 8,
+          "symbol": "rcc_clock_setup_cfgr"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "rcc_clock_setup_domain1"
+          ],
+          "file": "lib/stm32/h7/rcc.c",
+          "grade": 1,
+          "rank": 10,
+          "symbol": "rcc_clock_setup_domain1"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "rcc_clock_setup_domain2"
+          ],
+          "file": "lib/stm32/h7/rcc.c",
+          "grade": 1,
+          "rank": 13,
+          "symbol": "rcc_clock_setup_domain2"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "rcc_clock_setup_domain3"
+          ],
+          "file": "lib/stm32/h7/rcc.c",
+          "grade": 1,
+          "rank": 14,
+          "symbol": "rcc_clock_setup_domain3"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "libopencm3-hal::clock.disable",
+      "independence_group": "libopencm3",
+      "operation_id": "clock.disable",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "lib/stm32/f0/rcc.c",
+        "score": 1.219146,
+        "symbol": "rcc_disable_rtc_clock"
+      },
+      "sdk_id": "libopencm3-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.219146,
+          "symbol": "rcc_disable_rtc_clock"
+        },
+        {
+          "label": 3,
+          "score": 1.071437,
+          "symbol": "rcc_periph_clock_disable"
+        },
+        {
+          "label": 0,
+          "score": 0.93344,
+          "symbol": "rcc_peripheral_disable_clock"
+        },
+        {
+          "label": 0,
+          "score": 0.772554,
+          "symbol": "rcc_disable_main_osc"
+        },
+        {
+          "label": 0,
+          "score": 0.743272,
+          "symbol": "sysctl_periph_clock_disable"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "lib/stm32/common/rcc_common_all.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "rcc_periph_clock_disable"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "libopencm3-hal::uart.write",
+      "independence_group": "libopencm3",
+      "operation_id": "uart.write",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "uart_send"
+        ],
+        "file": "lib/lm4f/uart.c",
+        "score": 2.606399,
+        "symbol": "uart_send"
+      },
+      "sdk_id": "libopencm3-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.606399,
+          "symbol": "uart_send"
+        },
+        {
+          "label": 0,
+          "score": 1.881567,
+          "symbol": "uart_write"
+        },
+        {
+          "label": 0,
+          "score": 1.076593,
+          "symbol": "uart_send_blocking"
+        },
+        {
+          "label": 0,
+          "score": 0.088995,
+          "symbol": "uart_set_flow_control"
+        },
+        {
+          "label": 2,
+          "score": 5.8e-05,
+          "symbol": "usart_send"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "usart_send_blocking"
+          ],
+          "file": "lib/lm3s/usart.c",
+          "grade": 3,
+          "rank": 6,
+          "symbol": "usart_send_blocking"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "lib/lm3s/usart.c",
+          "grade": 2,
+          "rank": 5,
+          "symbol": "usart_send"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "libopencm3-hal::uart.read",
+      "independence_group": "libopencm3",
+      "operation_id": "uart.read",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "lib/lpc43xx/uart.c",
+        "score": 1.881567,
+        "symbol": "uart_read"
+      },
+      "sdk_id": "libopencm3-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.881567,
+          "symbol": "uart_read"
+        },
+        {
+          "label": 0,
+          "score": 1.112734,
+          "symbol": "uart_get_baudrate"
+        },
+        {
+          "label": 0,
+          "score": 0.743187,
+          "symbol": "uart_wait_recv_ready"
+        },
+        {
+          "label": 0,
+          "score": 0.69317,
+          "symbol": "uart_read_timeout"
+        },
+        {
+          "label": 0,
+          "score": 0.648894,
+          "symbol": "uart_get_databits"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "usart_recv_blocking"
+          ],
+          "file": "lib/stm32/common/usart_common_all.c",
+          "grade": 3,
+          "rank": 11,
+          "symbol": "usart_recv_blocking"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [
+            "usart_recv"
+          ],
+          "file": "lib/stm32/common/usart_common_f124.c",
+          "grade": 2,
+          "rank": 6,
+          "symbol": "usart_recv"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "libopencm3-hal::gpio.write",
+      "independence_group": "libopencm3",
+      "operation_id": "gpio.write",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "gpio_write"
+        ],
+        "file": "include/libopencm3/lm4f/gpio.h",
+        "score": 2.622685,
+        "symbol": "gpio_write"
+      },
+      "sdk_id": "libopencm3-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.622685,
+          "symbol": "gpio_write"
+        },
+        {
+          "label": 0,
+          "score": 2.169752,
+          "symbol": "gpio_port_write"
+        },
+        {
+          "label": 3,
+          "score": 2.135234,
+          "symbol": "gpio_set"
+        },
+        {
+          "label": 2,
+          "score": 1.766131,
+          "symbol": "gpio_toggle"
+        },
+        {
+          "label": 3,
+          "score": 1.537473,
+          "symbol": "gpio_clear"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "lib/efm32/common/gpio_common.c",
+          "grade": 3,
+          "rank": 5,
+          "symbol": "gpio_clear"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "lib/efm32/common/gpio_common.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "gpio_set"
+        },
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "lib/nrf/common/gpio.c",
+          "grade": 2,
+          "rank": 4,
+          "symbol": "gpio_toggle"
+        }
+      ]
+    },
+    {
+      "cause": "same-family-operation-confusion",
+      "explanation": "预测项与真值属于同一 API 家族，但动作或子操作不一致",
+      "group_id": "libopencm3-hal::gpio.read",
+      "independence_group": "libopencm3",
+      "operation_id": "gpio.read",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "gpio_read"
+        ],
+        "file": "include/libopencm3/lm4f/gpio.h",
+        "score": 2.655019,
+        "symbol": "gpio_read"
+      },
+      "sdk_id": "libopencm3-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.655019,
+          "symbol": "gpio_read"
+        },
+        {
+          "label": 3,
+          "score": 2.611409,
+          "symbol": "gpio_get"
+        },
+        {
+          "label": 0,
+          "score": 2.097297,
+          "symbol": "gpio_port_read"
+        },
+        {
+          "label": 0,
+          "score": 0.162621,
+          "symbol": "port_read"
+        },
+        {
+          "label": 0,
+          "score": -0.924358,
+          "symbol": "gpio_get_lock_flag"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gpio_get"
+          ],
+          "file": "lib/sam/d/port.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "gpio_get"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "libopencm3-hal::timer.start",
+      "independence_group": "libopencm3",
+      "operation_id": "timer.start",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "lib/swm050/timer.c",
+        "score": 2.06132,
+        "symbol": "timer_enable"
+      },
+      "sdk_id": "libopencm3-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.06132,
+          "symbol": "timer_enable"
+        },
+        {
+          "label": 0,
+          "score": 2.046674,
+          "symbol": "timer_start"
+        },
+        {
+          "label": 3,
+          "score": 1.168932,
+          "symbol": "timer_enable_counter"
+        },
+        {
+          "label": 0,
+          "score": 1.042367,
+          "symbol": "lptimer_start_counter"
+        },
+        {
+          "label": 0,
+          "score": 0.785872,
+          "symbol": "timer_int_enable"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "lib/stm32/common/timer_common_all.c",
+          "grade": 3,
+          "rank": 3,
+          "symbol": "timer_enable_counter"
+        }
+      ]
+    },
+    {
+      "cause": "truth-path-missing",
+      "explanation": "真值函数没有恢复出足够的目标操作效果路径",
+      "group_id": "libopencm3-hal::timer.stop",
+      "independence_group": "libopencm3",
+      "operation_id": "timer.stop",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [
+          "timer_stop"
+        ],
+        "file": "lib/nrf/common/timer.c",
+        "score": 2.070649,
+        "symbol": "timer_stop"
+      },
+      "sdk_id": "libopencm3-hal",
+      "top5": [
+        {
+          "label": 0,
+          "score": 2.070649,
+          "symbol": "timer_stop"
+        },
+        {
+          "label": 3,
+          "score": 1.555599,
+          "symbol": "timer_disable_counter"
+        },
+        {
+          "label": 0,
+          "score": 0.888933,
+          "symbol": "timer_disable_break"
+        },
+        {
+          "label": 0,
+          "score": 0.771695,
+          "symbol": "lptimer_disable"
+        },
+        {
+          "label": 0,
+          "score": 0.489366,
+          "symbol": "timer_ic_disable"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": null,
+          "effect_path": [],
+          "file": "lib/stm32/common/timer_common_all.c",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "timer_disable_counter"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "alif-ensemble-dfp::clock.disable",
+      "independence_group": "alif",
+      "operation_id": "clock.disable",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "canfd_clock_disable"
+        ],
+        "file": "drivers/include/sys_ctrl_canfd.h",
+        "score": 0.610963,
+        "symbol": "canfd_clock_disable"
+      },
+      "sdk_id": "alif-ensemble-dfp",
+      "top5": [
+        {
+          "label": 0,
+          "score": 0.610963,
+          "symbol": "canfd_clock_disable"
+        },
+        {
+          "label": 0,
+          "score": -0.028652,
+          "symbol": "disable_lputimer_clk"
+        },
+        {
+          "label": 0,
+          "score": -0.116083,
+          "symbol": "disable_lprtc_clk"
+        },
+        {
+          "label": 0,
+          "score": -0.149186,
+          "symbol": "disable_i3c_clock"
+        },
+        {
+          "label": 0,
+          "score": -0.356484,
+          "symbol": "disable_lpspi_clk"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "SERVICES_clocks_enable_clock"
+          ],
+          "file": "se_services/source/services_host_clocks.c",
+          "grade": 3,
+          "rank": 69,
+          "symbol": "SERVICES_clocks_enable_clock"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "alif-ensemble-dfp::gpio.write",
+      "independence_group": "alif",
+      "operation_id": "gpio.write",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "pinconf_set"
+        ],
+        "file": "drivers/source/pinconf.c",
+        "score": 1.325209,
+        "symbol": "pinconf_set"
+      },
+      "sdk_id": "alif-ensemble-dfp",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.325209,
+          "symbol": "pinconf_set"
+        },
+        {
+          "label": 1,
+          "score": 0.954193,
+          "symbol": "GPIO_SetValue"
+        },
+        {
+          "label": 0,
+          "score": 0.674589,
+          "symbol": "gpio_set_direction_output"
+        },
+        {
+          "label": 2,
+          "score": 0.47874,
+          "symbol": "gpio_set_value_high"
+        },
+        {
+          "label": 0,
+          "score": 0.371378,
+          "symbol": "GPIO_SetDirection"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gpio_bit_man_set_value_high"
+          ],
+          "file": "drivers/include/gpio.h",
+          "grade": 2,
+          "rank": 11,
+          "symbol": "gpio_bit_man_set_value_high"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gpio_bit_man_set_value_low"
+          ],
+          "file": "drivers/include/gpio.h",
+          "grade": 2,
+          "rank": 10,
+          "symbol": "gpio_bit_man_set_value_low"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gpio_set_value_high"
+          ],
+          "file": "drivers/include/gpio.h",
+          "grade": 2,
+          "rank": 4,
+          "symbol": "gpio_set_value_high"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "gpio_set_value_low"
+          ],
+          "file": "drivers/include/gpio.h",
+          "grade": 2,
+          "rank": 6,
+          "symbol": "gpio_set_value_low"
+        },
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "GPIO_SetValue"
+          ],
+          "file": "Alif_CMSIS/Source/Driver_IO.c",
+          "grade": 1,
+          "rank": 2,
+          "symbol": "GPIO_SetValue"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "alif-ensemble-dfp::timer.initialize",
+      "independence_group": "alif",
+      "operation_id": "timer.initialize",
+      "prediction": {
+        "anchor_depth": null,
+        "effect_path": [],
+        "file": "components/Source/CH201_Private.c",
+        "score": 1.679293,
+        "symbol": "chbsp_periodic_timer_init"
+      },
+      "sdk_id": "alif-ensemble-dfp",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.679293,
+          "symbol": "chbsp_periodic_timer_init"
+        },
+        {
+          "label": 2,
+          "score": 1.26843,
+          "symbol": "utimer_config_mode"
+        },
+        {
+          "label": 0,
+          "score": 0.691727,
+          "symbol": "lptimer_init"
+        },
+        {
+          "label": 0,
+          "score": 0.31383,
+          "symbol": "ARM_LPTIMER_Initialize"
+        },
+        {
+          "label": 0,
+          "score": 0.18923,
+          "symbol": "ARM_UTIMER_Initialize"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "utimer_config_mode"
+          ],
+          "file": "drivers/source/utimer.c",
+          "grade": 2,
+          "rank": 2,
+          "symbol": "utimer_config_mode"
+        }
+      ]
+    },
+    {
+      "cause": "ranking-model-confusion",
+      "explanation": "现有图特征和 PU 权重不能区分两个相近候选",
+      "group_id": "alif-ensemble-dfp::timer.stop",
+      "independence_group": "alif",
+      "operation_id": "timer.stop",
+      "prediction": {
+        "anchor_depth": 0,
+        "effect_path": [
+          "lptimer_disable_counter"
+        ],
+        "file": "drivers/include/lptimer.h",
+        "score": 1.734375,
+        "symbol": "lptimer_disable_counter"
+      },
+      "sdk_id": "alif-ensemble-dfp",
+      "top5": [
+        {
+          "label": 0,
+          "score": 1.734375,
+          "symbol": "lptimer_disable_counter"
+        },
+        {
+          "label": 3,
+          "score": 1.6816,
+          "symbol": "utimer_counter_stop"
+        },
+        {
+          "label": 0,
+          "score": 1.231428,
+          "symbol": "chbsp_periodic_timer_stop"
+        },
+        {
+          "label": 0,
+          "score": 0.627472,
+          "symbol": "ARM_LPTIMER_Stop"
+        },
+        {
+          "label": 0,
+          "score": 0.614674,
+          "symbol": "ARM_UTIMER_Stop"
+        }
+      ],
+      "truth": [
+        {
+          "anchor_depth": 0,
+          "effect_path": [
+            "utimer_counter_stop"
+          ],
+          "file": "drivers/include/utimer.h",
+          "grade": 3,
+          "rank": 2,
+          "symbol": "utimer_counter_stop"
+        }
+      ]
+    }
+  ],
+  "method": "multiview-lambdamart-nested",
+  "schema_version": "0.1",
+  "scope": "out-of-fold predictions for role=train groups only",
+  "summary": {
+    "cause_counts": {
+      "abstraction-level-mismatch": 6,
+      "composite-entry-overranked": 5,
+      "effect-strength-confusion": 6,
+      "internal-role-overranked": 1,
+      "ranking-model-confusion": 40,
+      "same-family-operation-confusion": 27,
+      "truth-path-missing": 16
+    },
+    "correct_top1": 180,
+    "incorrect_top1": 101,
+    "precision_at_1": 0.640569,
+    "queries": 281
+  },
+  "truth_set": "human-engineer-2-H02"
+}

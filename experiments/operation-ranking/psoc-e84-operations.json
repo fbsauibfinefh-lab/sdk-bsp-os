@@ -1,26 +1,269 @@
 {
-  "schema_version": "1.0",
-  "sdk_id": "psoc-e84-edgi-talk-sdk",
-  "annotation": {"status": "single-curator-source-audited", "second_reviewer_required_for_publication": true, "revision": "2026-08-25-completeness-audit", "policy": "MTB HAL is preferred; callable public inline and PDL alternatives receive relevance grade 2"},
+  "annotator_id": "H03-external-adjudication",
+  "grade_fields": {
+    "0": "irrelevant_symbols",
+    "1": "related_symbols",
+    "2": "alternative_symbols",
+    "3": "symbols"
+  },
   "operations": {
-    "clock.initialize": {"symbols": ["mtb_hal_clock_set_hf_clock_freq", "mtb_hal_clock_set_peri_clock_freq"]},
-    "clock.enable": {"symbols": ["mtb_hal_clock_set_hf_clock_enabled", "mtb_hal_clock_set_peri_clock_enabled"]},
-    "clock.disable": {"symbols": ["mtb_hal_clock_set_hf_clock_enabled", "mtb_hal_clock_set_peri_clock_enabled"]},
-    "clock.get_frequency": {"symbols": ["mtb_hal_clock_get_hf_clock_freq", "mtb_hal_clock_get_peri_clock_freq"], "alternative_symbols": ["mtb_hal_clock_get_peri_src_clock_freq"]},
-    "interrupt.initialize": {"symbols": ["Cy_SysInt_Init"]},
-    "interrupt.enable": {"supported": false, "symbols": []},
-    "interrupt.disable": {"supported": false, "symbols": []},
-    "interrupt.register": {"symbols": ["Cy_SysInt_SetVector"]},
-    "uart.configure": {"symbols": ["mtb_hal_uart_setup", "mtb_hal_uart_set_baud"]},
-    "uart.write": {"symbols": ["mtb_hal_uart_write"]},
-    "uart.read": {"symbols": ["mtb_hal_uart_read"]},
-    "gpio.configure": {"symbols": ["mtb_hal_gpio_setup", "mtb_hal_gpio_configure"]},
-    "gpio.write": {"symbols": ["mtb_hal_gpio_write_internal", "mtb_hal_gpio_toggle_internal"], "alternative_symbols": ["mtb_hal_gpio_port_write_internal", "Cy_GPIO_Write"]},
-    "gpio.read": {"symbols": ["mtb_hal_gpio_read_internal"], "alternative_symbols": ["mtb_hal_gpio_port_read_internal", "Cy_GPIO_Read"]},
-    "gpio.attach_irq": {"symbols": ["mtb_hal_gpio_register_callback", "mtb_hal_gpio_enable_event"]},
-    "timer.initialize": {"symbols": ["mtb_hal_timer_setup"], "alternative_symbols": ["Cy_TCPWM_Counter_Init"]},
-    "timer.start": {"symbols": ["mtb_hal_timer_start"]},
-    "timer.stop": {"symbols": ["mtb_hal_timer_stop"]},
-    "timer.set_interval": {"symbols": ["mtb_hal_timer_setup"], "alternative_symbols": ["Cy_TCPWM_Counter_SetPeriod"]}
-  }
+    "clock.disable": {
+      "alternative_symbols": [
+        "mtb_hal_clock_set_hf_clock_enabled",
+        "mtb_hal_clock_set_peri_clock_enabled"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "mtb_hal_clock_set_enabled"
+      ]
+    },
+    "clock.enable": {
+      "alternative_symbols": [
+        "mtb_hal_clock_set_hf_clock_enabled",
+        "mtb_hal_clock_set_peri_clock_enabled"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "mtb_hal_clock_set_enabled"
+      ]
+    },
+    "clock.get_frequency": {
+      "alternative_symbols": [
+        "mtb_hal_clock_get_peri_src_clock_freq"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "mtb_hal_clock_get_hf_clock_freq",
+        "mtb_hal_clock_get_peri_clock_freq"
+      ]
+    },
+    "clock.initialize": {
+      "alternative_symbols": [
+        "mtb_hal_clock_set_hf_clock_freq",
+        "mtb_hal_clock_set_peri_clock_freq"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "mtb_hal_clock_set_frequency"
+      ]
+    },
+    "gpio.attach_irq": {
+      "alternative_symbols": [],
+      "group_status": "no_public_api",
+      "irrelevant_symbols": [],
+      "related_symbols": [
+        "Cy_GPIO_Pin_Init",
+        "Cy_GPIO_SetInterruptEdge",
+        "Cy_GPIO_SetInterruptMask",
+        "mtb_hal_gpio_enable_event",
+        "mtb_hal_gpio_register_callback"
+      ],
+      "symbols": []
+    },
+    "gpio.configure": {
+      "alternative_symbols": [
+        "Cy_GPIO_Pin_FastInit",
+        "Cy_GPIO_Pin_Init"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [
+        "Cy_GPIO_SetDrivemode",
+        "mtb_hal_gpio_setup"
+      ],
+      "symbols": [
+        "mtb_hal_gpio_configure"
+      ]
+    },
+    "gpio.read": {
+      "alternative_symbols": [
+        "Cy_GPIO_Read",
+        "mtb_hal_gpio_port_read_internal"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "mtb_hal_gpio_read_internal"
+      ]
+    },
+    "gpio.write": {
+      "alternative_symbols": [
+        "Cy_GPIO_Clr",
+        "Cy_GPIO_Set",
+        "Cy_GPIO_Write",
+        "mtb_hal_gpio_port_write_internal"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [
+        "mtb_hal_gpio_port_toggle_internal",
+        "mtb_hal_gpio_toggle_internal"
+      ],
+      "symbols": [
+        "mtb_hal_gpio_write_internal"
+      ]
+    },
+    "interrupt.disable": {
+      "alternative_symbols": [
+        "__NVIC_DisableIRQ"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": []
+    },
+    "interrupt.enable": {
+      "alternative_symbols": [
+        "__NVIC_EnableIRQ"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": []
+    },
+    "interrupt.initialize": {
+      "alternative_symbols": [
+        "__NVIC_SetPriorityGrouping"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [
+        "__NVIC_SetPriority"
+      ],
+      "symbols": [
+        "Cy_SysInt_Init"
+      ]
+    },
+    "interrupt.register": {
+      "alternative_symbols": [
+        "__NVIC_SetVector"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "Cy_SysInt_Init",
+        "Cy_SysInt_SetVector"
+      ]
+    },
+    "timer.initialize": {
+      "alternative_symbols": [
+        "Cy_TCPWM_Counter_Init"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "mtb_hal_timer_setup"
+      ]
+    },
+    "timer.set_interval": {
+      "alternative_symbols": [
+        "Cy_TCPWM_Counter_Init",
+        "mtb_hal_timer_setup"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [
+        "mtb_hal_timer_reset"
+      ],
+      "related_symbols": [],
+      "symbols": [
+        "Cy_TCPWM_Counter_SetPeriod"
+      ]
+    },
+    "timer.start": {
+      "alternative_symbols": [
+        "Cy_TCPWM_TriggerStart_Single"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [
+        "Cy_TCPWM_Counter_Enable"
+      ],
+      "symbols": [
+        "mtb_hal_timer_start"
+      ]
+    },
+    "timer.stop": {
+      "alternative_symbols": [
+        "Cy_TCPWM_Counter_Disable",
+        "Cy_TCPWM_TriggerStopOrKill_Single"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "mtb_hal_timer_stop"
+      ]
+    },
+    "uart.configure": {
+      "alternative_symbols": [
+        "mtb_hal_uart_set_baud"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [
+        "mtb_hal_uart_config_async"
+      ],
+      "symbols": [
+        "mtb_hal_uart_setup"
+      ]
+    },
+    "uart.read": {
+      "alternative_symbols": [
+        "mtb_hal_uart_read_async"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "mtb_hal_uart_read"
+      ]
+    },
+    "uart.write": {
+      "alternative_symbols": [
+        "mtb_hal_uart_write_async"
+      ],
+      "group_status": "complete",
+      "irrelevant_symbols": [],
+      "related_symbols": [],
+      "symbols": [
+        "mtb_hal_uart_write"
+      ]
+    }
+  },
+  "review_method": "manual source audit against public headers, definitions, and 1-2 level call chains",
+  "role": "external-test",
+  "schema_version": "operation-truth-v1",
+  "sdk_id": "psoc-e84-edgi-talk-sdk",
+  "source_audit": {
+    "file": "external-test-truth/source/psoc-e84-edgi-talk-sdk/truth-audit-v1-final.json",
+    "sha256": "67dd358037e03d71ec378ae1ef9587a10b5b6577888ce9af63845f995f99737f"
+  },
+  "source_revision": "1c6964a67ffb3925e9731c2e29e14b99a3534ee2",
+  "summary": {
+    "grade_counts": {
+      "0": 1,
+      "1": 12,
+      "2": 28,
+      "3": 18
+    },
+    "group_status_counts": {
+      "complete": 18,
+      "no_public_api": 1
+    },
+    "query_groups": 19
+  },
+  "training_included": false,
+  "truth_set_id": "external-board-h03",
+  "truth_source": "human-source-audited-external-adjudication"
 }

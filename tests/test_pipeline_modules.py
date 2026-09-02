@@ -5,13 +5,22 @@ import unittest
 import sys
 from pathlib import Path
 
+import numpy as np
+
 from bspforge.build_diagnoser import BuildDiagnoser
+from bspforge.code_effect_encoder import CodeEmbeddingCache, normalize_code, operation_query_text
 from bspforge.binding_planner import BindingPlanner
+from bspforge.capability_schema import CAPABILITY_SCHEMA
 from bspforge.closure_solver import ClosureSolver
 from bspforge.compile_feedback import create_compile_feedback
 from bspforge.common import write_json
+from bspforge.cross_operation_coherence import (
+    coherence_family_key,
+    enrich_dataset_with_cross_operation_coherence,
+)
 from bspforge.evaluation import ExperimentEvaluator
 from bspforge.ir_store import IRStore
+from bspforge.hardware_effect_graph import HardwareEffectGraph
 from bspforge.hardware_test.host import HardwareTestRunner, ProcessTransport
 from bspforge.os_backend import RTThreadBackend, ZephyrBackend
 from bspforge.os_backend.artifact_verifier import FirmwareArtifactVerifier
@@ -27,9 +36,21 @@ from bspforge.operation_ranking import (
     operation_static_score,
     weak_relevance,
 )
+from bspforge.pretrained_effect_ranker import PretrainedEffectPURanker
+from bspforge.multiview_effect_encoder import (
+    JointPairCache,
+    MultiViewEffectCache,
+    operation_effect_slice,
+)
+from bspforge.multiview_effect_ranker import (
+    MultiViewEffectRanker,
+    operation_constraint_penalty,
+)
+from bspforge.joint_pair_ranker import JointPairRanker
 from bspforge.sdk_ingestor import SDKIngestor
-from bspforge.ranking_dataset import audit_ground_truth, build_ranking_dataset
+from bspforge.ranking_dataset import GroundTruthError, audit_ground_truth, build_ranking_dataset
 from bspforge.semantic_resolver import SemanticResolver
+from bspforge.ranking_diagnostics import deterministic_ranking_evidence
 from bspforge.semantic_resolver.learning import FEATURE_NAMES
 from bspforge.structured_retrieval import (
     api_family_key,
@@ -110,6 +131,173 @@ class ModuleTests(unittest.TestCase):
         entity = next(item for item in ir["functions"] if item["name"] == "irq_enable")
         self.assertEqual(entity["file"], "lib/drivers/include/irq.h")
         self.assertEqual(entity["parser"], "tree-sitter")
+
+    def test_hardware_effect_graph_recovers_public_wrapper_path(self) -> None:
+        (self.sdk / "lib" / "drivers" / "uart.c").write_text(
+            '#include "uart.h"\n#include "uart_regs.h"\n'
+            "static void uart_channel_putc(int value) { UART0->THR = value; }\n"
+            "int uart_send_data(const char *data, int size) { "
+            "for (int i = 0; i < size; ++i) uart_channel_putc(data[i]); return size; }\n"
+            "static void uart_irq_handler(void) { UART0->IER |= 1; }\n",
+            encoding="utf-8",
+        )
+        (self.sdk / "lib" / "drivers" / "include" / "uart.h").write_text(
+            "int uart_send_data(const char *data, int size);\n", encoding="utf-8"
+        )
+        (self.sdk / "lib" / "drivers" / "include" / "uart_regs.h").write_text(
+            "typedef struct { volatile int THR; volatile int IER; } UART_Type;\n"
+            "#define UART0 ((UART_Type *)0x40000000)\n",
+            encoding="utf-8",
+        )
+        ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "effect-sdk")
+        functions = {item["name"]: item for item in ir["functions"]}
+        graph = HardwareEffectGraph(
+            ir, self.sdk, {item["id"] for item in functions.values()}
+        )
+        send, evidence = graph.candidate_features(
+            {"entity_id": functions["uart_send_data"]["id"]}, "uart.write"
+        )
+        leaf, _ = graph.candidate_features(
+            {"entity_id": functions["uart_channel_putc"]["id"]}, "uart.write"
+        )
+        handler, _ = graph.candidate_features(
+            {"entity_id": functions["uart_irq_handler"]["id"]}, "uart.write"
+        )
+        self.assertEqual(evidence["effect_path"][:2], ["uart_send_data", "uart_channel_putc"])
+        self.assertGreater(send["hw-transitive-operation-effect"], send["hw-direct-operation-effect"])
+        self.assertGreater(send["hw-api-boundary-depth"], leaf["hw-api-boundary-depth"])
+        self.assertEqual(send["hw-public-boundary"], 1.0)
+        self.assertEqual(handler["hw-internal-callback-likelihood"], 1.0)
+
+    def test_code_effect_serialization_normalizes_unstable_literals(self) -> None:
+        normalized = normalize_code(
+            '/* comment */ UART0->THR = 0x40001000; send("hello", 32); // tail\n'
+        )
+        self.assertNotIn("comment", normalized)
+        self.assertNotIn("40001000", normalized)
+        self.assertNotIn("hello", normalized)
+        self.assertIn("HEX_LITERAL", normalized)
+        self.assertIn("INT_LITERAL", normalized)
+        self.assertIn("required effect", operation_query_text("uart.write"))
+
+    def test_pretrained_effect_cache_and_ranker_contract(self) -> None:
+        metadata_path = self.root / "embedding-metadata.json"
+        vectors_path = self.root / "embedding-vectors.npz"
+        write_json(metadata_path, {
+            "model": {"id": "fixture", "dimension": 4},
+            "document_keys": ["fixture-sdk::entity-1", "fixture-sdk::entity-2"],
+            "operation_ids": [
+                f"{capability}.{operation}"
+                for capability, specification in CAPABILITY_SCHEMA.items()
+                for operation in specification["operations"]
+            ],
+        })
+        np.savez_compressed(
+            vectors_path,
+            documents=np.asarray([[1, 0, 0, 0], [0, 1, 0, 0]], dtype=np.float16),
+            queries=np.ones((19, 4), dtype=np.float16) / 2,
+        )
+        cache = CodeEmbeddingCache(metadata_path, vectors_path)
+        group = {
+            "sdk_id": "fixture-sdk",
+            "operation_id": "uart.write",
+            "candidates": [
+                {"entity_id": "entity-1", "features": {}},
+                {"entity_id": "entity-2", "features": {}},
+            ],
+        }
+        ranker = PretrainedEffectPURanker(cache)
+        ranker.fit_scaler(group["candidates"])
+        components = ranker.group_components(group)
+        self.assertEqual(set(components), {"fusion", "base", "adapted", "graph"})
+        self.assertTrue(all(len(values) == 2 for values in components.values()))
+
+    def test_operation_effect_slice_prioritizes_register_write(self) -> None:
+        body = (
+            "{ validate(value); log_start(); while (!(UART->STATUS & TX_READY)) {} "
+            "UART->TXDATA = value; log_done(); }"
+        )
+        selected = operation_effect_slice(
+            body,
+            "uart.write",
+            {"register_hits": ["UART->TXDATA"], "effect_path": ["uart_write"]},
+            max_statements=4,
+        )
+        self.assertIn("TXDATA", selected)
+        self.assertIn("value", selected)
+
+    def test_multiview_ranker_and_status_query_constraint(self) -> None:
+        base_metadata = self.root / "base-metadata.json"
+        base_vectors = self.root / "base-vectors.npz"
+        focused_metadata = self.root / "focused-metadata.json"
+        focused_vectors = self.root / "focused-vectors.npz"
+        operation_ids = [
+            f"{capability}.{operation}"
+            for capability, specification in CAPABILITY_SCHEMA.items()
+            for operation in specification["operations"]
+        ]
+        write_json(base_metadata, {
+            "model": {"id": "fixture", "dimension": 4},
+            "document_keys": ["fixture-sdk::entity-1", "fixture-sdk::entity-2"],
+            "operation_ids": operation_ids,
+        })
+        np.savez_compressed(
+            base_vectors,
+            documents=np.asarray([[1, 0, 0, 0], [0, 1, 0, 0]], dtype=np.float16),
+            queries=np.ones((19, 4), dtype=np.float16) / 2,
+        )
+        write_json(focused_metadata, {
+            "focused_keys": [
+                "fixture-sdk::uart.write::entity-1",
+                "fixture-sdk::uart.write::entity-2",
+            ]
+        })
+        np.savez_compressed(
+            focused_vectors,
+            focused=np.asarray([[1, 0, 0, 0], [0, 1, 0, 0]], dtype=np.float16),
+        )
+        cache = MultiViewEffectCache(
+            base_metadata, base_vectors, focused_metadata, focused_vectors
+        )
+        group = {
+            "group_id": "fixture-sdk::uart.write",
+            "sdk_id": "fixture-sdk",
+            "operation_id": "uart.write",
+            "candidates": [
+                {"entity_id": "entity-1", "symbol": "uart_write", "features": {}, "static_score": 0.1},
+                {"entity_id": "entity-2", "symbol": "uart_status", "features": {}, "static_score": 0.1},
+            ],
+        }
+        ranker = MultiViewEffectRanker(cache)
+        ranker.fit_scaler(group["candidates"])
+        components = ranker.group_components(group)
+        self.assertEqual(
+            set(components), {"fusion", "full", "focused", "graph", "structured"}
+        )
+        self.assertEqual(operation_constraint_penalty(group["candidates"][0], "uart.write"), 0.0)
+        self.assertEqual(operation_constraint_penalty(group["candidates"][1], "uart.write"), 1.0)
+
+        joint_metadata = self.root / "joint-metadata.json"
+        joint_vectors = self.root / "joint-vectors.npz"
+        write_json(joint_metadata, {
+            "joint_keys": [
+                "fixture-sdk::uart.write::entity-1",
+                "fixture-sdk::uart.write::entity-2",
+            ],
+            "shortlist": {"per_channel": 15},
+        })
+        np.savez_compressed(
+            joint_vectors,
+            joint=np.asarray([[1, 0, 0, 0], [0, 1, 0, 0]], dtype=np.float16),
+        )
+        joint_cache = JointPairCache(joint_metadata, joint_vectors)
+        joint_ranker = JointPairRanker(cache, joint_cache)
+        joint_ranker.fit_scaler([group])
+        joint_components = joint_ranker.group_components(group)
+        self.assertEqual(
+            set(joint_components), {"fusion", "joint", "scalar", "indices"}
+        )
+        self.assertEqual(joint_components["indices"], [0, 1])
 
     def test_ingestor_skips_broken_sdk_symlinks(self) -> None:
         broken = self.sdk / "lib" / "drivers" / "missing.c"
@@ -246,6 +434,124 @@ class ModuleTests(unittest.TestCase):
     def test_operation_tokens_normalize_inflected_and_deinit_actions(self) -> None:
         self.assertIn("enable", identifier_tokens("clock_enabled"))
         self.assertIn("deinit", identifier_tokens("HAL_RCC_DeInit"))
+        self.assertIn("sysint", identifier_tokens("Cy_SysInt_SetVector"))
+        self.assertIn("i2s", identifier_tokens("LL_RCC_SetI2SClockSource"))
+
+    def test_cross_operation_coherence_rewards_complete_public_api_family(self) -> None:
+        groups = []
+        for operation, effect in (("configure", 0.7), ("write", 0.9), ("read", 0.8)):
+            candidates = [{
+                "entity_id": f"public-{operation}",
+                "symbol": f"uart_{operation}",
+                "file": "drivers/uart.c",
+                "api_family": "uart",
+                "source_role": "sdk-driver",
+                "features": {
+                    "hw-transitive-operation-effect": effect,
+                    "operation-contract-retrieval": 0.8,
+                    "generic-operation-fit": 0.9,
+                    "source-role-prior": 0.9,
+                    "hw-public-boundary": 1.0,
+                },
+                "label": 0,
+            }]
+            if operation == "write":
+                candidates.append({
+                    "entity_id": "debug-write",
+                    "symbol": "debug_uart_write",
+                    "file": "examples/debug_uart.c",
+                    "api_family": "debug_uart",
+                    "source_role": "example-test",
+                    "features": {
+                        "hw-transitive-operation-effect": 0.95,
+                        "operation-contract-retrieval": 0.75,
+                        "generic-operation-fit": 0.55,
+                        "source-role-prior": 0.06,
+                    },
+                    "label": 1,
+                })
+            groups.append({
+                "group_id": f"fixture::uart.{operation}",
+                "sdk_id": "fixture",
+                "capability": "uart",
+                "operation": operation,
+                "operation_id": f"uart.{operation}",
+                "candidates": candidates,
+            })
+        enriched = enrich_dataset_with_cross_operation_coherence({"groups": groups})
+        write_group = next(
+            item for item in enriched["groups"] if item["operation_id"] == "uart.write"
+        )
+        public, debug = write_group["candidates"]
+        self.assertGreater(
+            public["features"]["xop-family-operation-coverage"],
+            debug["features"]["xop-family-operation-coverage"],
+        )
+        self.assertGreater(
+            public["features"]["xop-family-complement-support"],
+            debug["features"]["xop-family-complement-support"],
+        )
+        self.assertIn("xop-consensus-margin", public["features"])
+        self.assertIn("xop-signal-agreement", public["features"])
+        self.assertEqual(enriched["cross_operation_coherence"]["leakage_control"],
+                         "labels and truth metadata are not read")
+
+    def test_coherence_family_key_removes_action_but_keeps_timer_mode(self) -> None:
+        self.assertEqual(
+            coherence_family_key("uart", {"symbol": "HAL_UART_Transmit"}),
+            "hal_uart",
+        )
+        self.assertEqual(
+            coherence_family_key("uart", {"symbol": "HAL_UART_Receive"}),
+            "hal_uart",
+        )
+        self.assertEqual(
+            coherence_family_key("timer", {"symbol": "HAL_TIM_Base_Start"}),
+            "hal_tim_base",
+        )
+
+    def test_ranking_diagnostics_preserve_contract_dominant_public_api(self) -> None:
+        group = {
+            "group_id": "fixture::timer.start",
+            "capability": "timer",
+            "operation": "start",
+            "operation_id": "timer.start",
+            "candidates": [
+                {
+                    "entity_id": "base",
+                    "symbol": "HAL_TIM_Base_Start",
+                    "file": "Drivers/STM32_HAL_Driver/Src/stm32_hal_tim.c",
+                    "static_score": 0.80,
+                    "candidate_text": "file: Drivers/STM32_HAL_Driver/Src/stm32_hal_tim.c\nsymbol: HAL_TIM_Base_Start\nsignature: int HAL_TIM_Base_Start(void *handle)\nincludes:\ncalls:",
+                    "features": {
+                        "operation-exact": 1.0,
+                        "operation-substring": 0.0,
+                        "parameterized-toggle": 0.0,
+                        "field-late-interaction": 0.78,
+                    },
+                },
+                {
+                    "entity_id": "pwm",
+                    "symbol": "HAL_TIMEx_PWMN_Start_DMA",
+                    "file": "Drivers/STM32_HAL_Driver/Src/stm32_hal_tim_ex.c",
+                    "static_score": 0.90,
+                    "candidate_text": "file: Drivers/STM32_HAL_Driver/Src/stm32_hal_tim_ex.c\nsymbol: HAL_TIMEx_PWMN_Start_DMA\nsignature: int HAL_TIMEx_PWMN_Start_DMA(void *handle)\nincludes:\ncalls:",
+                    "features": {
+                        "operation-exact": 1.0,
+                        "operation-substring": 0.0,
+                        "parameterized-toggle": 0.0,
+                        "field-late-interaction": 0.84,
+                    },
+                },
+            ],
+        }
+        enrich_group_with_structured_retrieval(group)
+        scores, diagnostics = complete_structured_scores(group)
+        selected = max(range(len(scores)), key=scores.__getitem__)
+        evidence = deterministic_ranking_evidence(group, scores, diagnostics)
+        self.assertEqual(group["candidates"][selected]["symbol"], "HAL_TIM_Base_Start")
+        self.assertEqual(evidence["selected_symbol"], "HAL_TIM_Base_Start")
+        self.assertFalse(evidence["low_score"])
 
     def test_public_header_inline_internal_is_not_private(self) -> None:
         candidate = {"entity_id": "inline", "symbol": "mtb_hal_gpio_write_internal", "score": 0.7}
@@ -370,6 +676,56 @@ class ModuleTests(unittest.TestCase):
         self.assertEqual(write_ranking["selected_symbol"], "uart_receive_data")
         self.assertEqual(write_ranking["candidates"][0]["semantic_scores"]["adapted"], 1.0)
 
+    def test_structured_runtime_always_selects_top1_and_keeps_diagnostics(self) -> None:
+        ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "fixture-sdk")
+        resolver = SemanticResolver()
+        candidates = resolver.candidate_pool(ir, "uart")
+        functions = {item["id"]: item for item in ir["functions"]}
+
+        class FixedFieldRanker:
+            def score_operations(self, capability, operations, ranked, function_map):
+                del capability, function_map
+                return {
+                    operation: {
+                        item["entity_id"]: {
+                            "base": 0.0,
+                            "adapted": 0.0,
+                            "field": float(
+                                operation == "write" and item["symbol"] == "uart_send_data"
+                            ),
+                        }
+                        for item in ranked
+                    }
+                    for operation in operations
+                }
+
+        result = resolver._resolve_operations(
+            "uart",
+            candidates,
+            functions,
+            threshold=0.99,
+            top_k=8,
+            minimum_margin=1.0,
+            semantic_ranker=FixedFieldRanker(),
+            semantic_weights={"static": 0.0, "base": 0.0, "adapted": 0.0, "field": 1.0},
+            structured_retrieval=True,
+            compile_feedback={
+                ("uart", operation, item["entity_id"]): float(
+                    item["symbol"] == "uart_receive_data"
+                )
+                for operation in CAPABILITY_SCHEMA["uart"]["operations"]
+                for item in candidates
+            },
+            compile_feedback_weight=1.0,
+        )
+        write_ranking = next(
+            item for item in result["operation_rankings"] if item["operation"] == "write"
+        )
+        evidence = write_ranking["ranking_evidence"]
+        self.assertIsNotNone(write_ranking["selected_entity_id"])
+        self.assertEqual(write_ranking["selected_entity_id"], evidence["selected_entity_id"])
+        self.assertEqual(write_ranking["selected_symbol"], "uart_receive_data")
+
     def test_operation_dataset_keeps_external_labels_out_of_training(self) -> None:
         train_ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "train-sdk")
         test_ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "test-sdk")
@@ -405,6 +761,80 @@ class ModuleTests(unittest.TestCase):
             {"auditable-graded-supervision"},
         )
         self.assertEqual({item["label_source"] for group in external for item in group["candidates"]}, {"source-audited"})
+
+    def test_operation_dataset_records_unretrievable_human_truth(self) -> None:
+        ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "train-sdk")
+        meta = {
+            "sdk_id": "train-sdk",
+            "vendor": "Train",
+            "independence_group": "train-vendor",
+            "role": "train",
+        }
+        truth = {
+            "sdk_id": "train-sdk",
+            "operations": {
+                "uart.configure": {
+                    "group_status": "complete",
+                    "symbols": ["HardwareSerial::begin"],
+                },
+            },
+        }
+        with self.assertRaises(GroundTruthError):
+            build_operation_dataset([(meta, ir, truth, self.root / "train-ir.json")])
+
+        dataset = build_operation_dataset(
+            [(meta, ir, truth, self.root / "train-ir.json")],
+            unretrievable_truth_policy="skip-missing",
+        )
+        self.assertEqual(dataset["summary"]["truth_alignment_groups"], 1)
+        self.assertEqual(dataset["summary"]["unretrievable_truth_symbols"], 1)
+        self.assertTrue(any(
+            item["reason"] == "unretrievable-positive-label"
+            for item in dataset["skipped"]
+        ))
+
+    def test_operation_dataset_sampling_is_independent_between_groups(self) -> None:
+        train_ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "train-sdk")
+        external_ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "external-sdk")
+        train_meta = {
+            "sdk_id": "train-sdk",
+            "vendor": "Train",
+            "independence_group": "train-vendor",
+            "role": "train",
+        }
+        external_meta = {
+            "sdk_id": "external-sdk",
+            "vendor": "External",
+            "independence_group": "external-board",
+            "role": "external-test",
+        }
+        truth = {
+            "sdk_id": "external-sdk",
+            "operations": {
+                "uart.configure": {"symbols": ["uart_configure"]},
+                "uart.write": {"symbols": ["uart_send_data"]},
+                "uart.read": {"symbols": ["uart_receive_data"]},
+            },
+        }
+        external_only = build_operation_dataset([
+            (external_meta, external_ir, truth, self.root / "external-ir.json"),
+        ])
+        with_training = build_operation_dataset([
+            (train_meta, train_ir, None, self.root / "train-ir.json"),
+            (external_meta, external_ir, truth, self.root / "external-ir.json"),
+        ])
+
+        def external_candidates(dataset):
+            return {
+                group["group_id"]: [item["entity_id"] for item in group["candidates"]]
+                for group in dataset["groups"]
+                if group["role"] == "external-test"
+            }
+
+        self.assertEqual(
+            external_candidates(external_only),
+            external_candidates(with_training),
+        )
 
     def test_process_transport_reuses_hardware_protocol(self) -> None:
         simulator = self.root / "simulator.py"
@@ -596,6 +1026,7 @@ class ModuleTests(unittest.TestCase):
         timer_source = (bsp / "drivers" / "drv_hw_timer.c").read_text(encoding="utf-8")
         self.assertIn('rt_hw_serial_register(&bspforge_uart_devices[0], "testuart"', board_source)
         self.assertIn('rt_device_pin_register("testpin"', board_source)
+        self.assertIn('rt_device_find("pin") == RT_NULL', board_source)
         self.assertIn('rt_device_hwtimer_register(&bspforge_hwtimers[0], "testtim"', timer_source)
 
     def test_device_configuration_rejects_duplicate_names(self) -> None:
@@ -635,9 +1066,47 @@ class ModuleTests(unittest.TestCase):
         )
         source = Path(manifest["source"]).read_text(encoding="utf-8")
         self.assertIn('bspforge_uart_name[] = "uart2"', source)
-        self.assertIn("rt_device_write", source)
+        self.assertIn('rt_kprintf("%s", banner)', source)
+        self.assertIn("rt_device_open", source)
         self.assertIn("rt_pin_write", source)
         self.assertIn("rt_timer_start", source)
+        self.assertIn('rt_device_find(bspforge_hwtimer_name)', source)
+
+    def test_k210_binding_validation_emits_observable_hardware_tests(self) -> None:
+        bsp = self.root / "k210-binding-validation"
+        RTThreadValidationGenerator().generate(
+            bsp,
+            {
+                "board": "k210",
+                "binding_validation": True,
+                "hwtimer": "bsptim0",
+                "gpio_fpioa_io": 35,
+                "gpio_binding_pin": 31,
+                "gpio_input_fpioa_io": 16,
+                "gpio_input_binding_pin": 30,
+            },
+        )
+        source = (bsp / "applications" / "bspforge_validation.c").read_text(
+            encoding="utf-8"
+        )
+        self.assertIn("bspforge_clock_frequency", source)
+        self.assertIn("FUNC_GPIOHS0 + 31", source)
+        self.assertIn("FUNC_GPIOHS0 + 30", source)
+        self.assertIn("output_val.u32[0]", source)
+        self.assertIn("HWTIMER_MODE_ONESHOT", source)
+        self.assertIn('strcmp(command, "interrupt.basic")', source)
+
+    def test_rtthread_backend_can_disable_nonrequired_board_feature(self) -> None:
+        config = self.root / "rtconfig.h"
+        config.write_text(
+            "#define RT_USING_SMP\n#define RT_CPUS_NR 2\n#define RT_USING_SERIAL\n",
+            encoding="utf-8",
+        )
+        RTThreadBackend._disable_rtthread_features(config, ["RT_USING_SMP"])
+        value = config.read_text(encoding="utf-8")
+        self.assertNotIn("#define RT_USING_SMP", value)
+        self.assertIn("#define RT_CPUS_NR 2", value)
+        self.assertIn("#define RT_USING_SERIAL", value)
 
     def test_zephyr_backend_generates_native_application_contract(self) -> None:
         zephyr = self.root / "zephyr"
@@ -666,6 +1135,15 @@ class ModuleTests(unittest.TestCase):
             manifest["device_model"]["registration_symbols"],
             ["bspforge_zephyr_validation_init", "bspforge_zephyr_validation_run"],
         )
+
+    def test_k210_zephyr_port_enables_fpioa_clock_before_pin_mapping(self) -> None:
+        source = (
+            Path(__file__).resolve().parents[1]
+            / "ports/zephyr-k210/soc/bspforge/k210/soc.c"
+        ).read_text(encoding="utf-8")
+        clock_enable = source.index("*clk_en_peri |= K210_SYSCTL_FPIOA_CLK_EN")
+        rx_mapping = source.index("fpioa[K210_UARTHS_RX_PIN]")
+        self.assertLess(clock_enable, rx_mapping)
 
     def test_zephyr_compiled_source_parser_excludes_unselected_drivers(self) -> None:
         build = self.root / "zephyr-build"
@@ -737,7 +1215,7 @@ class ModuleTests(unittest.TestCase):
         class FakeTransport:
             def __init__(self) -> None:
                 self.lines = [
-                    b'{"bspforge":true,"protocol":"1.0","event":"boot"}\n'
+                    b'\x1b[0m{"bspforge":true,"protocol":"1.0","event":"boot"}\n'
                 ]
 
             def write(self, value: bytes) -> int:
@@ -761,6 +1239,7 @@ class ModuleTests(unittest.TestCase):
         report = HardwareTestRunner(
             FakeTransport(), "fixture", "rtthread", timeout=0.1
         ).run(commands=["info", "gpio.irq"])
+        self.assertEqual(report["summary"]["boot_successes"], 1)
         self.assertEqual(report["summary"]["commands_passed"], 1)
         self.assertEqual(report["summary"]["commands_applicable"], 1)
         self.assertEqual(report["summary"]["unsupported"], 1)

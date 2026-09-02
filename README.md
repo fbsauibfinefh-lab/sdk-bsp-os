@@ -15,7 +15,7 @@ BSPForge 是一个面向芯片 SDK 语义恢复与 RTOS BSP 自动生成的研�
 
 K210/RT-Thread 路径会生成真实参与链接的 `rt_uart_ops`、`rt_pin_ops`、`rt_hwtimer_ops`、设备实例和初始化注册函数。成熟 BSP 路径追踪 RTOS 原生驱动到 SDK 实体的调用证据，并生成设备 API 验证入口。流水线在编译失败后根据 IR 增补源码或包含目录，直到成功、无新约束或达到迭代上限；链接成功后还会检查固件架构、段信息、哈希和关键生成符号。
 
-v1.0 在五字段迟交互基础上增加 SDK 源码层级路由、操作契约、多通道 RRF 和 API 家族覆盖解码。50 个板卡操作组上的探索性 P@1、Recall@5、MAP 和 nDCG@10 分别达到 0.820、0.926、0.815 和 0.873；按开发集冻结阈值后，自动接受覆盖率为 0.38、选择性精度为 1.00。K210 的完整流水线生成 19 个操作绑定，经自动诊断修复后编译出 RISC-V ELF/BIN。3 块开发板 × 2 个 RTOS 的六组工程均已完成固件静态验证；Zephyr native_sim 已完成 20 轮可执行回归，真实上板验证仍待完成。
+v1.2 在五字段迟交互、SDK 源码层级路由、操作契约、多通道 RRF 和 API 家族覆盖解码基础上，增加通用操作适配度，并把运行时决策固定为“候选存在即选择最终分数最高的 Top1”。低分与弱证据只写入诊断，不取消绑定；当前默认运行时仍使用该无 SDK 训练的 q4 路径。v1.7 另行实现操作条件效果切片、完整/局部代码语义、寄存器效果图和结构契约的轻量分级排序，在 H02 的 281 个函数级厂商独立五折查询上达到 P@1 0.651、Recall@5 0.748、MAP 0.681、nDCG@10 0.743；相对 v1.6 明显提升，但绝对值仍未达到论文目标，暂未替换默认 Resolver。v1.8 继续验证跨操作效果差、API 家族一致性和嵌套专家融合：固定配置的 Top1 有显著改善，但严格嵌套未稳定超过 v1.7，故作为探索性消融保留。K210的完整流水线生成19个操作绑定，经自动诊断修复后编译出RISC-V ELF/BIN。3块开发板×2个RTOS的六组工程均已完成固件静态验证；Zephyr native_sim已完成20轮可执行回归，真实上板验证仍待完成。
 
 ## 快速开始
 
@@ -39,12 +39,11 @@ cd /home/whk/RTT-porting/bspforge
 conda run -n AIoT-v1.0 python -m unittest discover -s tests -v
 ```
 
-运行跨 SDK 排序实验和 native_sim 回归：
+准备评测 SDK 并运行 native_sim 回归：
 
 ```bash
 ./scripts/bootstrap_evaluation_sdks.sh
-conda run -n AIoT-v1.0 python -m pip install -e '.[learning]'
-./scripts/run_semantic_experiment.sh
+conda run -n AIoT-v1.0 python -m pip install -e '.[retrieval]'
 ./scripts/run_zephyr_native_simulation.sh
 ```
 
@@ -61,18 +60,15 @@ conda run -n AIoT-v1.0 python scripts/evaluate_operation_ranker.py \
   --output experiments/generated/operation-ranking-results.json
 ```
 
-运行轻量 IR 查询适配器与 K210 语义流水线：
+运行冻结 MiniLM 字段语义与 K210 确定性流水线：
 
 ```bash
-conda run -n AIoT-v1.0 python -m pip install -e '.[retrieval,learning]'
-conda run -n AIoT-v1.0 python scripts/train_operation_query_adapter.py \
-  --dataset experiments/generated/operation-ranking-dataset.json \
-  --split experiments/operation-ranking/development-split.json \
-  --output-adapter models/operation-query-adapter-ir-v1.pt \
-  --report experiments/generated/operation-query-adapter-training.json
+conda run -n AIoT-v1.0 python -m pip install -e '.[retrieval]'
 conda run -n AIoT-v1.0 python -m bspforge.cli pipeline \
   --config examples/k210-rtthread/project-semantic.json
 ```
+
+预训练代码效果排序的模型下载、全量缓存和五折评测命令见 `docs/pretrained-code-effect-ranking-v0.2.md`。模型权重放在 `/home/whk/RTT-porting/models/`，不纳入本仓库；本次首次 CPU 缓存耗时 6,351.642 秒，缓存后完整嵌套五折评测耗时 137.650 秒，后续只训练 12,636 参数的小型排序头。
 
 所有阶段产物保存在 `workspace/runs/<run-id>/`，包括 SDK IR、语义映射、闭包、绑定与设备清单、逐轮编译日志、诊断约束、产物验证、方法指标、证据消融和最终报告。
 
@@ -89,7 +85,19 @@ conda run -n AIoT-v1.0 python -m bspforge.cli pipeline \
 - [操作级排序与模型优化](docs/operation-ranking-v0.7.md)
 - [IR 感知轻量语义排序 v0.8](docs/ir-semantic-reranking-v0.8.md)
 - [字段迟交互、组合约束与编译校准 v0.9](docs/field-aware-structured-ranking-v0.9.md)
+- [无 SDK 训练的确定性排序与低分诊断 v1.2](docs/deterministic-ranking-low-score-diagnostics-v1.2.md)
+- [六套上板组合的能力操作真值对照](docs/board-six-combination-operation-comparison.md)
+- [寄存器效果图与正例-未标注偏好排序 v0.1](docs/hardware-effect-graph-pu-ranking-v0.1.md)
+- [寄存器效果图 PU 排序完整错误报告](docs/hardware-effect-graph-pu-error-report-v0.1.md)
+- [冻结预训练代码模型增强的硬件效果排序 v0.2](docs/pretrained-code-effect-ranking-v0.2.md)
+- [预训练代码效果排序完整错误报告](docs/pretrained-code-effect-error-report-v0.2.md)
+- [操作条件效果切片与多视图排序 v0.3](docs/effect-slice-multiview-ranking-v0.3.md)
+- [操作条件多视图排序完整错误报告](docs/effect-slice-multiview-error-report-v0.3.md)
+- [跨操作效果对比与结构一致性探索 v0.4](docs/cross-operation-effect-contrast-v0.4.md)
+- [跨操作效果对比完整错误报告](docs/cross-operation-effect-contrast-error-report-v0.4.md)
+- [相近任务指标与论文实验目标参考](docs/related-task-metric-reference-v0.4.md)
 - [论文核心方法与整体工作梳理 v1.0](docs/core-method-v1.0.md)
+- [LambdaMART 主方法与三板外部评估 v0.6](docs/lambdamart-method-and-external-board-evaluation-v0.6.md)
 - [方法引用与知识产权风险检查](docs/related-work-citation-and-ip-risk-v0.9.md)
 - [第三方组件与许可证说明](THIRD_PARTY_NOTICES.md)
 - [实验规模与仿真方案](docs/experiment-scale-and-simulation-plan.md)

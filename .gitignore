@@ -17,6 +17,9 @@ toolchains/*/
 !toolchains/manifest.json
 workspace/
 
+# 本地内部说明与操作记录，不同步到公开仓库。
+docs/internaldocs/
+
 # 由固定清单和脚本生成的大体积操作级数据，可在本地重建。
 experiments/generated/operation-ranking-dataset*.json
 models/operation-ranker*.txt
@@ -27,5 +30,11 @@ experiments/generated/operation-ranking-results-*.json
 experiments/generated/development-truth-review-*.json
 experiments/generated/operation-ranking-errors-*.json
 experiments/generated/operation-graded-truth-audit-*.json
+experiments/generated/truth-set-rerun-*/
+experiments/generated/h03-*/
 !experiments/generated/operation-ranking-results-adapter-ensemble.json
 !experiments/generated/operation-ranking-results-adapter-cascade-k10.json
+experiments/generated/deterministic-*.json
+experiments/generated/jina-code-embeddings-*.npz
+experiments/generated/jina-multiview-*.npz
+experiments/generated/jina-joint-*.npz

@@ -5,6 +5,7 @@ BSPForge 自有代码使用 MIT 许可证。以下第三方组件不属于 BSPFo
 | 组件 | 用途 | 许可 | 分发方式 |
 | --- | --- | --- | --- |
 | sentence-transformers/all-MiniLM-L6-v2 | 操作与 SDK IR 语义编码 | Apache-2.0 | 记录模型名和提交，不在仓库复制基础模型 |
+| jinaai/jina-embeddings-v2-base-code | C/C++ SDK 函数体与能力操作的冻结代码语义编码 | Apache-2.0 | 固定模型和远程代码提交，不在仓库复制约 312 MB 权重 |
 | Sentence Transformers / Transformers | 模型加载、训练与推理 | Apache-2.0 | Python 可选依赖 |
 | PyTorch | 张量计算 | BSD-style | Python 间接依赖 |
 | LightGBM | LambdaMART 排序基线 | MIT | Python 可选依赖 |

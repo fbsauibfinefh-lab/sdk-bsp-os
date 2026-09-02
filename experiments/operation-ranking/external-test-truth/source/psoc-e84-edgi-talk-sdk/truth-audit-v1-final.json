@@ -1,0 +1,1890 @@
+{
+  "schema_version": "truth-audit-v1-final",
+  "truth_set": "3-test-board-external-evaluation",
+  "sdk_id": "psoc-e84-edgi-talk-sdk",
+  "display_name": "PSoC E84 / Edge AI Talk",
+  "vendor": "Infineon",
+  "role": "external-test",
+  "training_included": false,
+  "source_revision": "1c6964a67ffb3925e9731c2e29e14b99a3534ee2",
+  "source_root": "/home/whk/RTT-porting/sdk-bsp-psoc_e84-edgi-talk/libraries",
+  "annotator_id": "H03-external-adjudication",
+  "review_method": "manual source audit against public headers, definitions, and 1-2 level call chains",
+  "policy": {
+    "grade_3": "正式或首选 callable API，可直接完成操作契约。",
+    "grade_2": "可独立完成契约但层级更低、模式更专用或接口更重。",
+    "grade_1": "相关前置/后置/分步动作，不能独立完成契约。",
+    "grade_0": "名称或模块相关但行为不满足契约。",
+    "macro_rule": "纯宏名不进入真值；若宏包装真实 function/static inline，则记录真实 callable 目标。"
+  },
+  "operations": [
+    {
+      "operation_id": "clock.initialize",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/hal/source/"
+      ],
+      "search_terms": [
+        "clock init",
+        "clock configure",
+        "pll",
+        "oscillator",
+        "clock source"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_clock_set_frequency",
+          "canonical_symbol": "mtb_hal_clock_set_frequency",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_clock.h",
+          "declaration_line": 142,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+          "definition_line": 294,
+          "signature": "cy_rslt_t mtb_hal_clock_set_frequency(mtb_hal_clock_t* clock, uint32_t hz, const mtb_hal_clock_tolerance_t* tolerance)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "MTB HAL 通用时钟对象入口，按 Hz 配置目标频率。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c:294 — cy_rslt_t mtb_hal_clock_set_frequency(mtb_hal_clock_t* clock, uint32_t hz, const mtb_hal_clock_tolerance_t* tolerance)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_clock_set_hf_clock_freq",
+          "canonical_symbol": "mtb_hal_clock_set_hf_clock_freq",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_clock_impl.h",
+          "declaration_line": 141,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+          "definition_line": 252,
+          "signature": "cy_rslt_t mtb_hal_clock_set_hf_clock_freq(const void* clk, uint32_t frequency, uint32_t tolerance_ppm)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "PSoC E84 HAL 适配层的高频时钟专用实现，层级较低。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c:252 — cy_rslt_t mtb_hal_clock_set_hf_clock_freq(const void* clk, uint32_t frequency, uint32_t tolerance_ppm)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_clock_set_peri_clock_freq",
+          "canonical_symbol": "mtb_hal_clock_set_peri_clock_freq",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_clock_impl.h",
+          "declaration_line": 100,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+          "definition_line": 99,
+          "signature": "cy_rslt_t mtb_hal_clock_set_peri_clock_freq(const void* clk, uint32_t frequency, uint32_t tolerance_ppm)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "PSoC E84 HAL 适配层的外设时钟专用实现，层级较低。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c:99 — cy_rslt_t mtb_hal_clock_set_peri_clock_freq(const void* clk, uint32_t frequency, uint32_t tolerance_ppm)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "clock.enable",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/hal/source/"
+      ],
+      "search_terms": [
+        "clock enable",
+        "gate enable",
+        "pll enable"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_clock_set_enabled",
+          "canonical_symbol": "mtb_hal_clock_set_enabled",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_clock.h",
+          "declaration_line": 126,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+          "definition_line": 281,
+          "signature": "cy_rslt_t mtb_hal_clock_set_enabled(mtb_hal_clock_t* clock, bool enabled, bool wait_for_lock)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束",
+            "enabled 参数为 true"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "以 enabled=true 直接开启通用 MTB HAL 时钟对象。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c:281 — cy_rslt_t mtb_hal_clock_set_enabled(mtb_hal_clock_t* clock, bool enabled, bool wait_for_lock)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_clock_set_hf_clock_enabled",
+          "canonical_symbol": "mtb_hal_clock_set_hf_clock_enabled",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_clock_impl.h",
+          "declaration_line": 152,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+          "definition_line": 265,
+          "signature": "cy_rslt_t mtb_hal_clock_set_hf_clock_enabled(const void* clk, bool enable)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接开启指定高频时钟，属于芯片适配层入口。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c:265 — cy_rslt_t mtb_hal_clock_set_hf_clock_enabled(const void* clk, bool enable)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_clock_set_peri_clock_enabled",
+          "canonical_symbol": "mtb_hal_clock_set_peri_clock_enabled",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_clock_impl.h",
+          "declaration_line": 111,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+          "definition_line": 184,
+          "signature": "cy_rslt_t mtb_hal_clock_set_peri_clock_enabled(const void* clk, bool enable)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接开启指定外设时钟，属于芯片适配层入口。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c:184 — cy_rslt_t mtb_hal_clock_set_peri_clock_enabled(const void* clk, bool enable)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "clock.disable",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/hal/source/"
+      ],
+      "search_terms": [
+        "clock disable",
+        "gate disable",
+        "pll disable"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_clock_set_enabled",
+          "canonical_symbol": "mtb_hal_clock_set_enabled",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_clock.h",
+          "declaration_line": 126,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+          "definition_line": 281,
+          "signature": "cy_rslt_t mtb_hal_clock_set_enabled(mtb_hal_clock_t* clock, bool enabled, bool wait_for_lock)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束",
+            "enabled 参数为 false"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "以 enabled=false 直接关闭通用 MTB HAL 时钟对象。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c:281 — cy_rslt_t mtb_hal_clock_set_enabled(mtb_hal_clock_t* clock, bool enabled, bool wait_for_lock)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_clock_set_hf_clock_enabled",
+          "canonical_symbol": "mtb_hal_clock_set_hf_clock_enabled",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_clock_impl.h",
+          "declaration_line": 152,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+          "definition_line": 265,
+          "signature": "cy_rslt_t mtb_hal_clock_set_hf_clock_enabled(const void* clk, bool enable)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束",
+            "enable 参数为 false"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接关闭指定高频时钟，属于芯片适配层入口。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c:265 — cy_rslt_t mtb_hal_clock_set_hf_clock_enabled(const void* clk, bool enable)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_clock_set_peri_clock_enabled",
+          "canonical_symbol": "mtb_hal_clock_set_peri_clock_enabled",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_clock_impl.h",
+          "declaration_line": 111,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+          "definition_line": 184,
+          "signature": "cy_rslt_t mtb_hal_clock_set_peri_clock_enabled(const void* clk, bool enable)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束",
+            "enable 参数为 false"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接关闭指定外设时钟，属于芯片适配层入口。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c:184 — cy_rslt_t mtb_hal_clock_set_peri_clock_enabled(const void* clk, bool enable)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "clock.get_frequency",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/hal/source/"
+      ],
+      "search_terms": [
+        "clock frequency",
+        "get freq",
+        "clock rate",
+        "Hz"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_clock_get_hf_clock_freq",
+          "canonical_symbol": "mtb_hal_clock_get_hf_clock_freq",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_clock_impl.h",
+          "declaration_line": 128,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+          "definition_line": 243,
+          "signature": "uint32_t mtb_hal_clock_get_hf_clock_freq(const void* clk)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "返回指定高频时钟的频率值。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c:243 — uint32_t mtb_hal_clock_get_hf_clock_freq(const void* clk)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_clock_get_peri_clock_freq",
+          "canonical_symbol": "mtb_hal_clock_get_peri_clock_freq",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_clock_impl.h",
+          "declaration_line": 88,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+          "definition_line": 76,
+          "signature": "uint32_t mtb_hal_clock_get_peri_clock_freq(const void* clk)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "返回指定外设时钟的频率值。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c:76 — uint32_t mtb_hal_clock_get_peri_clock_freq(const void* clk)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_clock_get_peri_src_clock_freq",
+          "canonical_symbol": "mtb_hal_clock_get_peri_src_clock_freq",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_clock_impl.h",
+          "declaration_line": 119,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c",
+          "definition_line": 113,
+          "signature": "uint32_t mtb_hal_clock_get_peri_src_clock_freq(const void* clk)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "目标时钟对象或时钟标识有效",
+            "遵守芯片时钟树切换与锁定约束"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "返回外设时钟源频率，范围较具体。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_clock.c:113 — source_freq = mtb_hal_clock_get_peri_src_clock_freq(clk)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "interrupt.initialize",
+      "group_status": "complete",
+      "search_scope": [
+        "components/Infineon_cmsis-latest/Core/Include/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/include/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/source/"
+      ],
+      "search_terms": [
+        "interrupt init",
+        "priority grouping",
+        "controller init"
+      ],
+      "items": [
+        {
+          "symbol": "Cy_SysInt_Init",
+          "canonical_symbol": "Cy_SysInt_Init",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_sysint.h",
+          "declaration_line": 307,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_sysint_v2.c",
+          "definition_line": 80,
+          "signature": "cy_en_sysint_status_t Cy_SysInt_Init(const cy_stc_sysint_t* config, cy_israddress userIsr)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "配置系统中断源、优先级并可同时安装用户 ISR。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_sysint_v2.c:80 — cy_en_sysint_status_t Cy_SysInt_Init(const cy_stc_sysint_t* config, cy_israddress userIsr)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "__NVIC_SetPriorityGrouping",
+          "canonical_symbol": "__NVIC_SetPriorityGrouping",
+          "grade": 2,
+          "declaration_file": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h",
+          "declaration_line": 3874,
+          "definition_file": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h",
+          "definition_line": 3874,
+          "signature": "__STATIC_INLINE void __NVIC_SetPriorityGrouping(uint32_t PriorityGroup)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "CMSIS Cortex-M55 static inline 底层入口，设置优先级分组。",
+          "evidence_snippet": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h:3874 — __STATIC_INLINE void __NVIC_SetPriorityGrouping(uint32_t PriorityGroup)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "__NVIC_SetPriority",
+          "canonical_symbol": "__NVIC_SetPriority",
+          "grade": 1,
+          "declaration_file": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h",
+          "declaration_line": 4102,
+          "definition_file": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h",
+          "definition_line": 4102,
+          "signature": "__STATIC_INLINE void __NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只设置单个 IRQ 优先级，不能独立初始化中断系统。",
+          "evidence_snippet": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h:4102 — __STATIC_INLINE void __NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "interrupt.enable",
+      "group_status": "complete",
+      "search_scope": [
+        "components/Infineon_cmsis-latest/Core/Include/"
+      ],
+      "search_terms": [
+        "irq enable",
+        "interrupt enable",
+        "NVIC",
+        "PLIC"
+      ],
+      "items": [
+        {
+          "symbol": "__NVIC_EnableIRQ",
+          "canonical_symbol": "__NVIC_EnableIRQ",
+          "grade": 2,
+          "declaration_file": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h",
+          "declaration_line": 3905,
+          "definition_file": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h",
+          "definition_line": 3905,
+          "signature": "__STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "CMSIS Cortex-M55 static inline 可直接使能指定 IRQ。",
+          "evidence_snippet": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h:3905 — __STATIC_INLINE void __NVIC_EnableIRQ(IRQn_Type IRQn)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "interrupt.disable",
+      "group_status": "complete",
+      "search_scope": [
+        "components/Infineon_cmsis-latest/Core/Include/"
+      ],
+      "search_terms": [
+        "irq disable",
+        "interrupt disable",
+        "NVIC",
+        "PLIC"
+      ],
+      "items": [
+        {
+          "symbol": "__NVIC_DisableIRQ",
+          "canonical_symbol": "__NVIC_DisableIRQ",
+          "grade": 2,
+          "declaration_file": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h",
+          "declaration_line": 3943,
+          "definition_file": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h",
+          "definition_line": 3943,
+          "signature": "__STATIC_INLINE void __NVIC_DisableIRQ(IRQn_Type IRQn)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "CMSIS Cortex-M55 static inline 可直接禁止指定 IRQ。",
+          "evidence_snippet": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h:3943 — __STATIC_INLINE void __NVIC_DisableIRQ(IRQn_Type IRQn)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "interrupt.register",
+      "group_status": "complete",
+      "search_scope": [
+        "components/Infineon_cmsis-latest/Core/Include/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/include/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/source/"
+      ],
+      "search_terms": [
+        "irq register",
+        "set vector",
+        "ISR",
+        "callback"
+      ],
+      "items": [
+        {
+          "symbol": "Cy_SysInt_Init",
+          "canonical_symbol": "Cy_SysInt_Init",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_sysint.h",
+          "declaration_line": 307,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_sysint_v2.c",
+          "definition_line": 80,
+          "signature": "cy_en_sysint_status_t Cy_SysInt_Init(const cy_stc_sysint_t* config, cy_israddress userIsr)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "初始化时接收 userIsr，并将其与目标中断源绑定。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_sysint_v2.c:80 — cy_en_sysint_status_t Cy_SysInt_Init(const cy_stc_sysint_t* config, cy_israddress userIsr)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_SysInt_SetVector",
+          "canonical_symbol": "Cy_SysInt_SetVector",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_sysint.h",
+          "declaration_line": 352,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_sysint_v2.c",
+          "definition_line": 92,
+          "signature": "cy_israddress Cy_SysInt_SetVector(IRQn_Type IRQn, cy_israddress userIsr)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按 IRQn 直接替换向量并返回旧 ISR 地址。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_sysint_v2.c:92 — (void)Cy_SysInt_SetVector(config->intrSrc, userIsr)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "__NVIC_SetVector",
+          "canonical_symbol": "__NVIC_SetVector",
+          "grade": 2,
+          "declaration_file": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h",
+          "declaration_line": 4199,
+          "definition_file": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h",
+          "definition_line": 4199,
+          "signature": "__STATIC_INLINE void __NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "中断号/中断源有效",
+            "向量表及目标内核处于可配置状态",
+            "VTOR 指向可写向量表"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "CMSIS 底层 static inline 可直接写向量表项。",
+          "evidence_snippet": "components/Infineon_cmsis-latest/Core/Include/core_cm55.h:4199 — __STATIC_INLINE void __NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "uart.configure",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/hal/source/"
+      ],
+      "search_terms": [
+        "uart init",
+        "uart configure",
+        "baud",
+        "word length",
+        "parity"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_uart_setup",
+          "canonical_symbol": "mtb_hal_uart_setup",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_uart_impl.h",
+          "declaration_line": 68,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c",
+          "definition_line": 531,
+          "signature": "cy_rslt_t mtb_hal_uart_setup(mtb_hal_uart_t* obj, const mtb_hal_uart_configurator_t* config, cy_stc_scb_uart_context_t* context, const mtb_hal_clock_t* clock)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按生成的 configurator 完成 UART 对象及硬件参数设置。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c:531 — cy_rslt_t mtb_hal_uart_setup(mtb_hal_uart_t* obj, const mtb_hal_uart_configurator_t* cfg, cy_stc_scb_uart_context_t* context, const mtb_hal_clock_t* clock)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_uart_set_baud",
+          "canonical_symbol": "mtb_hal_uart_set_baud",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_uart.h",
+          "declaration_line": 211,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c",
+          "definition_line": 570,
+          "signature": "cy_rslt_t mtb_hal_uart_set_baud(mtb_hal_uart_t* obj, uint32_t baudrate, uint32_t* actualbaud)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "可独立设置波特率，但不覆盖数据位/校验等完整配置。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c:570 — cy_rslt_t mtb_hal_uart_set_baud(mtb_hal_uart_t* obj, uint32_t baudrate, uint32_t* actualbaud)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_uart_config_async",
+          "canonical_symbol": "mtb_hal_uart_config_async",
+          "grade": 1,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_uart.h",
+          "declaration_line": 346,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c",
+          "definition_line": 956,
+          "signature": "cy_rslt_t mtb_hal_uart_config_async(mtb_hal_uart_t* obj, mtb_async_transfer_context_t* context)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只准备异步传输上下文，不完成 UART 基础配置。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c:956 — cy_rslt_t mtb_hal_uart_config_async(mtb_hal_uart_t* obj, mtb_async_transfer_context_t* context)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "uart.write",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/hal/source/"
+      ],
+      "search_terms": [
+        "uart write",
+        "send",
+        "transmit",
+        "DMA"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_uart_write",
+          "canonical_symbol": "mtb_hal_uart_write",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_uart.h",
+          "declaration_line": 274,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c",
+          "definition_line": 724,
+          "signature": "cy_rslt_t mtb_hal_uart_write(mtb_hal_uart_t* obj, void* tx, size_t* tx_length)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "同步发送缓冲区并通过长度参数报告完成量。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c:724 — cy_rslt_t mtb_hal_uart_write(mtb_hal_uart_t* obj, void* tx, size_t* tx_length)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_uart_write_async",
+          "canonical_symbol": "mtb_hal_uart_write_async",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_uart.h",
+          "declaration_line": 406,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c",
+          "definition_line": 1034,
+          "signature": "cy_rslt_t mtb_hal_uart_write_async(mtb_hal_uart_t* obj, void* tx, size_t length)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "异步发送指定长度缓冲区，需要异步上下文/事件处理。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c:1034 — cy_rslt_t mtb_hal_uart_write_async(mtb_hal_uart_t* obj, void* tx, size_t length)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "uart.read",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/hal/source/"
+      ],
+      "search_terms": [
+        "uart read",
+        "receive",
+        "DMA",
+        "idle"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_uart_read",
+          "canonical_symbol": "mtb_hal_uart_read",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_uart.h",
+          "declaration_line": 287,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c",
+          "definition_line": 749,
+          "signature": "cy_rslt_t mtb_hal_uart_read(mtb_hal_uart_t* obj, void* rx, size_t* rx_length)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "同步接收缓冲区并通过长度参数报告完成量。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c:749 — cy_rslt_t mtb_hal_uart_read(mtb_hal_uart_t* obj, void* rx, size_t* rx_length)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_uart_read_async",
+          "canonical_symbol": "mtb_hal_uart_read_async",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_uart.h",
+          "declaration_line": 387,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c",
+          "definition_line": 1024,
+          "signature": "cy_rslt_t mtb_hal_uart_read_async(mtb_hal_uart_t* obj, void* rx, size_t length)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "UART 实例和引脚复用已准备",
+            "所需外设时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "异步接收指定长度缓冲区，需要异步上下文/事件处理。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_uart.c:1024 — cy_rslt_t mtb_hal_uart_read_async(mtb_hal_uart_t* obj, void* rx, size_t length)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "gpio.configure",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/hal/source/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/include/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/source/"
+      ],
+      "search_terms": [
+        "gpio init",
+        "pin configure",
+        "drive mode",
+        "direction"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_gpio_configure",
+          "canonical_symbol": "mtb_hal_gpio_configure",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio.h",
+          "declaration_line": 213,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_gpio.c",
+          "definition_line": 146,
+          "signature": "void mtb_hal_gpio_configure(mtb_hal_gpio_t* obj, mtb_hal_gpio_direction_t direction, mtb_hal_gpio_drive_mode_t drive_mode)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按方向和驱动模式直接配置 MTB HAL GPIO 对象。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_gpio.c:146 — void mtb_hal_gpio_configure(mtb_hal_gpio_t* obj, mtb_hal_gpio_direction_t direction, mtb_hal_gpio_drive_mode_t drive_mode)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_GPIO_Pin_Init",
+          "canonical_symbol": "Cy_GPIO_Pin_Init",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "declaration_line": 667,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_gpio.c",
+          "definition_line": 80,
+          "signature": "cy_en_gpio_status_t Cy_GPIO_Pin_Init(GPIO_PRT_Type* base, uint32_t pinNum, const cy_stc_gpio_pin_config_t *config)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "PDL 层按配置结构完整初始化单个 GPIO 引脚。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_gpio.c:80 — cy_en_gpio_status_t Cy_GPIO_Pin_Init(GPIO_PRT_Type *base, uint32_t pinNum, const cy_stc_gpio_pin_config_t *config)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_GPIO_Pin_FastInit",
+          "canonical_symbol": "Cy_GPIO_Pin_FastInit",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "declaration_line": 669,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_gpio.c",
+          "definition_line": 420,
+          "signature": "void Cy_GPIO_Pin_FastInit(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t driveMode, uint32_t outVal, en_hsiom_sel_t hsiom)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "PDL 快速入口可配置驱动模式、输出初值和 HSIOM。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_gpio.c:420 — void Cy_GPIO_Pin_FastInit(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t driveMode, uint32_t outVal, en_hsiom_sel_t hsiom)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_gpio_setup",
+          "canonical_symbol": "mtb_hal_gpio_setup",
+          "grade": 1,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio.h",
+          "declaration_line": 204,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_gpio.c",
+          "definition_line": 132,
+          "signature": "void mtb_hal_gpio_setup(mtb_hal_gpio_t* obj, const uint8_t port, const uint8_t pin)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只把 HAL 对象绑定到端口/引脚，不设置方向与驱动模式。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_gpio.c:132 — void mtb_hal_gpio_setup(mtb_hal_gpio_t* obj, const uint8_t port, const uint8_t pin)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_GPIO_SetDrivemode",
+          "canonical_symbol": "Cy_GPIO_SetDrivemode",
+          "grade": 1,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "declaration_line": 698,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "definition_line": 1284,
+          "signature": "__STATIC_INLINE void Cy_GPIO_SetDrivemode(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t value)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只设置驱动模式，是完整 GPIO 配置的一部分。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h:1284 — __STATIC_INLINE void Cy_GPIO_SetDrivemode(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t value)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "gpio.write",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/include/"
+      ],
+      "search_terms": [
+        "gpio write",
+        "set pin",
+        "clear pin",
+        "toggle"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_gpio_write_internal",
+          "canonical_symbol": "mtb_hal_gpio_write_internal",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+          "declaration_line": 66,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+          "definition_line": 66,
+          "signature": "__STATIC_INLINE void mtb_hal_gpio_write_internal(mtb_hal_gpio_t* obj, bool value)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "这是公开 mtb_hal_gpio_write 宏的真实 static inline 目标，可按逻辑值写引脚。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h:66 — __STATIC_INLINE void mtb_hal_gpio_write_internal(mtb_hal_gpio_t* obj, bool value)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_gpio_port_write_internal",
+          "canonical_symbol": "mtb_hal_gpio_port_write_internal",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+          "declaration_line": 187,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+          "definition_line": 187,
+          "signature": "__STATIC_INLINE void mtb_hal_gpio_port_write_internal(mtb_hal_gpio_port_t* port, uint32_t value)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "这是端口写宏的真实 static inline 目标，按整端口值写入。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h:187 — __STATIC_INLINE void mtb_hal_gpio_port_write_internal(mtb_hal_gpio_port_t* port, uint32_t value)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_GPIO_Write",
+          "canonical_symbol": "Cy_GPIO_Write",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "declaration_line": 693,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "definition_line": 1104,
+          "signature": "__STATIC_INLINE void Cy_GPIO_Write(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t value)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "PDL static inline 按 value 写指定引脚，层级低于 MTB HAL。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h:1104 — __STATIC_INLINE void Cy_GPIO_Write(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t value)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_GPIO_Set",
+          "canonical_symbol": "Cy_GPIO_Set",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "declaration_line": 695,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "definition_line": 1193,
+          "signature": "__STATIC_INLINE void Cy_GPIO_Set(GPIO_PRT_Type* base, uint32_t pinNum)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "PDL static inline 固定置高，能完成受限的 GPIO 写语义。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h:1193 — __STATIC_INLINE void Cy_GPIO_Set(GPIO_PRT_Type* base, uint32_t pinNum)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_GPIO_Clr",
+          "canonical_symbol": "Cy_GPIO_Clr",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "declaration_line": 696,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "definition_line": 1221,
+          "signature": "__STATIC_INLINE void Cy_GPIO_Clr(GPIO_PRT_Type* base, uint32_t pinNum)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "PDL static inline 固定置低，能完成受限的 GPIO 写语义。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h:1221 — __STATIC_INLINE void Cy_GPIO_Clr(GPIO_PRT_Type* base, uint32_t pinNum)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_gpio_toggle_internal",
+          "canonical_symbol": "mtb_hal_gpio_toggle_internal",
+          "grade": 1,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+          "declaration_line": 88,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+          "definition_line": 88,
+          "signature": "__STATIC_INLINE void mtb_hal_gpio_toggle_internal(mtb_hal_gpio_t* obj)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "这是 toggle 宏的真实目标，只翻转当前值，不能指定高/低。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h:88 — __STATIC_INLINE void mtb_hal_gpio_toggle_internal(mtb_hal_gpio_t* obj)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_gpio_port_toggle_internal",
+          "canonical_symbol": "mtb_hal_gpio_port_toggle_internal",
+          "grade": 1,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+          "declaration_line": 163,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+          "definition_line": 163,
+          "signature": "__STATIC_INLINE void mtb_hal_gpio_port_toggle_internal(mtb_hal_gpio_port_t* port, uint32_t pin_mask)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只翻转端口掩码内的当前值，不能指定目标逻辑值。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h:163 — __STATIC_INLINE void mtb_hal_gpio_port_toggle_internal(mtb_hal_gpio_port_t* port, uint32_t pin_mask)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "gpio.read",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/include/"
+      ],
+      "search_terms": [
+        "gpio read",
+        "get pin",
+        "input state"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_gpio_read_internal",
+          "canonical_symbol": "mtb_hal_gpio_read_internal",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+          "declaration_line": 77,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+          "definition_line": 77,
+          "signature": "__STATIC_INLINE bool mtb_hal_gpio_read_internal(mtb_hal_gpio_t* obj)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "这是公开 mtb_hal_gpio_read 宏的真实 static inline 目标，返回引脚状态。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h:77 — __STATIC_INLINE bool mtb_hal_gpio_read_internal(mtb_hal_gpio_t* obj)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_gpio_port_read_internal",
+          "canonical_symbol": "mtb_hal_gpio_port_read_internal",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+          "declaration_line": 213,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h",
+          "definition_line": 213,
+          "signature": "__STATIC_INLINE void mtb_hal_gpio_port_read_internal(mtb_hal_gpio_port_t* port, uint32_t* value)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "这是端口读宏的真实 static inline 目标，读取整个端口值。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio_impl.h:213 — __STATIC_INLINE void mtb_hal_gpio_port_read_internal(mtb_hal_gpio_port_t* port, uint32_t* value)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_GPIO_Read",
+          "canonical_symbol": "Cy_GPIO_Read",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "declaration_line": 692,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "definition_line": 1074,
+          "signature": "__STATIC_INLINE uint32_t Cy_GPIO_Read(GPIO_PRT_Type* base, uint32_t pinNum)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "PDL static inline 读取指定引脚状态，层级低于 MTB HAL。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h:1074 — __STATIC_INLINE uint32_t Cy_GPIO_Read(GPIO_PRT_Type* base, uint32_t pinNum)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "gpio.attach_irq",
+      "group_status": "no_public_api",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/hal/source/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/include/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/source/"
+      ],
+      "search_terms": [
+        "gpio interrupt",
+        "register callback",
+        "edge",
+        "event"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_gpio_register_callback",
+          "canonical_symbol": "mtb_hal_gpio_register_callback",
+          "grade": 1,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio.h",
+          "declaration_line": 315,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_gpio.c",
+          "definition_line": 157,
+          "signature": "void mtb_hal_gpio_register_callback(mtb_hal_gpio_t* obj, mtb_hal_gpio_event_callback_t callback, void* callback_arg)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只登记回调；仍需事件/触发配置和中断使能。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_gpio.c:157 — void mtb_hal_gpio_register_callback(mtb_hal_gpio_t* obj, mtb_hal_gpio_event_callback_t callback, void* callback_arg)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_gpio_enable_event",
+          "canonical_symbol": "mtb_hal_gpio_enable_event",
+          "grade": 1,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_gpio.h",
+          "declaration_line": 329,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_gpio.c",
+          "definition_line": 170,
+          "signature": "void mtb_hal_gpio_enable_event(mtb_hal_gpio_t* obj, mtb_hal_gpio_event_t event, bool enable)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只启用 GPIO 事件；不负责登记应用回调。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_gpio.c:170 — void mtb_hal_gpio_enable_event(mtb_hal_gpio_t* obj, mtb_hal_gpio_event_t event, bool enable)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_GPIO_SetInterruptEdge",
+          "canonical_symbol": "Cy_GPIO_SetInterruptEdge",
+          "grade": 1,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "declaration_line": 749,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "definition_line": 2195,
+          "signature": "__STATIC_INLINE void Cy_GPIO_SetInterruptEdge(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t value)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只设置触发边沿，不绑定处理函数。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h:2195 — __STATIC_INLINE void Cy_GPIO_SetInterruptEdge(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t value)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_GPIO_SetInterruptMask",
+          "canonical_symbol": "Cy_GPIO_SetInterruptMask",
+          "grade": 1,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "declaration_line": 745,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "definition_line": 2066,
+          "signature": "__STATIC_INLINE void Cy_GPIO_SetInterruptMask(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t value)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只设置中断掩码，不绑定处理函数。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h:2066 — __STATIC_INLINE void Cy_GPIO_SetInterruptMask(GPIO_PRT_Type* base, uint32_t pinNum, uint32_t value)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_GPIO_Pin_Init",
+          "canonical_symbol": "Cy_GPIO_Pin_Init",
+          "grade": 1,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_gpio.h",
+          "declaration_line": 667,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_gpio.c",
+          "definition_line": 80,
+          "signature": "cy_en_gpio_status_t Cy_GPIO_Pin_Init(GPIO_PRT_Type* base, uint32_t pinNum, const cy_stc_gpio_pin_config_t *config)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "端口与引脚编号有效",
+            "对应 GPIO 端口时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "配置结构可包含边沿/掩码，但仍不绑定应用回调。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_gpio.c:80 — cy_en_gpio_status_t Cy_GPIO_Pin_Init(GPIO_PRT_Type *base, uint32_t pinNum, const cy_stc_gpio_pin_config_t *config)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；发现的接口只能完成触发/回调/使能等分步动作，没有单一稳定公开 callable API 可独立完成完整契约。"
+    },
+    {
+      "operation_id": "timer.initialize",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/hal/source/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/include/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/source/"
+      ],
+      "search_terms": [
+        "timer init",
+        "timer setup",
+        "base init"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_timer_setup",
+          "canonical_symbol": "mtb_hal_timer_setup",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_timer.h",
+          "declaration_line": 158,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c",
+          "definition_line": 51,
+          "signature": "cy_rslt_t mtb_hal_timer_setup(mtb_hal_timer_t* obj, const mtb_hal_timer_configurator_t* config, mtb_hal_clock_t* clock)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "按 configurator 绑定并初始化 MTB HAL 定时器对象。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c:51 — cy_rslt_t mtb_hal_timer_setup(mtb_hal_timer_t* obj, const mtb_hal_timer_configurator_t* hal_config, mtb_hal_clock_t* clk)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_TCPWM_Counter_Init",
+          "canonical_symbol": "Cy_TCPWM_Counter_Init",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm_counter.h",
+          "declaration_line": 265,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_tcpwm_counter.c",
+          "definition_line": 58,
+          "signature": "cy_en_tcpwm_status_t Cy_TCPWM_Counter_Init(TCPWM_Type *base, uint32_t cntNum, cy_stc_tcpwm_counter_config_t const *config)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "PDL 层初始化 TCPWM counter，层级低于 MTB HAL。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_tcpwm_counter.c:58 — cy_en_tcpwm_status_t Cy_TCPWM_Counter_Init(TCPWM_Type *base, uint32_t cntNum, cy_stc_tcpwm_counter_config_t const *config)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "timer.start",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/hal/source/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/include/"
+      ],
+      "search_terms": [
+        "timer start",
+        "timer enable",
+        "trigger start"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_timer_start",
+          "canonical_symbol": "mtb_hal_timer_start",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_timer.h",
+          "declaration_line": 169,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c",
+          "definition_line": 89,
+          "signature": "cy_rslt_t mtb_hal_timer_start(mtb_hal_timer_t* obj)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "同时使能 TCPWM counter 并触发 start，直接开始计数。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c:89 — cy_rslt_t mtb_hal_timer_start(mtb_hal_timer_t* obj)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_TCPWM_TriggerStart_Single",
+          "canonical_symbol": "Cy_TCPWM_TriggerStart_Single",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm.h",
+          "declaration_line": 423,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm.h",
+          "definition_line": 888,
+          "signature": "__STATIC_INLINE void Cy_TCPWM_TriggerStart_Single(TCPWM_Type *base, uint32_t cntNum)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启",
+            "Counter 已由 Cy_TCPWM_Counter_Enable 使能"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接触发单个 TCPWM 启动，但要求 counter 已预先 enable。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm.h:888 — __STATIC_INLINE void Cy_TCPWM_TriggerStart_Single(TCPWM_Type *base, uint32_t cntNum)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_TCPWM_Counter_Enable",
+          "canonical_symbol": "Cy_TCPWM_Counter_Enable",
+          "grade": 1,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm_counter.h",
+          "declaration_line": 268,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm_counter.h",
+          "definition_line": 313,
+          "signature": "__STATIC_INLINE void Cy_TCPWM_Counter_Enable(TCPWM_Type *base, uint32_t cntNum)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只使能 counter；官方流程仍要求随后触发 start。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm_counter.h:313 — __STATIC_INLINE void Cy_TCPWM_Counter_Enable(TCPWM_Type *base, uint32_t cntNum)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "timer.stop",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/hal/source/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/include/"
+      ],
+      "search_terms": [
+        "timer stop",
+        "timer disable",
+        "pause"
+      ],
+      "items": [
+        {
+          "symbol": "mtb_hal_timer_stop",
+          "canonical_symbol": "mtb_hal_timer_stop",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_timer.h",
+          "declaration_line": 176,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c",
+          "definition_line": 114,
+          "signature": "cy_rslt_t mtb_hal_timer_stop(mtb_hal_timer_t* obj)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "直接 disable counter，使已运行的 MTB HAL 定时器停止。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c:114 — cy_rslt_t mtb_hal_timer_stop(mtb_hal_timer_t* obj)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_TCPWM_Counter_Disable",
+          "canonical_symbol": "Cy_TCPWM_Counter_Disable",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm_counter.h",
+          "declaration_line": 269,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm_counter.h",
+          "definition_line": 335,
+          "signature": "__STATIC_INLINE void Cy_TCPWM_Counter_Disable(TCPWM_Type *base, uint32_t cntNum)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "PDL static inline 禁用 counter，层级较低但可停止计数。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm_counter.h:335 — __STATIC_INLINE void Cy_TCPWM_Counter_Disable(TCPWM_Type *base, uint32_t cntNum)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_TCPWM_TriggerStopOrKill_Single",
+          "canonical_symbol": "Cy_TCPWM_TriggerStopOrKill_Single",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm.h",
+          "declaration_line": 425,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm.h",
+          "definition_line": 944,
+          "signature": "__STATIC_INLINE void Cy_TCPWM_TriggerStopOrKill_Single(TCPWM_Type *base, uint32_t cntNum)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "触发单个 TCPWM stop/kill，属于较低层专用入口。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm.h:944 — __STATIC_INLINE void Cy_TCPWM_TriggerStopOrKill_Single(TCPWM_Type *base, uint32_t cntNum)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    },
+    {
+      "operation_id": "timer.set_interval",
+      "group_status": "complete",
+      "search_scope": [
+        "components/mtb-device-support-pse8xxgp/hal/include/",
+        "components/mtb-device-support-pse8xxgp/hal/source/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/include/",
+        "components/mtb-device-support-pse8xxgp/pdl/drivers/source/"
+      ],
+      "search_terms": [
+        "timer interval",
+        "period",
+        "autoreload",
+        "timeout"
+      ],
+      "items": [
+        {
+          "symbol": "Cy_TCPWM_Counter_SetPeriod",
+          "canonical_symbol": "Cy_TCPWM_Counter_SetPeriod",
+          "grade": 3,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm_counter.h",
+          "declaration_line": 280,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm_counter.h",
+          "definition_line": 654,
+          "signature": "__STATIC_INLINE void Cy_TCPWM_Counter_SetPeriod(TCPWM_Type *base, uint32_t cntNum, uint32_t period)",
+          "api_layer": "public_macro_inline",
+          "callable_kind": "static_inline",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "PDL static inline 直接写定时周期值。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm_counter.h:654 — __STATIC_INLINE void Cy_TCPWM_Counter_SetPeriod(TCPWM_Type *base, uint32_t cntNum, uint32_t period)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_timer_setup",
+          "canonical_symbol": "mtb_hal_timer_setup",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_timer.h",
+          "declaration_line": 158,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c",
+          "definition_line": 51,
+          "signature": "cy_rslt_t mtb_hal_timer_setup(mtb_hal_timer_t* obj, const mtb_hal_timer_configurator_t* config, mtb_hal_clock_t* clock)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "configurator 中携带 period，可设置周期但会同时执行完整 setup。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c:51 — cy_rslt_t mtb_hal_timer_setup(mtb_hal_timer_t* obj, const mtb_hal_timer_configurator_t* hal_config, mtb_hal_clock_t* clk)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "Cy_TCPWM_Counter_Init",
+          "canonical_symbol": "Cy_TCPWM_Counter_Init",
+          "grade": 2,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/include/cy_tcpwm_counter.h",
+          "declaration_line": 265,
+          "definition_file": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_tcpwm_counter.c",
+          "definition_line": 58,
+          "signature": "cy_en_tcpwm_status_t Cy_TCPWM_Counter_Init(TCPWM_Type *base, uint32_t cntNum, cy_stc_tcpwm_counter_config_t const *config)",
+          "api_layer": "public_driver",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "配置结构包含 period，可在初始化时设置周期。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/pdl/drivers/source/cy_tcpwm_counter.c:58 — cy_en_tcpwm_status_t Cy_TCPWM_Counter_Init(TCPWM_Type *base, uint32_t cntNum, cy_stc_tcpwm_counter_config_t const *config)",
+          "review_status": "adjudicated"
+        },
+        {
+          "symbol": "mtb_hal_timer_reset",
+          "canonical_symbol": "mtb_hal_timer_reset",
+          "grade": 0,
+          "declaration_file": "components/mtb-device-support-pse8xxgp/hal/include/mtb_hal_timer.h",
+          "declaration_line": 184,
+          "definition_file": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c",
+          "definition_line": 133,
+          "signature": "cy_rslt_t mtb_hal_timer_reset(mtb_hal_timer_t* obj, uint32_t start_value)",
+          "api_layer": "public_hal",
+          "callable_kind": "function",
+          "call_direction": "app_to_sdk",
+          "preconditions": [
+            "定时器实例有效",
+            "对应定时器时钟已开启"
+          ],
+          "discovery_source": [
+            "source_search",
+            "public_header",
+            "definition_review",
+            "call_graph"
+          ],
+          "rationale": "只重置当前计数起点，不修改定时周期。",
+          "evidence_snippet": "components/mtb-device-support-pse8xxgp/hal/source/mtb_hal_timer.c:133 — cy_rslt_t mtb_hal_timer_reset(mtb_hal_timer_t* obj, uint32_t start_value)",
+          "review_status": "adjudicated"
+        }
+      ],
+      "group_rationale": "已复核公开声明与实现；至少存在一个可独立完成操作契约的 2/3 级 callable API。"
+    }
+  ]
+}

@@ -58,7 +58,7 @@ OPERATION_DESCRIPTIONS = {
     "clock.enable": "enable a peripheral or system clock",
     "clock.disable": "disable a peripheral or system clock",
     "clock.get_frequency": "return the current clock frequency in hertz",
-    "interrupt.initialize": "initialize the interrupt controller or configure interrupt priority",
+    "interrupt.initialize": "initialize or configure the interrupt controller",
     "interrupt.enable": "enable or unmask an interrupt request",
     "interrupt.disable": "disable or mask an interrupt request",
     "interrupt.register": "register or attach an interrupt handler or vector",
@@ -102,7 +102,7 @@ OPPOSITE_ACTIONS = {
 # These are operation-contract conflicts rather than SDK-specific symbol lists.
 # They prevent a compilable but behaviorally different API from being promoted.
 SEMANTIC_CONFLICTS = {
-    "clock.initialize": {"get", "frequency", "freq", "disable", "deinit"},
+    "clock.initialize": {"get", "enable", "disable", "deinit"},
     "clock.enable": {"disable", "get", "frequency", "freq"},
     "clock.disable": {"enable", "get", "frequency", "freq"},
     "clock.get_frequency": {"enable", "disable", "init", "configure", "set"},
@@ -145,6 +145,15 @@ def identifier_tokens(value: str) -> list[str]:
         normalized.append(inflections.get(token, token))
         if index + 1 < len(tokens) and token == "de" and tokens[index + 1] == "init":
             normalized.append("deinit")
+        if index + 1 < len(tokens) and token == "sys" and tokens[index + 1] == "int":
+            normalized.append("sysint")
+        if (
+            index + 2 < len(tokens)
+            and len(token) == 1
+            and tokens[index + 1].isdigit()
+            and len(tokens[index + 2]) == 1
+        ):
+            normalized.append(token + tokens[index + 1] + tokens[index + 2])
     return normalized
 
 
