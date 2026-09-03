@@ -475,3 +475,13 @@ H01 相对自动真值的 P@1、Recall@5、MAP 和 nDCG@10 分别提高 0.040、
 - 论文计划仍以 LambdaMART 为主方法，但当前证据不支持“已稳定优于 q4”。Resolver 未切换到 LambdaMART，本轮没有烧录或执行用户已连接的 IO7/IO6 UART 环回与 IO8/IO9 GPIO 测试，避免把 `operation-weighted` 固件误计为主方法结果。
 - 下一阶段优先统一 HAL/LL/static-inline/包装函数的真值等级，增加 8 至 12 个带源码证据的独立训练厂商组，把目标架构和 SDK 组件图变成一等输入，并验证两阶段可行性筛选 + LambdaMART。冻结门槛为每板 P@1 不低于 0.80、汇总 MAP/nDCG@10 不低于 0.80、Hit@5 不低于 0.90；达到后再接入 Resolver、重建六套固件和执行上板。
 - 新增完整方法与结果文档 `docs/lambdamart-method-and-external-board-evaluation-v0.6.md`。项目测试由 55 项增加到 61 项，当前 61 项全部通过。
+
+## v2.6：指标语义、q4 对照与三板开发集边界澄清
+
+- 核对评估实现后确认，现有 P@1、Recall@5、MAP 和 nDCG@10 均先将 1/2/3 级标签二值化为相关项，再按查询宏平均。三板 55 个查询平均有 2.82 个相关函数，49 个查询首位命中，但有 21 个查询出现“首位正确而 Top5 未找全所有相关实体”，因此 P@1 0.891 与 Recall@5 0.775、MAP 0.736 并不矛盾。
+- 补充分级口径审计：首选/等价 API P@1（label>=2）为 0.855，首选/等价 API Recall@5 为 0.836，分级 nDCG@10 为 0.832；这些指标用于区分主要绑定正确性和辅助相关实体覆盖，不替换原有严格指标。
+- 更正与 q4 的表述。旧冻结三种子 LambdaMART 在原始 H03 上低于 q4；本轮最终结构增强残差组合在同一三板等价真值和可行性保护下，P@1/Recall@5/MAP/nDCG@10/Hit@5 均高于 q4，差值为 +0.055/+0.077/+0.033/+0.031/+0.036。可以声明当前三板外部开发集上的提升，不能外推为所有未见 SDK 上均稳定显著提升。
+- 代码审计确认 `semantic_feasibility.py` 不含 K210、STM32、PSoC 或具体函数名白名单。三板 SDK ID 只在 profile 数据中声明目标架构，三条等价仲裁只修改评估标签。但规则类别是在查看三板错误后形成，因此三板应标为外部开发诊断集，而不是方法调整后的完全未见确认集。
+- 四个核心外部指标平均为 0.803，达到进入 Resolver 接入、编译和上板工程验证的合理门槛。下一阶段不再针对三板新增经验规则，先冻结方法、接入 `operation-lambdamart` Resolver，并重新生成绑定和固件。
+- `61 passed` 的含义已明确：`test_pipeline_modules.py` 的 55 个单元/组件集成测试加 `test_semantic_feasibility.py` 的 6 个约束测试。它不代表 61 个 SDK、61 次目标编译或 61 项真实硬件测试，不能替代语义实验、六套编译矩阵和实板结果。
+- 新增仅供内部使用的完整方法说明 `docs/internaldocs/semantic-ranking-lambdamart-INTERNAL-20260903.md`，逐步说明 IR、查询、候选召回、MiniLM MaxSim、Jina 双代码视图、寄存器效果图、LambdaMART、指标公式、q4 对照、通用性审计及测试边界；该目录继续由 Git 忽略，不同步公开仓库。
