@@ -14,6 +14,10 @@
     "selection_policy": "覆盖初始化、配置、数据、控制与中断路径的最小迁移契约；仅收录 SDK 中可定位的函数实体",
     "second_reviewer_required_for_publication": true
   },
+  "device_model": {
+    "backend": "rtthread",
+    "contract": "RT-Thread serial, pin and hwtimer operation tables"
+  },
   "capabilities": {
     "clock": {
       "semantic_symbols": ["sysctl_clock_enable", "sysctl_clock_disable", "sysctl_clock_get_freq"],

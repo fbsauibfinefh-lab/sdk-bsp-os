@@ -107,11 +107,11 @@ STM32/PSoC 生成的 `bspforge_validation.c` 仅调用 `rt_device_find/open/writ
 
 ### Zephyr 后端
 
-Zephyr 后端生成 `app/CMakeLists.txt`、`prj.conf`、可选 `app.overlay` 和 `src/main.c`，再由 west 选择目标板并完成 Kconfig、devicetree、CMake 和 Ninja 闭包。STM32F103 与 PSoC E84 使用 Zephyr 上游板级目标和 HAL 模块；K210 使用 `ports/zephyr-k210` 中的仓库内板级端口。
+Zephyr 后端生成 `app/CMakeLists.txt`、`prj.conf`、可选 `app.overlay` 和 `src/main.c`，再由 west 选择目标板并完成 Kconfig、devicetree、CMake 和 Ninja 闭包。STM32F103 与 PSoC E84 使用 Zephyr 上游板级目标和 HAL 模块；K210 使用 `ports/zephyr-k210` 中的仓库内板级端口。后端支持 `native-driver-trace` 与 `generated-sdk-adapter` 两种策略：前者追踪成熟 Zephyr 驱动，后者根据 IR 和规范绑定计划生成可调用 SDK 适配层，并把所需 SDK 源文件直接纳入目标构建。
 
 功能绑定清单在生成阶段先记录 SDK 实体和 HAL provider 证据。构建成功后，后端解析 `build.ninja`，只从本次实际参与编译且位于允许驱动根目录中的源文件提取 `driver_references`，随后回写 `functional-bindings.json`。因此 provider 存在、源码树中出现调用和当前固件实际选中驱动是三个不同证据层级。
 
-K210 端口定义 RV64 CPU、6 MiB SRAM、PLIC、机器定时器和 UARTHS，并在 `PRE_KERNEL_1` 阶段设置标准串口 FPIOA。PSoC E84 的 GNU objcopy 原地 LMA 调整由生成工程中的受控包装器转换为“保留 ELF、在 HEX 转换时应用偏移”，上游 Zephyr 与工具链目录均保持只读。
+K210 端口定义 RV64 CPU、6 MiB SRAM、PLIC、机器定时器和 UARTHS，并在 `PRE_KERNEL_1` 阶段设置标准串口 FPIOA。功能适配路径生成 `bspforge_bindings.c/.h`，编译 SDK 的 FPIOA、GPIOHS、SYSCTL、TIMER、UART 与工具源文件；PLIC 桥把 SDK 本地 IRQ 编号编码为 Zephyr 二级 IRQ，SDK 回调由 Zephyr 中断分发表触发。严格 C 兼容头和 `usleep` 运行时桥由生成目录提供，不修改只读 SDK。PSoC E84 的 GNU objcopy 原地 LMA 调整由生成工程中的受控包装器转换为“保留 ELF、在 HEX 转换时应用偏移”，上游 Zephyr 与工具链目录均保持只读。
 
 ### 统一产物契约
 
@@ -121,7 +121,7 @@ K210 端口定义 RV64 CPU、6 MiB SRAM、PLIC、机器定时器和 UARTHS，并
 
 `02b-canonical-binding-plan.json` 位于语义解析和 OS Backend 之间。它按 clock、interrupt、uart、gpio、timer 的规范化操作保存所选 SDK 实体、签名、参数来源、备选项、置信度及 `inferred/missing` 状态。OS 后端消费这份计划；`SDK_PROFILES` 只提供已知平台架构提示和人工 oracle，不替代自动选择。
 
-固件自测采用统一命令集合：`info`、`uart.loopback`、`gpio.toggle`、`gpio.irq`、`timer.oneshot`、`timer.periodic`、`stability`。RT-Thread 通过 FinSH 命令接收，Zephyr 通过 console 轮询接收，均输出协议 1.0 的逐行 JSON。主机端保存原始串口日志，并把 `unsupported` 从适用命令分母中剔除。详细操作见 `docs/hardware-validation.md`。
+固件自测采用统一命令集合：`info`、`clock.basic`、`interrupt.basic`、`uart.loopback`、`gpio.toggle`、`gpio.irq`、`timer.oneshot`、`timer.periodic`、`stability`。RT-Thread 通过 FinSH 命令接收，Zephyr 通过 console 轮询接收，均输出协议 1.0 的逐行 JSON。主机端保存原始串口日志，并把 `unsupported` 从适用命令分母中剔除。详细操作见 `docs/hardware-validation.md`。
 
 ## 构建后验证与评估
 

@@ -24,6 +24,13 @@ class ExperimentEvaluator:
             for item in bindings.get("bindings", [])
         }
         class_to_capability = {"serial": "uart", "pin": "gpio", "hwtimer": "timer"}
+        expected_device_backend = ground_truth.get("device_model", {}).get("backend")
+        observed_device_backend = devices.get("backend")
+        device_contract_matches = (
+            expected_device_backend is None
+            or observed_device_backend is None
+            or expected_device_backend == observed_device_backend
+        )
         operation_index: dict[str, set[str]] = {}
         for item in devices.get("devices", []):
             capability = class_to_capability.get(item["class"])
@@ -41,7 +48,7 @@ class ExperimentEvaluator:
             device_metrics = self._set_metrics(
                 operation_index.get(capability, set()),
                 set(truth.get("device_operations", [])),
-                applicable=supported,
+                applicable=supported and device_contract_matches,
             )
             per_capability[capability] = {
                 "supported_by_sdk": supported,
@@ -53,6 +60,11 @@ class ExperimentEvaluator:
             "schema_version": "1.1",
             "created_at": utc_now(),
             "ground_truth_id": ground_truth.get("id", "unknown"),
+            "device_model_contract": {
+                "expected_backend": expected_device_backend,
+                "observed_backend": observed_device_backend,
+                "matches": device_contract_matches,
+            },
             "semantic_resolution": semantic,
             "per_capability": per_capability,
             "summary": {

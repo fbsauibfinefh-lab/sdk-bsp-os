@@ -45,7 +45,8 @@ Windows 可通过以下 UNC 路径访问同一目录：
 | 内容 | 文件 |
 | --- | --- |
 | RT-Thread 自测源码生成器 | `bspforge/os_backend/rtthread_validation.py` |
-| Zephyr 自测源码生成器 | `bspforge/os_backend/zephyr.py` 中的 `_validation_source` |
+| Zephyr 自测源码生成器 | `bspforge/os_backend/zephyr_validation.py` |
+| Zephyr SDK 功能适配生成器 | `bspforge/os_backend/zephyr_binding.py` |
 | 主机执行器 | `bspforge/hardware_test/host.py` |
 | 请求和 JSON 协议 | `bspforge/hardware_test/protocol.py` |
 | 命令行入口 | `pyproject.toml` 中的 `bspforge-hwtest` |
@@ -237,6 +238,7 @@ K210 + RT-Thread：
 conda run -n AIoT-v1.0 bspforge-hwtest \
   --port /dev/ttyUSB0 --board k210 --rtos rtthread \
   --baudrate 115200 --timeout 15 --rounds 1 \
+  --firmware workspace/generated/k210-rtthread/bsp/k210/rtthread.bin \
   --output workspace/hardware/$EXPERIMENT_ID/k210-rtthread-smoke.json
 ```
 
@@ -246,6 +248,7 @@ K210 + Zephyr：
 conda run -n AIoT-v1.0 bspforge-hwtest \
   --port /dev/ttyUSB0 --board k210 --rtos zephyr \
   --baudrate 115200 --timeout 15 --rounds 1 \
+  --firmware workspace/generated/k210-zephyr/build/zephyr/zephyr.bin \
   --output workspace/hardware/$EXPERIMENT_ID/k210-zephyr-smoke.json
 ```
 
@@ -285,7 +288,7 @@ conda run -n AIoT-v1.0 bspforge-hwtest \
   --output workspace/hardware/$EXPERIMENT_ID/psoc-e84-zephyr-smoke.json
 ```
 
-上述 `/dev/ttyUSB0` 和 `/dev/ttyACM0` 只是示例，必须替换为本次 `udevadm` 核验后的设备。
+上述 `/dev/ttyUSB0` 和 `/dev/ttyACM0` 只是示例，必须替换为本次 `udevadm` 核验后的设备。正式报告应始终提供 `--firmware <已烧录文件>`；工具会校验文件存在，并在 JSON 中记录路径、大小和 SHA-256。该参数不会自行烧录，操作者仍须保证传入文件就是本轮烧录对象。
 
 ### 5.2 正式重复实验
 
@@ -412,7 +415,7 @@ conda run -n AIoT-v1.0 bspforge-hwtest \
 
 仿真用于验证协议、OS API 行为和重复性，不能替代真实时钟、中断、电气连接和芯片启动链验证。
 
-## 10. 冻结 LambdaMART 的 K210 实测更新（2026-09-03）
+## 10. 冻结 LambdaMART 的 K210 实测更新（2026-09-04）
 
 K210 当前正式测试配置已经从旧 `operation-weighted` 切换到 `operation-lambdamart`。新固件、命令、哈希、接线、10 轮逐命令结果和解释边界统一记录在 `docs/frozen-lambdamart-resolver-k210-v2.1.md`。
 
@@ -423,4 +426,4 @@ experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-rtthread-full-1
 experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-full-10rounds.json
 ```
 
-当前结论是 RT-Thread 90/90 条命令通过且无 `unsupported`；Zephyr 40/40 个适用命令通过、50 个命令明确 `unsupported`。因此前者是五能力绑定级验证，后者仍是启动、双向协议和 OS 定时器冒烟验证。本文前面旧路径和旧哈希用于保留版本历史，后续 K210 复测应优先使用上述新配置和文件。
+当前最终结论是两套后端均为 10/10 次启动、90/90 条命令通过、失败 0、`unsupported` 0。Zephyr 已从 `native-driver-trace` 冒烟路径更新为 `generated-sdk-adapter`：生成适配层编译分析所得 K210 SDK 的 FPIOA、GPIOHS、SYSCTL、TIMER 和 UART 实现，并完成真实 IO7/IO6 UART 回环与 IO8/IO9 GPIO 电平/中断验证。Zephyr 周期定时器在达到预期 3 次回调后由适配层停表，十轮均严格得到 3 次；该用例验证模式、启动、停止和 IRQ 可达性，不用于宣称定时精度。本文前面的旧路径与旧哈希用于保留历史，后续 K210 复测应优先使用上述机器报告。

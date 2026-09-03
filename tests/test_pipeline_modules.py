@@ -28,6 +28,8 @@ from bspforge.os_backend.artifact_verifier import FirmwareArtifactVerifier
 from bspforge.os_backend.native_binding import NativeDriverBindingTracer
 from bspforge.os_backend.rtthread_device import RTThreadDeviceModelGenerator
 from bspforge.os_backend.rtthread_validation import RTThreadValidationGenerator
+from bspforge.os_backend.zephyr_binding import ZephyrBindingGenerator
+from bspforge.os_backend.zephyr_validation import ZephyrValidationGenerator
 from bspforge.operation_dataset import build_operation_dataset
 from bspforge.operation_constraints import contract_adjustment
 from bspforge.operation_ranking import (
@@ -1227,6 +1229,49 @@ class ModuleTests(unittest.TestCase):
         self.assertIn("if (bspforge_zephyr_validation_run() != 0)", source)
         self.assertIn("k_busy_wait(50);", source)
 
+    def test_zephyr_functional_validation_covers_common_board_protocol(self) -> None:
+        source_dir = self.root / "zephyr-functional"
+        source_dir.mkdir()
+        manifest = ZephyrValidationGenerator().generate(
+            source_dir, "k210", "fixture-build", functional=True
+        )
+        source = Path(manifest["source"]).read_text(encoding="utf-8")
+        for command in (
+            "info",
+            "clock.basic",
+            "interrupt.basic",
+            "uart.loopback",
+            "gpio.toggle",
+            "gpio.irq",
+            "timer.oneshot",
+            "timer.periodic",
+            "stability",
+        ):
+            self.assertIn(f'"{command}"', source)
+        self.assertIn('#include "bspforge_bindings.h"', source)
+        self.assertIn("bspforge_timer_target = expected", source)
+        self.assertIn("bspforge_timer_quiesce();", source)
+        self.assertNotIn('const char *status = "unsupported"', source)
+
+    def test_zephyr_functional_cmake_compiles_analyzed_sdk_sources(self) -> None:
+        cmake = ZephyrBackend._cmake_source(
+            self.sdk, ["lib/drivers/uart.c"], functional=True
+        )
+        self.assertIn("src/bspforge_bindings.c", cmake)
+        self.assertIn(str((self.sdk / "lib/drivers/uart.c").resolve()), cmake)
+        self.assertIn("target_include_directories(app PRIVATE", cmake)
+        self.assertIn("asm=__asm__", cmake)
+
+    def test_zephyr_k210_binding_validates_and_uses_configured_timer_irq(self) -> None:
+        source = ZephyrBindingGenerator._source(
+            {"timer_device": 2, "timer_channel": 3}
+        )
+        self.assertIn("#define BSPFORGE_TIMER_DEVICE 2U", source)
+        self.assertIn("#define BSPFORGE_TIMER_CHANNEL 3U", source)
+        self.assertIn("BSPFORGE_TIMER_CHANNEL / 2U", source)
+        with self.assertRaisesRegex(ValueError, "timer device/channel"):
+            ZephyrBindingGenerator._source({"timer_device": 3})
+
     def test_k210_zephyr_port_enables_fpioa_clock_before_pin_mapping(self) -> None:
         source = (
             Path(__file__).resolve().parents[1]
@@ -1302,6 +1347,28 @@ class ModuleTests(unittest.TestCase):
         self.assertIsNone(metrics["summary"]["semantic_macro_f1"])
         self.assertIsNone(metrics["summary"]["binding_macro_recall"])
 
+    def test_device_contract_is_not_compared_across_rtos_backends(self) -> None:
+        resolution = {"mappings": []}
+        truth = {
+            "id": "rtthread-only-contract",
+            "device_model": {"backend": "rtthread"},
+            "capabilities": {
+                "uart": {
+                    "semantic_symbols": [],
+                    "binding_symbols": [],
+                    "device_operations": ["configure", "putc", "getc"],
+                }
+            },
+        }
+        metrics = ExperimentEvaluator().evaluate(
+            resolution,
+            {"bindings": []},
+            {"backend": "zephyr", "devices": []},
+            truth,
+        )
+        self.assertFalse(metrics["device_model_contract"]["matches"])
+        self.assertIsNone(metrics["summary"]["device_operation_macro_recall"])
+
     def test_hardware_protocol_report_excludes_unsupported_commands(self) -> None:
         class FakeTransport:
             def __init__(self) -> None:
@@ -1327,13 +1394,21 @@ class ModuleTests(unittest.TestCase):
             def close(self) -> None:
                 pass
 
+        firmware = self.root / "fixture.bin"
+        firmware.write_bytes(b"firmware")
         report = HardwareTestRunner(
-            FakeTransport(), "fixture", "rtthread", timeout=0.1
+            FakeTransport(),
+            "fixture",
+            "rtthread",
+            timeout=0.1,
+            firmware_artifact=firmware,
         ).run(commands=["info", "gpio.irq"])
         self.assertEqual(report["summary"]["boot_successes"], 1)
         self.assertEqual(report["summary"]["commands_passed"], 1)
         self.assertEqual(report["summary"]["commands_applicable"], 1)
         self.assertEqual(report["summary"]["unsupported"], 1)
+        self.assertEqual(report["firmware_artifact"]["size"], 8)
+        self.assertEqual(len(report["firmware_artifact"]["sha256"]), 64)
 
     def test_artifact_output_parsers(self) -> None:
         header = FirmwareArtifactVerifier._parse_elf_header(

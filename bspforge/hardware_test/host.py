@@ -12,7 +12,7 @@ from pathlib import Path
 from statistics import mean
 from typing import Any, Protocol
 
-from bspforge.common import utc_now, write_json
+from bspforge.common import file_sha256, utc_now, write_json
 from bspforge.hardware_test.protocol import DEFAULT_COMMANDS, parse_event, request_line
 
 
@@ -117,6 +117,7 @@ class HardwareTestRunner:
     board: str
     rtos: str
     timeout: float = 5.0
+    firmware_artifact: Path | None = None
 
     def run(self, rounds: int = 1, commands: list[str] | None = None) -> dict[str, Any]:
         commands = commands or DEFAULT_COMMANDS
@@ -181,11 +182,19 @@ class HardwareTestRunner:
         applicable = [item for item in commands if item.get("status") != "unsupported"]
         passed = [item for item in applicable if item.get("status") == "pass"]
         boot_times = [item["boot_time_ms"] for item in rounds if item["boot_time_ms"] is not None]
+        firmware = None
+        if self.firmware_artifact is not None:
+            firmware = {
+                "path": str(self.firmware_artifact),
+                "size": self.firmware_artifact.stat().st_size,
+                "sha256": file_sha256(self.firmware_artifact),
+            }
         return {
-            "schema_version": "1.0",
+            "schema_version": "1.1",
             "created_at": utc_now(),
             "board": self.board,
             "rtos": self.rtos,
+            "firmware_artifact": firmware,
             "rounds": rounds,
             "raw_log": raw_lines,
             "summary": {
@@ -220,6 +229,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--timeout", type=float, default=5.0)
     parser.add_argument("--rounds", type=int, default=1)
     parser.add_argument(
+        "--firmware",
+        type=Path,
+        help="记录本次已烧录固件的路径、大小和 SHA-256",
+    )
+    parser.add_argument(
         "--test-command",
         action="append",
         choices=DEFAULT_COMMANDS,
@@ -228,6 +242,8 @@ def main(argv: list[str] | None = None) -> int:
     )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
+    if args.firmware is not None and not args.firmware.is_file():
+        parser.error(f"firmware artifact does not exist: {args.firmware}")
     active_transport: Transport = (
         SerialTransport(args.port, args.baudrate, args.timeout)
         if args.port
@@ -235,7 +251,11 @@ def main(argv: list[str] | None = None) -> int:
     )
     try:
         report = HardwareTestRunner(
-            active_transport, args.board, args.rtos, args.timeout
+            active_transport,
+            args.board,
+            args.rtos,
+            args.timeout,
+            args.firmware,
         ).run(args.rounds, commands=args.test_commands)
     finally:
         active_transport.close()

@@ -13,6 +13,8 @@ from bspforge.os_backend.artifact_verifier import FirmwareArtifactVerifier
 from bspforge.os_backend.base import OSBackend
 from bspforge.os_backend.native_binding import NativeDriverBindingTracer
 from bspforge.os_backend.profiles import sdk_profile
+from bspforge.os_backend.zephyr_binding import ZephyrBindingGenerator
+from bspforge.os_backend.zephyr_validation import ZephyrValidationGenerator
 
 
 class ZephyrBackend(OSBackend):
@@ -42,12 +44,34 @@ class ZephyrBackend(OSBackend):
         profile_name = options["sdk_profile"]
         profile = sdk_profile(profile_name)
         binding_plan = options.get("_binding_plan")
-        source = source_dir / "main.c"
-        source.write_text(
-            self._validation_source(board, ir["sdk"]["digest"][:12]),
+        strategy = options.get("binding_strategy", "native-driver-trace")
+        validation_options = dict(options.get("validation", {}))
+        build_id = str(
+            validation_options.get("firmware_build_id", ir["sdk"]["digest"][:12])
+        )
+        if strategy == "generated-sdk-adapter":
+            binding_manifest = ZephyrBindingGenerator().generate(
+                source_dir, ir, binding_plan, options
+            )
+        elif strategy == "native-driver-trace":
+            binding_manifest = None
+        else:
+            raise ValueError(f"Unsupported Zephyr binding strategy: {strategy}")
+        protocol_manifest = ZephyrValidationGenerator().generate(
+            source_dir,
+            board,
+            build_id,
+            functional=strategy == "generated-sdk-adapter",
+        )
+        source = Path(protocol_manifest["source"])
+        (app / "CMakeLists.txt").write_text(
+            self._cmake_source(
+                Path(ir["sdk"]["root"]),
+                binding_manifest.get("required_sources", []) if binding_manifest else [],
+                binding_manifest is not None,
+            ),
             encoding="utf-8",
         )
-        (app / "CMakeLists.txt").write_text(self._cmake_source(), encoding="utf-8")
         (app / "prj.conf").write_text(
             self._project_config(options.get("native_executable", False)),
             encoding="utf-8",
@@ -76,29 +100,52 @@ class ZephyrBackend(OSBackend):
             zephyr_root.parent / item for item in options.get("native_provider_roots", [])
         ]
         # Build-specific driver references are refreshed from build.ninja after linking.
-        binding_manifest = NativeDriverBindingTracer().generate(
-            ir,
-            profile_name,
-            "zephyr",
-            [],
-            provider_roots,
-            binding_plan=binding_plan,
-        )
-        device_manifest = {
-            "schema_version": "1.0",
-            "created_at": utc_now(),
-            "strategy": "zephyr-devicetree-native-model",
-            "devices": [
+        if binding_manifest is None:
+            binding_manifest = NativeDriverBindingTracer().generate(
+                ir,
+                profile_name,
+                "zephyr",
+                [],
+                provider_roots,
+                binding_plan=binding_plan,
+            )
+        if strategy == "generated-sdk-adapter":
+            devices = [
+                {
+                    "class": "sdk-functional-adapter",
+                    "capability": item["capability"],
+                    "source": "bspforge_bindings.c",
+                    "operations": [
+                        symbol["symbol"] for symbol in item["sdk_symbols"]
+                    ],
+                }
+                for item in binding_manifest["bindings"]
+            ]
+        else:
+            devices = [
                 {"class": "serial", "source": "zephyr,console", "operations": ["poll_out"]},
                 {"class": "gpio", "source": "led0", "operations": ["configure", "toggle"]},
                 {"class": "timer", "source": "k_timer", "operations": ["init", "start"]},
-            ],
+            ]
+        device_manifest = {
+            "schema_version": "1.0",
+            "created_at": utc_now(),
+            "backend": "zephyr",
+            "strategy": (
+                "zephyr-sdk-functional-model"
+                if strategy == "generated-sdk-adapter"
+                else "zephyr-devicetree-native-model"
+            ),
+            "devices": devices,
             "operation_tables": [],
             "registration_symbols": [
                 "bspforge_zephyr_validation_init",
                 "bspforge_zephyr_validation_run",
             ],
-            "summary": {"devices": 3, "generated_sources": 1},
+            "summary": {
+                "devices": len(devices),
+                "generated_sources": 3 if binding_manifest.get("source") else 1,
+            },
         }
         write_json(metadata / "sdk-ir.json", ir)
         write_json(metadata / "semantic-resolution.json", resolution)
@@ -115,7 +162,7 @@ class ZephyrBackend(OSBackend):
             "backend": "zephyr",
             "board": board,
             "sdk_profile": profile_name,
-            "binding_strategy": "native-driver-trace",
+            "binding_strategy": strategy,
             "zephyr_root": str(zephyr_root),
             "zephyr_revision": revision,
             "project_root": str(output),
@@ -124,8 +171,8 @@ class ZephyrBackend(OSBackend):
             "adapter": str(source.relative_to(output)),
             "adapter_sha256": file_sha256(source),
             "functional_bindings": {
-                "source": None,
-                "header": None,
+                "source": self._relative_or_none(binding_manifest.get("source"), output),
+                "header": self._relative_or_none(binding_manifest.get("header"), output),
                 "manifest": str((metadata / "functional-bindings.json").relative_to(output)),
                 "summary": binding_manifest["summary"],
             },
@@ -138,7 +185,11 @@ class ZephyrBackend(OSBackend):
             },
             "sdk_package": str(Path(ir["sdk"]["root"])),
             "sdk_digest": ir["sdk"]["digest"],
-            "sdk_materialization": "analyzed-read-only-input-with-native-hal-module",
+            "sdk_materialization": (
+                "analyzed-read-only-input-compiled-by-generated-adapter"
+                if strategy == "generated-sdk-adapter"
+                else "analyzed-read-only-input-with-native-hal-module"
+            ),
             "mapping_count": len(resolution["mappings"]),
             "resolved_count": resolution["summary"]["resolved"],
             "binding_plan": binding_plan["summary"] if binding_plan else None,
@@ -192,7 +243,7 @@ class ZephyrBackend(OSBackend):
             stderr=subprocess.STDOUT,
             errors="replace",
         )
-        if process.returncode == 0:
+        if process.returncode == 0 and manifest["binding_strategy"] == "native-driver-trace":
             self._refresh_binding_manifest(project, output / "build")
         return process.returncode, process.stdout
 
@@ -255,6 +306,16 @@ class ZephyrBackend(OSBackend):
         marker.write_text("generated Zephyr application\n", encoding="utf-8")
 
     @staticmethod
+    def _relative_or_none(value: str | None, root: Path) -> str | None:
+        if not value:
+            return None
+        path = Path(value)
+        try:
+            return str(path.relative_to(root))
+        except ValueError:
+            return str(path)
+
+    @staticmethod
     def _install_board_port(source: Path, app: Path) -> None:
         source = source.resolve()
         if not source.is_dir():
@@ -264,11 +325,35 @@ class ZephyrBackend(OSBackend):
             shutil.copytree(source / "soc", app / "soc")
 
     @staticmethod
-    def _cmake_source() -> str:
-        return """cmake_minimum_required(VERSION 3.20.0)
-find_package(Zephyr REQUIRED HINTS $ENV{ZEPHYR_BASE})
+    def _cmake_source(
+        sdk_root: Path,
+        sdk_sources: list[str],
+        functional: bool,
+    ) -> str:
+        extra_sources = ""
+        include_dirs = ""
+        if functional:
+            paths = ["src/bspforge_bindings.c"] + [
+                str((sdk_root / item).resolve()) for item in sdk_sources
+            ]
+            extra_sources = "\n".join(f"    {item}" for item in paths)
+            include_dirs = f"""
+target_include_directories(app PRIVATE
+    ${{CMAKE_CURRENT_SOURCE_DIR}}/src
+    {sdk_root / 'lib/drivers/include'}
+    {sdk_root / 'lib/bsp/include'}
+    {sdk_root / 'lib/utils/include'}
+)
+target_compile_options(app PRIVATE -std=gnu17)
+target_compile_definitions(app PRIVATE asm=__asm__ typeof=__typeof__)
+"""
+        return f"""cmake_minimum_required(VERSION 3.20.0)
+find_package(Zephyr REQUIRED HINTS $ENV{{ZEPHYR_BASE}})
 project(bspforge_validation)
-target_sources(app PRIVATE src/main.c)
+target_sources(app PRIVATE src/main.c
+{extra_sources}
+)
+{include_dirs}
 """
 
     @staticmethod
@@ -279,6 +364,7 @@ CONFIG_UART_CONSOLE=y
 CONFIG_GPIO=y
 CONFIG_PRINTK=y
 CONFIG_ASSERT=y
+CONFIG_MAIN_STACK_SIZE=4096
 """
         if native_executable:
             config += "CONFIG_UART_NATIVE_PTY_0_ON_STDINOUT=y\n"
@@ -306,129 +392,6 @@ if state.is_file() and "--output-target=ihex" in arguments:
     arguments = ["--change-section-lma", state.read_text(encoding="ascii"), *arguments]
 raise SystemExit(subprocess.run([real_objcopy, *arguments], check=False).returncode)
 '''
-
-    @staticmethod
-    def _validation_source(board: str = "unknown", build_id: str = "uncommitted") -> str:
-        source = r'''/* Generated by BSPForge; evidence is stored in bspforge/. */
-#include <zephyr/device.h>
-#include <zephyr/devicetree.h>
-#include <zephyr/drivers/gpio.h>
-#include <zephyr/drivers/uart.h>
-#include <zephyr/init.h>
-#include <zephyr/kernel.h>
-#include <errno.h>
-#include <string.h>
-
-#define BSPFORGE_LED_NODE DT_ALIAS(led0)
-
-static struct k_timer bspforge_timer;
-
-int bspforge_zephyr_validation_run(void)
-{
-    static const char banner[] =
-        "{\"bspforge\":true,\"protocol\":\"1.0\","
-        "\"event\":\"boot\",\"rtos\":\"zephyr\","
-        "\"board\":\"@BOARD@\",\"build_id\":\"@BUILD_ID@\","
-        "\"stage\":\"application\"}\r\n";
-    const struct device *console = DEVICE_DT_GET(DT_CHOSEN(zephyr_console));
-
-    if (!device_is_ready(console))
-        return -ENODEV;
-    for (size_t index = 0; index < sizeof(banner) - 1; ++index)
-        uart_poll_out(console, banner[index]);
-
-#if DT_NODE_HAS_STATUS(BSPFORGE_LED_NODE, okay)
-    const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(BSPFORGE_LED_NODE, gpios);
-    if (gpio_is_ready_dt(&led)) {
-        gpio_pin_configure_dt(&led, GPIO_OUTPUT_INACTIVE);
-        gpio_pin_toggle_dt(&led);
-    }
-#endif
-    k_timer_start(&bspforge_timer, K_MSEC(10), K_NO_WAIT);
-    return 0;
-}
-
-static void bspforge_selftest(const char *request_id, const char *command)
-{
-    const char *status = "unsupported";
-    uint32_t elapsed = 0;
-    int64_t started;
-
-    if (strcmp(command, "info") == 0 || strcmp(command, "stability") == 0)
-        status = "pass";
-    else if (strcmp(command, "gpio.toggle") == 0) {
-#if DT_NODE_HAS_STATUS(BSPFORGE_LED_NODE, okay)
-        const struct gpio_dt_spec led = GPIO_DT_SPEC_GET(BSPFORGE_LED_NODE, gpios);
-        if (gpio_is_ready_dt(&led) &&
-            gpio_pin_configure_dt(&led, GPIO_OUTPUT_INACTIVE) == 0) {
-            gpio_pin_toggle_dt(&led);
-            gpio_pin_toggle_dt(&led);
-            status = "pass";
-        } else {
-            status = "fail";
-        }
-#endif
-    } else if (strcmp(command, "timer.oneshot") == 0 ||
-               strcmp(command, "timer.periodic") == 0) {
-        started = k_uptime_get();
-        k_sleep(K_MSEC(2));
-        elapsed = (uint32_t)(k_uptime_get() - started);
-        status = "pass";
-    }
-    printk("{\"bspforge\":true,\"protocol\":\"1.0\","
-           "\"event\":\"result\",\"request_id\":\"%s\","
-           "\"command\":\"%s\",\"status\":\"%s\","
-           "\"metrics\":{\"elapsed_ms\":%u}}\r\n",
-           request_id, command, status, elapsed);
-}
-
-int bspforge_zephyr_validation_init(void)
-{
-    k_timer_init(&bspforge_timer, NULL, NULL);
-    return 0;
-}
-SYS_INIT(bspforge_zephyr_validation_init, APPLICATION, 90);
-
-int main(void)
-{
-    const struct device *console = DEVICE_DT_GET(DT_CHOSEN(zephyr_console));
-    char line[96];
-    size_t length = 0;
-
-    if (bspforge_zephyr_validation_run() != 0)
-        return -ENODEV;
-    while (device_is_ready(console)) {
-        unsigned char value;
-        if (uart_poll_in(console, &value) != 0) {
-            k_busy_wait(50);
-            continue;
-        }
-        if (value == '\r' || value == '\n') {
-            char *request_id;
-            char *command;
-            char *separator;
-            static const char prefix[] = "bspforge_selftest ";
-            if (length == 0)
-                continue;
-            line[length] = '\0';
-            request_id = line + sizeof(prefix) - 1;
-            separator = strchr(request_id, ' ');
-            if (strncmp(line, prefix, sizeof(prefix) - 1) == 0 && separator) {
-                *separator = '\0';
-                command = separator + 1;
-                bspforge_selftest(request_id, command);
-            }
-            length = 0;
-        } else if (length + 1 < sizeof(line)) {
-            line[length++] = (char)value;
-        } else {
-            length = 0;
-        }
-    }
-    return -ENODEV;
-}
-'''
-        return source.replace("@BOARD@", board).replace("@BUILD_ID@", build_id)
 
     @staticmethod
     def _detect_prefix(toolchain_bin: Path) -> str:

@@ -509,3 +509,15 @@ H01 相对自动真值的 P@1、Recall@5、MAP 和 nDCG@10 分别提高 0.040、
 - 两个新固件均重新烧录。RT-Thread 为 10/10 次启动、90/90 条适用命令通过、失败 0；Zephyr 为 10/10 次启动、40/40 条适用命令通过、50 条 `unsupported`、失败 0。最终开发板留在 RT-Thread 新固件。
 - 新增 `scripts/evaluate_frozen_operation_bundle.py` 与机器报告 `experiments/operation-ranking/results-k210-runtime-label-free-lambdamart-v2.1.json`。首次无标签全候选 CPU 预处理成本较高，但向量按文本哈希缓存；后续同 SDK Resolver/后端迭代无需重复编码。
 - 最终 Python 单元与组件集成回归为 `63 passed`；三份新部署脚本另经 `py_compile` 检查。该数字不包含两次目标编译或两套实板 10 轮结果。
+
+## v2.9：K210 Zephyr 功能后端与双 RTOS 完整回归
+
+- K210 Zephyr 从 `native-driver-trace` 冒烟路径升级为 `generated-sdk-adapter`。后端根据 IR 和冻结规范绑定计划生成 `bspforge_bindings.c/.h`，将 K210 SDK 的 FPIOA、GPIOHS、SYSCTL、TIMER、UART 和工具源文件直接纳入 west/CMake/Ninja 构建；SDK 输入仍保持只读。
+- 统一协议的九条命令全部接入真实适配层：时钟查询与门控、基础中断、UART 物理回环、GPIO 输出/输入、GPIO 边沿中断、硬件定时器单次/周期回调，以及启动与稳定性。原来的五类 `unsupported` 分支不再用于 K210 功能配置。
+- Zephyr K210 端口补齐 PLIC 二级中断表参数。生成桥把 SDK 本地 IRQ 编码为 Zephyr 二级 IRQ，并把 GPIOHS28 和 TIMER0A 的 Zephyr ISR 分发到 SDK 回调，解决直接使用本地中断号时回调不可达的问题。
+- GPIO 初始化兼容 Zephyr 已完成的板级复用状态：FPIOA 功能与上下拉继续使用 SDK API，GPIOHS 输入/输出方向在适配层按 SDK 寄存器定义配置，读写、边沿和 IRQ 注册仍执行 SDK 函数。定时器每次测试前停表并清理旧状态，达到目标回调数后立即静默停表，使单次和周期功能判据分别固定为 1 次和 3 次。
+- Zephyr 一次编译成功；19/19 项绑定被编译反馈观察，ELF/BIN 验证通过。BIN 为 31256 bytes，SHA-256 为 `e20317d5d853be67f314b013d99a4b2ba8cbaff8527433a1bf0e6a9a99ec46ad`。RT-Thread 同一冻结输入重新生成后由 Build Diagnoser 第二轮补齐 SDK 系统调用源，BIN 为 468104 bytes，SHA-256 为 `9702bdfd8274410fb642d6d8de96bf6327de75b3902c40f4dc19b10704fd16ea`。
+- 同一块 K210、同一 IO7/IO6 UART 回环与 IO8/IO9 GPIO 连线下，两套固件均完成 10 轮自动复位。RT-Thread 与 Zephyr 各为 10/10 次启动、90/90 条命令通过、失败 0、`unsupported` 0；Zephyr 十轮的基础中断/GPIO IRQ/单次定时器/周期定时器计数分别稳定为 1/1/1/3，UART 每轮 16 字节且错误为 0。
+- 主机测试工具新增 `--firmware`，schema 1.1 报告会嵌入已烧录固件的路径、大小和 SHA-256。最终机器报告覆盖旧同名报告，保存在 `experiments/hardware-results/k210-operation-lambdamart-v2.1/`；报告 SHA-256 分别为 RT-Thread `b5a7a2196ffa67245665228716730381647212d1f44bcdc985a2583bfabc850e`、Zephyr `f222e8e736fc8bcba240fb42116697a647f95552722b3a8a7210f4d8b94169f2`。
+- 评估器新增设备后端契约检查。K210 现有 `device_operations` 真值是 RT-Thread serial/pin/hwtimer 契约，不能与 Zephyr 清单直接计算；Zephyr 运行中的该指标改为不适用，语义恢复和 SDK 绑定指标仍独立计算。Zephyr 当前证据属于 SDK 绑定级功能验证，不等同于已注册完整的 Zephyr 原生 `struct device` 驱动。
+- Python 单元与组件集成回归增加 Zephyr 九命令、SDK 构建接入、可配置定时器 IRQ、定时器停表、报告固件哈希和跨 RTOS 设备契约测试，最终为 `67 passed`。该数量不包含两次目标编译和两套各 10 轮的实板结果。
