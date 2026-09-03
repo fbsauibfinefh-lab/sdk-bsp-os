@@ -19,6 +19,9 @@ class RTThreadValidationGenerator:
         pin_number = int(config.get("pin", -1))
         hwtimer_name = str(config.get("hwtimer", "bsptim0"))
         binding_validation = bool(config.get("binding_validation", False))
+        uart_channel = int(config.get("uart_channel", -1))
+        uart_tx_fpioa_io = int(config.get("uart_tx_fpioa_io", -1))
+        uart_rx_fpioa_io = int(config.get("uart_rx_fpioa_io", -1))
         gpio_fpioa_io = int(config.get("gpio_fpioa_io", -1))
         gpio_binding_pin = int(config.get("gpio_binding_pin", -1))
         gpio_input_fpioa_io = int(config.get("gpio_input_fpioa_io", -1))
@@ -32,6 +35,9 @@ class RTThreadValidationGenerator:
                 pin_number,
                 hwtimer_name,
                 binding_validation,
+                uart_channel,
+                uart_tx_fpioa_io,
+                uart_rx_fpioa_io,
                 gpio_fpioa_io,
                 gpio_binding_pin,
                 gpio_input_fpioa_io,
@@ -49,8 +55,8 @@ class RTThreadValidationGenerator:
             "source": str(source),
             "source_sha256": file_sha256(source),
             "devices": [
-                {"class": "serial", "name": uart_name, "operations": ["find", "open", "write"]},
-                {"class": "pin", "name": pin_device, "pin": pin_number, "operations": ["mode", "write"]},
+                {"class": "serial", "name": uart_name, "operations": ["find", "open", "write", "read", "loopback"]},
+                {"class": "pin", "name": pin_device, "pin": pin_number, "operations": ["mode", "write", "read", "irq"]},
                 {"class": "hwtimer", "name": hwtimer_name, "operations": ["find", "open", "start", "isr", "stop", "close"]},
             ],
             "operation_tables": [],
@@ -70,6 +76,9 @@ class RTThreadValidationGenerator:
         pin_number: int,
         hwtimer_name: str,
         binding_validation: bool,
+        uart_channel: int,
+        uart_tx_fpioa_io: int,
+        uart_rx_fpioa_io: int,
         gpio_fpioa_io: int,
         gpio_binding_pin: int,
         gpio_input_fpioa_io: int,
@@ -86,6 +95,60 @@ class RTThreadValidationGenerator:
 #include <sysctl.h>
 '''
             binding_helpers = rf'''
+static int bspforge_binding_uart_loopback(rt_uint32_t *bytes,
+                                          rt_uint32_t *errors)
+{{
+    rt_device_t serial;
+    rt_uint32_t index;
+
+    *bytes = 0U;
+    *errors = 0U;
+    if ({uart_channel} < 0 || {uart_channel} > 2 ||
+        {uart_tx_fpioa_io} < 0 || {uart_rx_fpioa_io} < 0)
+        return -RT_ENOSYS;
+    if (fpioa_set_function((uint8_t){uart_tx_fpioa_io},
+                           (fpioa_function_t)(FUNC_UART1_TX + 2 * {uart_channel})) != 0)
+        return -RT_ERROR;
+    if (fpioa_set_function((uint8_t){uart_rx_fpioa_io},
+                           (fpioa_function_t)(FUNC_UART1_RX + 2 * {uart_channel})) != 0)
+        return -RT_ERROR;
+    serial = rt_device_find(bspforge_uart_name);
+    if (serial == RT_NULL)
+        return -RT_ENOSYS;
+    if (rt_device_open(serial, RT_DEVICE_FLAG_RDWR) != RT_EOK)
+        return -RT_ERROR;
+    for (index = 0U; index < 16U; ++index)
+    {{
+        rt_uint8_t sent = (rt_uint8_t)(0x31U + index * 7U);
+        rt_uint8_t received = 0U;
+        rt_tick_t deadline;
+        rt_ssize_t received_count = 0;
+
+        if (rt_device_write(serial, 0, &sent, 1U) != 1U)
+        {{
+            (*errors)++;
+            continue;
+        }}
+        deadline = rt_tick_get() + RT_TICK_PER_SECOND / 10U;
+        while ((received_count = rt_device_read(serial, 0, &received, 1U)) != 1U)
+        {{
+            if ((rt_int32_t)(rt_tick_get() - deadline) >= 0)
+                break;
+            rt_thread_mdelay(1);
+        }}
+        if (received_count != 1U)
+        {{
+            (*errors)++;
+            continue;
+        }}
+        (*bytes)++;
+        if (received != sent)
+            (*errors)++;
+    }}
+    (void)rt_device_close(serial);
+    return *bytes == 16U && *errors == 0U ? RT_EOK : -RT_ERROR;
+}}
+
 static int bspforge_binding_clock_test(rt_uint32_t *cpu_hz, rt_uint32_t *timer_hz)
 {{
     *cpu_hz = bspforge_clock_frequency((rt_uint32_t)SYSCTL_CLOCK_CPU);
@@ -99,7 +162,8 @@ static int bspforge_binding_clock_test(rt_uint32_t *cpu_hz, rt_uint32_t *timer_h
 
 static int bspforge_binding_gpio_test(rt_int32_t *low_latch,
                                       rt_int32_t *high_latch,
-                                      rt_int32_t *input_value)
+                                      rt_int32_t *input_low,
+                                      rt_int32_t *input_high)
 {{
     if ({gpio_fpioa_io} < 0 || {gpio_binding_pin} < 0 ||
         {gpio_input_fpioa_io} < 0 || {gpio_input_binding_pin} < 0)
@@ -107,27 +171,75 @@ static int bspforge_binding_gpio_test(rt_int32_t *low_latch,
     if (fpioa_set_function((uint8_t){gpio_fpioa_io},
                            (fpioa_function_t)(FUNC_GPIOHS0 + {gpio_binding_pin})) != 0)
         return -RT_ERROR;
-    if (bspforge_gpio_mode((rt_uint8_t){gpio_binding_pin}, BSPFORGE_GPIO_OUTPUT) != RT_EOK)
-        return -RT_ERROR;
-    if (bspforge_gpio_write((rt_uint8_t){gpio_binding_pin}, 0U) != RT_EOK)
-        return -RT_ERROR;
-    rt_thread_mdelay(250);
-    *low_latch = (rt_int32_t)((gpiohs->output_val.u32[0] >> {gpio_binding_pin}) & 1U);
-    if (bspforge_gpio_write((rt_uint8_t){gpio_binding_pin}, 1U) != RT_EOK)
-        return -RT_ERROR;
-    rt_thread_mdelay(250);
-    *high_latch = (rt_int32_t)((gpiohs->output_val.u32[0] >> {gpio_binding_pin}) & 1U);
-
     if (fpioa_set_function((uint8_t){gpio_input_fpioa_io},
                            (fpioa_function_t)(FUNC_GPIOHS0 + {gpio_input_binding_pin})) != 0)
         return -RT_ERROR;
+    if (bspforge_gpio_mode((rt_uint8_t){gpio_binding_pin}, BSPFORGE_GPIO_OUTPUT) != RT_EOK)
+        return -RT_ERROR;
     if (bspforge_gpio_mode((rt_uint8_t){gpio_input_binding_pin},
-                           BSPFORGE_GPIO_INPUT_PULL_UP) != RT_EOK)
+                           BSPFORGE_GPIO_INPUT_PULL_DOWN) != RT_EOK)
+        return -RT_ERROR;
+    if (bspforge_gpio_write((rt_uint8_t){gpio_binding_pin}, 0U) != RT_EOK)
         return -RT_ERROR;
     rt_thread_mdelay(2);
-    *input_value = bspforge_gpio_read((rt_uint8_t){gpio_input_binding_pin});
-    return (*low_latch == 0 && *high_latch == 1 && *input_value == 1)
+    *low_latch = (rt_int32_t)((gpiohs->output_val.u32[0] >> {gpio_binding_pin}) & 1U);
+    *input_low = bspforge_gpio_read((rt_uint8_t){gpio_input_binding_pin});
+    if (bspforge_gpio_write((rt_uint8_t){gpio_binding_pin}, 1U) != RT_EOK)
+        return -RT_ERROR;
+    rt_thread_mdelay(2);
+    *high_latch = (rt_int32_t)((gpiohs->output_val.u32[0] >> {gpio_binding_pin}) & 1U);
+    *input_high = bspforge_gpio_read((rt_uint8_t){gpio_input_binding_pin});
+    return (*low_latch == 0 && *high_latch == 1 &&
+            *input_low == 0 && *input_high == 1)
                ? RT_EOK : -RT_ERROR;
+}}
+
+static volatile rt_uint32_t bspforge_gpio_irq_fires;
+
+static int bspforge_gpio_irq_callback(void *context)
+{{
+    RT_UNUSED(context);
+    bspforge_gpio_irq_fires++;
+    return 0;
+}}
+
+static int bspforge_binding_gpio_irq_test(rt_uint32_t *fires)
+{{
+    rt_tick_t started;
+
+    *fires = 0U;
+    if ({gpio_fpioa_io} < 0 || {gpio_binding_pin} < 0 ||
+        {gpio_input_fpioa_io} < 0 || {gpio_input_binding_pin} < 0)
+        return -RT_ENOSYS;
+    if (fpioa_set_function((uint8_t){gpio_fpioa_io},
+                           (fpioa_function_t)(FUNC_GPIOHS0 + {gpio_binding_pin})) != 0 ||
+        fpioa_set_function((uint8_t){gpio_input_fpioa_io},
+                           (fpioa_function_t)(FUNC_GPIOHS0 + {gpio_input_binding_pin})) != 0)
+        return -RT_ERROR;
+    if (bspforge_gpio_mode((rt_uint8_t){gpio_binding_pin}, BSPFORGE_GPIO_OUTPUT) != RT_EOK ||
+        bspforge_gpio_mode((rt_uint8_t){gpio_input_binding_pin},
+                           BSPFORGE_GPIO_INPUT_PULL_DOWN) != RT_EOK)
+        return -RT_ERROR;
+    if (bspforge_gpio_write((rt_uint8_t){gpio_binding_pin}, 0U) != RT_EOK)
+        return -RT_ERROR;
+    bspforge_gpio_irq_fires = 0U;
+    if (bspforge_gpio_irq_register((rt_uint8_t){gpio_input_binding_pin},
+                                   BSPFORGE_GPIO_RISING,
+                                   bspforge_gpio_irq_callback, RT_NULL) != RT_EOK)
+        return -RT_ERROR;
+    rt_thread_mdelay(2);
+    if (bspforge_gpio_write((rt_uint8_t){gpio_binding_pin}, 1U) != RT_EOK)
+    {{
+        bspforge_gpio_irq_unregister((rt_uint8_t){gpio_input_binding_pin});
+        return -RT_ERROR;
+    }}
+    started = rt_tick_get();
+    while (bspforge_gpio_irq_fires == 0U &&
+           (rt_tick_get() - started) < RT_TICK_PER_SECOND / 2U)
+        rt_thread_mdelay(1);
+    bspforge_gpio_irq_unregister((rt_uint8_t){gpio_input_binding_pin});
+    *fires = bspforge_gpio_irq_fires;
+    return *fires > 0U ? RT_EOK : -RT_ETIMEOUT;
 }}
 '''
         return rf'''/* Generated by BSPForge; configuration evidence is in bspforge/. */
@@ -271,6 +383,22 @@ int bspforge_selftest(int argc, char **argv)
                    (unsigned long)fires, (unsigned long)ticks);
         return 0;
     }}
+    else if (strcmp(command, "uart.loopback") == 0)
+    {{
+        rt_uint32_t bytes = 0U;
+        rt_uint32_t errors = 0U;
+        int result = -RT_ENOSYS;
+{('        result = bspforge_binding_uart_loopback(&bytes, &errors);' if binding_validation else '')}
+        status = result == RT_EOK ? "pass" :
+                 result == -RT_ENOSYS ? "unsupported" : "fail";
+        rt_kprintf("{{\"bspforge\":true,\"protocol\":\"1.0\","
+                   "\"event\":\"result\",\"request_id\":\"%s\","
+                   "\"command\":\"%s\",\"status\":\"%s\","
+                   "\"metrics\":{{\"bytes\":%lu,\"errors\":%lu}}}}\r\n",
+                   request_id, command, status,
+                   (unsigned long)bytes, (unsigned long)errors);
+        return 0;
+    }}
     else if (strcmp(command, "gpio.toggle") == 0 && bspforge_pin_number >= 0)
     {{
         rt_pin_write(bspforge_pin_number, PIN_LOW);
@@ -282,18 +410,34 @@ int bspforge_selftest(int argc, char **argv)
     {{
         rt_int32_t low_latch = -1;
         rt_int32_t high_latch = -1;
-        rt_int32_t input_value = -1;
+        rt_int32_t input_low = -1;
+        rt_int32_t input_high = -1;
         int result = -RT_ENOSYS;
-{('        result = bspforge_binding_gpio_test(&low_latch, &high_latch, &input_value);' if binding_validation else '')}
+{('        result = bspforge_binding_gpio_test(&low_latch, &high_latch, &input_low, &input_high);' if binding_validation else '')}
         status = result == RT_EOK ? "pass" :
                  result == -RT_ENOSYS ? "unsupported" : "fail";
         rt_kprintf("{{\"bspforge\":true,\"protocol\":\"1.0\","
                    "\"event\":\"result\",\"request_id\":\"%s\","
                    "\"command\":\"%s\",\"status\":\"%s\","
                    "\"metrics\":{{\"output_low_latch\":%ld,"
-                   "\"output_high_latch\":%ld,\"input_pullup\":%ld}}}}\r\n",
+                   "\"output_high_latch\":%ld,\"input_low\":%ld,"
+                   "\"input_high\":%ld}}}}\r\n",
                    request_id, command, status, (long)low_latch,
-                   (long)high_latch, (long)input_value);
+                   (long)high_latch, (long)input_low, (long)input_high);
+        return 0;
+    }}
+    else if (strcmp(command, "gpio.irq") == 0)
+    {{
+        rt_uint32_t fires = 0U;
+        int result = -RT_ENOSYS;
+{('        result = bspforge_binding_gpio_irq_test(&fires);' if binding_validation else '')}
+        status = result == RT_EOK ? "pass" :
+                 result == -RT_ENOSYS ? "unsupported" : "fail";
+        rt_kprintf("{{\"bspforge\":true,\"protocol\":\"1.0\","
+                   "\"event\":\"result\",\"request_id\":\"%s\","
+                   "\"command\":\"%s\",\"status\":\"%s\","
+                   "\"metrics\":{{\"irq_callbacks\":%lu}}}}\r\n",
+                   request_id, command, status, (unsigned long)fires);
         return 0;
     }}
     else if (strcmp(command, "timer.oneshot") == 0 ||

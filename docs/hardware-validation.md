@@ -411,3 +411,16 @@ conda run -n AIoT-v1.0 bspforge-hwtest \
 ```
 
 仿真用于验证协议、OS API 行为和重复性，不能替代真实时钟、中断、电气连接和芯片启动链验证。
+
+## 10. 冻结 LambdaMART 的 K210 实测更新（2026-09-03）
+
+K210 当前正式测试配置已经从旧 `operation-weighted` 切换到 `operation-lambdamart`。新固件、命令、哈希、接线、10 轮逐命令结果和解释边界统一记录在 `docs/frozen-lambdamart-resolver-k210-v2.1.md`。
+
+最终机器报告为：
+
+```text
+experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-rtthread-full-10rounds.json
+experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-full-10rounds.json
+```
+
+当前结论是 RT-Thread 90/90 条命令通过且无 `unsupported`；Zephyr 40/40 个适用命令通过、50 个命令明确 `unsupported`。因此前者是五能力绑定级验证，后者仍是启动、双向协议和 OS 定时器冒烟验证。本文前面旧路径和旧哈希用于保留版本历史，后续 K210 复测应优先使用上述新配置和文件。

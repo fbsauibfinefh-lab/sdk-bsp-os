@@ -15,7 +15,7 @@ BSPForge 是一个面向芯片 SDK 语义恢复与 RTOS BSP 自动生成的研�
 
 K210/RT-Thread 路径会生成真实参与链接的 `rt_uart_ops`、`rt_pin_ops`、`rt_hwtimer_ops`、设备实例和初始化注册函数。成熟 BSP 路径追踪 RTOS 原生驱动到 SDK 实体的调用证据，并生成设备 API 验证入口。流水线在编译失败后根据 IR 增补源码或包含目录，直到成功、无新约束或达到迭代上限；链接成功后还会检查固件架构、段信息、哈希和关键生成符号。
 
-v1.2 在五字段迟交互、SDK 源码层级路由、操作契约、多通道 RRF 和 API 家族覆盖解码基础上，增加通用操作适配度，并把运行时决策固定为“候选存在即选择最终分数最高的 Top1”。低分与弱证据只写入诊断，不取消绑定；当前默认运行时仍使用该无 SDK 训练的 q4 路径。v1.7 另行实现操作条件效果切片、完整/局部代码语义、寄存器效果图和结构契约的轻量分级排序，在 H02 的 281 个函数级厂商独立五折查询上达到 P@1 0.651、Recall@5 0.748、MAP 0.681、nDCG@10 0.743；相对 v1.6 明显提升，但绝对值仍未达到论文目标，暂未替换默认 Resolver。v1.8 继续验证跨操作效果差、API 家族一致性和嵌套专家融合：固定配置的 Top1 有显著改善，但严格嵌套未稳定超过 v1.7，故作为探索性消融保留。K210的完整流水线生成19个操作绑定，经自动诊断修复后编译出RISC-V ELF/BIN。3块开发板×2个RTOS的六组工程均已完成固件静态验证；Zephyr native_sim已完成20轮可执行回归，真实上板验证仍待完成。
+当前论文部署方法为结构先验与目标可行性保护增强的 LambdaMART。K210 部署候选由 IR 独立生成，不读取目标板真值；系统对 14,814 个候选行计算字段语义、代码双视图、寄存器效果图和结构特征，再冻结每项操作的模型 Top-128。事后独立真值评测覆盖 48/48 个真值符号，P@1 为 0.895、nDCG@10 为 0.816。K210 配置使用 `operation-lambdamart` Resolver，把冻结 Top1 接入 19 项操作绑定、闭包、编译和固件生成。K210 + RT-Thread 已完成 10 轮实板回归，10/10 次启动且 90/90 条命令通过，覆盖时钟、PLIC、UART1 物理回环、GPIO 电平/中断和硬件定时器。K210 + Zephyr 已完成 10/10 次启动和 40/40 个适用命令，另有 50 个未实现项明确返回 `unsupported`；它仍是第二构建系统和启动协议证据，尚不是 19 项 SDK 绑定的完整运行证据。
 
 ## 快速开始
 
@@ -68,6 +68,15 @@ conda run -n AIoT-v1.0 python -m bspforge.cli pipeline \
   --config examples/k210-rtthread/project-semantic.json
 ```
 
+运行冻结 LambdaMART 的 K210 部署流水线：
+
+```bash
+conda run --no-capture-output -n AIoT-v1.0 python -m bspforge.cli pipeline \
+  --config examples/k210-rtthread/project.json
+conda run --no-capture-output -n AIoT-v1.0 python -m bspforge.cli pipeline \
+  --config examples/k210-zephyr/project.json
+```
+
 预训练代码效果排序的模型下载、全量缓存和五折评测命令见 `docs/pretrained-code-effect-ranking-v0.2.md`。模型权重放在 `/home/whk/RTT-porting/models/`，不纳入本仓库；本次首次 CPU 缓存耗时 6,351.642 秒，缓存后完整嵌套五折评测耗时 137.650 秒，后续只训练 12,636 参数的小型排序头。
 
 所有阶段产物保存在 `workspace/runs/<run-id>/`，包括 SDK IR、语义映射、闭包、绑定与设备清单、逐轮编译日志、诊断约束、产物验证、方法指标、证据消融和最终报告。
@@ -98,6 +107,7 @@ conda run -n AIoT-v1.0 python -m bspforge.cli pipeline \
 - [相近任务指标与论文实验目标参考](docs/related-task-metric-reference-v0.4.md)
 - [论文核心方法与整体工作梳理 v1.0](docs/core-method-v1.0.md)
 - [LambdaMART 主方法与三板外部评估 v0.6](docs/lambdamart-method-and-external-board-evaluation-v0.6.md)
+- [冻结 LambdaMART Resolver 与 K210 实板验证 v2.1](docs/frozen-lambdamart-resolver-k210-v2.1.md)
 - [方法引用与知识产权风险检查](docs/related-work-citation-and-ip-risk-v0.9.md)
 - [第三方组件与许可证说明](THIRD_PARTY_NOTICES.md)
 - [实验规模与仿真方案](docs/experiment-scale-and-simulation-plan.md)

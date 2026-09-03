@@ -1,6 +1,6 @@
 # 论文核心方法与整体工作梳理（v1.2）
 
-> **方法口径更新（2026-09-03）**：论文目标主方法调整为基于 Migration IR 多视图证据的分级 LambdaMART。本文前部关于 q4“最终方法”的描述仅保留为历史设计与对照基线，不再代表当前论文主张。最终结构增强 LambdaMART 在当前三板外部开发集的五项指标均高于同条件 q4，但尚未在新的冻结确认集上证明对所有未见 SDK 都稳定显著优于。LambdaMART 的输入处理、模型内部工作、结构先验、可行性保护和三板结果统一以 `docs/lambdamart-method-and-external-board-evaluation-v0.6.md` 为准。当前尚未切换 Resolver，也未把既有 K210 固件计为论文主方法的端到端结果。
+> **方法口径更新（2026-09-03）**：论文目标主方法已调整为基于 Migration IR 多视图证据的分级 LambdaMART。本文前部关于 q4“最终方法”的描述仅保留为历史设计与对照基线，不再代表当前论文主张。最终结构增强 LambdaMART 在当前三板外部开发集的五项指标均高于同条件 q4，但尚未在新的冻结确认集上证明对所有未见 SDK 都稳定显著优于。LambdaMART 的输入处理、模型内部工作、结构先验、可行性保护和三板结果统一以 `docs/lambdamart-method-and-external-board-evaluation-v0.6.md` 为准。当前方法已通过 `operation-lambdamart` 接入 Resolver；K210 部署已改为不读取目标真值的 14,814 行全候选推理，事后 P@1 为 0.895、nDCG@10 为 0.816。RT-Thread 由该冻结结果重新生成 19 项绑定并完成 10 轮、90/90 条命令的实板回归。K210 + Zephyr 已完成启动和适用命令回归，但其 SDK 绑定级设备后端仍不完整。部署契约和板测证据见 `docs/frozen-lambdamart-resolver-k210-v2.1.md`。
 
 ## 1. 一句话主张
 

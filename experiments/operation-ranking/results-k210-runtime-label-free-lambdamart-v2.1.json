@@ -1,0 +1,576 @@
+{
+  "adjudication": "experiments/operation-ranking/external-test-truth/source/equivalence-adjudication-20260902.json",
+  "aggregate": {
+    "hit_at_5": 0.947368,
+    "map": 0.722395,
+    "ndcg_at_10": 0.816447,
+    "precision_at_1": 0.894737,
+    "recall_at_5": 0.775439
+  },
+  "bundle": "models/runtime/k210-operation-lambdamart-h03-eq-r1-v2.1.json",
+  "bundle_sha256": "d1cad37db9f449d6333e4bb9eb69fac9753b9c61915c981625388258fcf63420",
+  "created_at": "2026-09-03T12:14:42.641861+00:00",
+  "post_hoc_truth_only": true,
+  "records": [
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.833333,
+        "ndcg_at_10": 0.919721,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "clock.disable",
+      "selected_grade": 3,
+      "selected_symbol": "sysctl_clock_disable",
+      "top5": [
+        "sysctl_clock_disable",
+        "sysctl_disable_irq",
+        "sysctl_pll_disable",
+        "sysctl_pll_set_freq",
+        "sysctl_clock_set_threshold"
+      ],
+      "truth_symbols": [
+        "sysctl_clock_disable",
+        "sysctl_pll_disable"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "sysctl_clock_disable",
+        "sysctl_pll_disable"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.611111,
+        "ndcg_at_10": 0.812653,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.666667
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "clock.enable",
+      "selected_grade": 3,
+      "selected_symbol": "sysctl_clock_enable",
+      "top5": [
+        "sysctl_clock_enable",
+        "sysctl_enable_irq",
+        "sysctl_pll_set_freq",
+        "sysctl_pll_enable",
+        "sysctl_cpu_set_freq"
+      ],
+      "truth_symbols": [
+        "sysctl_clock_enable",
+        "sysctl_clock_set_clock_select",
+        "sysctl_pll_enable"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "sysctl_clock_enable",
+        "sysctl_clock_set_clock_select",
+        "sysctl_pll_enable"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.621528,
+        "ndcg_at_10": 0.826237,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.5
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "clock.get_frequency",
+      "selected_grade": 3,
+      "selected_symbol": "sysctl_clock_get_freq",
+      "top5": [
+        "sysctl_clock_get_freq",
+        "sysctl_get_freq",
+        "sysctl_pll_get_freq",
+        "sysctl_clock_source_get_freq",
+        "sysctl_cpu_get_freq"
+      ],
+      "truth_symbols": [
+        "sysctl_clock_get_clock_select",
+        "sysctl_clock_get_freq",
+        "sysctl_clock_get_threshold",
+        "sysctl_pll_get_freq"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "sysctl_clock_get_clock_select",
+        "sysctl_clock_get_freq",
+        "sysctl_clock_get_threshold",
+        "sysctl_pll_get_freq"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.566667,
+        "ndcg_at_10": 0.73659,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.75
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "clock.initialize",
+      "selected_grade": 3,
+      "selected_symbol": "sysctl_pll_set_freq",
+      "top5": [
+        "sysctl_pll_set_freq",
+        "aes_clk_init",
+        "sysctl_clock_set_threshold",
+        "sysctl_pll_source_set_freq",
+        "sysctl_clock_set_clock_select"
+      ],
+      "truth_symbols": [
+        "sysctl_clock_set_clock_select",
+        "sysctl_clock_set_threshold",
+        "sysctl_pll_enable",
+        "sysctl_pll_set_freq"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "sysctl_clock_set_clock_select",
+        "sysctl_clock_set_threshold",
+        "sysctl_pll_enable",
+        "sysctl_pll_set_freq"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.892857,
+        "ndcg_at_10": 0.961999,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.75
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "gpio.attach_irq",
+      "selected_grade": 3,
+      "selected_symbol": "gpiohs_irq_register",
+      "top5": [
+        "gpiohs_irq_register",
+        "gpiohs_set_irq",
+        "gpiohs_irq_unregister",
+        "gpiohs_irq_disable",
+        "gpiohs_pin_onchange_isr"
+      ],
+      "truth_symbols": [
+        "gpiohs_irq_register",
+        "gpiohs_irq_unregister",
+        "gpiohs_set_irq",
+        "gpiohs_set_pin_edge"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "gpiohs_irq_register",
+        "gpiohs_irq_unregister",
+        "gpiohs_set_irq",
+        "gpiohs_set_pin_edge"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 0.0,
+        "map": 0.0,
+        "ndcg_at_10": 0.0,
+        "precision_at_1": 0.0,
+        "recall_at_5": 0.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "gpio.configure",
+      "selected_grade": 0,
+      "selected_symbol": "gpio_init",
+      "top5": [
+        "gpio_init",
+        "gpiohs_pin_onchange_isr",
+        "fpioa_init",
+        "spi_slave_config",
+        "uarths_config"
+      ],
+      "truth_symbols": [
+        "gpio_set_drive_mode",
+        "gpiohs_set_drive_mode",
+        "gpiohs_set_pin_edge"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "gpio_set_drive_mode",
+        "gpiohs_set_drive_mode",
+        "gpiohs_set_pin_edge"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "gpio.read",
+      "selected_grade": 3,
+      "selected_symbol": "gpio_get_pin",
+      "top5": [
+        "gpio_get_pin",
+        "gpiohs_get_pin",
+        "fpioa_get_io",
+        "fpioa_get_io_pull",
+        "gpiohs_pin_onchange_isr"
+      ],
+      "truth_symbols": [
+        "gpio_get_pin",
+        "gpiohs_get_pin"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "gpio_get_pin",
+        "gpiohs_get_pin"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "gpio.write",
+      "selected_grade": 3,
+      "selected_symbol": "gpio_set_pin",
+      "top5": [
+        "gpio_set_pin",
+        "gpiohs_set_pin",
+        "gpiohs_set_pin_edge",
+        "gpiohs_pin_onchange_isr",
+        "fpioa_set_io_pull"
+      ],
+      "truth_symbols": [
+        "gpio_set_pin",
+        "gpiohs_set_pin"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "gpio_set_pin",
+        "gpiohs_set_pin"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "interrupt.disable",
+      "selected_grade": 3,
+      "selected_symbol": "plic_irq_disable",
+      "top5": [
+        "plic_irq_disable",
+        "gpiohs_irq_disable",
+        "plic_irq_unregister",
+        "uarths_set_irq",
+        "dmac_irq_unregister"
+      ],
+      "truth_symbols": [
+        "plic_irq_disable"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "plic_irq_disable"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.7,
+        "ndcg_at_10": 0.850345,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "interrupt.enable",
+      "selected_grade": 3,
+      "selected_symbol": "plic_irq_enable",
+      "top5": [
+        "plic_irq_enable",
+        "uarths_set_irq",
+        "plic_irq_unregister",
+        "gpiohs_set_irq",
+        "plic_set_priority"
+      ],
+      "truth_symbols": [
+        "plic_irq_enable",
+        "plic_set_priority"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "plic_irq_enable",
+        "plic_set_priority"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.833333,
+        "ndcg_at_10": 0.919721,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "interrupt.initialize",
+      "selected_grade": 3,
+      "selected_symbol": "plic_init",
+      "top5": [
+        "plic_init",
+        "dvp_config_interrupt",
+        "plic_set_priority",
+        "_init_bsp",
+        "kpu_init"
+      ],
+      "truth_symbols": [
+        "plic_init",
+        "plic_set_priority"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "plic_init",
+        "plic_set_priority"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.55,
+        "ndcg_at_10": 0.613147,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.5
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "interrupt.register",
+      "selected_grade": 3,
+      "selected_symbol": "plic_irq_register",
+      "top5": [
+        "plic_irq_register",
+        "uart_irq_register",
+        "dmac_irq_register",
+        "rtc_alarm_irq_register",
+        "rtc_tick_irq_register"
+      ],
+      "truth_symbols": [
+        "plic_irq_register",
+        "plic_irq_unregister"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "plic_irq_register",
+        "plic_irq_unregister"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.6,
+        "ndcg_at_10": 0.790386,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.5
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "timer.initialize",
+      "selected_grade": 3,
+      "selected_symbol": "timer_init",
+      "top5": [
+        "timer_init",
+        "clint_timer_init",
+        "timer_irq_register",
+        "clint_timer_register",
+        "timer_irq_unregister"
+      ],
+      "truth_symbols": [
+        "timer_init",
+        "timer_set_irq"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "timer_init",
+        "timer_set_irq"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "timer.set_interval",
+      "selected_grade": 3,
+      "selected_symbol": "timer_set_interval",
+      "top5": [
+        "timer_set_interval",
+        "timer_set_reload",
+        "timer_init",
+        "timer_set_mode",
+        "timer_set_irq"
+      ],
+      "truth_symbols": [
+        "timer_set_interval"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "timer_set_interval"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.5,
+        "ndcg_at_10": 0.63093,
+        "precision_at_1": 0.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "timer.start",
+      "selected_grade": 0,
+      "selected_symbol": "timer_enable",
+      "top5": [
+        "timer_enable",
+        "timer_set_enable",
+        "clint_timer_start",
+        "timer_init",
+        "timer_enable_interrupt"
+      ],
+      "truth_symbols": [
+        "timer_set_enable"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "timer_set_enable"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.75,
+        "ndcg_at_10": 0.877215,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "timer.stop",
+      "selected_grade": 3,
+      "selected_symbol": "timer_disable",
+      "top5": [
+        "timer_disable",
+        "timer_disable_interrupt",
+        "clint_timer_stop",
+        "timer_set_enable",
+        "timer_init"
+      ],
+      "truth_symbols": [
+        "timer_disable",
+        "timer_set_enable"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "timer_disable",
+        "timer_set_enable"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.475,
+        "ndcg_at_10": 0.66014,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.4
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "uart.configure",
+      "selected_grade": 3,
+      "selected_symbol": "uart_configure",
+      "top5": [
+        "uart_configure",
+        "uart_init",
+        "uart_debug_init",
+        "uart_set_tat",
+        "uart_set_det"
+      ],
+      "truth_symbols": [
+        "uart_configure",
+        "uart_init",
+        "uart_set_receive_trigger",
+        "uart_set_send_trigger",
+        "uart_set_work_mode"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "uart_configure",
+        "uart_init",
+        "uart_set_receive_trigger",
+        "uart_set_send_trigger",
+        "uart_set_work_mode"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "uart.read",
+      "selected_grade": 3,
+      "selected_symbol": "uart_receive_data",
+      "top5": [
+        "uart_receive_data",
+        "uart_receive_data_dma",
+        "uart_receive_data_dma_irq",
+        "uart_set_det",
+        "uarths_receive_data"
+      ],
+      "truth_symbols": [
+        "uart_receive_data",
+        "uart_receive_data_dma",
+        "uart_receive_data_dma_irq"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "uart_receive_data",
+        "uart_receive_data_dma",
+        "uart_receive_data_dma_irq"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.791667,
+        "ndcg_at_10": 0.913402,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.666667
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "uart.write",
+      "selected_grade": 3,
+      "selected_symbol": "uart_send_data",
+      "top5": [
+        "uart_send_data",
+        "uart_send_data_dma",
+        "uarths_send_data",
+        "uart_set_send_trigger",
+        "uart_handle_data_dma"
+      ],
+      "truth_symbols": [
+        "uart_send_data",
+        "uart_send_data_dma",
+        "uart_send_data_dma_irq"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "uart_send_data",
+        "uart_send_data_dma",
+        "uart_send_data_dma_irq"
+      ]
+    }
+  ],
+  "schema_version": "frozen-operation-bundle-evaluation-v1",
+  "summary": {
+    "operations": 19,
+    "truth_symbols": 48,
+    "truth_symbols_missing_from_label_free_pool": 0
+  },
+  "truth": "experiments/operation-ranking/external-test-truth/source/kendryte-k210-standalone-sdk-0.5.6/truth-audit-v1-final.json",
+  "truth_sha256": "ac2c0b2c934b88881b01312ffa1db7e45abbafb4dd165eb5ff86d12db337a5fe"
+}

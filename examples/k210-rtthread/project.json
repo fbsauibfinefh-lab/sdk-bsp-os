@@ -1,5 +1,5 @@
 {
-  "run_id": "k210-rtthread-baseline",
+  "run_id": "k210-rtthread-lambdamart-v2.1",
   "workspace": "workspace",
   "ir_store": "workspace/ir",
   "ingestor": {"mode": "hybrid"},
@@ -8,7 +8,8 @@
     "path": "sdk/k210/source"
   },
   "resolver": {
-    "method": "operation-weighted",
+    "method": "operation-lambdamart",
+    "model_path": "models/runtime/k210-operation-lambdamart-h03-eq-r1-v2.1.json",
     "operation_min_margin": 0.0,
     "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
     "threshold": 0.42,
@@ -27,7 +28,7 @@
     "board": "k210",
     "sdk_profile": "k210",
     "rtthread_root": "third_party/rt-thread",
-    "output": "workspace/generated/k210-rtthread",
+    "output": "workspace/generated/k210-rtthread-lambdamart",
     "disabled_rtthread_features": ["RT_USING_SMP"],
     "devices": {
       "uart": [
@@ -41,11 +42,16 @@
     },
     "validation": {
       "binding_validation": true,
+      "firmware_build_id": "operation-lambdamart-h03-eq-r1-v2.1",
+      "uart": "bspuart1",
+      "uart_channel": 0,
+      "uart_tx_fpioa_io": 7,
+      "uart_rx_fpioa_io": 6,
       "hwtimer": "bsptim0",
-      "gpio_fpioa_io": 35,
-      "gpio_binding_pin": 31,
-      "gpio_input_fpioa_io": 16,
-      "gpio_input_binding_pin": 30
+      "gpio_fpioa_io": 8,
+      "gpio_binding_pin": 29,
+      "gpio_input_fpioa_io": 9,
+      "gpio_input_binding_pin": 28
     }
   },
   "build": {

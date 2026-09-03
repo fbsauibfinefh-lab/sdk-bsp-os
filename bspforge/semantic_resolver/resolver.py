@@ -7,6 +7,7 @@ from statistics import mean
 from bspforge.capability_schema import CAPABILITY_SCHEMA
 from bspforge.common import stable_id, utc_now
 from bspforge.compile_feedback import feedback_index
+from bspforge.frozen_operation_ranker import FrozenOperationRanker
 from bspforge.operation_constraints import compatibility, contract_adjustment
 from bspforge.ranking_diagnostics import deterministic_ranking_evidence
 from bspforge.operation_ranking import operation_feature_map, operation_static_score
@@ -126,13 +127,22 @@ class SemanticResolver:
             if method in {"operation-semantic", "operation-structured"} and model_path is not None
             else None
         )
+        frozen_operation_ranker = (
+            FrozenOperationRanker(model_path)
+            if method == "operation-lambdamart" and model_path is not None
+            else None
+        )
         if method in {"learned", "hybrid"} and ranker is None:
             raise ValueError(f"{method} resolver requires model_path")
         if method in {"operation-semantic", "operation-structured"} and semantic_ranker is None:
             raise ValueError(f"{method} resolver requires model_path")
+        if method == "operation-lambdamart" and frozen_operation_ranker is None:
+            raise ValueError("operation-lambdamart resolver requires model_path")
+        if frozen_operation_ranker is not None:
+            frozen_operation_ranker.validate_ir(ir)
         if method not in {
             "weighted", "learned", "hybrid", "operation-weighted", "operation-semantic",
-            "operation-structured",
+            "operation-structured", "operation-lambdamart",
         }:
             raise ValueError(
                 "unsupported resolver method"
@@ -173,7 +183,10 @@ class SemanticResolver:
             if spec is None:
                 raise ValueError(f"Unknown capability: {capability}")
             candidates = self.candidate_pool(ir, capability, weights)
-            if method in {"operation-weighted", "operation-semantic", "operation-structured"}:
+            if method in {
+                "operation-weighted", "operation-semantic", "operation-structured",
+                "operation-lambdamart",
+            }:
                 operation_resolution = self._resolve_operations(
                     capability,
                     candidates,
@@ -188,6 +201,7 @@ class SemanticResolver:
                     compile_feedback=previous_feedback,
                     compile_feedback_weight=compile_feedback_weight,
                     structured_retrieval=method == "operation-structured",
+                    frozen_operation_ranker=frozen_operation_ranker,
                 )
                 mappings.append({
                     "id": stable_id(ir["sdk"]["id"], "mapping", capability),
@@ -228,6 +242,8 @@ class SemanticResolver:
             "method": (
                 "operation-aware-semantic-adapter-resolution"
                 if method == "operation-semantic"
+                else "frozen-multiview-lambdamart-operation-resolution"
+                if method == "operation-lambdamart"
                 else "operation-aware-structured-retrieval-resolution"
                 if method == "operation-structured"
                 else "operation-aware-static-resolution"
@@ -246,6 +262,10 @@ class SemanticResolver:
             "hybrid_weight": selected_hybrid_weight if method == "hybrid" else None,
             "semantic_weights": selected_semantic_weights if method in {"operation-semantic", "operation-structured"} else None,
             "semantic_model": semantic_ranker.metadata if semantic_ranker is not None else None,
+            "operation_ranking_model": (
+                frozen_operation_ranker.metadata
+                if frozen_operation_ranker is not None else None
+            ),
             "operation_constraint_weight": operation_constraint_weight,
             "compile_feedback_weight": compile_feedback_weight,
             "evidence_weights": weights,
@@ -272,6 +292,7 @@ class SemanticResolver:
         compile_feedback: dict[tuple[str, str, str], float] | None = None,
         compile_feedback_weight: float = 0.0,
         structured_retrieval: bool = False,
+        frozen_operation_ranker: FrozenOperationRanker | None = None,
     ) -> dict[str, Any]:
         operation_rankings = []
         accepted_by_entity: dict[str, dict[str, Any]] = {}
@@ -303,6 +324,22 @@ class SemanticResolver:
                 item["operation_features"] = features
                 item["target_operations"] = [operation]
                 ranked.append(item)
+            if frozen_operation_ranker is not None:
+                frozen_scores = frozen_operation_ranker.score_candidates(
+                    f"{capability}.{operation}",
+                    [item["entity_id"] for item in ranked],
+                )
+                ranked = [
+                    item for item in ranked if item["entity_id"] in frozen_scores
+                ]
+                for item in ranked:
+                    item["score"] = frozen_scores[item["entity_id"]]
+                    item["lambdamart_score"] = item["score"]
+                    item["semantic_candidate"] = True
+                ranking_evidence = {
+                    "method": "frozen-operation-lambdamart",
+                    "bundle_sha256": frozen_operation_ranker.metadata["bundle_sha256"],
+                }
             if semantic_scores is not None:
                 static_ranked = sorted(
                     ranked, key=lambda item: (-item["operation_score"], item["entity_id"])
@@ -437,7 +474,7 @@ class SemanticResolver:
                 if top and runner_up is not None
                 else top[0]["score"] if top else 0.0
             )
-            if structured_retrieval:
+            if structured_retrieval or frozen_operation_ranker is not None:
                 selected = top[0] if top else None
             else:
                 selected = (

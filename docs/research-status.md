@@ -485,3 +485,27 @@ H01 相对自动真值的 P@1、Recall@5、MAP 和 nDCG@10 分别提高 0.040、
 - 四个核心外部指标平均为 0.803，达到进入 Resolver 接入、编译和上板工程验证的合理门槛。下一阶段不再针对三板新增经验规则，先冻结方法、接入 `operation-lambdamart` Resolver，并重新生成绑定和固件。
 - `61 passed` 的含义已明确：`test_pipeline_modules.py` 的 55 个单元/组件集成测试加 `test_semantic_feasibility.py` 的 6 个约束测试。它不代表 61 个 SDK、61 次目标编译或 61 项真实硬件测试，不能替代语义实验、六套编译矩阵和实板结果。
 - 新增仅供内部使用的完整方法说明 `docs/internaldocs/semantic-ranking-lambdamart-INTERNAL-20260903.md`，逐步说明 IR、查询、候选召回、MiniLM MaxSim、Jina 双代码视图、寄存器效果图、LambdaMART、指标公式、q4 对照、通用性审计及测试边界；该目录继续由 Git 忽略，不同步公开仓库。
+
+## v2.7：冻结 LambdaMART Resolver 与 K210 双 RTOS 实板复测
+
+- 将 `structural-prior-feasible-lambdamart-residual-v2.1` 导出为无标签运行时包。包固定模型、报告、数据集、向量缓存、SDK digest、19 个操作的第一阶段候选短名单及最终分数，并保存对应 SHA-256。
+- Resolver 新增 `operation-lambdamart`。运行时严格校验 SDK ID、digest 和短名单实体，对冻结候选按最终分数稳定排序；候选存在即选择 Top1。K210 两套项目配置均由旧方法切换到该 Resolver。
+- 当前运行时包是 K210 指定 SDK digest 的可复现实验部署。任意新 SDK 仍需执行相同的无标签候选生成、特征计算和模型推理后再导出包；运行时不读取 H03 或三板真值。
+- K210/RT-Thread 重新生成 19/19 项绑定和 71 文件闭包。首次链接缺少四个 `sys_*` 符号，Build Diagnoser 反查 IR 并补入已有 `lib/bsp/syscalls.c`，第二轮成功；最终 BIN 为 468104 bytes，SHA-256 为 `c88a17bf46a5a837919714afcc975338b5b687cbf6bfcc0db61e8196d98adf6b`。
+- RT-Thread UART1 验证改为适配非阻塞 `getc` 的有界轮询。IO7/IO6 物理回环、IO8/IO9 GPIO 电平与边沿中断、时钟、PLIC 和硬件定时器全部进入统一协议。最终 10/10 次启动、90/90 条命令通过，失败和 `unsupported` 均为 0。
+- K210/Zephyr 使用同一 Resolver 结果重新生成并一次编译成功。K210 UARTHS 时钟描述统一为 403 MHz；协议 boot 移到 `main()` 接收就绪后，空闲 RX 轮询由 1 ms 改为 50 us，解决小 FIFO 丢失主机命令的问题。
+- Zephyr 最终 10/10 次启动、40/40 个适用命令通过、失败 0，另有 50 个命令明确为 `unsupported`。当前 Zephyr 后端仍是 `native-driver-trace`，只验证启动、双向协议和 OS 定时器冒烟，不能将其表述为 19 项 SDK 绑定的完整功能验证。
+- 两份最终 10 轮机器报告保存到 `experiments/hardware-results/k210-operation-lambdamart-v2.1/`；完整部署、命令、固件哈希和证据边界见 `docs/frozen-lambdamart-resolver-k210-v2.1.md`。
+- 单元与组件集成回归由 61 项增加到 62 项，最终 `62 passed`。该数字与两套真实板测的 10 次启动和 130 个适用命令通过分别统计，不能互相替代。
+
+## v2.8：目标真值隔离审计与无标签全候选重新部署
+
+- 审计发现 v2.7 导出源数据由 `build_operation_dataset` 构造，短名单会先保留全部真值正例。虽然冻结 JSON 不携带标签，但候选集合本身受到目标真值影响，因此 v2.7 的短名单口径不能作为最终论文部署证据；本节结果取代其运行时包、固件哈希和板测报告。
+- 新增 `build_runtime_operation_dataset.py`。它只读取 manifest 和 SDK IR，保留所有具有正能力级证据的函数，不读取 ground truth，生成 19 个查询、14,814 个候选行、2,103 个唯一实体。字段迟交互新增计算 13,233 行；完整代码视图复用 619、编码 1,484 个实体；操作条件效果视图复用 1,567、编码 13,247 行。
+- 冻结 v2.1 模型和特征定义不变。模型对 14,814 行全部推理后，每项按最终模型分数保存 Top-128，共 2,432 行。导出器会拒绝未声明 `contains_labels=false` 或任何候选仍含 `label` 字段的数据集；运行时加载器增加空候选、计数、重复实体、有限分数和声明 Top1 一致性校验。
+- 新增独立事后评测脚本，严格以真值集合为分母。K210 的 48/48 个真值符号均进入无标签全候选池；P@1 0.895、Recall@5 0.775、MAP 0.722、nDCG@10 0.816、Hit@5 0.947。`timer.start` 的新 Top1 `timer_enable` 未在现有严格真值中，但后续板测通过，保留为待仲裁案例，不回流修改本轮指标。
+- RT-Thread 由新包重新生成 19/19 绑定，闭包 71 文件，Build Diagnoser 在第二轮补齐 `lib/bsp/syscalls.c` 后成功。BIN 为 468104 bytes，SHA-256 为 `069afac532263afdfce72eb04356a292cea533f699795bad11bcaa77a4c36e0e`。
+- Zephyr 由同一新包重新生成并一次编译成功，BIN 保持 20216 bytes 和 SHA-256 `5a88f6c16d51a475bb19b56089228bcbd59013463b32fab6299a065c9fccb1c9`；这仍是 `native-driver-trace` 后端，证据边界不变。
+- 两个新固件均重新烧录。RT-Thread 为 10/10 次启动、90/90 条适用命令通过、失败 0；Zephyr 为 10/10 次启动、40/40 条适用命令通过、50 条 `unsupported`、失败 0。最终开发板留在 RT-Thread 新固件。
+- 新增 `scripts/evaluate_frozen_operation_bundle.py` 与机器报告 `experiments/operation-ranking/results-k210-runtime-label-free-lambdamart-v2.1.json`。首次无标签全候选 CPU 预处理成本较高，但向量按文本哈希缓存；后续同 SDK Resolver/后端迭代无需重复编码。
+- 最终 Python 单元与组件集成回归为 `63 passed`；三份新部署脚本另经 `py_compile` 检查。该数字不包含两次目标编译或两套实板 10 轮结果。

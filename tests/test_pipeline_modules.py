@@ -19,6 +19,7 @@ from bspforge.cross_operation_coherence import (
     enrich_dataset_with_cross_operation_coherence,
 )
 from bspforge.evaluation import ExperimentEvaluator
+from bspforge.frozen_operation_ranker import FrozenOperationRanker
 from bspforge.ir_store import IRStore
 from bspforge.hardware_effect_graph import HardwareEffectGraph
 from bspforge.hardware_test.host import HardwareTestRunner, ProcessTransport
@@ -627,6 +628,85 @@ class ModuleTests(unittest.TestCase):
         self.assertEqual(selected["write"], "uart_send_data")
         self.assertEqual(selected["read"], "uart_receive_data")
 
+    def test_frozen_lambdamart_bundle_drives_operation_resolver(self) -> None:
+        ir = SDKIngestor().ingest(self.sdk, "fixture-sdk")
+        resolver = SemanticResolver()
+        pool = resolver.candidate_pool(ir, "uart")
+        preferred = {
+            "configure": "uart_configure",
+            "write": "uart_send_data",
+            "read": "uart_receive_data",
+        }
+        operations = {}
+        for operation, symbol in preferred.items():
+            rows = [
+                {
+                    "entity_id": item["entity_id"],
+                    "symbol": item["symbol"],
+                    "score": 2.0 if item["symbol"] == symbol else -1.0,
+                    "rank": 1 if item["symbol"] == symbol else 2,
+                }
+                for item in pool
+            ]
+            rows.sort(key=lambda item: (-item["score"], item["entity_id"]))
+            operations[f"uart.{operation}"] = {
+                "candidate_count": len(rows),
+                "selected_entity_id": rows[0]["entity_id"],
+                "selected_symbol": rows[0]["symbol"],
+                "candidates": rows,
+            }
+        bundle = self.root / "frozen-ranking.json"
+        write_json(bundle, {
+            "schema_version": "frozen-operation-ranking-v1",
+            "contains_labels": False,
+            "method": "fixture-lambdamart",
+            "sdk": {"id": ir["sdk"]["id"], "digest": ir["sdk"]["digest"]},
+            "model": {"sha256": "fixture"},
+            "feature_contract": {"operation_count": 3},
+            "operations": operations,
+        })
+        resolution = resolver.resolve(
+            ir,
+            ["uart"],
+            method="operation-lambdamart",
+            model_path=bundle,
+        )
+        rankings = resolution["mappings"][0]["operation_rankings"]
+        self.assertEqual(
+            {item["operation"]: item["selected_symbol"] for item in rankings},
+            preferred,
+        )
+        self.assertEqual(
+            resolution["method"], "frozen-multiview-lambdamart-operation-resolution"
+        )
+        self.assertIn("bundle_sha256", resolution["operation_ranking_model"])
+
+    def test_frozen_lambdamart_bundle_rejects_nonfinite_scores(self) -> None:
+        bundle = self.root / "invalid-frozen-ranking.json"
+        write_json(bundle, {
+            "schema_version": "frozen-operation-ranking-v1",
+            "contains_labels": False,
+            "method": "fixture-lambdamart",
+            "sdk": {"id": "fixture-sdk", "digest": "fixture"},
+            "model": {"sha256": "fixture"},
+            "feature_contract": {"operation_count": 1},
+            "operations": {
+                "uart.write": {
+                    "candidate_count": 1,
+                    "selected_entity_id": "candidate",
+                    "selected_symbol": "uart_write",
+                    "candidates": [{
+                        "entity_id": "candidate",
+                        "symbol": "uart_write",
+                        "score": float("inf"),
+                        "rank": 1,
+                    }],
+                }
+            },
+        })
+        with self.assertRaisesRegex(ValueError, "non-finite candidate score"):
+            FrozenOperationRanker(bundle)
+
     def test_operation_resolver_can_abstain_on_small_margin(self) -> None:
         ir = SDKIngestor(frontend_mode="hybrid").ingest(self.sdk, "fixture-sdk")
         resolution = SemanticResolver().resolve(
@@ -1080,21 +1160,29 @@ class ModuleTests(unittest.TestCase):
                 "board": "k210",
                 "binding_validation": True,
                 "hwtimer": "bsptim0",
-                "gpio_fpioa_io": 35,
-                "gpio_binding_pin": 31,
-                "gpio_input_fpioa_io": 16,
-                "gpio_input_binding_pin": 30,
+                "uart": "bspuart1",
+                "uart_channel": 0,
+                "uart_tx_fpioa_io": 7,
+                "uart_rx_fpioa_io": 6,
+                "gpio_fpioa_io": 8,
+                "gpio_binding_pin": 29,
+                "gpio_input_fpioa_io": 9,
+                "gpio_input_binding_pin": 28,
             },
         )
         source = (bsp / "applications" / "bspforge_validation.c").read_text(
             encoding="utf-8"
         )
         self.assertIn("bspforge_clock_frequency", source)
-        self.assertIn("FUNC_GPIOHS0 + 31", source)
-        self.assertIn("FUNC_GPIOHS0 + 30", source)
+        self.assertIn("FUNC_UART1_TX + 2 * 0", source)
+        self.assertIn("FUNC_UART1_RX + 2 * 0", source)
+        self.assertIn("FUNC_GPIOHS0 + 29", source)
+        self.assertIn("FUNC_GPIOHS0 + 28", source)
         self.assertIn("output_val.u32[0]", source)
         self.assertIn("HWTIMER_MODE_ONESHOT", source)
         self.assertIn('strcmp(command, "interrupt.basic")', source)
+        self.assertIn('strcmp(command, "uart.loopback")', source)
+        self.assertIn('strcmp(command, "gpio.irq")', source)
 
     def test_rtthread_backend_can_disable_nonrequired_board_feature(self) -> None:
         config = self.root / "rtconfig.h"
@@ -1135,6 +1223,9 @@ class ModuleTests(unittest.TestCase):
             manifest["device_model"]["registration_symbols"],
             ["bspforge_zephyr_validation_init", "bspforge_zephyr_validation_run"],
         )
+        source = (output / "app" / "src" / "main.c").read_text(encoding="utf-8")
+        self.assertIn("if (bspforge_zephyr_validation_run() != 0)", source)
+        self.assertIn("k_busy_wait(50);", source)
 
     def test_k210_zephyr_port_enables_fpioa_clock_before_pin_mapping(self) -> None:
         source = (

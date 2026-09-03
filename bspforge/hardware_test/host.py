@@ -219,6 +219,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--baudrate", type=int, default=115200)
     parser.add_argument("--timeout", type=float, default=5.0)
     parser.add_argument("--rounds", type=int, default=1)
+    parser.add_argument(
+        "--test-command",
+        action="append",
+        choices=DEFAULT_COMMANDS,
+        dest="test_commands",
+        help="仅运行指定协议命令；可重复提供，默认运行全部命令",
+    )
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     active_transport: Transport = (
@@ -229,7 +236,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         report = HardwareTestRunner(
             active_transport, args.board, args.rtos, args.timeout
-        ).run(args.rounds)
+        ).run(args.rounds, commands=args.test_commands)
     finally:
         active_transport.close()
     write_json(args.output, report)

@@ -22,7 +22,7 @@
 			compatible = "kendryte,k210", "riscv";
 			reg = <0>;
 			status = "okay";
-			clock-frequency = <390000000>;
+			clock-frequency = <403000000>;
 			riscv,isa-base = "rv64i";
 			riscv,isa-extensions = "i", "m", "a", "f", "d", "c", "zicsr", "zifencei";
 
@@ -75,7 +75,7 @@
 			reg = <0x38000000 0x1000>;
 			interrupt-parent = <&plic>;
 			interrupts = <33 1>;
-			clock-frequency = <390000000>;
+			clock-frequency = <403000000>;
 			current-speed = <115200>;
 			status = "okay";
 		};

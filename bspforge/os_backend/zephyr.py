@@ -385,7 +385,7 @@ static void bspforge_selftest(const char *request_id, const char *command)
 int bspforge_zephyr_validation_init(void)
 {
     k_timer_init(&bspforge_timer, NULL, NULL);
-    return bspforge_zephyr_validation_run();
+    return 0;
 }
 SYS_INIT(bspforge_zephyr_validation_init, APPLICATION, 90);
 
@@ -395,10 +395,12 @@ int main(void)
     char line[96];
     size_t length = 0;
 
+    if (bspforge_zephyr_validation_run() != 0)
+        return -ENODEV;
     while (device_is_ready(console)) {
         unsigned char value;
         if (uart_poll_in(console, &value) != 0) {
-            k_sleep(K_MSEC(1));
+            k_busy_wait(50);
             continue;
         }
         if (value == '\r' || value == '\n') {
