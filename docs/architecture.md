@@ -206,3 +206,13 @@ Migration IR 函数、调用边、宏和寄存器证据
 v1.8 在 v1.7 数据集之后增加一个纯离线、无标签的结构纠错层。它按稳定实体 ID 聚合同一 SDK 中19个操作的效果证据，计算目标动作相对竞争动作的效果差，并可选统计动作无关 API 家族的一致性。该层不改变 IR schema、Resolver 输出、闭包或后端输入。
 
 严格嵌套没有证明该分支稳定优于 v1.7，因此默认数据流仍停在 v1.7 候选排序，运行时仍为 q4。`effect-contrast`、多信号对比、家族一致性和双专家融合均保留为可复现研究分支，不进入六套固件的默认生成路径。
+
+## v1.9 LambdaMART 计划驱动绑定
+
+K210 论文部署不再让 OS 后端从静态平台符号表决定 19 项目标操作。`operation-lambdamart` Resolver 输出每个操作的完整候选排序，`BindingPlanner` 执行两级无标签部署解码：先按能力词、动作词、参数数量和参数语义过滤不可封装候选，再要求同一能力的全部操作来自一个完整 API 家族。家族目标使用候选归一化名次求和，整个过程不读取 H01/H02/H03。
+
+`02b-canonical-binding-plan.json` 对每项操作同时保存原始 Top1、最终实体、原始候选名次、家族、签名和过滤理由。当前 K210 中，模型原始 `gpio.configure` 为无参数的 `gpio_init(void)`；签名过滤将其排除，完整家族解码选择 GPIOHS 的 configure/write/read/attach_irq 组合。该变化属于可复用部署约束，不修改 LambdaMART 原始排序指标。
+
+两个后端必须调用 `validate_operation_plan()`，缺少计划、实体不存在、实体与符号不一致或某项操作缺失时立即失败。生成器用 `@OP:capability.operation@` 占位符写入计划所选函数，并输出逐操作 `operation_bindings`。RT-Thread 当前 19 项均为 `direct-generated-call`；Zephyr 的 15 项 SDK 操作为直接调用，4 项 PLIC 操作为 `replaced-by-os-backend`，由 Zephyr 二级 IRQ 框架承担等价职责。后端辅助依赖仅用于参数适配、回调注销和状态清理，不得替换目标操作。
+
+对于 SDK 源文件中存在定义但公共头文件未声明的全局函数，生成器从 IR 实体的真实签名恢复原型，并把原型清单写入 `functional-bindings.json`。直接调用审计在加入这些原型前执行，避免把函数声明误计为调用。`compile_feedback.py` 以规范计划和逐操作生成清单为准，区分直接调用编译成功、OS 替代编译成功和缺少生成证据三种状态；所有状态仍只代表编译/链接/产物成立，不替代实板语义验证。

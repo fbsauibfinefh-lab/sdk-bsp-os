@@ -4,42 +4,24 @@ from pathlib import Path
 from typing import Any
 
 from bspforge.common import file_sha256, utc_now
+from bspforge.os_backend.plan_binding import (
+    function_declarations,
+    operation_manifest,
+    render_operation_symbols,
+    validate_operation_plan,
+)
 
 
-K210_BINDING_SYMBOLS = {
-    "clock": [
-        "sysctl_clock_enable",
-        "sysctl_clock_disable",
-        "sysctl_clock_get_freq",
-        "sysctl_clock_set_clock_select",
-        "sysctl_clock_set_threshold",
-    ],
-    "interrupt": [
-        "plic_irq_enable",
-        "plic_irq_disable",
-        "plic_irq_register",
-        "plic_irq_unregister",
-    ],
-    "uart": [
-        "uart_init",
-        "uart_configure",
-        "uart_send_data",
-        "uart_receive_data",
-    ],
-    "gpio": [
-        "gpiohs_set_drive_mode",
-        "gpiohs_get_pin",
-        "gpiohs_set_pin",
-        "gpiohs_set_pin_edge",
-        "gpiohs_irq_register",
-        "gpiohs_irq_unregister",
-    ],
+K210_AUXILIARY_SYMBOLS = {
+    "clock": ["sysctl_clock_set_threshold"],
+    "interrupt": ["plic_irq_unregister"],
+    "uart": ["uart_init"],
+    "gpio": ["gpiohs_set_pin_edge", "gpiohs_irq_unregister"],
     "timer": [
-        "timer_init",
-        "timer_set_interval",
-        "timer_set_enable",
         "timer_irq_register",
         "timer_irq_unregister",
+        "timer_set_mode",
+        "timer_enable_interrupt",
     ],
 }
 
@@ -66,21 +48,21 @@ class ZephyrBindingGenerator:
         config = options or {}
         if config.get("sdk_profile") != "k210":
             raise ValueError("generated Zephyr SDK bindings currently support k210")
+        selections = validate_operation_plan(ir, binding_plan)
 
         function_index: dict[str, list[dict[str, Any]]] = {}
         for function in ir["functions"]:
             function_index.setdefault(function["name"], []).append(function)
-        planned = {
-            item["capability"]
-            for item in (binding_plan or {}).get("capabilities", [])
-            if item["status"] in {"resolved", "partial"}
-        }
 
         bindings: list[dict[str, Any]] = []
         missing: list[dict[str, str]] = []
-        for capability, symbols in K210_BINDING_SYMBOLS.items():
-            if planned and capability not in planned:
-                continue
+        for capability, operations in selections.items():
+            selected_symbols = [
+                item["selected_symbol"] for item in operations.values()
+            ]
+            symbols = list(dict.fromkeys(
+                selected_symbols + K210_AUXILIARY_SYMBOLS.get(capability, [])
+            ))
             evidence = []
             capability_missing = []
             for symbol in symbols:
@@ -95,13 +77,26 @@ class ZephyrBindingGenerator:
                     "entity_id": entity["id"],
                     "source": entity["evidence"],
                     "signature": entity["signature"],
-                    "selection_method": "canonical-plan-backed-sdk-adapter",
+                    "selection_method": (
+                        "canonical-plan-selected-operation"
+                        if symbol in selected_symbols
+                        else "backend-adaptation-dependency"
+                    ),
                 })
             if not capability_missing:
                 bindings.append({
                     "capability": capability,
                     "status": "generated",
                     "sdk_symbols": evidence,
+                    "selected_operations": [
+                        {
+                            "operation": operation,
+                            "symbol": item["selected_symbol"],
+                            "entity_id": item["entity_id"],
+                        }
+                        for operation, item in operations.items()
+                    ],
+                    "auxiliary_symbols": K210_AUXILIARY_SYMBOLS.get(capability, []),
                 })
 
         if missing:
@@ -125,7 +120,24 @@ class ZephyrBindingGenerator:
             encoding="utf-8",
         )
         header.write_text(self._header(), encoding="utf-8")
-        source.write_text(self._source(config.get("validation", {})), encoding="utf-8")
+        call_source = self._source(config.get("validation", {}), selections)
+        operation_bindings = operation_manifest(
+            selections,
+            call_source,
+            replaced_operations={
+                ("interrupt", operation) for operation in selections["interrupt"]
+            },
+        )
+        callable_symbols = [
+            item["symbol"]
+            for binding in bindings
+            for item in binding["sdk_symbols"]
+        ]
+        ir_declarations = function_declarations(function_index, callable_symbols)
+        generated_source = self._source(
+            config.get("validation", {}), selections, ir_declarations
+        )
+        source.write_text(generated_source, encoding="utf-8")
         return {
             "schema_version": "1.0",
             "created_at": utc_now(),
@@ -141,11 +153,22 @@ class ZephyrBindingGenerator:
                 str(source_dir / "math.h"),
             ],
             "bindings": bindings,
+            "operation_bindings": operation_bindings,
+            "ir_function_declarations": ir_declarations,
             "required_sources": K210_REQUIRED_SOURCES,
             "missing_symbols": missing,
             "summary": {
                 "capabilities": len(bindings),
                 "wrappers": 19,
+                "plan_operations": len(operation_bindings),
+                "direct_plan_operations": sum(
+                    item["disposition"] == "direct-generated-call"
+                    for item in operation_bindings
+                ),
+                "os_replaced_operations": sum(
+                    item["disposition"] == "replaced-by-os-backend"
+                    for item in operation_bindings
+                ),
                 "required_sources": len(K210_REQUIRED_SOURCES),
                 "missing_symbols": len(missing),
             },
@@ -188,7 +211,11 @@ uint32_t bspforge_timer_count(void);
 '''
 
     @staticmethod
-    def _source(validation: dict[str, Any]) -> str:
+    def _source(
+        validation: dict[str, Any],
+        selections: dict[str, dict[str, dict[str, Any]]],
+        ir_declarations: list[str] | None = None,
+    ) -> str:
         uart_channel = int(validation.get("uart_channel", 0))
         uart_tx = int(validation.get("uart_tx_fpioa_io", 7))
         uart_rx = int(validation.get("uart_rx_fpioa_io", 6))
@@ -209,7 +236,8 @@ uint32_t bspforge_timer_count(void);
             raise ValueError("K210 GPIOHS pin must be in [0, 31]")
         if not 0 <= timer_device <= 2 or not 0 <= timer_channel <= 3:
             raise ValueError("K210 timer device/channel must be in [0, 2]/[0, 3]")
-        return rf'''/* Generated from K210 SDK IR and the Zephyr backend contract. */
+        prototypes = "\n".join(ir_declarations or [])
+        template = rf'''/* Generated from K210 SDK IR and the Zephyr backend contract. */
 #include "bspforge_bindings.h"
 
 #include <zephyr/irq.h>
@@ -225,6 +253,9 @@ uint32_t bspforge_timer_count(void);
 #include <sysctl.h>
 #include <timer.h>
 #include <uart.h>
+
+/* Prototypes recovered from SDK implementation entities in the IR. */
+{prototypes}
 
 #define BSPFORGE_UART_CHANNEL {uart_channel}U
 #define BSPFORGE_UART_TX_IO {uart_tx}U
@@ -362,7 +393,7 @@ int bspforge_clock_on(uint32_t clock_id)
 
     if (result != 0)
         return result;
-    return sysctl_clock_enable(clock) == 0 ? 0 : -EIO;
+    return @OP:clock.enable@(clock) == 0 ? 0 : -EIO;
 }}
 
 int bspforge_clock_off(uint32_t clock_id)
@@ -375,7 +406,7 @@ int bspforge_clock_off(uint32_t clock_id)
     result = bspforge_clock_id(clock_id, &clock);
     if (result != 0)
         return result;
-    return sysctl_clock_disable(clock) == 0 ? 0 : -EIO;
+    return @OP:clock.disable@(clock) == 0 ? 0 : -EIO;
 }}
 
 int bspforge_clock_get_rate(uint32_t clock_id, uint32_t *rate)
@@ -386,7 +417,7 @@ int bspforge_clock_get_rate(uint32_t clock_id, uint32_t *rate)
         return -EINVAL;
     if (bspforge_clock_id(clock_id, &clock) != 0)
         return -EINVAL;
-    *rate = sysctl_clock_get_freq(clock);
+    *rate = @OP:clock.get_frequency@(clock);
     return *rate > 0U ? 0 : -EIO;
 }}
 
@@ -418,8 +449,8 @@ int bspforge_uart_configure(uint32_t baud_rate)
 {{
     if (baud_rate == 0U)
         return -EINVAL;
-    uart_configure((uart_device_number_t)BSPFORGE_UART_CHANNEL, baud_rate,
-                   UART_BITWIDTH_8BIT, UART_STOP_1, UART_PARITY_NONE);
+    @OP:uart.configure@((uart_device_number_t)BSPFORGE_UART_CHANNEL, baud_rate,
+                        UART_BITWIDTH_8BIT, UART_STOP_1, UART_PARITY_NONE);
     return 0;
 }}
 
@@ -427,16 +458,16 @@ int bspforge_uart_write(const void *buffer, size_t size)
 {{
     if (buffer == NULL)
         return -EINVAL;
-    return uart_send_data((uart_device_number_t)BSPFORGE_UART_CHANNEL,
-                          (const char *)buffer, size);
+    return @OP:uart.write@((uart_device_number_t)BSPFORGE_UART_CHANNEL,
+                           (const char *)buffer, size);
 }}
 
 int bspforge_uart_read(void *buffer, size_t size)
 {{
     if (buffer == NULL)
         return -EINVAL;
-    return uart_receive_data((uart_device_number_t)BSPFORGE_UART_CHANNEL,
-                             (char *)buffer, size);
+    return @OP:uart.read@((uart_device_number_t)BSPFORGE_UART_CHANNEL,
+                          (char *)buffer, size);
 }}
 
 int bspforge_gpio_initialize(void)
@@ -449,23 +480,21 @@ int bspforge_gpio_initialize(void)
     if (fpioa_set_io_pull(BSPFORGE_GPIO_OUTPUT_IO, FPIOA_PULL_DOWN) != 0 ||
         fpioa_set_io_pull(BSPFORGE_GPIO_INPUT_IO, FPIOA_PULL_DOWN) != 0)
         return -EIO;
-    gpiohs->input_en.u32[0] &= ~(1U << BSPFORGE_GPIO_OUTPUT_PIN);
-    gpiohs->output_en.u32[0] |= 1U << BSPFORGE_GPIO_OUTPUT_PIN;
-    gpiohs->output_en.u32[0] &= ~(1U << BSPFORGE_GPIO_INPUT_PIN);
-    gpiohs->input_en.u32[0] |= 1U << BSPFORGE_GPIO_INPUT_PIN;
+    @OP:gpio.configure@(BSPFORGE_GPIO_OUTPUT_PIN, GPIO_DM_OUTPUT);
+    @OP:gpio.configure@(BSPFORGE_GPIO_INPUT_PIN, GPIO_DM_INPUT_PULL_DOWN);
     return 0;
 }}
 
 int bspforge_gpio_write(uint8_t value)
 {{
-    gpiohs_set_pin(BSPFORGE_GPIO_OUTPUT_PIN,
-                   value ? GPIO_PV_HIGH : GPIO_PV_LOW);
+    @OP:gpio.write@(BSPFORGE_GPIO_OUTPUT_PIN,
+                    value ? GPIO_PV_HIGH : GPIO_PV_LOW);
     return 0;
 }}
 
 int bspforge_gpio_read(void)
 {{
-    return gpiohs_get_pin(BSPFORGE_GPIO_INPUT_PIN) == GPIO_PV_HIGH ? 1 : 0;
+    return @OP:gpio.read@(BSPFORGE_GPIO_INPUT_PIN) == GPIO_PV_HIGH ? 1 : 0;
 }}
 
 int bspforge_gpio_output_latch(void)
@@ -478,8 +507,8 @@ int bspforge_gpio_irq_register(bspforge_callback_t handler, void *context)
     if (handler == NULL)
         return -EINVAL;
     gpiohs_set_pin_edge(BSPFORGE_GPIO_INPUT_PIN, GPIO_PE_RISING);
-    gpiohs_irq_register(BSPFORGE_GPIO_INPUT_PIN, 1,
-                        (plic_irq_callback_t)handler, context);
+    @OP:gpio.attach_irq@(BSPFORGE_GPIO_INPUT_PIN, 1,
+                         (plic_irq_callback_t)handler, context);
     return 0;
 }}
 
@@ -490,8 +519,8 @@ void bspforge_gpio_irq_unregister(void)
 
 int bspforge_timer_initialize(void)
 {{
-    timer_init((timer_device_number_t)BSPFORGE_TIMER_DEVICE);
-    if (sysctl_clock_set_clock_select(
+    @OP:timer.initialize@((timer_device_number_t)BSPFORGE_TIMER_DEVICE);
+    if (@OP:clock.initialize@(
             (sysctl_clock_select_t)(SYSCTL_CLOCK_SELECT_TIMER0 +
                                     BSPFORGE_TIMER_DEVICE), 1) != 0)
         return -EIO;
@@ -499,8 +528,8 @@ int bspforge_timer_initialize(void)
             (sysctl_threshold_t)(SYSCTL_THRESHOLD_TIMER0 +
                                  BSPFORGE_TIMER_DEVICE), 0) != 0)
         return -EIO;
-    timer_set_enable((timer_device_number_t)BSPFORGE_TIMER_DEVICE,
-                     (timer_channel_number_t)BSPFORGE_TIMER_CHANNEL, 0);
+    @OP:timer.stop@((timer_device_number_t)BSPFORGE_TIMER_DEVICE,
+                    (timer_channel_number_t)BSPFORGE_TIMER_CHANNEL);
     (void)timer[BSPFORGE_TIMER_DEVICE]
         ->channel[BSPFORGE_TIMER_CHANNEL].eoi;
     return 0;
@@ -511,24 +540,30 @@ int bspforge_timer_start(uint64_t interval_ns, bool single_shot,
 {{
     if (interval_ns == 0U || handler == NULL)
         return -EINVAL;
-    if (timer_set_interval((timer_device_number_t)BSPFORGE_TIMER_DEVICE,
-                           (timer_channel_number_t)BSPFORGE_TIMER_CHANNEL,
-                           (size_t)interval_ns) == 0U)
+    if (@OP:timer.set_interval@(
+            (timer_device_number_t)BSPFORGE_TIMER_DEVICE,
+            (timer_channel_number_t)BSPFORGE_TIMER_CHANNEL,
+            (size_t)interval_ns) == 0U)
         return -EIO;
     if (timer_irq_register((timer_device_number_t)BSPFORGE_TIMER_DEVICE,
                            (timer_channel_number_t)BSPFORGE_TIMER_CHANNEL,
                            single_shot ? 1 : 0, 1,
                            (timer_callback_t)handler, context) != 0)
         return -EIO;
-    timer_set_enable((timer_device_number_t)BSPFORGE_TIMER_DEVICE,
-                     (timer_channel_number_t)BSPFORGE_TIMER_CHANNEL, 1);
+    timer_set_mode((timer_device_number_t)BSPFORGE_TIMER_DEVICE,
+                   (timer_channel_number_t)BSPFORGE_TIMER_CHANNEL,
+                   TIMER_CR_USER_MODE);
+    timer_enable_interrupt((timer_device_number_t)BSPFORGE_TIMER_DEVICE,
+                           (timer_channel_number_t)BSPFORGE_TIMER_CHANNEL);
+    @OP:timer.start@((timer_device_number_t)BSPFORGE_TIMER_DEVICE,
+                     (timer_channel_number_t)BSPFORGE_TIMER_CHANNEL);
     return 0;
 }}
 
 void bspforge_timer_quiesce(void)
 {{
-    timer_set_enable((timer_device_number_t)BSPFORGE_TIMER_DEVICE,
-                     (timer_channel_number_t)BSPFORGE_TIMER_CHANNEL, 0);
+    @OP:timer.stop@((timer_device_number_t)BSPFORGE_TIMER_DEVICE,
+                    (timer_channel_number_t)BSPFORGE_TIMER_CHANNEL);
 }}
 
 int bspforge_timer_stop(void)
@@ -544,3 +579,4 @@ uint32_t bspforge_timer_count(void)
         ->channel[BSPFORGE_TIMER_CHANNEL].current_value;
 }}
 '''
+        return render_operation_symbols(template, selections)

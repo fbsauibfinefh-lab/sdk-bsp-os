@@ -1,5 +1,5 @@
 {
-  "run_id": "k210-rtthread-lambdamart-v2.1",
+  "run_id": "k210-rtthread-plan-driven-v2.2",
   "workspace": "workspace",
   "ir_store": "workspace/ir",
   "ingestor": {"mode": "hybrid"},
@@ -9,11 +9,12 @@
   },
   "resolver": {
     "method": "operation-lambdamart",
-    "model_path": "models/runtime/k210-operation-lambdamart-h03-eq-r1-v2.1.json",
+    "model_path": "models/runtime/k210-operation-lambdamart-h03-eq-r1-full-v2.2.json",
+    "binding_decoder": "signature-family",
     "operation_min_margin": 0.0,
     "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
     "threshold": 0.42,
-    "top_k": 8
+    "top_k": 1024
   },
   "toolchain": {
     "architecture": "riscv64",
@@ -42,7 +43,7 @@
     },
     "validation": {
       "binding_validation": true,
-      "firmware_build_id": "operation-lambdamart-h03-eq-r1-v2.1",
+      "firmware_build_id": "operation-lambdamart-plan-driven-v2.2-rtthread",
       "uart": "bspuart1",
       "uart_channel": 0,
       "uart_tx_fpioa_io": 7,

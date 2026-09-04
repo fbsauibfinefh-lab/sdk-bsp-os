@@ -103,6 +103,57 @@ class ModuleTests(unittest.TestCase):
     def tearDown(self) -> None:
         self.temporary.cleanup()
 
+    def test_signature_family_decoder_rejects_wrong_gpio_top1(self) -> None:
+        functions = {}
+        rankings = {}
+
+        def add(operation: str, symbol: str, signature: str, score: float) -> None:
+            entity_id = f"entity-{symbol}"
+            functions[entity_id] = {
+                "id": entity_id,
+                "name": symbol,
+                "signature": signature,
+                "file": f"lib/{symbol}.c",
+            }
+            rankings.setdefault(operation, []).append({
+                "entity_id": entity_id,
+                "symbol": symbol,
+                "score": score,
+            })
+
+        add("configure", "gpio_init", "void gpio_init(void)", 1.0)
+        add(
+            "configure",
+            "gpiohs_set_drive_mode",
+            "void gpiohs_set_drive_mode(uint8_t pin, gpio_drive_mode_t mode)",
+            0.7,
+        )
+        add("write", "gpio_set_pin", "void gpio_set_pin(uint8_t pin, int value)", 0.9)
+        add("write", "gpiohs_set_pin", "void gpiohs_set_pin(uint8_t pin, int value)", 0.8)
+        add("read", "gpio_get_pin", "int gpio_get_pin(uint8_t pin)", 0.9)
+        add("read", "gpiohs_get_pin", "int gpiohs_get_pin(uint8_t pin)", 0.8)
+        add(
+            "attach_irq",
+            "gpiohs_irq_register",
+            "void gpiohs_irq_register(uint8_t pin, int priority, void *callback)",
+            0.8,
+        )
+        mapping = {
+            "operation_rankings": [
+                {"operation": operation, "candidates": candidates}
+                for operation, candidates in rankings.items()
+            ]
+        }
+
+        decoded = BindingPlanner._decode_signature_family("gpio", mapping, functions)
+
+        self.assertEqual(
+            decoded["configure"]["selected"]["symbol"], "gpiohs_set_drive_mode"
+        )
+        self.assertEqual(decoded["write"]["selected"]["symbol"], "gpiohs_set_pin")
+        self.assertEqual(decoded["read"]["selected"]["symbol"], "gpiohs_get_pin")
+        self.assertEqual(decoded["configure"]["rejected"][0]["symbol"], "gpio_init")
+
     def test_ingest_resolve_and_closure_are_traceable(self) -> None:
         ir = SDKIngestor().ingest(self.sdk, "fixture-sdk")
         self.assertGreaterEqual(ir["stats"]["functions"], 3)
@@ -1059,8 +1110,17 @@ class ModuleTests(unittest.TestCase):
         ir = SDKIngestor().ingest(self.sdk, "fixture-sdk")
         resolution = SemanticResolver().resolve(ir, ["uart"], threshold=0.4)
         closure = ClosureSolver().solve(ir, resolution)
+        binding_plan = BindingPlanner().plan(ir, resolution)
         output = self.root / "generated"
-        manifest = RTThreadBackend().generate(source, "k210", output, ir, resolution, closure)
+        manifest = RTThreadBackend().generate(
+            source,
+            "k210",
+            output,
+            ir,
+            resolution,
+            closure,
+            {"_binding_plan": binding_plan},
+        )
         self.assertTrue((Path(manifest["bsp_path"]) / "board" / "bspforge_sdk_adapter.c").exists())
         self.assertTrue((output / manifest["sdk_package"] / "bspforge-input.json").exists())
         self.assertEqual(manifest["sdk_materialization"], "copied-from-analyzed-input")
@@ -1217,23 +1277,12 @@ class ModuleTests(unittest.TestCase):
             ir,
             resolution,
             closure,
-            {
-                "sdk_profile": "k210",
-                "binding_strategy": "generated-sdk-adapter",
-                "_binding_plan": {
-                    "capabilities": [{"capability": "uart", "status": "resolved"}],
-                    "summary": {"resolved": 1},
-                },
-            },
+            {"sdk_profile": "k210"},
         )
         self.assertEqual(manifest["backend"], "zephyr")
         self.assertTrue((output / "app" / "prj.conf").is_file())
         self.assertTrue((output / "app" / "src" / "main.c").is_file())
-        self.assertEqual(manifest["device_model"]["summary"]["devices"], 4)
-        self.assertIn(
-            "bspforge_zephyr_uart_device",
-            manifest["device_model"]["registration_symbols"],
-        )
+        self.assertEqual(manifest["device_model"]["summary"]["devices"], 3)
         self.assertIn(
             "bspforge_zephyr_validation_run",
             manifest["device_model"]["registration_symbols"],
@@ -1317,14 +1366,53 @@ class ModuleTests(unittest.TestCase):
         self.assertIn("asm=__asm__", cmake)
 
     def test_zephyr_k210_binding_validates_and_uses_configured_timer_irq(self) -> None:
+        selections = {
+            capability: {
+                operation: {"selected_symbol": symbol}
+                for operation, symbol in operations.items()
+            }
+            for capability, operations in {
+                "clock": {
+                    "initialize": "sysctl_clock_set_clock_select",
+                    "enable": "sysctl_clock_enable",
+                    "disable": "sysctl_clock_disable",
+                    "get_frequency": "sysctl_clock_get_freq",
+                },
+                "interrupt": {
+                    "initialize": "plic_init",
+                    "enable": "plic_irq_enable",
+                    "disable": "plic_irq_disable",
+                    "register": "plic_irq_register",
+                },
+                "uart": {
+                    "configure": "uart_configure",
+                    "write": "uart_send_data",
+                    "read": "uart_receive_data",
+                },
+                "gpio": {
+                    "configure": "gpiohs_set_drive_mode",
+                    "write": "gpiohs_set_pin",
+                    "read": "gpiohs_get_pin",
+                    "attach_irq": "gpiohs_irq_register",
+                },
+                "timer": {
+                    "initialize": "timer_init",
+                    "start": "timer_enable",
+                    "stop": "timer_disable",
+                    "set_interval": "timer_set_interval",
+                },
+            }.items()
+        }
         source = ZephyrBindingGenerator._source(
-            {"timer_device": 2, "timer_channel": 3}
+            {"timer_device": 2, "timer_channel": 3}, selections
         )
         self.assertIn("#define BSPFORGE_TIMER_DEVICE 2U", source)
         self.assertIn("#define BSPFORGE_TIMER_CHANNEL 3U", source)
         self.assertIn("BSPFORGE_TIMER_CHANNEL / 2U", source)
+        self.assertIn("timer_enable((timer_device_number_t)BSPFORGE_TIMER_DEVICE", source)
+        self.assertIn("timer_disable((timer_device_number_t)BSPFORGE_TIMER_DEVICE", source)
         with self.assertRaisesRegex(ValueError, "timer device/channel"):
-            ZephyrBindingGenerator._source({"timer_device": 3})
+            ZephyrBindingGenerator._source({"timer_device": 3}, selections)
 
     def test_k210_zephyr_port_enables_fpioa_clock_before_pin_mapping(self) -> None:
         source = (

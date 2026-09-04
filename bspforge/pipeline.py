@@ -78,7 +78,11 @@ class Pipeline:
             ),
         )
         write_json(run_root / "02-semantic-resolution.json", resolution)
-        binding_plan = BindingPlanner().plan(ir, resolution)
+        binding_plan = BindingPlanner().plan(
+            ir,
+            resolution,
+            decoder=resolver_config.get("binding_decoder", "top1"),
+        )
         write_json(run_root / "02b-canonical-binding-plan.json", binding_plan)
         timings["semantic_resolution_seconds"] = round(perf_counter() - stage_started, 6)
 
@@ -285,7 +289,14 @@ class Pipeline:
             timings["diagnostic_regeneration_seconds"] = round(regeneration_seconds, 6)
 
         evaluation_result: dict[str, Any] = {"skipped": True}
-        compile_feedback = create_compile_feedback(resolution, build_result)
+        metadata = Path(generation["bsp_path"]) / "bspforge"
+        functional_bindings = read_json(metadata / "functional-bindings.json")
+        compile_feedback = create_compile_feedback(
+            resolution,
+            build_result,
+            binding_plan=binding_plan,
+            operation_bindings=functional_bindings.get("operation_bindings"),
+        )
         compile_feedback_path = run_root / "08b-semantic-compile-feedback.json"
         write_json(compile_feedback_path, compile_feedback)
         evaluation_config = config.get("evaluation", {})
@@ -293,10 +304,9 @@ class Pipeline:
             evaluation_started = perf_counter()
             evaluator = ExperimentEvaluator()
             ground_truth = read_json(self._path(evaluation_config["ground_truth"]))
-            metadata = Path(generation["bsp_path"]) / "bspforge"
             metrics = evaluator.evaluate(
                 resolution,
-                read_json(metadata / "functional-bindings.json"),
+                functional_bindings,
                 read_json(metadata / "device-model.json"),
                 ground_truth,
             )

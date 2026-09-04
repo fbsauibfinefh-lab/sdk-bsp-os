@@ -92,6 +92,7 @@ class RTThreadValidationGenerator:
             binding_includes = '''#include "../board/bspforge_bindings.h"
 #include <fpioa.h>
 #include <gpiohs.h>
+#include <plic.h>
 #include <sysctl.h>
 '''
             binding_helpers = rf'''
@@ -151,6 +152,9 @@ static int bspforge_binding_uart_loopback(rt_uint32_t *bytes,
 
 static int bspforge_binding_clock_test(rt_uint32_t *cpu_hz, rt_uint32_t *timer_hz)
 {{
+    if (bspforge_clock_initialize(
+            (rt_uint32_t)SYSCTL_CLOCK_SELECT_TIMER2, 1U) != RT_EOK)
+        return -RT_ERROR;
     *cpu_hz = bspforge_clock_frequency((rt_uint32_t)SYSCTL_CLOCK_CPU);
     if (bspforge_clock_enable((rt_uint32_t)SYSCTL_CLOCK_TIMER2) != RT_EOK)
         return -RT_ERROR;
@@ -372,7 +376,11 @@ int bspforge_selftest(int argc, char **argv)
     {{
         rt_uint32_t fires = 0U;
         rt_uint32_t ticks = 0U;
-        int result = bspforge_hwtimer_test(HWTIMER_MODE_ONESHOT, 1U, &fires, &ticks);
+        int result;
+        bspforge_irq_initialize();
+        result = bspforge_hwtimer_test(HWTIMER_MODE_ONESHOT, 1U, &fires, &ticks);
+        if (bspforge_irq_disable((rt_uint32_t)IRQN_TIMER0A_INTERRUPT) != RT_EOK)
+            result = -RT_ERROR;
         status = result == RT_EOK ? "pass" :
                  result == -RT_ENOSYS ? "unsupported" : "fail";
         rt_kprintf("{{\"bspforge\":true,\"protocol\":\"1.0\","
