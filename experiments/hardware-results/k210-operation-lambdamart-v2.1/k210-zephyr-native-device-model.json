@@ -1,0 +1,111 @@
+{
+  "backend": "zephyr",
+  "created_at": "2026-09-04T05:41:57.428385+00:00",
+  "devices": [
+    {
+      "class": "clock_control",
+      "name": "bspforge_clock",
+      "operations": [
+        "on",
+        "off",
+        "get_rate",
+        "get_status"
+      ]
+    },
+    {
+      "class": "serial",
+      "name": "bspforge_uart",
+      "operations": [
+        "configure",
+        "config_get",
+        "poll_out",
+        "poll_in"
+      ]
+    },
+    {
+      "class": "gpio",
+      "name": "bspforge_gpio",
+      "operations": [
+        "pin_configure",
+        "port_get_raw",
+        "port_set_masked_raw",
+        "port_set_bits_raw",
+        "port_clear_bits_raw",
+        "port_toggle_bits",
+        "pin_interrupt_configure",
+        "manage_callback"
+      ],
+      "pins": {
+        "input": 28,
+        "output": 29
+      }
+    },
+    {
+      "class": "counter",
+      "name": "bspforge_counter",
+      "operations": [
+        "start",
+        "stop",
+        "get_value",
+        "set_alarm",
+        "cancel_alarm",
+        "set_top_value"
+      ]
+    }
+  ],
+  "header": "/home/whk/RTT-porting/bspforge/workspace/generated/k210-zephyr-lambdamart/app/src/bspforge_zephyr_devices.h",
+  "header_sha256": "6c13e79899e34783e6f390484e5bf82641eff02e264a766b5c60ff58324396dc",
+  "operation_tables": [
+    "bspforge_clock_api",
+    "bspforge_uart_api",
+    "bspforge_gpio_api",
+    "bspforge_counter_api"
+  ],
+  "registration_symbols": [
+    "bspforge_zephyr_clock_device",
+    "bspforge_zephyr_counter_device",
+    "bspforge_zephyr_gpio_device",
+    "bspforge_zephyr_uart_device",
+    "bspforge_zephyr_validation_init",
+    "bspforge_zephyr_validation_run"
+  ],
+  "required_zephyr_features": [
+    "CONFIG_CLOCK_CONTROL",
+    "CONFIG_COUNTER",
+    "CONFIG_GPIO",
+    "CONFIG_SERIAL",
+    "CONFIG_UART_USE_RUNTIME_CONFIGURE"
+  ],
+  "schema_version": "1.0",
+  "selftest_protocol": {
+    "source": "/home/whk/RTT-porting/bspforge/workspace/generated/k210-zephyr-lambdamart/app/src/main.c",
+    "strategy": "zephyr-native-sdk-device-selftest",
+    "version": "1.0"
+  },
+  "source": "/home/whk/RTT-porting/bspforge/workspace/generated/k210-zephyr-lambdamart/app/src/bspforge_zephyr_devices.c",
+  "source_sha256": "d878524a65f3f47bed56a24e8525ab5653089d260198ac88df3a8c99a326106c",
+  "sources": [
+    "/home/whk/RTT-porting/bspforge/workspace/generated/k210-zephyr-lambdamart/app/src/bspforge_zephyr_devices.c",
+    "/home/whk/RTT-porting/bspforge/workspace/generated/k210-zephyr-lambdamart/app/src/main.c"
+  ],
+  "strategy": "zephyr-native-sdk-backed-device-model",
+  "subsystems": [
+    {
+      "class": "interrupt_controller",
+      "implementation": "Zephyr second-level IRQ table and K210 PLIC bridge",
+      "operations": [
+        "connect",
+        "enable",
+        "disable",
+        "dispatch"
+      ]
+    }
+  ],
+  "summary": {
+    "devices": 4,
+    "generated_sources": 3,
+    "interrupt_subsystems": 1,
+    "operation_tables": 4,
+    "registration_functions": 4
+  }
+}

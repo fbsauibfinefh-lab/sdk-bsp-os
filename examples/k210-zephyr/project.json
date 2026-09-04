@@ -32,7 +32,7 @@
     "board_port": "ports/zephyr-k210",
     "toolchain_variant": "cross-compile",
     "validation": {
-      "firmware_build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional",
+      "firmware_build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device",
       "uart_channel": 0,
       "uart_tx_fpioa_io": 7,
       "uart_rx_fpioa_io": 6,
@@ -50,7 +50,7 @@
     "max_iterations": 3
   },
   "evaluation": {
-    "ground_truth": "experiments/k210-ground-truth.json",
+    "ground_truth": "experiments/k210-zephyr-ground-truth.json",
     "run_ablations": false
   }
 }

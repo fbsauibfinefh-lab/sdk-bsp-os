@@ -1,0 +1,48 @@
+{
+  "schema_version": "2.0",
+  "id": "k210-sdk-0.5.6-zephyr-device-contract-v1",
+  "description": "K210 SDK 0.5.6 到 Zephyr 原生设备与中断子系统契约的人工核验真值集",
+  "sdk": {
+    "id": "kendryte-k210-standalone-sdk-0.5.6",
+    "vendor": "Kendryte",
+    "version": "0.5.6",
+    "revision": "02576ba67e8797444f3ee3f34c625b5ed048e707",
+    "source_url": "https://github.com/kendryte/kendryte-standalone-sdk"
+  },
+  "annotation": {
+    "status": "single-curator-source-audited",
+    "selection_policy": "语义符号与绑定符号沿用同一 SDK 真值；设备操作按 Zephyr clock_control、UART、GPIO 和 counter 标准 API 核验，PLIC 按 Zephyr 中断子系统核验",
+    "second_reviewer_required_for_publication": true
+  },
+  "device_model": {
+    "backend": "zephyr",
+    "contract": "Zephyr clock_control, UART, GPIO and counter driver APIs plus interrupt-controller subsystem"
+  },
+  "capabilities": {
+    "clock": {
+      "semantic_symbols": ["sysctl_clock_enable", "sysctl_clock_disable", "sysctl_clock_get_freq"],
+      "binding_symbols": ["sysctl_clock_enable", "sysctl_clock_disable", "sysctl_clock_get_freq", "sysctl_clock_set_clock_select", "sysctl_clock_set_threshold"],
+      "device_operations": ["on", "off", "get_rate", "get_status"]
+    },
+    "interrupt": {
+      "semantic_symbols": ["plic_init", "plic_irq_enable", "plic_irq_disable", "plic_irq_register", "plic_irq_unregister", "plic_irq_claim"],
+      "binding_symbols": ["plic_irq_enable", "plic_irq_disable", "plic_irq_register", "plic_irq_unregister"],
+      "device_operations": []
+    },
+    "uart": {
+      "semantic_symbols": ["uart_init", "uart_configure", "uart_send_data", "uart_receive_data"],
+      "binding_symbols": ["uart_init", "uart_configure", "uart_send_data", "uart_receive_data"],
+      "device_operations": ["configure", "config_get", "poll_out", "poll_in"]
+    },
+    "gpio": {
+      "semantic_symbols": ["gpiohs_set_drive_mode", "gpiohs_get_pin", "gpiohs_set_pin", "gpiohs_set_pin_edge", "gpiohs_irq_register", "gpiohs_irq_unregister"],
+      "binding_symbols": ["gpiohs_set_drive_mode", "gpiohs_get_pin", "gpiohs_set_pin", "gpiohs_set_pin_edge", "gpiohs_irq_register", "gpiohs_irq_unregister"],
+      "device_operations": ["pin_configure", "port_get_raw", "port_set_masked_raw", "port_set_bits_raw", "port_clear_bits_raw", "port_toggle_bits", "pin_interrupt_configure", "manage_callback"]
+    },
+    "timer": {
+      "semantic_symbols": ["timer_init", "timer_set_interval", "timer_set_enable", "timer_irq_register", "timer_irq_unregister"],
+      "binding_symbols": ["timer_init", "timer_set_interval", "timer_set_enable", "timer_irq_register", "timer_irq_unregister"],
+      "device_operations": ["start", "stop", "get_value", "set_alarm", "cancel_alarm", "set_top_value"]
+    }
+  }
+}

@@ -29,6 +29,7 @@ from bspforge.os_backend.native_binding import NativeDriverBindingTracer
 from bspforge.os_backend.rtthread_device import RTThreadDeviceModelGenerator
 from bspforge.os_backend.rtthread_validation import RTThreadValidationGenerator
 from bspforge.os_backend.zephyr_binding import ZephyrBindingGenerator
+from bspforge.os_backend.zephyr_device import ZephyrDeviceModelGenerator
 from bspforge.os_backend.zephyr_validation import ZephyrValidationGenerator
 from bspforge.operation_dataset import build_operation_dataset
 from bspforge.operation_constraints import contract_adjustment
@@ -1216,18 +1217,70 @@ class ModuleTests(unittest.TestCase):
             ir,
             resolution,
             closure,
-            {"sdk_profile": "k210"},
+            {
+                "sdk_profile": "k210",
+                "binding_strategy": "generated-sdk-adapter",
+                "_binding_plan": {
+                    "capabilities": [{"capability": "uart", "status": "resolved"}],
+                    "summary": {"resolved": 1},
+                },
+            },
         )
         self.assertEqual(manifest["backend"], "zephyr")
         self.assertTrue((output / "app" / "prj.conf").is_file())
         self.assertTrue((output / "app" / "src" / "main.c").is_file())
-        self.assertEqual(
+        self.assertEqual(manifest["device_model"]["summary"]["devices"], 4)
+        self.assertIn(
+            "bspforge_zephyr_uart_device",
             manifest["device_model"]["registration_symbols"],
-            ["bspforge_zephyr_validation_init", "bspforge_zephyr_validation_run"],
+        )
+        self.assertIn(
+            "bspforge_zephyr_validation_run",
+            manifest["device_model"]["registration_symbols"],
         )
         source = (output / "app" / "src" / "main.c").read_text(encoding="utf-8")
         self.assertIn("if (bspforge_zephyr_validation_run() != 0)", source)
         self.assertIn("k_busy_wait(50);", source)
+
+    def test_zephyr_native_device_model_registers_standard_driver_apis(self) -> None:
+        source_dir = self.root / "zephyr-devices"
+        source_dir.mkdir()
+        manifest = ZephyrDeviceModelGenerator().generate(source_dir)
+        source = Path(manifest["source"]).read_text(encoding="utf-8")
+        self.assertEqual(manifest["summary"]["devices"], 4)
+        for api in ("clock_control", "uart", "gpio", "counter"):
+            self.assertIn(f"DEVICE_API({api},", source)
+        for device in ("clock", "uart", "gpio", "counter"):
+            self.assertIn(f"DEVICE_DEFINE(bspforge_{device}", source)
+            self.assertIn(f"bspforge_zephyr_{device}_device", source)
+        self.assertIn("gpio_fire_callbacks", source)
+        self.assertIn("counter_alarm_callback_t", source)
+
+    def test_zephyr_native_validation_uses_only_standard_device_apis(self) -> None:
+        source_dir = self.root / "zephyr-native-validation"
+        source_dir.mkdir()
+        manifest = ZephyrValidationGenerator().generate(
+            source_dir,
+            "k210",
+            "native-device-test",
+            functional=True,
+            native_devices=True,
+        )
+        source = Path(manifest["source"]).read_text(encoding="utf-8")
+        self.assertIn('#include "bspforge_zephyr_devices.h"', source)
+        self.assertNotIn('#include "bspforge_bindings.h"', source)
+        for call in (
+            "clock_control_get_rate",
+            "uart_configure",
+            "uart_poll_out",
+            "gpio_pin_configure",
+            "gpio_add_callback",
+            "counter_set_channel_alarm",
+            "counter_set_top_value",
+        ):
+            self.assertIn(call, source)
+        self.assertNotIn("bspforge_uart_write", source)
+        self.assertNotIn("bspforge_gpio_write", source)
 
     def test_zephyr_functional_validation_covers_common_board_protocol(self) -> None:
         source_dir = self.root / "zephyr-functional"
@@ -1255,9 +1308,10 @@ class ModuleTests(unittest.TestCase):
 
     def test_zephyr_functional_cmake_compiles_analyzed_sdk_sources(self) -> None:
         cmake = ZephyrBackend._cmake_source(
-            self.sdk, ["lib/drivers/uart.c"], functional=True
+            self.sdk, ["lib/drivers/uart.c"], functional=True, native_devices=True
         )
         self.assertIn("src/bspforge_bindings.c", cmake)
+        self.assertIn("src/bspforge_zephyr_devices.c", cmake)
         self.assertIn(str((self.sdk / "lib/drivers/uart.c").resolve()), cmake)
         self.assertIn("target_include_directories(app PRIVATE", cmake)
         self.assertIn("asm=__asm__", cmake)

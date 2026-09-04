@@ -1,0 +1,355 @@
+{
+  "created_at": "2026-09-04T05:48:04.946903+00:00",
+  "device_model_contract": {
+    "expected_backend": "zephyr",
+    "matches": true,
+    "observed_backend": "zephyr"
+  },
+  "ground_truth_id": "k210-sdk-0.5.6-zephyr-device-contract-v1",
+  "per_capability": {
+    "clock": {
+      "binding": {
+        "applicable": true,
+        "f1": 1.0,
+        "false_negative": [],
+        "false_positive": [],
+        "precision": 1.0,
+        "predicted": 5,
+        "recall": 1.0,
+        "relevant": 5,
+        "true_positive": 5
+      },
+      "device_model": {
+        "applicable": true,
+        "f1": 1.0,
+        "false_negative": [],
+        "false_positive": [],
+        "precision": 1.0,
+        "predicted": 4,
+        "recall": 1.0,
+        "relevant": 4,
+        "true_positive": 4
+      },
+      "supported_by_sdk": true
+    },
+    "gpio": {
+      "binding": {
+        "applicable": true,
+        "f1": 1.0,
+        "false_negative": [],
+        "false_positive": [],
+        "precision": 1.0,
+        "predicted": 6,
+        "recall": 1.0,
+        "relevant": 6,
+        "true_positive": 6
+      },
+      "device_model": {
+        "applicable": true,
+        "f1": 1.0,
+        "false_negative": [],
+        "false_positive": [],
+        "precision": 1.0,
+        "predicted": 8,
+        "recall": 1.0,
+        "relevant": 8,
+        "true_positive": 8
+      },
+      "supported_by_sdk": true
+    },
+    "interrupt": {
+      "binding": {
+        "applicable": true,
+        "f1": 1.0,
+        "false_negative": [],
+        "false_positive": [],
+        "precision": 1.0,
+        "predicted": 4,
+        "recall": 1.0,
+        "relevant": 4,
+        "true_positive": 4
+      },
+      "device_model": {
+        "applicable": false,
+        "f1": null,
+        "false_negative": [],
+        "false_positive": [],
+        "precision": null,
+        "predicted": 0,
+        "recall": null,
+        "relevant": 0,
+        "true_positive": 0,
+        "unsupported_claim": false
+      },
+      "supported_by_sdk": true
+    },
+    "timer": {
+      "binding": {
+        "applicable": true,
+        "f1": 1.0,
+        "false_negative": [],
+        "false_positive": [],
+        "precision": 1.0,
+        "predicted": 5,
+        "recall": 1.0,
+        "relevant": 5,
+        "true_positive": 5
+      },
+      "device_model": {
+        "applicable": true,
+        "f1": 1.0,
+        "false_negative": [],
+        "false_positive": [],
+        "precision": 1.0,
+        "predicted": 6,
+        "recall": 1.0,
+        "relevant": 6,
+        "true_positive": 6
+      },
+      "supported_by_sdk": true
+    },
+    "uart": {
+      "binding": {
+        "applicable": true,
+        "f1": 1.0,
+        "false_negative": [],
+        "false_positive": [],
+        "precision": 1.0,
+        "predicted": 4,
+        "recall": 1.0,
+        "relevant": 4,
+        "true_positive": 4
+      },
+      "device_model": {
+        "applicable": true,
+        "f1": 1.0,
+        "false_negative": [],
+        "false_positive": [],
+        "precision": 1.0,
+        "predicted": 4,
+        "recall": 1.0,
+        "relevant": 4,
+        "true_positive": 4
+      },
+      "supported_by_sdk": true
+    }
+  },
+  "schema_version": "1.1",
+  "semantic_resolution": {
+    "per_capability": {
+      "clock": {
+        "accepted": [
+          "sysctl_clock_disable",
+          "sysctl_clock_enable",
+          "sysctl_clock_get_freq",
+          "sysctl_pll_set_freq"
+        ],
+        "applicable": true,
+        "f1": 0.8571,
+        "false_negative": [],
+        "false_positive": [
+          "sysctl_pll_set_freq"
+        ],
+        "precision": 0.75,
+        "predicted": 4,
+        "ranked_candidates": [
+          "sysctl_clock_get_freq",
+          "sysctl_get_freq",
+          "sysctl_pll_get_freq",
+          "sysctl_clock_source_get_freq",
+          "sysctl_cpu_get_freq",
+          "sysctl_clock_enable",
+          "sysctl_clock_disable",
+          "sysctl_get_time_us"
+        ],
+        "recall": 1.0,
+        "recall_at_k": 1.0,
+        "reciprocal_rank": 1.0,
+        "relevant": [
+          "sysctl_clock_disable",
+          "sysctl_clock_enable",
+          "sysctl_clock_get_freq"
+        ],
+        "true_positive": 3
+      },
+      "gpio": {
+        "accepted": [
+          "gpio_get_pin",
+          "gpio_init",
+          "gpio_set_pin",
+          "gpiohs_irq_register"
+        ],
+        "applicable": true,
+        "f1": 0.2,
+        "false_negative": [
+          "gpiohs_get_pin",
+          "gpiohs_irq_unregister",
+          "gpiohs_set_drive_mode",
+          "gpiohs_set_pin",
+          "gpiohs_set_pin_edge"
+        ],
+        "false_positive": [
+          "gpio_get_pin",
+          "gpio_init",
+          "gpio_set_pin"
+        ],
+        "precision": 0.25,
+        "predicted": 4,
+        "ranked_candidates": [
+          "gpio_get_pin",
+          "gpiohs_get_pin",
+          "gpiohs_irq_register",
+          "gpio_set_pin",
+          "gpio_init",
+          "gpiohs_set_pin",
+          "gpiohs_set_irq",
+          "gpiohs_irq_unregister"
+        ],
+        "recall": 0.1667,
+        "recall_at_k": 0.6667,
+        "reciprocal_rank": 0.5,
+        "relevant": [
+          "gpiohs_get_pin",
+          "gpiohs_irq_register",
+          "gpiohs_irq_unregister",
+          "gpiohs_set_drive_mode",
+          "gpiohs_set_pin",
+          "gpiohs_set_pin_edge"
+        ],
+        "true_positive": 1
+      },
+      "interrupt": {
+        "accepted": [
+          "plic_init",
+          "plic_irq_disable",
+          "plic_irq_enable",
+          "plic_irq_register"
+        ],
+        "applicable": true,
+        "f1": 0.8,
+        "false_negative": [
+          "plic_irq_claim",
+          "plic_irq_unregister"
+        ],
+        "false_positive": [],
+        "precision": 1.0,
+        "predicted": 4,
+        "ranked_candidates": [
+          "plic_irq_register",
+          "uart_irq_register",
+          "dmac_irq_register",
+          "rtc_alarm_irq_register",
+          "rtc_tick_irq_register",
+          "gpiohs_irq_register",
+          "dmac_irq_callback",
+          "plic_init"
+        ],
+        "recall": 0.6667,
+        "recall_at_k": 0.3333,
+        "reciprocal_rank": 1.0,
+        "relevant": [
+          "plic_init",
+          "plic_irq_claim",
+          "plic_irq_disable",
+          "plic_irq_enable",
+          "plic_irq_register",
+          "plic_irq_unregister"
+        ],
+        "true_positive": 4
+      },
+      "timer": {
+        "accepted": [
+          "timer_disable",
+          "timer_enable",
+          "timer_init",
+          "timer_set_interval"
+        ],
+        "applicable": true,
+        "f1": 0.4444,
+        "false_negative": [
+          "timer_irq_register",
+          "timer_irq_unregister",
+          "timer_set_enable"
+        ],
+        "false_positive": [
+          "timer_disable",
+          "timer_enable"
+        ],
+        "precision": 0.5,
+        "predicted": 4,
+        "ranked_candidates": [
+          "timer_enable",
+          "timer_init",
+          "timer_disable",
+          "timer_set_interval",
+          "timer_set_enable",
+          "clint_timer_start",
+          "timer_disable_interrupt",
+          "clint_timer_stop"
+        ],
+        "recall": 0.4,
+        "recall_at_k": 0.6,
+        "reciprocal_rank": 0.5,
+        "relevant": [
+          "timer_init",
+          "timer_irq_register",
+          "timer_irq_unregister",
+          "timer_set_enable",
+          "timer_set_interval"
+        ],
+        "true_positive": 2
+      },
+      "uart": {
+        "accepted": [
+          "uart_configure",
+          "uart_receive_data",
+          "uart_send_data"
+        ],
+        "applicable": true,
+        "f1": 0.8571,
+        "false_negative": [
+          "uart_init"
+        ],
+        "false_positive": [],
+        "precision": 1.0,
+        "predicted": 3,
+        "ranked_candidates": [
+          "uart_configure",
+          "uart_receive_data",
+          "uart_send_data",
+          "uart_init",
+          "uart_receive_data_dma",
+          "uart_debug_init",
+          "uart_receive_data_dma_irq",
+          "uart_send_data_dma"
+        ],
+        "recall": 0.75,
+        "recall_at_k": 1.0,
+        "reciprocal_rank": 1.0,
+        "relevant": [
+          "uart_configure",
+          "uart_init",
+          "uart_receive_data",
+          "uart_send_data"
+        ],
+        "true_positive": 3
+      }
+    },
+    "summary": {
+      "macro_f1": 0.6317,
+      "macro_precision": 0.7,
+      "macro_recall": 0.5967,
+      "macro_recall_at_k": 0.72,
+      "mrr": 0.8
+    }
+  },
+  "summary": {
+    "binding_macro_recall": 1.0,
+    "device_operation_macro_recall": 1.0,
+    "semantic_macro_f1": 0.6317,
+    "semantic_macro_precision": 0.7,
+    "semantic_macro_recall": 0.5967,
+    "semantic_mrr": 0.8,
+    "unsupported_capability_claims": 0
+  }
+}

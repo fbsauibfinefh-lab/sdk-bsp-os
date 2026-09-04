@@ -1,191 +1,193 @@
 {
   "board": "k210",
-  "created_at": "2026-09-03T18:40:30.874903+00:00",
+  "created_at": "2026-09-04T05:43:26.922124+00:00",
   "firmware_artifact": {
     "path": "workspace/generated/k210-zephyr-lambdamart/build/zephyr/zephyr.bin",
-    "sha256": "e20317d5d853be67f314b013d99a4b2ba8cbaff8527433a1bf0e6a9a99ec46ad",
-    "size": 31256
+    "sha256": "c423e5162fc28e725f66406499a87d46c3a7b63a2e253982476298f7a631d809",
+    "size": 34744
   },
   "raw_log": [
     "*** Booting Zephyr OS build v4.4.0 ***",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional\",\"stage\":\"application\"}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"8029b5dacf33\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"7842e61fa14f\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"936c6f47f277\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"be5756461a08\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a565fe242e98\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"23a0ca0784bb\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"8a3c9eba1200\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"48ca2461e87e\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"26d5771b56f4\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"f5cf2c6eafbe\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b4113542116d\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"02523769d4d1\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b0842484cb89\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"7351b6969fd6\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d29657f73d4f\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ae5b69ac832b\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e4b4132a0c32\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"75b9f0b5e5a5\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
     "*** Booting Zephyr OS build v4.4.0 ***",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional\",\"stage\":\"application\"}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"fa4a3aed1e5f\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2da3cc21b35c\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"bbd14ae622ee\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"68059dcc6e6f\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"f4599cf4f4b2\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"bd032464eacb\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"7c760fab5eff\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"7d455fb36057\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c78bdd89af92\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"428c9ff6b93e\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"9580440f464e\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e60eac221cc1\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"580baa8b409e\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"6ae144472ab6\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"1f4ffdf35333\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"1bb2a7502e08\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3104e0ee0373\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"7ff171da3e37\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
     "*** Booting Zephyr OS build v4.4.0 ***",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional\",\"stage\":\"application\"}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0554ad920281\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"57b9cc947edf\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0c52c342f6e1\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"f6ceee58f6c8\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2806e8755ad0\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"12823c819bcb\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c7572b287bba\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"48faf7e9a521\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2057cc8a574c\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"33e58e0f8256\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"28d75dcb3cb4\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2a2243203d12\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"8db3bcfbf9f7\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"44f600b5c52b\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"6a93fea644ed\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"41ca07f3453f\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0ce418b36c45\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3fefe4e8d90a\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
     "*** Booting Zephyr OS build v4.4.0 ***",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional\",\"stage\":\"application\"}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"04b538e5527d\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a97bcf9100d5\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"5fbe089c78c2\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"4922d470ed99\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"93d79793d3ae\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3674d416fa16\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e2bdca643e99\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"8e0fc5f5ed49\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"6ef6a8c4ecc0\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ce8e893393e8\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b6babb9d537f\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"48d9dfef5309\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"5c91fd1b3e9d\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c4fc78038058\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e89418e5b08e\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"68d5c67b3a69\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b5e8e7665a6c\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3bf966257fd3\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
     "*** Booting Zephyr OS build v4.4.0 ***",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional\",\"stage\":\"application\"}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e61ccab6ab35\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"41986106bd10\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ebcadd9d585c\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"328ea5a6e0cc\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"1ede79c12e3a\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"52f83dd72298\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a58578f27467\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b0c9ebcea06f\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"73d17ea53f15\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ca5b385ad78a\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"09591fcb20ef\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b6a8703ff740\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"80332a93b8eb\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"1fcc48d58095\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b4588dacf7f2\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"fe5778adfa41\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"cb4b886c6f0f\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"423b64c899cc\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
     "*** Booting Zephyr OS build v4.4.0 ***",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional\",\"stage\":\"application\"}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"84483296ff7a\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"aa40cb77dbeb\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"f0351106b501\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"dc2ba74f09b4\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0d3351cafc59\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a9221fba2559\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"1cc7f5e510c9\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"fd473b6a8ce9\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a5887c91043b\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c8420d2a84a2\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"1cadc28ec8cb\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"1ab35824b58d\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"128940939619\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"cc90f438e2e7\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a3c0d805341a\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"9dba1c029eaf\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"4c5abe683984\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"02d43515803a\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
     "*** Booting Zephyr OS build v4.4.0 ***",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional\",\"stage\":\"application\"}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0dbc8fdbdfb7\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"6e9ebc1fd975\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"86388d336a84\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"27f69898553e\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ad2685611206\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0993e2aecaf3\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"716416a16e2d\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a829542e92de\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d5ecfcf55647\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"337599525f1f\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d505d2e0b6e8\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"bd38fd9824f4\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"5c58f090e561\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3582cfc2f213\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"53d2579a57e4\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"282664c9178e\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"fb2960aabcbd\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0f48f125ac1a\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
     "*** Booting Zephyr OS build v4.4.0 ***",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional\",\"stage\":\"application\"}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"6f861da9f7df\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"f74f583e21b4\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"58d1db10924d\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"44de39e48a88\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"7a8bb89d35b9\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ed4d474a509d\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"224b95f5d4db\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"521e3a0ed4d3\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e01db4c98861\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"70468c0b3905\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"4d26df13ba5c\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"f1e48862031f\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"dc0c100406b6\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2d21a6813cfd\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"95d14940dd3a\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"4fc8253f7536\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c86b73895089\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c28178516f66\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
     "*** Booting Zephyr OS build v4.4.0 ***",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional\",\"stage\":\"application\"}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"bdcc97fc6b7b\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"163fc932684f\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"5f73f50344f8\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2c91a4c67e36\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"78d53a0af8cf\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"cf01b666a73c\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a4ae91b42907\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"6e9aa67cf899\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"72685c40ec3c\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"62cec04e151a\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"6c345a609fb9\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"68ca6ba37d52\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"cb767c006421\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ec5e1fd5ba55\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"218a097a76d5\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"8e56fec9310a\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"60baf21fc614\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"5fb87942e672\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
     "*** Booting Zephyr OS build v4.4.0 ***",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional\",\"stage\":\"application\"}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c2227f202380\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0b7f93f9ad29\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3c33ade74e1c\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ef10a494751c\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e27eb573f2d3\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d6a7b104d9d4\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"00be994b568b\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a68dc4c81814\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
-    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"dabe34c91753\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}"
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c41e4ab51ab4\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"94490289d5dc\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":390000000,\"timer_hz\":1523437}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c993487091fa\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ad65c241ccc6\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"dfc940936700\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b21d381a55ea\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"30d08028f2d1\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"dcc8abf99b90\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":2}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a9b32a4495c9\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}"
   ],
   "rounds": [
     {
       "boot_event": {
         "board": "k210",
         "bspforge": true,
-        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional",
+        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device",
         "event": "boot",
         "protocol": "1.0",
         "rtos": "zephyr",
         "stage": "application"
       },
       "boot_success": true,
-      "boot_time_ms": 33.848,
+      "boot_time_ms": 32.654,
       "commands": [
         {
           "bspforge": true,
           "command": "info",
           "event": "result",
-          "host_round_trip_ms": 17.458,
-          "metrics": {},
+          "host_round_trip_ms": 17.322,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "8029b5dacf33",
+          "request_id": "f5cf2c6eafbe",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "clock.basic",
           "event": "result",
-          "host_round_trip_ms": 21.956,
+          "host_round_trip_ms": 20.432,
           "metrics": {
             "cpu_hz": 390000000,
             "timer_hz": 1523437
           },
           "protocol": "1.0",
-          "request_id": "7842e61fa14f",
+          "request_id": "b4113542116d",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "interrupt.basic",
           "event": "result",
-          "host_round_trip_ms": 23.229,
+          "host_round_trip_ms": 22.178,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "936c6f47f277",
+          "request_id": "02523769d4d1",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "uart.loopback",
           "event": "result",
-          "host_round_trip_ms": 22.584,
+          "host_round_trip_ms": 20.948,
           "metrics": {
             "bytes": 16,
             "errors": 0
           },
           "protocol": "1.0",
-          "request_id": "be5756461a08",
+          "request_id": "b0842484cb89",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.toggle",
           "event": "result",
-          "host_round_trip_ms": 31.767,
+          "host_round_trip_ms": 28.787,
           "metrics": {
             "input_high": 1,
             "input_low": 0,
@@ -193,56 +195,58 @@
             "output_low_latch": 0
           },
           "protocol": "1.0",
-          "request_id": "a565fe242e98",
+          "request_id": "7351b6969fd6",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.irq",
           "event": "result",
-          "host_round_trip_ms": 24.343,
+          "host_round_trip_ms": 21.974,
           "metrics": {
             "elapsed_ms": 0,
             "irq_callbacks": 1
           },
           "protocol": "1.0",
-          "request_id": "23a0ca0784bb",
+          "request_id": "d29657f73d4f",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.oneshot",
           "event": "result",
-          "host_round_trip_ms": 23.174,
+          "host_round_trip_ms": 21.976,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "8a3c9eba1200",
+          "request_id": "ae5b69ac832b",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.periodic",
           "event": "result",
-          "host_round_trip_ms": 23.741,
+          "host_round_trip_ms": 22.085,
           "metrics": {
             "callbacks": 3,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "48ca2461e87e",
+          "request_id": "e4b4132a0c32",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "stability",
           "event": "result",
-          "host_round_trip_ms": 18.14,
-          "metrics": {},
+          "host_round_trip_ms": 18.205,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "26d5771b56f4",
+          "request_id": "75b9f0b5e5a5",
           "status": "pass"
         }
       ],
@@ -252,69 +256,71 @@
       "boot_event": {
         "board": "k210",
         "bspforge": true,
-        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional",
+        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device",
         "event": "boot",
         "protocol": "1.0",
         "rtos": "zephyr",
         "stage": "application"
       },
       "boot_success": true,
-      "boot_time_ms": 33.716,
+      "boot_time_ms": 32.537,
       "commands": [
         {
           "bspforge": true,
           "command": "info",
           "event": "result",
-          "host_round_trip_ms": 17.336,
-          "metrics": {},
+          "host_round_trip_ms": 17.3,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "fa4a3aed1e5f",
+          "request_id": "428c9ff6b93e",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "clock.basic",
           "event": "result",
-          "host_round_trip_ms": 21.968,
+          "host_round_trip_ms": 20.604,
           "metrics": {
             "cpu_hz": 390000000,
             "timer_hz": 1523437
           },
           "protocol": "1.0",
-          "request_id": "2da3cc21b35c",
+          "request_id": "9580440f464e",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "interrupt.basic",
           "event": "result",
-          "host_round_trip_ms": 23.557,
+          "host_round_trip_ms": 21.983,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "bbd14ae622ee",
+          "request_id": "e60eac221cc1",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "uart.loopback",
           "event": "result",
-          "host_round_trip_ms": 22.611,
+          "host_round_trip_ms": 20.928,
           "metrics": {
             "bytes": 16,
             "errors": 0
           },
           "protocol": "1.0",
-          "request_id": "68059dcc6e6f",
+          "request_id": "580baa8b409e",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.toggle",
           "event": "result",
-          "host_round_trip_ms": 31.87,
+          "host_round_trip_ms": 28.825,
           "metrics": {
             "input_high": 1,
             "input_low": 0,
@@ -322,56 +328,58 @@
             "output_low_latch": 0
           },
           "protocol": "1.0",
-          "request_id": "f4599cf4f4b2",
+          "request_id": "6ae144472ab6",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.irq",
           "event": "result",
-          "host_round_trip_ms": 23.62,
+          "host_round_trip_ms": 21.96,
           "metrics": {
             "elapsed_ms": 0,
             "irq_callbacks": 1
           },
           "protocol": "1.0",
-          "request_id": "bd032464eacb",
+          "request_id": "1f4ffdf35333",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.oneshot",
           "event": "result",
-          "host_round_trip_ms": 22.701,
+          "host_round_trip_ms": 20.924,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "7c760fab5eff",
+          "request_id": "1bb2a7502e08",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.periodic",
           "event": "result",
-          "host_round_trip_ms": 23.844,
+          "host_round_trip_ms": 21.167,
           "metrics": {
             "callbacks": 3,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "7d455fb36057",
+          "request_id": "3104e0ee0373",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "stability",
           "event": "result",
-          "host_round_trip_ms": 17.725,
-          "metrics": {},
+          "host_round_trip_ms": 18.113,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "c78bdd89af92",
+          "request_id": "7ff171da3e37",
           "status": "pass"
         }
       ],
@@ -381,69 +389,71 @@
       "boot_event": {
         "board": "k210",
         "bspforge": true,
-        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional",
+        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device",
         "event": "boot",
         "protocol": "1.0",
         "rtos": "zephyr",
         "stage": "application"
       },
       "boot_success": true,
-      "boot_time_ms": 33.541,
+      "boot_time_ms": 32.678,
       "commands": [
         {
           "bspforge": true,
           "command": "info",
           "event": "result",
-          "host_round_trip_ms": 17.529,
-          "metrics": {},
+          "host_round_trip_ms": 17.175,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "0554ad920281",
+          "request_id": "33e58e0f8256",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "clock.basic",
           "event": "result",
-          "host_round_trip_ms": 22.009,
+          "host_round_trip_ms": 20.411,
           "metrics": {
             "cpu_hz": 390000000,
             "timer_hz": 1523437
           },
           "protocol": "1.0",
-          "request_id": "57b9cc947edf",
+          "request_id": "28d75dcb3cb4",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "interrupt.basic",
           "event": "result",
-          "host_round_trip_ms": 23.378,
+          "host_round_trip_ms": 21.346,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "0c52c342f6e1",
+          "request_id": "2a2243203d12",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "uart.loopback",
           "event": "result",
-          "host_round_trip_ms": 22.412,
+          "host_round_trip_ms": 20.855,
           "metrics": {
             "bytes": 16,
             "errors": 0
           },
           "protocol": "1.0",
-          "request_id": "f6ceee58f6c8",
+          "request_id": "8db3bcfbf9f7",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.toggle",
           "event": "result",
-          "host_round_trip_ms": 31.038,
+          "host_round_trip_ms": 28.903,
           "metrics": {
             "input_high": 1,
             "input_low": 0,
@@ -451,56 +461,58 @@
             "output_low_latch": 0
           },
           "protocol": "1.0",
-          "request_id": "2806e8755ad0",
+          "request_id": "44f600b5c52b",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.irq",
           "event": "result",
-          "host_round_trip_ms": 23.513,
+          "host_round_trip_ms": 21.966,
           "metrics": {
             "elapsed_ms": 0,
             "irq_callbacks": 1
           },
           "protocol": "1.0",
-          "request_id": "12823c819bcb",
+          "request_id": "6a93fea644ed",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.oneshot",
           "event": "result",
-          "host_round_trip_ms": 22.915,
+          "host_round_trip_ms": 21.972,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "c7572b287bba",
+          "request_id": "41ca07f3453f",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.periodic",
           "event": "result",
-          "host_round_trip_ms": 23.686,
+          "host_round_trip_ms": 22.058,
           "metrics": {
             "callbacks": 3,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "48faf7e9a521",
+          "request_id": "0ce418b36c45",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "stability",
           "event": "result",
-          "host_round_trip_ms": 17.937,
-          "metrics": {},
+          "host_round_trip_ms": 18.179,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "2057cc8a574c",
+          "request_id": "3fefe4e8d90a",
           "status": "pass"
         }
       ],
@@ -510,69 +522,71 @@
       "boot_event": {
         "board": "k210",
         "bspforge": true,
-        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional",
+        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device",
         "event": "boot",
         "protocol": "1.0",
         "rtos": "zephyr",
         "stage": "application"
       },
       "boot_success": true,
-      "boot_time_ms": 33.79,
+      "boot_time_ms": 32.526,
       "commands": [
         {
           "bspforge": true,
           "command": "info",
           "event": "result",
-          "host_round_trip_ms": 17.31,
-          "metrics": {},
+          "host_round_trip_ms": 17.208,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "04b538e5527d",
+          "request_id": "ce8e893393e8",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "clock.basic",
           "event": "result",
-          "host_round_trip_ms": 21.963,
+          "host_round_trip_ms": 20.518,
           "metrics": {
             "cpu_hz": 390000000,
             "timer_hz": 1523437
           },
           "protocol": "1.0",
-          "request_id": "a97bcf9100d5",
+          "request_id": "b6babb9d537f",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "interrupt.basic",
           "event": "result",
-          "host_round_trip_ms": 23.495,
+          "host_round_trip_ms": 21.392,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "5fbe089c78c2",
+          "request_id": "48d9dfef5309",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "uart.loopback",
           "event": "result",
-          "host_round_trip_ms": 23.981,
+          "host_round_trip_ms": 21.013,
           "metrics": {
             "bytes": 16,
             "errors": 0
           },
           "protocol": "1.0",
-          "request_id": "4922d470ed99",
+          "request_id": "5c91fd1b3e9d",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.toggle",
           "event": "result",
-          "host_round_trip_ms": 31.636,
+          "host_round_trip_ms": 29.61,
           "metrics": {
             "input_high": 1,
             "input_low": 0,
@@ -580,56 +594,58 @@
             "output_low_latch": 0
           },
           "protocol": "1.0",
-          "request_id": "93d79793d3ae",
+          "request_id": "c4fc78038058",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.irq",
           "event": "result",
-          "host_round_trip_ms": 23.81,
+          "host_round_trip_ms": 22.182,
           "metrics": {
             "elapsed_ms": 0,
             "irq_callbacks": 1
           },
           "protocol": "1.0",
-          "request_id": "3674d416fa16",
+          "request_id": "e89418e5b08e",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.oneshot",
           "event": "result",
-          "host_round_trip_ms": 23.519,
+          "host_round_trip_ms": 21.822,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "e2bdca643e99",
+          "request_id": "68d5c67b3a69",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.periodic",
           "event": "result",
-          "host_round_trip_ms": 23.783,
+          "host_round_trip_ms": 21.161,
           "metrics": {
             "callbacks": 3,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "8e0fc5f5ed49",
+          "request_id": "b5e8e7665a6c",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "stability",
           "event": "result",
-          "host_round_trip_ms": 17.943,
-          "metrics": {},
+          "host_round_trip_ms": 18.145,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "6ef6a8c4ecc0",
+          "request_id": "3bf966257fd3",
           "status": "pass"
         }
       ],
@@ -639,69 +655,71 @@
       "boot_event": {
         "board": "k210",
         "bspforge": true,
-        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional",
+        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device",
         "event": "boot",
         "protocol": "1.0",
         "rtos": "zephyr",
         "stage": "application"
       },
       "boot_success": true,
-      "boot_time_ms": 33.668,
+      "boot_time_ms": 32.602,
       "commands": [
         {
           "bspforge": true,
           "command": "info",
           "event": "result",
-          "host_round_trip_ms": 17.226,
-          "metrics": {},
+          "host_round_trip_ms": 17.234,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "e61ccab6ab35",
+          "request_id": "ca5b385ad78a",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "clock.basic",
           "event": "result",
-          "host_round_trip_ms": 22.014,
+          "host_round_trip_ms": 20.547,
           "metrics": {
             "cpu_hz": 390000000,
             "timer_hz": 1523437
           },
           "protocol": "1.0",
-          "request_id": "41986106bd10",
+          "request_id": "09591fcb20ef",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "interrupt.basic",
           "event": "result",
-          "host_round_trip_ms": 23.69,
+          "host_round_trip_ms": 22.151,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "ebcadd9d585c",
+          "request_id": "b6a8703ff740",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "uart.loopback",
           "event": "result",
-          "host_round_trip_ms": 22.539,
+          "host_round_trip_ms": 20.888,
           "metrics": {
             "bytes": 16,
             "errors": 0
           },
           "protocol": "1.0",
-          "request_id": "328ea5a6e0cc",
+          "request_id": "80332a93b8eb",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.toggle",
           "event": "result",
-          "host_round_trip_ms": 31.952,
+          "host_round_trip_ms": 28.877,
           "metrics": {
             "input_high": 1,
             "input_low": 0,
@@ -709,56 +727,58 @@
             "output_low_latch": 0
           },
           "protocol": "1.0",
-          "request_id": "1ede79c12e3a",
+          "request_id": "1fcc48d58095",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.irq",
           "event": "result",
-          "host_round_trip_ms": 23.667,
+          "host_round_trip_ms": 21.913,
           "metrics": {
             "elapsed_ms": 0,
             "irq_callbacks": 1
           },
           "protocol": "1.0",
-          "request_id": "52f83dd72298",
+          "request_id": "b4588dacf7f2",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.oneshot",
           "event": "result",
-          "host_round_trip_ms": 22.736,
+          "host_round_trip_ms": 21.093,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "a58578f27467",
+          "request_id": "fe5778adfa41",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.periodic",
           "event": "result",
-          "host_round_trip_ms": 23.811,
+          "host_round_trip_ms": 22.163,
           "metrics": {
             "callbacks": 3,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "b0c9ebcea06f",
+          "request_id": "cb4b886c6f0f",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "stability",
           "event": "result",
-          "host_round_trip_ms": 18.277,
-          "metrics": {},
+          "host_round_trip_ms": 18.247,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "73d17ea53f15",
+          "request_id": "423b64c899cc",
           "status": "pass"
         }
       ],
@@ -768,69 +788,71 @@
       "boot_event": {
         "board": "k210",
         "bspforge": true,
-        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional",
+        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device",
         "event": "boot",
         "protocol": "1.0",
         "rtos": "zephyr",
         "stage": "application"
       },
       "boot_success": true,
-      "boot_time_ms": 33.725,
+      "boot_time_ms": 32.777,
       "commands": [
         {
           "bspforge": true,
           "command": "info",
           "event": "result",
-          "host_round_trip_ms": 17.645,
-          "metrics": {},
+          "host_round_trip_ms": 17.247,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "84483296ff7a",
+          "request_id": "c8420d2a84a2",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "clock.basic",
           "event": "result",
-          "host_round_trip_ms": 22.082,
+          "host_round_trip_ms": 20.49,
           "metrics": {
             "cpu_hz": 390000000,
             "timer_hz": 1523437
           },
           "protocol": "1.0",
-          "request_id": "aa40cb77dbeb",
+          "request_id": "1cadc28ec8cb",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "interrupt.basic",
           "event": "result",
-          "host_round_trip_ms": 23.026,
+          "host_round_trip_ms": 22.16,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "f0351106b501",
+          "request_id": "1ab35824b58d",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "uart.loopback",
           "event": "result",
-          "host_round_trip_ms": 22.517,
+          "host_round_trip_ms": 21.009,
           "metrics": {
             "bytes": 16,
             "errors": 0
           },
           "protocol": "1.0",
-          "request_id": "dc2ba74f09b4",
+          "request_id": "128940939619",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.toggle",
           "event": "result",
-          "host_round_trip_ms": 31.164,
+          "host_round_trip_ms": 29.838,
           "metrics": {
             "input_high": 1,
             "input_low": 0,
@@ -838,56 +860,58 @@
             "output_low_latch": 0
           },
           "protocol": "1.0",
-          "request_id": "0d3351cafc59",
+          "request_id": "cc90f438e2e7",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.irq",
           "event": "result",
-          "host_round_trip_ms": 23.432,
+          "host_round_trip_ms": 21.808,
           "metrics": {
             "elapsed_ms": 0,
             "irq_callbacks": 1
           },
           "protocol": "1.0",
-          "request_id": "a9221fba2559",
+          "request_id": "a3c0d805341a",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.oneshot",
           "event": "result",
-          "host_round_trip_ms": 22.643,
+          "host_round_trip_ms": 21.045,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "1cc7f5e510c9",
+          "request_id": "9dba1c029eaf",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.periodic",
           "event": "result",
-          "host_round_trip_ms": 24.024,
+          "host_round_trip_ms": 22.082,
           "metrics": {
             "callbacks": 3,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "fd473b6a8ce9",
+          "request_id": "4c5abe683984",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "stability",
           "event": "result",
-          "host_round_trip_ms": 17.756,
-          "metrics": {},
+          "host_round_trip_ms": 18.193,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "a5887c91043b",
+          "request_id": "02d43515803a",
           "status": "pass"
         }
       ],
@@ -897,69 +921,71 @@
       "boot_event": {
         "board": "k210",
         "bspforge": true,
-        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional",
+        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device",
         "event": "boot",
         "protocol": "1.0",
         "rtos": "zephyr",
         "stage": "application"
       },
       "boot_success": true,
-      "boot_time_ms": 33.482,
+      "boot_time_ms": 32.63,
       "commands": [
         {
           "bspforge": true,
           "command": "info",
           "event": "result",
-          "host_round_trip_ms": 17.447,
-          "metrics": {},
+          "host_round_trip_ms": 17.285,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "0dbc8fdbdfb7",
+          "request_id": "337599525f1f",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "clock.basic",
           "event": "result",
-          "host_round_trip_ms": 22.175,
+          "host_round_trip_ms": 20.588,
           "metrics": {
             "cpu_hz": 390000000,
             "timer_hz": 1523437
           },
           "protocol": "1.0",
-          "request_id": "6e9ebc1fd975",
+          "request_id": "d505d2e0b6e8",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "interrupt.basic",
           "event": "result",
-          "host_round_trip_ms": 23.418,
+          "host_round_trip_ms": 22.11,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "86388d336a84",
+          "request_id": "bd38fd9824f4",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "uart.loopback",
           "event": "result",
-          "host_round_trip_ms": 22.499,
+          "host_round_trip_ms": 20.843,
           "metrics": {
             "bytes": 16,
             "errors": 0
           },
           "protocol": "1.0",
-          "request_id": "27f69898553e",
+          "request_id": "5c58f090e561",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.toggle",
           "event": "result",
-          "host_round_trip_ms": 31.045,
+          "host_round_trip_ms": 28.882,
           "metrics": {
             "input_high": 1,
             "input_low": 0,
@@ -967,56 +993,58 @@
             "output_low_latch": 0
           },
           "protocol": "1.0",
-          "request_id": "ad2685611206",
+          "request_id": "3582cfc2f213",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.irq",
           "event": "result",
-          "host_round_trip_ms": 23.845,
+          "host_round_trip_ms": 21.937,
           "metrics": {
             "elapsed_ms": 0,
             "irq_callbacks": 1
           },
           "protocol": "1.0",
-          "request_id": "0993e2aecaf3",
+          "request_id": "53d2579a57e4",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.oneshot",
           "event": "result",
-          "host_round_trip_ms": 23.649,
+          "host_round_trip_ms": 22.082,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "716416a16e2d",
+          "request_id": "282664c9178e",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.periodic",
           "event": "result",
-          "host_round_trip_ms": 23.671,
+          "host_round_trip_ms": 22.012,
           "metrics": {
             "callbacks": 3,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "a829542e92de",
+          "request_id": "fb2960aabcbd",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "stability",
           "event": "result",
-          "host_round_trip_ms": 18.054,
-          "metrics": {},
+          "host_round_trip_ms": 18.169,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "d5ecfcf55647",
+          "request_id": "0f48f125ac1a",
           "status": "pass"
         }
       ],
@@ -1026,69 +1054,71 @@
       "boot_event": {
         "board": "k210",
         "bspforge": true,
-        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional",
+        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device",
         "event": "boot",
         "protocol": "1.0",
         "rtos": "zephyr",
         "stage": "application"
       },
       "boot_success": true,
-      "boot_time_ms": 33.711,
+      "boot_time_ms": 32.443,
       "commands": [
         {
           "bspforge": true,
           "command": "info",
           "event": "result",
-          "host_round_trip_ms": 17.363,
-          "metrics": {},
+          "host_round_trip_ms": 17.202,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "6f861da9f7df",
+          "request_id": "70468c0b3905",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "clock.basic",
           "event": "result",
-          "host_round_trip_ms": 22.108,
+          "host_round_trip_ms": 20.686,
           "metrics": {
             "cpu_hz": 390000000,
             "timer_hz": 1523437
           },
           "protocol": "1.0",
-          "request_id": "f74f583e21b4",
+          "request_id": "4d26df13ba5c",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "interrupt.basic",
           "event": "result",
-          "host_round_trip_ms": 23.499,
+          "host_round_trip_ms": 22.229,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "58d1db10924d",
+          "request_id": "f1e48862031f",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "uart.loopback",
           "event": "result",
-          "host_round_trip_ms": 22.48,
+          "host_round_trip_ms": 20.902,
           "metrics": {
             "bytes": 16,
             "errors": 0
           },
           "protocol": "1.0",
-          "request_id": "44de39e48a88",
+          "request_id": "dc0c100406b6",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.toggle",
           "event": "result",
-          "host_round_trip_ms": 31.874,
+          "host_round_trip_ms": 28.937,
           "metrics": {
             "input_high": 1,
             "input_low": 0,
@@ -1096,56 +1126,58 @@
             "output_low_latch": 0
           },
           "protocol": "1.0",
-          "request_id": "7a8bb89d35b9",
+          "request_id": "2d21a6813cfd",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.irq",
           "event": "result",
-          "host_round_trip_ms": 23.826,
+          "host_round_trip_ms": 21.98,
           "metrics": {
             "elapsed_ms": 0,
             "irq_callbacks": 1
           },
           "protocol": "1.0",
-          "request_id": "ed4d474a509d",
+          "request_id": "95d14940dd3a",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.oneshot",
           "event": "result",
-          "host_round_trip_ms": 23.59,
+          "host_round_trip_ms": 21.884,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "224b95f5d4db",
+          "request_id": "4fc8253f7536",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.periodic",
           "event": "result",
-          "host_round_trip_ms": 23.657,
+          "host_round_trip_ms": 22.149,
           "metrics": {
             "callbacks": 3,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "521e3a0ed4d3",
+          "request_id": "c86b73895089",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "stability",
           "event": "result",
-          "host_round_trip_ms": 17.653,
-          "metrics": {},
+          "host_round_trip_ms": 18.163,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "e01db4c98861",
+          "request_id": "c28178516f66",
           "status": "pass"
         }
       ],
@@ -1155,69 +1187,71 @@
       "boot_event": {
         "board": "k210",
         "bspforge": true,
-        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional",
+        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device",
         "event": "boot",
         "protocol": "1.0",
         "rtos": "zephyr",
         "stage": "application"
       },
       "boot_success": true,
-      "boot_time_ms": 33.707,
+      "boot_time_ms": 32.705,
       "commands": [
         {
           "bspforge": true,
           "command": "info",
           "event": "result",
-          "host_round_trip_ms": 17.624,
-          "metrics": {},
+          "host_round_trip_ms": 17.283,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "bdcc97fc6b7b",
+          "request_id": "62cec04e151a",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "clock.basic",
           "event": "result",
-          "host_round_trip_ms": 22.063,
+          "host_round_trip_ms": 20.449,
           "metrics": {
             "cpu_hz": 390000000,
             "timer_hz": 1523437
           },
           "protocol": "1.0",
-          "request_id": "163fc932684f",
+          "request_id": "6c345a609fb9",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "interrupt.basic",
           "event": "result",
-          "host_round_trip_ms": 22.994,
+          "host_round_trip_ms": 22.294,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "5f73f50344f8",
+          "request_id": "68ca6ba37d52",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "uart.loopback",
           "event": "result",
-          "host_round_trip_ms": 22.498,
+          "host_round_trip_ms": 20.887,
           "metrics": {
             "bytes": 16,
             "errors": 0
           },
           "protocol": "1.0",
-          "request_id": "2c91a4c67e36",
+          "request_id": "cb767c006421",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.toggle",
           "event": "result",
-          "host_round_trip_ms": 31.294,
+          "host_round_trip_ms": 29.713,
           "metrics": {
             "input_high": 1,
             "input_low": 0,
@@ -1225,56 +1259,58 @@
             "output_low_latch": 0
           },
           "protocol": "1.0",
-          "request_id": "78d53a0af8cf",
+          "request_id": "ec5e1fd5ba55",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.irq",
           "event": "result",
-          "host_round_trip_ms": 24.211,
+          "host_round_trip_ms": 21.861,
           "metrics": {
             "elapsed_ms": 0,
             "irq_callbacks": 1
           },
           "protocol": "1.0",
-          "request_id": "cf01b666a73c",
+          "request_id": "218a097a76d5",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.oneshot",
           "event": "result",
-          "host_round_trip_ms": 22.895,
+          "host_round_trip_ms": 21.148,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "a4ae91b42907",
+          "request_id": "8e56fec9310a",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.periodic",
           "event": "result",
-          "host_round_trip_ms": 22.987,
+          "host_round_trip_ms": 22.033,
           "metrics": {
             "callbacks": 3,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "6e9aa67cf899",
+          "request_id": "60baf21fc614",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "stability",
           "event": "result",
-          "host_round_trip_ms": 18.068,
-          "metrics": {},
+          "host_round_trip_ms": 18.191,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "72685c40ec3c",
+          "request_id": "5fb87942e672",
           "status": "pass"
         }
       ],
@@ -1284,69 +1320,71 @@
       "boot_event": {
         "board": "k210",
         "bspforge": true,
-        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-functional",
+        "build_id": "operation-lambdamart-h03-eq-r1-v2.1-zephyr-native-device",
         "event": "boot",
         "protocol": "1.0",
         "rtos": "zephyr",
         "stage": "application"
       },
       "boot_success": true,
-      "boot_time_ms": 33.768,
+      "boot_time_ms": 32.531,
       "commands": [
         {
           "bspforge": true,
           "command": "info",
           "event": "result",
-          "host_round_trip_ms": 17.318,
-          "metrics": {},
+          "host_round_trip_ms": 17.163,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "c2227f202380",
+          "request_id": "c41e4ab51ab4",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "clock.basic",
           "event": "result",
-          "host_round_trip_ms": 22.142,
+          "host_round_trip_ms": 20.436,
           "metrics": {
             "cpu_hz": 390000000,
             "timer_hz": 1523437
           },
           "protocol": "1.0",
-          "request_id": "0b7f93f9ad29",
+          "request_id": "94490289d5dc",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "interrupt.basic",
           "event": "result",
-          "host_round_trip_ms": 23.508,
+          "host_round_trip_ms": 21.541,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "3c33ade74e1c",
+          "request_id": "c993487091fa",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "uart.loopback",
           "event": "result",
-          "host_round_trip_ms": 22.582,
+          "host_round_trip_ms": 20.713,
           "metrics": {
             "bytes": 16,
             "errors": 0
           },
           "protocol": "1.0",
-          "request_id": "ef10a494751c",
+          "request_id": "ad65c241ccc6",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.toggle",
           "event": "result",
-          "host_round_trip_ms": 31.771,
+          "host_round_trip_ms": 29.066,
           "metrics": {
             "input_high": 1,
             "input_low": 0,
@@ -1354,56 +1392,58 @@
             "output_low_latch": 0
           },
           "protocol": "1.0",
-          "request_id": "e27eb573f2d3",
+          "request_id": "dfc940936700",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "gpio.irq",
           "event": "result",
-          "host_round_trip_ms": 23.603,
+          "host_round_trip_ms": 21.77,
           "metrics": {
             "elapsed_ms": 0,
             "irq_callbacks": 1
           },
           "protocol": "1.0",
-          "request_id": "d6a7b104d9d4",
+          "request_id": "b21d381a55ea",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.oneshot",
           "event": "result",
-          "host_round_trip_ms": 22.56,
+          "host_round_trip_ms": 21.226,
           "metrics": {
             "callbacks": 1,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "00be994b568b",
+          "request_id": "30d08028f2d1",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "timer.periodic",
           "event": "result",
-          "host_round_trip_ms": 22.925,
+          "host_round_trip_ms": 21.811,
           "metrics": {
             "callbacks": 3,
             "elapsed_ms": 2
           },
           "protocol": "1.0",
-          "request_id": "a68dc4c81814",
+          "request_id": "dcc8abf99b90",
           "status": "pass"
         },
         {
           "bspforge": true,
           "command": "stability",
           "event": "result",
-          "host_round_trip_ms": 18.003,
-          "metrics": {},
+          "host_round_trip_ms": 18.125,
+          "metrics": {
+            "native_devices": 4
+          },
           "protocol": "1.0",
-          "request_id": "dabe34c91753",
+          "request_id": "a9b32a4495c9",
           "status": "pass"
         }
       ],
@@ -1416,9 +1456,9 @@
     "boot_attempts": 10,
     "boot_success_rate": 1.0,
     "boot_successes": 10,
-    "boot_time_max_ms": 33.848,
-    "boot_time_mean_ms": 33.696,
-    "boot_time_min_ms": 33.482,
+    "boot_time_max_ms": 32.777,
+    "boot_time_mean_ms": 32.608,
+    "boot_time_min_ms": 32.443,
     "command_pass_rate": 1.0,
     "commands_applicable": 90,
     "commands_passed": 90,

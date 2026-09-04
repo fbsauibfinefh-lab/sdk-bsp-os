@@ -521,3 +521,14 @@ H01 相对自动真值的 P@1、Recall@5、MAP 和 nDCG@10 分别提高 0.040、
 - 主机测试工具新增 `--firmware`，schema 1.1 报告会嵌入已烧录固件的路径、大小和 SHA-256。最终机器报告覆盖旧同名报告，保存在 `experiments/hardware-results/k210-operation-lambdamart-v2.1/`；报告 SHA-256 分别为 RT-Thread `b5a7a2196ffa67245665228716730381647212d1f44bcdc985a2583bfabc850e`、Zephyr `f222e8e736fc8bcba240fb42116697a647f95552722b3a8a7210f4d8b94169f2`。
 - 评估器新增设备后端契约检查。K210 现有 `device_operations` 真值是 RT-Thread serial/pin/hwtimer 契约，不能与 Zephyr 清单直接计算；Zephyr 运行中的该指标改为不适用，语义恢复和 SDK 绑定指标仍独立计算。Zephyr 当前证据属于 SDK 绑定级功能验证，不等同于已注册完整的 Zephyr 原生 `struct device` 驱动。
 - Python 单元与组件集成回归增加 Zephyr 九命令、SDK 构建接入、可配置定时器 IRQ、定时器停表、报告固件哈希和跨 RTOS 设备契约测试，最终为 `67 passed`。该数量不包含两次目标编译和两套各 10 轮的实板结果。
+
+## v3.0：K210 Zephyr 原生设备框架接入与最终复测
+
+- 在 v2.9 的可调用 SDK 适配层之上新增 `ZephyrDeviceModelGenerator`。生成器输出 `bspforge_zephyr_devices.c/.h`，以 `DEVICE_DEFINE` 和 `DEVICE_API` 注册 `clock_control`、UART、GPIO、Counter 四个 Zephyr 原生 `struct device`；分别实现 4、4、8、6 项论文所需标准设备操作。
+- PLIC 没有被伪装成普通设备。K210 本地中断号经二级 IRQ 编码进入 Zephyr 中断分发表，TIMER0A 和 GPIOHS28 的 SDK 回调由 Zephyr ISR 路径触发。这符合 Zephyr 将中断控制器作为 IRQ 子系统而非应用外设 `struct device` 的模型。
+- 统一验证器的原生模式只包含 `bspforge_zephyr_devices.h`，不包含 `bspforge_bindings.h`。时钟、UART、GPIO 和定时器测试分别调用 `clock_control_*`、`uart_*`、`gpio_*` 和 `counter_*` 标准 API，形成“测试程序 -> OS API -> 生成设备 -> SDK 绑定 -> 硬件/IRQ”的完整路径，排除了测试程序直接调用 SDK 也能通过的混淆因素。
+- 新增 Zephyr 专属设备真值 `experiments/k210-zephyr-ground-truth.json`，避免用 RT-Thread serial/pin/hwtimer 操作表评估 Zephyr。四类设备操作宏召回率为 1.0；interrupt 由独立子系统和实板回调核验，不进入普通设备操作分母。
+- 最终流水线一次构建成功，19/19 项规范操作全部被编译反馈观察，并落实为 24 个底层 SDK 符号依赖；绑定宏召回率和设备操作宏召回率均为 1.0。ELF 为 675184 bytes，SHA-256 为 `1c11044707593b7c789f9983491f57fca3925ce9a053c3b0eae76af41ff900a2`；BIN 为 34744 bytes，SHA-256 为 `c423e5162fc28e725f66406499a87d46c3a7b63a2e253982476298f7a631d809`。ELF 中四个设备 getter 和两个验证入口均存在。
+- 最终 BIN 重新烧录到当前 K210。单轮校准为 1/1 启动、9/9 命令通过；正式十轮为 10/10 启动、90/90 命令通过、失败 0、`unsupported` 0，平均/最小/最大启动时间为 32.608/32.443/32.777 ms。每轮 UART 为 16 bytes、0 errors，GPIO 输入和输出均观测到 0/1，GPIO IRQ 为 1 次，Counter 单次/周期回调为 1/3 次。
+- 公开证据目录新增最终板测报告、设备模型、产物验证和方法评估 JSON。最终板测报告 SHA-256 为 `f07d10e63fe8f69fe7d1acd59c3025b4ddf4fe8f96a5db8875dcd46da24cf326`。Python 单元与组件集成测试为 `69 passed`，该数字仍与目标编译和实板轮次分别统计。
+- 论文可以把当前结果表述为“在五类目标能力范围内完成 K210 到 Zephyr 的设备框架迁移”。该表述不代表覆盖全部 K210 外设、Zephyr 全部设备类别、长期稳定性、定时精度或上游可合并质量；另外两块板的双 OS 实测仍需独立完成。

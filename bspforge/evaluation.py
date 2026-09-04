@@ -23,7 +23,15 @@ class ExperimentEvaluator:
             item["capability"]: {symbol["symbol"] for symbol in item["sdk_symbols"]}
             for item in bindings.get("bindings", [])
         }
-        class_to_capability = {"serial": "uart", "pin": "gpio", "hwtimer": "timer"}
+        class_to_capability = {
+            "serial": "uart",
+            "uart": "uart",
+            "pin": "gpio",
+            "gpio": "gpio",
+            "hwtimer": "timer",
+            "counter": "timer",
+            "clock_control": "clock",
+        }
         expected_device_backend = ground_truth.get("device_model", {}).get("backend")
         observed_device_backend = devices.get("backend")
         device_contract_matches = (

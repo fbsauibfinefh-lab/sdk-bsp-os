@@ -145,7 +145,7 @@ class ZephyrBindingGenerator:
             "missing_symbols": missing,
             "summary": {
                 "capabilities": len(bindings),
-                "wrappers": 15,
+                "wrappers": 19,
                 "required_sources": len(K210_REQUIRED_SOURCES),
                 "missing_symbols": len(missing),
             },
@@ -163,8 +163,12 @@ class ZephyrBindingGenerator:
 
 typedef int (*bspforge_callback_t)(void *context);
 
+int bspforge_clock_on(uint32_t clock_id);
+int bspforge_clock_off(uint32_t clock_id);
+int bspforge_clock_get_rate(uint32_t clock_id, uint32_t *rate);
 int bspforge_clock_test(uint32_t *cpu_hz, uint32_t *timer_hz);
 int bspforge_uart_initialize(void);
+int bspforge_uart_configure(uint32_t baud_rate);
 int bspforge_uart_write(const void *buffer, size_t size);
 int bspforge_uart_read(void *buffer, size_t size);
 int bspforge_gpio_initialize(void);
@@ -338,17 +342,65 @@ int usleep(uint64_t usec)
     return 0;
 }}
 
+static int bspforge_clock_id(uint32_t clock_id, sysctl_clock_t *clock)
+{{
+    if (clock == NULL)
+        return -EINVAL;
+    if (clock_id == 0U)
+        *clock = SYSCTL_CLOCK_CPU;
+    else if (clock_id == 1U)
+        *clock = SYSCTL_CLOCK_TIMER2;
+    else
+        return -EINVAL;
+    return 0;
+}}
+
+int bspforge_clock_on(uint32_t clock_id)
+{{
+    sysctl_clock_t clock;
+    int result = bspforge_clock_id(clock_id, &clock);
+
+    if (result != 0)
+        return result;
+    return sysctl_clock_enable(clock) == 0 ? 0 : -EIO;
+}}
+
+int bspforge_clock_off(uint32_t clock_id)
+{{
+    sysctl_clock_t clock;
+    int result;
+
+    if (clock_id == 0U)
+        return -ENOTSUP;
+    result = bspforge_clock_id(clock_id, &clock);
+    if (result != 0)
+        return result;
+    return sysctl_clock_disable(clock) == 0 ? 0 : -EIO;
+}}
+
+int bspforge_clock_get_rate(uint32_t clock_id, uint32_t *rate)
+{{
+    sysctl_clock_t clock;
+
+    if (rate == NULL)
+        return -EINVAL;
+    if (bspforge_clock_id(clock_id, &clock) != 0)
+        return -EINVAL;
+    *rate = sysctl_clock_get_freq(clock);
+    return *rate > 0U ? 0 : -EIO;
+}}
+
 int bspforge_clock_test(uint32_t *cpu_hz, uint32_t *timer_hz)
 {{
     if (cpu_hz == NULL || timer_hz == NULL)
         return -EINVAL;
-    *cpu_hz = sysctl_clock_get_freq(SYSCTL_CLOCK_CPU);
-    if (sysctl_clock_enable(SYSCTL_CLOCK_TIMER2) != 0)
+    if (bspforge_clock_get_rate(0U, cpu_hz) != 0)
         return -EIO;
-    *timer_hz = sysctl_clock_get_freq(SYSCTL_CLOCK_TIMER2);
-    if (sysctl_clock_disable(SYSCTL_CLOCK_TIMER2) != 0)
+    if (bspforge_clock_on(1U) != 0)
         return -EIO;
-    return *cpu_hz > 0U && *timer_hz > 0U ? 0 : -EIO;
+    if (bspforge_clock_get_rate(1U, timer_hz) != 0)
+        return -EIO;
+    return bspforge_clock_off(1U);
 }}
 
 int bspforge_uart_initialize(void)
@@ -359,7 +411,14 @@ int bspforge_uart_initialize(void)
                            FUNC_UART1_RX + 2 * BSPFORGE_UART_CHANNEL) != 0)
         return -EIO;
     uart_init((uart_device_number_t)BSPFORGE_UART_CHANNEL);
-    uart_configure((uart_device_number_t)BSPFORGE_UART_CHANNEL, 115200,
+    return bspforge_uart_configure(115200U);
+}}
+
+int bspforge_uart_configure(uint32_t baud_rate)
+{{
+    if (baud_rate == 0U)
+        return -EINVAL;
+    uart_configure((uart_device_number_t)BSPFORGE_UART_CHANNEL, baud_rate,
                    UART_BITWIDTH_8BIT, UART_STOP_1, UART_PARITY_NONE);
     return 0;
 }}

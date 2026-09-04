@@ -42,7 +42,7 @@ OS Backend ----------- RT-Thread BSP / Zephyr 应用 + 功能绑定
 
 ### Semantic Resolver
 
-基于名称、操作词、路径、函数签名、包含文件、调用和宏等独立证据恢复候选。当前主路径使用冻结的 MiniLM 字段语义、确定性源码层级、操作契约、通用操作适配度和 API 家族解码，不进行 SDK 监督训练。候选随后映射为 OS 无关的规范化操作计划，缺失和多解不会由人工 profile 静默填充。
+基于名称、操作词、路径、函数签名、包含文件、调用和宏等独立证据恢复候选。当前论文主路径使用冻结 LambdaMART，把 MiniLM 字段迟交互、代码双视图、寄存器效果图、调用层级、操作契约、结构先验和目标可行性保护组合为操作级排序；部署时对目标 SDK 的无标签 IR 候选推理，不读取目标板真值。候选随后映射为 OS 无关的规范化操作计划，缺失和多解不会由人工 profile 静默填充。
 
 ### Closure Solver
 
@@ -111,7 +111,7 @@ Zephyr 后端生成 `app/CMakeLists.txt`、`prj.conf`、可选 `app.overlay` 和
 
 功能绑定清单在生成阶段先记录 SDK 实体和 HAL provider 证据。构建成功后，后端解析 `build.ninja`，只从本次实际参与编译且位于允许驱动根目录中的源文件提取 `driver_references`，随后回写 `functional-bindings.json`。因此 provider 存在、源码树中出现调用和当前固件实际选中驱动是三个不同证据层级。
 
-K210 端口定义 RV64 CPU、6 MiB SRAM、PLIC、机器定时器和 UARTHS，并在 `PRE_KERNEL_1` 阶段设置标准串口 FPIOA。功能适配路径生成 `bspforge_bindings.c/.h`，编译 SDK 的 FPIOA、GPIOHS、SYSCTL、TIMER、UART 与工具源文件；PLIC 桥把 SDK 本地 IRQ 编号编码为 Zephyr 二级 IRQ，SDK 回调由 Zephyr 中断分发表触发。严格 C 兼容头和 `usleep` 运行时桥由生成目录提供，不修改只读 SDK。PSoC E84 的 GNU objcopy 原地 LMA 调整由生成工程中的受控包装器转换为“保留 ELF、在 HEX 转换时应用偏移”，上游 Zephyr 与工具链目录均保持只读。
+K210 端口定义 RV64 CPU、6 MiB SRAM、PLIC、机器定时器和 UARTHS，并在 `PRE_KERNEL_1` 阶段设置标准串口 FPIOA。功能适配路径生成 `bspforge_bindings.c/.h`，编译 SDK 的 FPIOA、GPIOHS、SYSCTL、TIMER、UART 与工具源文件；其上再生成 `bspforge_zephyr_devices.c/.h`，使用 `DEVICE_DEFINE` 和 `DEVICE_API` 注册 `clock_control`、UART、GPIO、Counter 四个原生设备。PLIC 桥把 SDK 本地 IRQ 编号编码为 Zephyr 二级 IRQ，SDK 回调由 Zephyr 中断分发表触发；中断控制器在 Zephyr 中属于 IRQ 子系统而不是普通 `struct device`。验证程序只包含生成设备头文件，通过 `clock_control_*`、`uart_*`、`gpio_*` 和 `counter_*` 标准 API 访问硬件，不直接调用 SDK 绑定。严格 C 兼容头和 `usleep` 运行时桥由生成目录提供，不修改只读 SDK。PSoC E84 的 GNU objcopy 原地 LMA 调整由生成工程中的受控包装器转换为“保留 ELF、在 HEX 转换时应用偏移”，上游 Zephyr 与工具链目录均保持只读。
 
 ### 统一产物契约
 

@@ -6,7 +6,7 @@
 
 K210 + RT-Thread 已形成完整的绑定级实板闭环：10 次自动复位全部启动，9 条命令每轮全部通过，共 90/90。测试覆盖时钟查询与门控、PLIC 回调、UART1 物理回环、GPIO 物理电平读写、GPIO 边沿中断、硬件定时器单次/周期回调和稳定性。
 
-K210 + Zephyr 已更新为 `generated-sdk-adapter` 并完成同一 Resolver 输入下的重新生成、编译、烧录和协议实测：10/10 次启动成功，9 条命令每轮全部通过，共 90/90，失败与 `unsupported` 均为 0。生成工程直接编译分析所得 K210 SDK 的 FPIOA、GPIOHS、SYSCTL、TIMER、UART 与工具源文件，并通过 Zephyr 运行时和二级 IRQ 桥执行。该结果构成五类能力的 SDK 绑定级证据；当前适配层尚未把这些能力分别注册成 Zephyr 原生 `struct device` 驱动，论文中应保持这一实现边界。
+K210 + Zephyr 已完成同一 Resolver 输入下的原生设备生成、编译、烧录和协议实测：10/10 次启动成功，9 条命令每轮全部通过，共 90/90，失败与 `unsupported` 均为 0。生成工程先连接分析所得 K210 SDK 实现，再使用 `DEVICE_DEFINE` 和 Zephyr 驱动 API 注册 `clock_control`、UART、GPIO、Counter 四个 `struct device`；PLIC 按 Zephyr 二级 IRQ 子系统接入。自测代码只调用 Zephyr 标准设备 API，不直接调用 SDK 适配函数，因此该结果可作为本文五类目标能力已接入 Zephyr 设备/中断框架的端到端证据。
 
 ## 2. 冻结运行时契约
 
@@ -116,18 +116,18 @@ conda run --no-capture-output -n AIoT-v1.0 \
 | 后端 | 操作绑定 | 闭包 | 构建迭代 | 固件 | 大小 | SHA-256 |
 | --- | ---: | --- | ---: | --- | ---: | --- |
 | RT-Thread | 19/19 | 71 文件、10 条构建规则 | 2 | `rtthread.bin` | 468104 B | `9702bdfd8274410fb642d6d8de96bf6327de75b3902c40f4dc19b10704fd16ea` |
-| Zephyr | 19/19 | 71 文件、10 条构建规则 | 1 | `zephyr.bin` | 31256 B | `e20317d5d853be67f314b013d99a4b2ba8cbaff8527433a1bf0e6a9a99ec46ad` |
+| Zephyr | 19/19 | 71 文件、10 条构建规则 | 1 | `zephyr.bin` | 34744 B | `c423e5162fc28e725f66406499a87d46c3a7b63a2e253982476298f7a631d809` |
 
 RT-Thread 第一轮链接发现 `sys_register_getchar`、`sys_register_putchar`、`sys_getchar` 和 `sys_putchar` 缺失。Build Diagnoser 根据 IR 找到已有 SDK 提供者 `lib/bsp/syscalls.c`，第二轮成功；19/19 项绑定均被编译反馈观察，生成的 UART、PIN、HWTIMER 操作表和注册函数均存在于 ELF。
 
-Zephyr 一次构建成功，ELF/BIN 架构和段检查通过。编译反馈确认规范计划的 19/19 项绑定均已进入本次编译，生成清单同时保存每个 SDK 符号的 IR 实体、签名和源码证据。K210 SDK 的裸机 PLIC API由生成桥接层映射到 Zephyr 二级 IRQ；这是后端兼容映射，不是修改语义排序结果。19 项操作尚未逐项注册为 Zephyr 原生设备对象，因此“绑定编译并通过功能回归”和“完整原生 Zephyr 驱动模型”应分别表述。
+Zephyr 一次构建成功，ELF/BIN 架构和段检查通过。编译反馈确认规范计划的 19/19 项操作均已进入本次编译；后端将其组织为 24 个可追溯 SDK 符号依赖，绑定宏召回率为 1.0。ELF 同时包含四个生成设备 getter 和两个验证入口。K210 SDK 的裸机 PLIC API 由生成桥接层映射到 Zephyr 二级 IRQ；这是符合 Zephyr 中断控制器模型的后端兼容映射，不是普通外设设备对象，也不修改语义排序结果。以 Zephyr 专属设备契约评估时，四类设备的操作宏召回率为 1.0。
 
 ## 6. 实板结果
 
 | 组合 | 启动 | 适用命令通过 | 总命令 | unsupported | 失败 | 启动时间均值 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
 | K210 + RT-Thread | 10/10 | 90/90 | 90 | 0 | 0 | 198.225 ms |
-| K210 + Zephyr | 10/10 | 90/90 | 90 | 0 | 0 | 33.696 ms |
+| K210 + Zephyr | 10/10 | 90/90 | 90 | 0 | 0 | 32.608 ms |
 
 RT-Thread 每轮关键观测一致：
 
@@ -148,6 +148,9 @@ Zephyr 使用同一接线和同一九命令协议。十轮中 CPU/TIMER 时钟�
 ```text
 experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-rtthread-full-10rounds.json
 experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-full-10rounds.json
+experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-native-device-model.json
+experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-native-artifact-verification.json
+experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-native-method-evaluation.json
 ```
 
 两份报告均采用协议 schema 1.1，直接嵌入已烧录 BIN 的相对路径、字节数和 SHA-256；报告中的启动 `build_id`、固件哈希、逐轮请求/响应和原始串口文本共同形成可追溯证据。
@@ -163,8 +166,8 @@ Zephyr 首次可发送启动事件但无法接收命令。原因包括 K210 UART
 ## 8. 论文使用边界
 
 - 可以声明：冻结 LambdaMART 选择已实际进入 K210 RT-Thread 的 19 项绑定、闭包、编译和固件，五类能力的可观测行为在 10 轮中全部通过。
-- 可以声明：同一 Resolver 输入可生成并编译两种 RTOS 工程；Zephyr 生成适配层编译了 19/19 项规范绑定，并在 K210 上完成五类能力的绑定级功能回归。
-- 不能声明：现有 Zephyr 适配层已经为五类能力分别实现并注册完整的 Zephyr 原生设备驱动，也不能用功能回调次数宣称定时精度或性能提升。
+- 可以声明：同一 Resolver 输入可生成并编译两种 RTOS 工程；Zephyr 侧已把 19/19 项规范绑定接入四类原生 `struct device` 驱动和 PLIC 中断子系统，并通过只使用标准 Zephyr API 的五能力实板回归。
+- 不能声明：当前结果覆盖 Zephyr 的全部设备类别、全部 K210 外设或达到上游通用 BSP 的完整范围，也不能用功能回调次数宣称定时精度或性能提升。
 - 不能把 90/90 当作 90 个独立语义样本；它是 9 条命令在 10 次复位中的重复运行。
 - 10 轮适合本轮工程确认，正式论文仍应补充更长时间/更多轮次、另外两块板和人工 BSP 对照。
 

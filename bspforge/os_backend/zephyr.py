@@ -14,6 +14,7 @@ from bspforge.os_backend.base import OSBackend
 from bspforge.os_backend.native_binding import NativeDriverBindingTracer
 from bspforge.os_backend.profiles import sdk_profile
 from bspforge.os_backend.zephyr_binding import ZephyrBindingGenerator
+from bspforge.os_backend.zephyr_device import ZephyrDeviceModelGenerator
 from bspforge.os_backend.zephyr_validation import ZephyrValidationGenerator
 
 
@@ -53,8 +54,12 @@ class ZephyrBackend(OSBackend):
             binding_manifest = ZephyrBindingGenerator().generate(
                 source_dir, ir, binding_plan, options
             )
+            device_manifest = ZephyrDeviceModelGenerator().generate(
+                source_dir, options
+            )
         elif strategy == "native-driver-trace":
             binding_manifest = None
+            device_manifest = None
         else:
             raise ValueError(f"Unsupported Zephyr binding strategy: {strategy}")
         protocol_manifest = ZephyrValidationGenerator().generate(
@@ -62,6 +67,7 @@ class ZephyrBackend(OSBackend):
             board,
             build_id,
             functional=strategy == "generated-sdk-adapter",
+            native_devices=strategy == "generated-sdk-adapter",
         )
         source = Path(protocol_manifest["source"])
         (app / "CMakeLists.txt").write_text(
@@ -69,11 +75,15 @@ class ZephyrBackend(OSBackend):
                 Path(ir["sdk"]["root"]),
                 binding_manifest.get("required_sources", []) if binding_manifest else [],
                 binding_manifest is not None,
+                device_manifest is not None,
             ),
             encoding="utf-8",
         )
         (app / "prj.conf").write_text(
-            self._project_config(options.get("native_executable", False)),
+            self._project_config(
+                options.get("native_executable", False),
+                device_manifest is not None,
+            ),
             encoding="utf-8",
         )
         overlay = options.get("overlay")
@@ -109,44 +119,37 @@ class ZephyrBackend(OSBackend):
                 provider_roots,
                 binding_plan=binding_plan,
             )
-        if strategy == "generated-sdk-adapter":
-            devices = [
-                {
-                    "class": "sdk-functional-adapter",
-                    "capability": item["capability"],
-                    "source": "bspforge_bindings.c",
-                    "operations": [
-                        symbol["symbol"] for symbol in item["sdk_symbols"]
-                    ],
-                }
-                for item in binding_manifest["bindings"]
-            ]
-        else:
+        if device_manifest is None:
             devices = [
                 {"class": "serial", "source": "zephyr,console", "operations": ["poll_out"]},
                 {"class": "gpio", "source": "led0", "operations": ["configure", "toggle"]},
                 {"class": "timer", "source": "k_timer", "operations": ["init", "start"]},
             ]
-        device_manifest = {
-            "schema_version": "1.0",
-            "created_at": utc_now(),
-            "backend": "zephyr",
-            "strategy": (
-                "zephyr-sdk-functional-model"
-                if strategy == "generated-sdk-adapter"
-                else "zephyr-devicetree-native-model"
-            ),
-            "devices": devices,
-            "operation_tables": [],
-            "registration_symbols": [
-                "bspforge_zephyr_validation_init",
-                "bspforge_zephyr_validation_run",
-            ],
-            "summary": {
-                "devices": len(devices),
-                "generated_sources": 3 if binding_manifest.get("source") else 1,
-            },
-        }
+            device_manifest = {
+                "schema_version": "1.0",
+                "created_at": utc_now(),
+                "backend": "zephyr",
+                "strategy": "zephyr-devicetree-native-model",
+                "devices": devices,
+                "sources": [protocol_manifest["source"]],
+                "operation_tables": [],
+                "registration_symbols": protocol_manifest["registration_symbols"],
+                "summary": {"devices": len(devices), "generated_sources": 1},
+            }
+        else:
+            device_manifest["sources"] = sorted(set(
+                device_manifest["sources"] + [protocol_manifest["source"]]
+            ))
+            device_manifest["registration_symbols"] = sorted(set(
+                device_manifest["registration_symbols"]
+                + protocol_manifest["registration_symbols"]
+            ))
+            device_manifest["selftest_protocol"] = {
+                "version": protocol_manifest["protocol_version"],
+                "strategy": protocol_manifest["strategy"],
+                "source": protocol_manifest["source"],
+            }
+            device_manifest["summary"]["generated_sources"] = 3
         write_json(metadata / "sdk-ir.json", ir)
         write_json(metadata / "semantic-resolution.json", resolution)
         if binding_plan is not None:
@@ -178,8 +181,11 @@ class ZephyrBackend(OSBackend):
             },
             "device_model": {
                 "manifest": str((metadata / "device-model.json").relative_to(output)),
-                "sources": [str(source.relative_to(output))],
-                "operation_tables": [],
+                "sources": [
+                    self._relative_or_none(item, output)
+                    for item in device_manifest["sources"]
+                ],
+                "operation_tables": device_manifest["operation_tables"],
                 "registration_symbols": device_manifest["registration_symbols"],
                 "summary": device_manifest["summary"],
             },
@@ -329,11 +335,15 @@ class ZephyrBackend(OSBackend):
         sdk_root: Path,
         sdk_sources: list[str],
         functional: bool,
+        native_devices: bool = False,
     ) -> str:
         extra_sources = ""
         include_dirs = ""
         if functional:
-            paths = ["src/bspforge_bindings.c"] + [
+            paths = ["src/bspforge_bindings.c"]
+            if native_devices:
+                paths.append("src/bspforge_zephyr_devices.c")
+            paths += [
                 str((sdk_root / item).resolve()) for item in sdk_sources
             ]
             extra_sources = "\n".join(f"    {item}" for item in paths)
@@ -357,7 +367,10 @@ target_sources(app PRIVATE src/main.c
 """
 
     @staticmethod
-    def _project_config(native_executable: bool = False) -> str:
+    def _project_config(
+        native_executable: bool = False,
+        native_devices: bool = False,
+    ) -> str:
         config = """CONFIG_SERIAL=y
 CONFIG_CONSOLE=y
 CONFIG_UART_CONSOLE=y
@@ -365,6 +378,11 @@ CONFIG_GPIO=y
 CONFIG_PRINTK=y
 CONFIG_ASSERT=y
 CONFIG_MAIN_STACK_SIZE=4096
+"""
+        if native_devices:
+            config += """CONFIG_CLOCK_CONTROL=y
+CONFIG_COUNTER=y
+CONFIG_UART_USE_RUNTIME_CONFIGURE=y
 """
         if native_executable:
             config += "CONFIG_UART_NATIVE_PTY_0_ON_STDINOUT=y\n"

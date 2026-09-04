@@ -1,0 +1,91 @@
+{
+  "artifacts": [
+    {
+      "kind": "elf",
+      "path": "/home/whk/RTT-porting/bspforge/workspace/generated/k210-zephyr-lambdamart/build/zephyr/zephyr.elf",
+      "sha256": "1c11044707593b7c789f9983491f57fca3925ce9a053c3b0eae76af41ff900a2",
+      "size": 675184
+    },
+    {
+      "kind": "bin",
+      "path": "/home/whk/RTT-porting/bspforge/workspace/generated/k210-zephyr-lambdamart/build/zephyr/zephyr.bin",
+      "sha256": "c423e5162fc28e725f66406499a87d46c3a7b63a2e253982476298f7a631d809",
+      "size": 34744
+    }
+  ],
+  "checks": [
+    {
+      "name": "elf-exists",
+      "success": true
+    },
+    {
+      "name": "bin-exists",
+      "success": true
+    },
+    {
+      "expected": "RISC-V",
+      "name": "elf-machine",
+      "observed": "RISC-V",
+      "success": true
+    },
+    {
+      "name": "elf-sections-readable",
+      "success": true
+    },
+    {
+      "expected": [
+        "bspforge_zephyr_clock_device",
+        "bspforge_zephyr_counter_device",
+        "bspforge_zephyr_gpio_device",
+        "bspforge_zephyr_uart_device",
+        "bspforge_zephyr_validation_init",
+        "bspforge_zephyr_validation_run"
+      ],
+      "missing": [],
+      "name": "generated-device-symbols-linked",
+      "present": [
+        "bspforge_zephyr_clock_device",
+        "bspforge_zephyr_counter_device",
+        "bspforge_zephyr_gpio_device",
+        "bspforge_zephyr_uart_device",
+        "bspforge_zephyr_validation_init",
+        "bspforge_zephyr_validation_run"
+      ],
+      "success": true
+    }
+  ],
+  "created_at": "2026-09-04T05:42:48.853997+00:00",
+  "elf_header": {
+    "Class": "ELF64",
+    "Data": "2's complement, little endian",
+    "Entry point address": "0x80000000",
+    "Machine": "RISC-V",
+    "Type": "EXEC (Executable file)"
+  },
+  "expected_machine": "RISC-V",
+  "expected_symbols": [
+    "bspforge_zephyr_clock_device",
+    "bspforge_zephyr_counter_device",
+    "bspforge_zephyr_gpio_device",
+    "bspforge_zephyr_uart_device",
+    "bspforge_zephyr_validation_init",
+    "bspforge_zephyr_validation_run"
+  ],
+  "missing_symbols": [],
+  "present_symbols": [
+    "bspforge_zephyr_clock_device",
+    "bspforge_zephyr_counter_device",
+    "bspforge_zephyr_gpio_device",
+    "bspforge_zephyr_uart_device",
+    "bspforge_zephyr_validation_init",
+    "bspforge_zephyr_validation_run"
+  ],
+  "schema_version": "1.0",
+  "section_sizes": {
+    "bss": 10520,
+    "data": 56,
+    "dec": 45252,
+    "text": 34676
+  },
+  "success": true
+}

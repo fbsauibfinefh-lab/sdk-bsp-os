@@ -426,4 +426,4 @@ experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-rtthread-full-1
 experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-full-10rounds.json
 ```
 
-当前最终结论是两套后端均为 10/10 次启动、90/90 条命令通过、失败 0、`unsupported` 0。Zephyr 已从 `native-driver-trace` 冒烟路径更新为 `generated-sdk-adapter`：生成适配层编译分析所得 K210 SDK 的 FPIOA、GPIOHS、SYSCTL、TIMER 和 UART 实现，并完成真实 IO7/IO6 UART 回环与 IO8/IO9 GPIO 电平/中断验证。Zephyr 周期定时器在达到预期 3 次回调后由适配层停表，十轮均严格得到 3 次；该用例验证模式、启动、停止和 IRQ 可达性，不用于宣称定时精度。本文前面的旧路径与旧哈希用于保留历史，后续 K210 复测应优先使用上述机器报告。
+当前最终结论是两套后端均为 10/10 次启动、90/90 条命令通过、失败 0、`unsupported` 0。Zephyr 已从 SDK 直调功能适配进一步更新为原生设备路径：生成的 `clock_control`、UART、GPIO 和 Counter `struct device` 通过标准 Zephyr API 接受测试请求，再调用 IR 可追溯的 SDK 绑定；PLIC 由 Zephyr 二级 IRQ 子系统分发。真实 IO7/IO6 UART 回环、IO8/IO9 GPIO 电平/中断和硬件 Counter 回调全部通过。最终 Zephyr BIN 为 34744 bytes，SHA-256 为 `c423e5162fc28e725f66406499a87d46c3a7b63a2e253982476298f7a631d809`，十轮平均启动时间为 32.608 ms。周期定时器十轮均严格得到 3 次回调；该用例验证模式、启动、停止和 IRQ 可达性，不用于宣称定时精度。本文前面的旧路径与旧哈希用于保留历史，后续 K210 复测应优先使用上述机器报告。
