@@ -100,7 +100,25 @@ def main() -> int:
         }
 
     records = []
+    skipped_operations = []
     for operation_id, operation in sorted(bundle["operations"].items()):
+        if operation_id not in truth_groups:
+            truth_operation = next(
+                (
+                    item
+                    for item in truth.get("operations", [])
+                    if item.get("operation_id") == operation_id
+                ),
+                {},
+            )
+            skipped_operations.append(
+                {
+                    "operation_id": operation_id,
+                    "group_status": truth_operation.get("group_status", "missing"),
+                    "reason": truth_operation.get("group_rationale", "no complete truth group"),
+                }
+            )
+            continue
         relevant = truth_groups[operation_id]
         ranked = unique_symbols(operation["candidates"])
         metrics = operation_metrics(ranked, relevant)
@@ -135,12 +153,15 @@ def main() -> int:
         "aggregate": aggregate,
         "summary": {
             "operations": len(records),
+            "bundle_operations": len(bundle["operations"]),
+            "skipped_operations": len(skipped_operations),
             "truth_symbols": sum(len(item["truth_symbols"]) for item in records),
             "truth_symbols_missing_from_label_free_pool": sum(
                 len(item["missing_truth_symbols_from_label_free_pool"])
                 for item in records
             ),
         },
+        "skipped_operation_records": skipped_operations,
         "records": records,
     }
     write_json(args.output, payload)

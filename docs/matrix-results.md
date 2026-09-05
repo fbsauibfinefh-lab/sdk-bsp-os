@@ -61,3 +61,9 @@ cd /home/whk/RTT-porting/bspforge
 ./scripts/install_toolchain.sh
 ./scripts/run_matrix.sh
 ```
+
+## 冻结方法增量结果（2026-09-06）
+
+PSoC E84 Edgi-Talk 已用冻结 LambdaMART v2.4 重新运行双 RTOS 流水线。两套均从 3,254 个 SDK 文件、17,423 个函数和 66,698 条 IR 边出发，形成 19/19 项绑定、270 个闭包文件和 18 条构建规则，并在第一次构建成功。RT-Thread ELF 为 1,503,296 bytes，Zephyr ELF 为 976,188 bytes；19/19 绑定均被编译反馈观察。
+
+实板上两套均 10/10 次启动、80/90 条命令通过、0 项 `unsupported`。八类命令每轮通过，UART5 外部回环每轮失败。因此 PSoC E84 当前构建矩阵为 2/2，但功能矩阵不能填写为全部通过。详见 `docs/psoc-e84-lambdamart-board-validation-v2.4.md`。

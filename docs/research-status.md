@@ -552,3 +552,14 @@ H01 相对自动真值的 P@1、Recall@5、MAP 和 nDCG@10 分别提高 0.040、
 - Zephyr 修正后的管线一次构建成功，15 项操作直接调用计划实体，4 项 PLIC 操作由 Zephyr IRQ 子系统接管，19/19 项均被编译反馈观察。最终 BIN 为 35584 bytes，SHA-256 `94146dffa0559993f759f96f792f35056bb689dd9c86ae862befe4f3de0e078b`；实板 10/10 次启动、90/90 条命令通过，失败和 `unsupported` 均为 0，平均启动时间 33.895 ms，报告 SHA-256 `f075dc63f388e4e007d051b981b1c6351df6f1a8fdd86e97cf0db0526ad24243`。
 - 九条命令覆盖设备发现、时钟与频率、中断回调、UART 双向回环、GPIO 电平与输入回读、GPIO 中断、定时器单次/周期回调和综合稳定性。验证路径只通过 RT-Thread 或 Zephyr 公共设备 API 进入生成设备与 SDK 绑定。最终计划、逐操作清单、编译反馈、产物验证、板测报告和失败诊断统一保存在 `experiments/hardware-results/k210-operation-lambdamart-v2.2/`。
 - Python 单元与组件集成回归仍为 `70 passed`，与两次目标构建、每个 RTOS 的 10 次启动和 90 条实板命令分别统计。为校验最新 RT-Thread 产物哈希，最后又烧录并复测 RT-Thread，因此当前板上最终保留的是 RT-Thread 固件。
+
+## v3.3：PSoC E84 无标签候选部署与双 RTOS 实板验证
+
+- 为 PSoC E84 从 SDK IR 生成无标签运行时数据，比较每操作 96、128 和 1024 个候选。三档 P@1 分别为 0.833、0.778、0.611，最终固定 96 候选；该策略只按通用静态证据和实体 ID 稳定截断，不读取目标真值或具体符号。
+- 最终冻结包含 19 个操作和 1,824 个候选，`contains_labels=false`。H03 在导出完成后独立读取；18 个完整单函数组得到 P@1 0.833、Recall@5 0.742、MAP 0.641、nDCG@10 0.731、Hit@5 1.000，`gpio.attach_irq` 因真值为 `no_public_api` 不进入单函数指标分母。
+- 部署解码补充两项通用语义：`SysInt/NVIC/PLIC` 归并为系统中断控制器族；`base/obj/counter/cnt/tcpwm` 识别为定时器实例参数。修正解决成熟 SDK 跨公共层中断组合和控制器实例命名问题，不含 PSoC 白名单、实体 ID 或真值回退。
+- RT-Thread 与 Zephyr 均从 IR 重新生成 19/19 项绑定和 270 文件闭包，各一次编译成功，19/19 绑定获得编译反馈。RT-Thread 必须把安全启动段的编程别名与重定位应用合并；仅烧录应用段会继续执行闪存中残留的旧 Zephyr 镜像。
+- 主机工具新增 `--keep-port-open-during-reset`。KitProg3 SWD 复位不占用 COM8，保持串口打开后可捕获早期 boot 事件，避免命令可运行但启动率误记为 0。
+- 两套正式固件均完成 10/10 次启动和 80/90 条命令通过，0 项 `unsupported`。时钟、基础中断、GPIO 电平、GPIO IRQ、单次/周期定时器及稳定性各 10/10；CN5 Pin8/Pin10 UART5 外部回环均为 0/16 bytes，十轮失败全部来自这一项。
+- 原理图确认 UART5 经常使能的 TXS0108E 连接 P17.1/P17.0；两个 OS 及直接 GPIO 诊断均无法让外部短接线传播低电平。当前不能声称五类能力全部通过，需人工检查跳线接触、电平转换器供电和波形后复测 UART5。
+- 公开方法与结果见 `docs/psoc-e84-lambdamart-board-validation-v2.4.md`，内部逐步命令见 `docs/internaldocs/edgitalk-board-validation-20260906.md`，机器报告位于 `experiments/hardware-results/psoc-e84-operation-lambdamart-v2.4/`。

@@ -154,6 +154,38 @@ class ModuleTests(unittest.TestCase):
         self.assertEqual(decoded["read"]["selected"]["symbol"], "gpiohs_get_pin")
         self.assertEqual(decoded["configure"]["rejected"][0]["symbol"], "gpio_init")
 
+    def test_signature_decoder_accepts_sysint_interrupt_family(self) -> None:
+        accepted, reason = BindingPlanner._signature_compatible(
+            "interrupt",
+            "initialize",
+            "Cy_SysInt_Init",
+            "cy_en_sysint_status_t Cy_SysInt_Init(const cy_stc_sysint_t *config, cy_israddress user_isr)",
+        )
+
+        self.assertTrue(accepted, reason)
+        self.assertEqual(
+            BindingPlanner._compatible_family("interrupt", "Cy_SysInt_Init"),
+            BindingPlanner._compatible_family("interrupt", "__NVIC_EnableIRQ"),
+        )
+        self.assertNotEqual(
+            BindingPlanner._compatible_family("interrupt", "Cy_CANFD_EnableInterruptLine"),
+            BindingPlanner._compatible_family("interrupt", "__NVIC_EnableIRQ"),
+        )
+
+    def test_signature_decoder_accepts_counter_instance_parameters(self) -> None:
+        signatures = {
+            "initialize": "int timer_counter_init(TCPWM_Type *base, uint32_t cnt_num, const void *config)",
+            "start": "void timer_counter_enable(TCPWM_Type *base, uint32_t cnt_num)",
+            "stop": "void timer_counter_disable(TCPWM_Type *base, uint32_t cnt_num)",
+            "set_interval": "void timer_counter_set_period(TCPWM_Type *base, uint32_t cnt_num, uint32_t period)",
+        }
+
+        for operation, signature in signatures.items():
+            accepted, reason = BindingPlanner._signature_compatible(
+                "timer", operation, signature.split("(")[0].split()[-1], signature
+            )
+            self.assertTrue(accepted, f"{operation}: {reason}")
+
     def test_ingest_resolve_and_closure_are_traceable(self) -> None:
         ir = SDKIngestor().ingest(self.sdk, "fixture-sdk")
         self.assertGreaterEqual(ir["stats"]["functions"], 3)
@@ -1249,6 +1281,33 @@ class ModuleTests(unittest.TestCase):
         self.assertIn('\\"discarded_rx_bytes\\":%lu', source)
         self.assertIn('strcmp(command, "gpio.irq")', source)
 
+    def test_rtthread_standard_device_validation_uses_separate_loopback_pins(self) -> None:
+        bsp = self.root / "rtthread-standard-validation"
+        manifest = RTThreadValidationGenerator().generate(
+            bsp,
+            {
+                "native_device_validation": True,
+                "uart": "uart5",
+                "gpio_output_pin": 71,
+                "gpio_input_pin": 172,
+                "hwtimer": "timer0",
+            },
+        )
+        source = Path(manifest["source"]).read_text(encoding="utf-8")
+        self.assertIn('bspforge_uart_name[] = "uart5"', source)
+        self.assertIn("rt_pin_mode((rt_base_t)71", source)
+        self.assertIn("rt_pin_mode((rt_base_t)172", source)
+        self.assertIn("bspforge_native_gpio_irq_test", source)
+        self.assertIn("bspforge_native_uart_loopback", source)
+        self.assertIn(
+            "RT_DEVICE_FLAG_RDWR | RT_DEVICE_FLAG_INT_RX", source
+        )
+        self.assertNotIn(
+            "rt_device_open(serial, RT_DEVICE_FLAG_RDWR) != RT_EOK", source
+        )
+        self.assertIn("RT_USING_HWTIMER", manifest["required_rtthread_features"])
+        self.assertNotIn("bspforge_irq_initialize();\n        result", source)
+
     def test_rtthread_backend_can_disable_nonrequired_board_feature(self) -> None:
         config = self.root / "rtconfig.h"
         config.write_text(
@@ -1260,6 +1319,34 @@ class ModuleTests(unittest.TestCase):
         self.assertNotIn("#define RT_USING_SMP", value)
         self.assertIn("#define RT_CPUS_NR 2", value)
         self.assertIn("#define RT_USING_SERIAL", value)
+
+    def test_psoc_e84_timer_repair_maps_current_generated_symbols(self) -> None:
+        project = self.root / "psoc-timer-repair"
+        drivers = project / "libraries" / "HAL_Drivers"
+        drivers.mkdir(parents=True)
+        (drivers / "drv_hwtimer.c").write_text(
+            "cy_en_divider_types_t dividerType;\n"
+            "f(tim->ipBlock, tim->dividerType, tim->cntNum);\n"
+            "CYBSP_TCPWM_0_GRP_0_COUNTER_0_HW\n",
+            encoding="utf-8",
+        )
+        (drivers / "drv_hwtimer.h").write_text(
+            ".source_clock_freq = 100000000,\n"
+            ".ipBlock = PCLK_TCPWM0_CLOCK_COUNTER_EN2,\n"
+            ".dividerType = CY_SYSCLK_DIV_16_BIT,\n"
+            "CYBSP_TCPWM_0_GRP_0_COUNTER_0_config\n",
+            encoding="utf-8",
+        )
+        repairs = RTThreadBackend._repair_psoc_e84_hwtimer(project)
+        source = (drivers / "drv_hwtimer.c").read_text(encoding="utf-8")
+        header = (drivers / "drv_hwtimer.h").read_text(encoding="utf-8")
+        self.assertEqual(repairs[0]["id"], "psoc-e84-current-tcpwm-symbols")
+        self.assertIn("uint32_t dividerNum", source)
+        self.assertIn("tim->dividerNum", source)
+        self.assertIn("CYBSP_GENERAL_PURPOSE_TIMER_HW", source)
+        self.assertIn("CYBSP_GENERAL_PURPOSE_TIMER_CLK_DIV_NUM", header)
+        self.assertIn(".dividerType = CY_SYSCLK_DIV_16_BIT,                                \\", header)
+        self.assertNotIn("CYBSP_TCPWM_0_GRP_0_COUNTER_0", header)
 
     def test_zephyr_backend_generates_native_application_contract(self) -> None:
         zephyr = self.root / "zephyr"
@@ -1322,16 +1409,47 @@ class ModuleTests(unittest.TestCase):
         self.assertNotIn('#include "bspforge_bindings.h"', source)
         for call in (
             "clock_control_get_rate",
-            "uart_configure",
-            "uart_poll_out",
+            "uart_fifo_fill",
+            "uart_fifo_read",
             "gpio_pin_configure",
             "gpio_add_callback",
             "counter_set_channel_alarm",
-            "counter_set_top_value",
         ):
             self.assertIn(call, source)
+        self.assertNotIn("uart_configure", source)
+        self.assertNotIn("counter_set_top_value", source)
         self.assertNotIn("bspforge_uart_write", source)
         self.assertNotIn("bspforge_gpio_write", source)
+
+    def test_zephyr_devicetree_validation_supports_distinct_gpio_ports(self) -> None:
+        source_dir = self.root / "zephyr-standard-validation"
+        source_dir.mkdir()
+        manifest = ZephyrValidationGenerator().generate(
+            source_dir,
+            "psoc-e84",
+            "standard-device-test",
+            functional=False,
+            standard_devices={
+                "uart_node": "uart5",
+                "gpio_output_node": "gpio_prt8",
+                "gpio_input_node": "gpio_prt21",
+                "counter_node": "counter0_0",
+                "gpio_output_pin": 7,
+                "gpio_input_pin": 4,
+            },
+        )
+        source = Path(manifest["source"]).read_text(encoding="utf-8")
+        header = (source_dir / "bspforge_zephyr_devices.h").read_text(encoding="utf-8")
+        self.assertEqual(
+            manifest["strategy"], "zephyr-standard-devicetree-device-selftest"
+        )
+        self.assertIn("DT_NODELABEL(uart5)", header)
+        self.assertIn("DT_NODELABEL(gpio_prt8)", header)
+        self.assertIn("DT_NODELABEL(gpio_prt21)", header)
+        self.assertIn("bspforge_zephyr_gpio_input_device", source)
+        self.assertIn("sys_clock_hw_cycles_per_sec", source)
+        self.assertIn("counter_get_frequency", source)
+        self.assertNotIn("bspforge_zephyr_clock_device", source)
 
     def test_zephyr_functional_validation_covers_common_board_protocol(self) -> None:
         source_dir = self.root / "zephyr-functional"

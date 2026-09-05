@@ -1,5 +1,5 @@
 {
-  "run_id": "psoc-e84-rtthread-v0.4",
+  "run_id": "psoc-e84-rtthread-lambdamart-v2.4",
   "workspace": "workspace",
   "ir_store": "workspace/ir",
   "ingestor": {"mode": "hybrid"},
@@ -8,11 +8,13 @@
     "path": "sdk/psoc_e84-edgi-talk/source"
   },
   "resolver": {
-    "method": "operation-weighted",
+    "method": "operation-lambdamart",
+    "model_path": "models/runtime/psoc-e84-operation-lambdamart-h03-eq-r1-full-v2.4.json",
+    "binding_decoder": "signature-family",
     "operation_min_margin": 0.0,
     "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
     "threshold": 0.42,
-    "top_k": 8
+    "top_k": 1024
   },
   "toolchain": {
     "architecture": "arm",
@@ -21,7 +23,7 @@
   },
   "closure": {
     "target": {
-      "chip": "cyw20829",
+      "chip": "pse846gps2dbzc4a",
       "core": "cortex-m33",
       "entry_symbols": ["Reset_Handler"],
       "startup_policy": "backend",
@@ -38,11 +40,17 @@
     "libraries_root": "third_party/psoc-e84-sdk/libraries",
     "libs_root": "third_party/psoc-e84-sdk/projects/libs",
     "native_driver_roots": ["libraries/HAL_Drivers"],
-    "output": "workspace/generated/psoc-e84-rtthread",
+    "mutable_library_subtrees": ["HAL_Drivers"],
+    "output": "workspace/generated/psoc-e84-rtthread-lambdamart",
     "validation": {
-      "uart": "uart0",
+      "native_device_validation": true,
+      "firmware_build_id": "operation-lambdamart-v2.4-rtthread-native-device",
+      "uart": "uart5",
       "pin_device": "pin",
-      "pin": -1
+      "pin": -1,
+      "gpio_output_pin": 91,
+      "gpio_input_pin": 119,
+      "hwtimer": "timer0"
     },
     "artifacts": {
       "elf": "rt-thread.elf",

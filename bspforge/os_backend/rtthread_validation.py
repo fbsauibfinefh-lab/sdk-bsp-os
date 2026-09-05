@@ -19,6 +19,9 @@ class RTThreadValidationGenerator:
         pin_number = int(config.get("pin", -1))
         hwtimer_name = str(config.get("hwtimer", "bsptim0"))
         binding_validation = bool(config.get("binding_validation", False))
+        native_device_validation = bool(config.get("native_device_validation", False))
+        gpio_output_pin = int(config.get("gpio_output_pin", pin_number))
+        gpio_input_pin = int(config.get("gpio_input_pin", -1))
         uart_channel = int(config.get("uart_channel", -1))
         uart_tx_fpioa_io = int(config.get("uart_tx_fpioa_io", -1))
         uart_rx_fpioa_io = int(config.get("uart_rx_fpioa_io", -1))
@@ -35,6 +38,9 @@ class RTThreadValidationGenerator:
                 pin_number,
                 hwtimer_name,
                 binding_validation,
+                native_device_validation,
+                gpio_output_pin,
+                gpio_input_pin,
                 uart_channel,
                 uart_tx_fpioa_io,
                 uart_rx_fpioa_io,
@@ -65,7 +71,14 @@ class RTThreadValidationGenerator:
                 "bspforge_validation_run",
                 "bspforge_selftest",
             ],
-            "required_rtthread_features": ["RT_USING_SERIAL", "RT_USING_PIN", "RT_USING_FINSH"],
+            "required_rtthread_features": [
+                "RT_USING_SERIAL", "RT_USING_PIN", "RT_USING_FINSH",
+                *(
+                    ["RT_USING_HWTIMER", "BSP_USING_TIM", "BSP_USING_TIM0"]
+                    if native_device_validation
+                    else []
+                ),
+            ],
             "summary": {"devices": 3, "generated_sources": 1},
         }
 
@@ -76,6 +89,9 @@ class RTThreadValidationGenerator:
         pin_number: int,
         hwtimer_name: str,
         binding_validation: bool,
+        native_device_validation: bool,
+        gpio_output_pin: int,
+        gpio_input_pin: int,
         uart_channel: int,
         uart_tx_fpioa_io: int,
         uart_rx_fpioa_io: int,
@@ -120,7 +136,7 @@ static int bspforge_binding_uart_loopback(rt_uint32_t *bytes,
     serial = rt_device_find(bspforge_uart_name);
     if (serial == RT_NULL)
         return -RT_ENOSYS;
-    if (rt_device_open(serial, RT_DEVICE_FLAG_RDWR) != RT_EOK)
+    if (rt_device_open(serial, RT_DEVICE_FLAG_RDWR | RT_DEVICE_FLAG_INT_RX) != RT_EOK)
         return -RT_ERROR;
     /* Discard bounded reset/open noise before measuring the generated path. */
     for (drain_limit = 0U; drain_limit < 64U; ++drain_limit)
@@ -264,6 +280,123 @@ static int bspforge_binding_gpio_irq_test(rt_uint32_t *fires)
     return *fires > 0U ? RT_EOK : -RT_ETIMEOUT;
 }}
 '''
+        elif native_device_validation:
+            binding_helpers = rf'''
+extern uint32_t SystemCoreClock;
+
+static volatile rt_uint32_t bspforge_gpio_irq_fires;
+
+static void bspforge_native_gpio_irq(void *argument)
+{{
+    RT_UNUSED(argument);
+    bspforge_gpio_irq_fires++;
+}}
+
+static int bspforge_native_clock_test(rt_uint32_t *cpu_hz,
+                                      rt_uint32_t *timer_hz)
+{{
+    rt_tick_t before = rt_tick_get();
+
+    rt_thread_mdelay(2);
+    *cpu_hz = (rt_uint32_t)SystemCoreClock;
+    *timer_hz = RT_TICK_PER_SECOND;
+    return (*cpu_hz > 0U && rt_tick_get() > before) ? RT_EOK : -RT_ERROR;
+}}
+
+static int bspforge_native_uart_loopback(rt_uint32_t *bytes,
+                                         rt_uint32_t *errors,
+                                         rt_uint32_t *discarded)
+{{
+    rt_device_t serial = rt_device_find(bspforge_uart_name);
+    rt_uint8_t stale;
+
+    *bytes = 0U;
+    *errors = 0U;
+    *discarded = 0U;
+    if (serial == RT_NULL)
+        return -RT_ENOSYS;
+    if (rt_device_open(serial, RT_DEVICE_FLAG_RDWR | RT_DEVICE_FLAG_INT_RX) != RT_EOK)
+        return -RT_ERROR;
+    while (*discarded < 64U && rt_device_read(serial, 0, &stale, 1U) == 1U)
+        (*discarded)++;
+    for (rt_uint32_t index = 0U; index < 16U; ++index)
+    {{
+        rt_uint8_t sent = (rt_uint8_t)(0x31U + index * 7U);
+        rt_uint8_t received = 0U;
+        rt_tick_t deadline;
+        rt_size_t count = 0U;
+
+        if (rt_device_write(serial, 0, &sent, 1U) != 1U)
+        {{
+            (*errors)++;
+            continue;
+        }}
+        deadline = rt_tick_get() + RT_TICK_PER_SECOND / 10U;
+        while ((count = rt_device_read(serial, 0, &received, 1U)) != 1U &&
+               (rt_int32_t)(rt_tick_get() - deadline) < 0)
+            rt_thread_mdelay(1);
+        if (count != 1U || received != sent)
+            (*errors)++;
+        else
+            (*bytes)++;
+    }}
+    (void)rt_device_close(serial);
+    return (*bytes == 16U && *errors == 0U) ? RT_EOK : -RT_ERROR;
+}}
+
+static int bspforge_native_gpio_test(rt_int32_t *low_latch,
+                                     rt_int32_t *high_latch,
+                                     rt_int32_t *input_low,
+                                     rt_int32_t *input_high)
+{{
+    if ({gpio_output_pin} < 0 || {gpio_input_pin} < 0)
+        return -RT_ENOSYS;
+    rt_pin_mode((rt_base_t){gpio_output_pin}, PIN_MODE_OUTPUT);
+    rt_pin_mode((rt_base_t){gpio_input_pin}, PIN_MODE_INPUT_PULLDOWN);
+    rt_pin_write((rt_base_t){gpio_output_pin}, PIN_LOW);
+    rt_thread_mdelay(2);
+    *low_latch = rt_pin_read((rt_base_t){gpio_output_pin});
+    *input_low = rt_pin_read((rt_base_t){gpio_input_pin});
+    rt_pin_write((rt_base_t){gpio_output_pin}, PIN_HIGH);
+    rt_thread_mdelay(2);
+    *high_latch = rt_pin_read((rt_base_t){gpio_output_pin});
+    *input_high = rt_pin_read((rt_base_t){gpio_input_pin});
+    return (*low_latch == PIN_LOW && *high_latch == PIN_HIGH &&
+            *input_low == PIN_LOW && *input_high == PIN_HIGH)
+               ? RT_EOK : -RT_ERROR;
+}}
+
+static int bspforge_native_gpio_irq_test(rt_uint32_t *fires)
+{{
+    rt_err_t result;
+    rt_tick_t deadline;
+
+    if ({gpio_output_pin} < 0 || {gpio_input_pin} < 0)
+        return -RT_ENOSYS;
+    rt_pin_mode((rt_base_t){gpio_output_pin}, PIN_MODE_OUTPUT);
+    rt_pin_mode((rt_base_t){gpio_input_pin}, PIN_MODE_INPUT_PULLDOWN);
+    rt_pin_write((rt_base_t){gpio_output_pin}, PIN_LOW);
+    rt_thread_mdelay(2);
+    bspforge_gpio_irq_fires = 0U;
+    result = rt_pin_attach_irq((rt_base_t){gpio_input_pin}, PIN_IRQ_MODE_RISING,
+                               bspforge_native_gpio_irq, RT_NULL);
+    if (result != RT_EOK)
+        return result;
+    result = rt_pin_irq_enable((rt_base_t){gpio_input_pin}, PIN_IRQ_ENABLE);
+    if (result != RT_EOK)
+        goto exit;
+    rt_pin_write((rt_base_t){gpio_output_pin}, PIN_HIGH);
+    deadline = rt_tick_get() + RT_TICK_PER_SECOND / 2U;
+    while (bspforge_gpio_irq_fires == 0U &&
+           (rt_int32_t)(rt_tick_get() - deadline) < 0)
+        rt_thread_mdelay(1);
+exit:
+    (void)rt_pin_irq_enable((rt_base_t){gpio_input_pin}, PIN_IRQ_DISABLE);
+    (void)rt_pin_detach_irq((rt_base_t){gpio_input_pin});
+    *fires = bspforge_gpio_irq_fires;
+    return result == RT_EOK && *fires > 0U ? RT_EOK : -RT_ETIMEOUT;
+}}
+'''
         return rf'''/* Generated by BSPForge; configuration evidence is in bspforge/. */
 #include <string.h>
 #include <rtdevice.h>
@@ -343,9 +476,6 @@ int bspforge_validation_run(void)
     rt_kprintf("%s", banner);
     if (serial == RT_NULL)
         return -RT_ENOSYS;
-    if (rt_device_open(serial, RT_DEVICE_FLAG_RDWR) != RT_EOK)
-        return -RT_ERROR;
-
     if (bspforge_pin_number >= 0)
     {{
         (void)bspforge_pin_device;
@@ -379,7 +509,7 @@ int bspforge_selftest(int argc, char **argv)
         rt_uint32_t cpu_hz = 0U;
         rt_uint32_t timer_hz = 0U;
         int result = -RT_ENOSYS;
-{('        result = bspforge_binding_clock_test(&cpu_hz, &timer_hz);' if binding_validation else '')}
+{('        result = bspforge_binding_clock_test(&cpu_hz, &timer_hz);' if binding_validation else ('        result = bspforge_native_clock_test(&cpu_hz, &timer_hz);' if native_device_validation else ''))}
         status = result == RT_EOK ? "pass" :
                  result == -RT_ENOSYS ? "unsupported" : "fail";
         rt_kprintf("{{\"bspforge\":true,\"protocol\":\"1.0\","
@@ -395,10 +525,9 @@ int bspforge_selftest(int argc, char **argv)
         rt_uint32_t fires = 0U;
         rt_uint32_t ticks = 0U;
         int result;
-        bspforge_irq_initialize();
+{('        bspforge_irq_initialize();' if binding_validation else '')}
         result = bspforge_hwtimer_test(HWTIMER_MODE_ONESHOT, 1U, &fires, &ticks);
-        if (bspforge_irq_disable((rt_uint32_t)IRQN_TIMER0A_INTERRUPT) != RT_EOK)
-            result = -RT_ERROR;
+{('        if (bspforge_irq_disable((rt_uint32_t)IRQN_TIMER0A_INTERRUPT) != RT_EOK)\n            result = -RT_ERROR;' if binding_validation else '')}
         status = result == RT_EOK ? "pass" :
                  result == -RT_ENOSYS ? "unsupported" : "fail";
         rt_kprintf("{{\"bspforge\":true,\"protocol\":\"1.0\","
@@ -415,7 +544,7 @@ int bspforge_selftest(int argc, char **argv)
         rt_uint32_t errors = 0U;
         rt_uint32_t discarded = 0U;
         int result = -RT_ENOSYS;
-{('        result = bspforge_binding_uart_loopback(&bytes, &errors, &discarded);' if binding_validation else '')}
+{('        result = bspforge_binding_uart_loopback(&bytes, &errors, &discarded);' if binding_validation else ('        result = bspforge_native_uart_loopback(&bytes, &errors, &discarded);' if native_device_validation else ''))}
         status = result == RT_EOK ? "pass" :
                  result == -RT_ENOSYS ? "unsupported" : "fail";
         rt_kprintf("{{\"bspforge\":true,\"protocol\":\"1.0\","
@@ -428,7 +557,8 @@ int bspforge_selftest(int argc, char **argv)
                    (unsigned long)discarded);
         return 0;
     }}
-    else if (strcmp(command, "gpio.toggle") == 0 && bspforge_pin_number >= 0)
+    else if (strcmp(command, "gpio.toggle") == 0 && bspforge_pin_number >= 0 &&
+             {int(not native_device_validation)})
     {{
         rt_pin_write(bspforge_pin_number, PIN_LOW);
         rt_pin_write(bspforge_pin_number, PIN_HIGH);
@@ -442,7 +572,7 @@ int bspforge_selftest(int argc, char **argv)
         rt_int32_t input_low = -1;
         rt_int32_t input_high = -1;
         int result = -RT_ENOSYS;
-{('        result = bspforge_binding_gpio_test(&low_latch, &high_latch, &input_low, &input_high);' if binding_validation else '')}
+{('        result = bspforge_binding_gpio_test(&low_latch, &high_latch, &input_low, &input_high);' if binding_validation else ('        result = bspforge_native_gpio_test(&low_latch, &high_latch, &input_low, &input_high);' if native_device_validation else ''))}
         status = result == RT_EOK ? "pass" :
                  result == -RT_ENOSYS ? "unsupported" : "fail";
         rt_kprintf("{{\"bspforge\":true,\"protocol\":\"1.0\","
@@ -459,7 +589,7 @@ int bspforge_selftest(int argc, char **argv)
     {{
         rt_uint32_t fires = 0U;
         int result = -RT_ENOSYS;
-{('        result = bspforge_binding_gpio_irq_test(&fires);' if binding_validation else '')}
+{('        result = bspforge_binding_gpio_irq_test(&fires);' if binding_validation else ('        result = bspforge_native_gpio_irq_test(&fires);' if native_device_validation else ''))}
         status = result == RT_EOK ? "pass" :
                  result == -RT_ENOSYS ? "unsupported" : "fail";
         rt_kprintf("{{\"bspforge\":true,\"protocol\":\"1.0\","

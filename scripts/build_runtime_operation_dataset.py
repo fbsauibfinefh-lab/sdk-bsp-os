@@ -17,7 +17,10 @@ from bspforge.semantic_resolver import SemanticResolver
 
 
 def build_runtime_dataset(
-    manifest: dict[str, Any], ir: dict[str, Any], ir_path: Path
+    manifest: dict[str, Any],
+    ir: dict[str, Any],
+    ir_path: Path,
+    max_candidates_per_operation: int | None = None,
 ) -> dict[str, Any]:
     sdk_id = ir["sdk"]["id"]
     manifest_items = {item["sdk_id"]: item for item in manifest["sdks"]}
@@ -48,6 +51,11 @@ def build_runtime_dataset(
                         "candidate_text": candidate_code_text(function),
                     }
                 )
+            candidates.sort(
+                key=lambda item: (-item["static_score"], item["entity_id"])
+            )
+            if max_candidates_per_operation is not None:
+                candidates = candidates[:max_candidates_per_operation]
             if not candidates:
                 raise ValueError(f"no runtime candidates for {sdk_id}/{operation_id}")
             groups.append(
@@ -62,6 +70,7 @@ def build_runtime_dataset(
                     "operation_id": operation_id,
                     "query_text": operation_query_text(capability, operation),
                     "candidate_pool_size": len(pool),
+                    "retained_candidate_count": len(candidates),
                     "candidates": candidates,
                 }
             )
@@ -70,13 +79,15 @@ def build_runtime_dataset(
         "created_at": utc_now(),
         "contains_labels": False,
         "candidate_policy": {
-            "name": "all-positive-capability-evidence",
+            "name": "deterministic-static-top-k",
             "description": (
-                "Keep every IR function with positive capability-level static "
-                "evidence; no truth symbol or relevance label is read."
+                "Rank every IR function with positive capability-level static "
+                "evidence, retain a deterministic per-operation Top-K, and do not "
+                "read any truth symbol or relevance label."
             ),
             "truth_independent": True,
-            "post_inference_pruning": True,
+            "pre_inference_pruning": True,
+            "max_candidates_per_operation": max_candidates_per_operation,
         },
         "source": {
             "sdk_id": sdk_id,
@@ -111,14 +122,26 @@ def main() -> int:
     )
     parser.add_argument("--ir", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
+    parser.add_argument("--max-candidates-per-operation", type=int)
     args = parser.parse_args()
+
+    if (
+        args.max_candidates_per_operation is not None
+        and args.max_candidates_per_operation <= 0
+    ):
+        parser.error("--max-candidates-per-operation must be positive")
 
     ir_path = args.ir
     ir = read_json(ir_path)
     if "sdk" not in ir and "path" in ir:
         ir_path = Path(ir["path"])
         ir = read_json(ir_path)
-    dataset = build_runtime_dataset(read_json(args.manifest), ir, ir_path)
+    dataset = build_runtime_dataset(
+        read_json(args.manifest),
+        ir,
+        ir_path,
+        args.max_candidates_per_operation,
+    )
     write_json(args.output, dataset)
     print(dataset["summary"])
     return 0

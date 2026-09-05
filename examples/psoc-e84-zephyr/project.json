@@ -1,5 +1,5 @@
 {
-  "run_id": "psoc-e84-zephyr-v0.4",
+  "run_id": "psoc-e84-zephyr-lambdamart-v2.4",
   "workspace": "workspace",
   "ir_store": "workspace/ir",
   "ingestor": {"mode": "hybrid"},
@@ -8,11 +8,13 @@
     "path": "sdk/psoc_e84-edgi-talk/source"
   },
   "resolver": {
-    "method": "operation-weighted",
+    "method": "operation-lambdamart",
+    "model_path": "models/runtime/psoc-e84-operation-lambdamart-h03-eq-r1-full-v2.4.json",
+    "binding_decoder": "signature-family",
     "operation_min_margin": 0.0,
     "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
     "threshold": 0.42,
-    "top_k": 8
+    "top_k": 1024
   },
   "toolchain": {
     "architecture": "arm",
@@ -21,7 +23,7 @@
   },
   "closure": {
     "target": {
-      "chip": "cyw20829",
+      "chip": "pse846gps2dbzc4a",
       "core": "cortex-m33",
       "entry_symbols": ["Reset_Handler"],
       "startup_policy": "backend",
@@ -36,7 +38,19 @@
     "toolchain_variant": "gnuarmemb",
     "objcopy_in_place_workaround": true,
     "native_provider_roots": ["modules/hal/infineon/mtb-dsl-pse8xxgp"],
-    "output": "workspace/generated/psoc-e84-zephyr"
+    "output": "workspace/generated/psoc-e84-zephyr-lambdamart",
+    "validation": {
+      "firmware_build_id": "operation-lambdamart-v2.4-zephyr-native-device",
+      "standard_devices": {
+        "uart_node": "uart5",
+        "gpio_output_node": "gpio_prt11",
+        "gpio_input_node": "gpio_prt14",
+        "counter_node": "counter0_0",
+        "gpio_output_pin": 3,
+        "gpio_input_pin": 7
+      }
+    },
+    "overlay": "&p17_1_scb5_uart_tx { drive-push-pull; };\n&p17_0_scb5_uart_rx { input-enable; };\n&peri0_group1_16bit_1 { status = \"okay\"; clock-div = <1>; };\nuart5: &scb5 { compatible = \"infineon,uart\"; status = \"okay\"; current-speed = <115200>; clocks = <&peri0_group1_16bit_1>; pinctrl-0 = <&p17_1_scb5_uart_tx &p17_0_scb5_uart_rx>; pinctrl-names = \"default\"; };\n&gpio_prt11 { status = \"okay\"; };\n&gpio_prt14 { status = \"okay\"; };\n&peri0_group1_16bit_2 { status = \"okay\"; clock-div = <1>; };\n&tcpwm0_0 { status = \"okay\"; counter0_0 { status = \"okay\"; clocks = <&peri0_group1_16bit_2>; }; };"
   },
   "build": {
     "jobs": 8,

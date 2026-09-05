@@ -1,0 +1,578 @@
+{
+  "adjudication": "experiments/operation-ranking/external-test-truth/source/equivalence-adjudication-20260902.json",
+  "aggregate": {
+    "hit_at_5": 1.0,
+    "map": 0.64082,
+    "ndcg_at_10": 0.730587,
+    "precision_at_1": 0.833333,
+    "recall_at_5": 0.742328
+  },
+  "bundle": "models/runtime/psoc-e84-operation-lambdamart-h03-eq-r1-full-v2.4.json",
+  "bundle_sha256": "14f2600d6085e533c7f6d7acf98b3f3ef13c30777a08068ae846b837f41e5b8e",
+  "created_at": "2026-09-05T16:37:06.096733+00:00",
+  "post_hoc_truth_only": true,
+  "records": [
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.388889,
+        "ndcg_at_10": 0.530721,
+        "precision_at_1": 0.0,
+        "recall_at_5": 0.666667
+      },
+      "missing_truth_symbols_from_label_free_pool": [
+        "mtb_hal_clock_set_enabled"
+      ],
+      "operation_id": "clock.disable",
+      "selected_grade": 0,
+      "selected_symbol": "Cy_SysClk_PllDisable",
+      "top5": [
+        "Cy_SysClk_PllDisable",
+        "mtb_hal_clock_set_peri_clock_enabled",
+        "mtb_hal_clock_set_hf_clock_enabled",
+        "Cy_SysClk_PeriphDisableDivider",
+        "mtb_hal_clock_set_peri_clock_freq"
+      ],
+      "truth_symbols": [
+        "mtb_hal_clock_set_enabled",
+        "mtb_hal_clock_set_hf_clock_enabled",
+        "mtb_hal_clock_set_peri_clock_enabled"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "mtb_hal_clock_set_hf_clock_enabled",
+        "mtb_hal_clock_set_peri_clock_enabled"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "clock.enable",
+      "selected_grade": 2,
+      "selected_symbol": "mtb_hal_clock_set_hf_clock_enabled",
+      "top5": [
+        "mtb_hal_clock_set_hf_clock_enabled",
+        "mtb_hal_clock_set_enabled",
+        "mtb_hal_clock_set_peri_clock_enabled",
+        "Cy_SysClk_Pll400MEnable",
+        "Cy_SysClk_PllEnable"
+      ],
+      "truth_symbols": [
+        "mtb_hal_clock_set_enabled",
+        "mtb_hal_clock_set_hf_clock_enabled",
+        "mtb_hal_clock_set_peri_clock_enabled"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "mtb_hal_clock_set_enabled",
+        "mtb_hal_clock_set_hf_clock_enabled",
+        "mtb_hal_clock_set_peri_clock_enabled"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "clock.get_frequency",
+      "selected_grade": 3,
+      "selected_symbol": "mtb_hal_clock_get_hf_clock_freq",
+      "top5": [
+        "mtb_hal_clock_get_hf_clock_freq",
+        "mtb_hal_clock_get_peri_src_clock_freq",
+        "mtb_hal_clock_get_peri_clock_freq",
+        "mtb_hal_sdhc_get_frequency",
+        "mtb_hal_memoryspi_get_frequency"
+      ],
+      "truth_symbols": [
+        "mtb_hal_clock_get_hf_clock_freq",
+        "mtb_hal_clock_get_peri_clock_freq",
+        "mtb_hal_clock_get_peri_src_clock_freq"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "mtb_hal_clock_get_hf_clock_freq",
+        "mtb_hal_clock_get_peri_clock_freq",
+        "mtb_hal_clock_get_peri_src_clock_freq"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "clock.initialize",
+      "selected_grade": 2,
+      "selected_symbol": "mtb_hal_clock_set_hf_clock_freq",
+      "top5": [
+        "mtb_hal_clock_set_hf_clock_freq",
+        "mtb_hal_clock_set_peri_clock_freq",
+        "mtb_hal_clock_set_frequency",
+        "Cy_SysClk_Pll400MManualConfigure",
+        "Cy_SysClk_Pll200MManualConfigure"
+      ],
+      "truth_symbols": [
+        "mtb_hal_clock_set_frequency",
+        "mtb_hal_clock_set_hf_clock_freq",
+        "mtb_hal_clock_set_peri_clock_freq"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "mtb_hal_clock_set_frequency",
+        "mtb_hal_clock_set_hf_clock_freq",
+        "mtb_hal_clock_set_peri_clock_freq"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.553333,
+        "ndcg_at_10": 0.737245,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.6
+      },
+      "missing_truth_symbols_from_label_free_pool": [
+        "Cy_GPIO_SetDrivemode"
+      ],
+      "operation_id": "gpio.configure",
+      "selected_grade": 1,
+      "selected_symbol": "mtb_hal_gpio_setup",
+      "top5": [
+        "mtb_hal_gpio_setup",
+        "_mtb_hal_gpio_convert_drive_mode",
+        "mtb_hal_gpio_port_setup_internal",
+        "Cy_GPIO_Pin_FastInit",
+        "Cy_GPIO_Pin_Init"
+      ],
+      "truth_symbols": [
+        "Cy_GPIO_Pin_FastInit",
+        "Cy_GPIO_Pin_Init",
+        "Cy_GPIO_SetDrivemode",
+        "mtb_hal_gpio_configure",
+        "mtb_hal_gpio_setup"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "Cy_GPIO_Pin_FastInit",
+        "Cy_GPIO_Pin_Init",
+        "mtb_hal_gpio_configure",
+        "mtb_hal_gpio_setup"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "gpio.read",
+      "selected_grade": 2,
+      "selected_symbol": "Cy_GPIO_Read",
+      "top5": [
+        "Cy_GPIO_Read",
+        "mtb_hal_gpio_port_read_internal",
+        "mtb_hal_gpio_read_internal",
+        "Cy_GPIO_ReadOut",
+        "Cy_GPIO_GetDrivemode"
+      ],
+      "truth_symbols": [
+        "Cy_GPIO_Read",
+        "mtb_hal_gpio_port_read_internal",
+        "mtb_hal_gpio_read_internal"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "Cy_GPIO_Read",
+        "mtb_hal_gpio_port_read_internal",
+        "mtb_hal_gpio_read_internal"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.488095,
+        "ndcg_at_10": 0.6646,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.428571
+      },
+      "missing_truth_symbols_from_label_free_pool": [
+        "Cy_GPIO_Clr",
+        "mtb_hal_gpio_port_toggle_internal",
+        "mtb_hal_gpio_toggle_internal"
+      ],
+      "operation_id": "gpio.write",
+      "selected_grade": 2,
+      "selected_symbol": "Cy_GPIO_Write",
+      "top5": [
+        "Cy_GPIO_Write",
+        "mtb_hal_gpio_port_write_internal",
+        "mtb_hal_gpio_port_set_internal",
+        "mtb_hal_gpio_write_internal",
+        "Cy_GPIO_WritePort"
+      ],
+      "truth_symbols": [
+        "Cy_GPIO_Clr",
+        "Cy_GPIO_Set",
+        "Cy_GPIO_Write",
+        "mtb_hal_gpio_port_toggle_internal",
+        "mtb_hal_gpio_port_write_internal",
+        "mtb_hal_gpio_toggle_internal",
+        "mtb_hal_gpio_write_internal"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "Cy_GPIO_Set",
+        "Cy_GPIO_Write",
+        "mtb_hal_gpio_port_write_internal",
+        "mtb_hal_gpio_write_internal"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.25,
+        "ndcg_at_10": 0.430677,
+        "precision_at_1": 0.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "interrupt.disable",
+      "selected_grade": 0,
+      "selected_symbol": "Cy_SysInt_SetVector",
+      "top5": [
+        "Cy_SysInt_SetVector",
+        "_cyhal_system_irq_clear_disabled_in_pending",
+        "USBD_X_DisableInterrupt",
+        "__NVIC_DisableIRQ",
+        "TZ_NVIC_DisableIRQ_NS"
+      ],
+      "truth_symbols": [
+        "__NVIC_DisableIRQ"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "__NVIC_DisableIRQ"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.2,
+        "ndcg_at_10": 0.386853,
+        "precision_at_1": 0.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "interrupt.enable",
+      "selected_grade": 0,
+      "selected_symbol": "Cy_CANFD_EnableInterruptLine",
+      "top5": [
+        "Cy_CANFD_EnableInterruptLine",
+        "viv_interrupt_enable",
+        "viv_conf_interrupt_enable",
+        "TZ_NVIC_EnableIRQ_NS",
+        "__NVIC_EnableIRQ"
+      ],
+      "truth_symbols": [
+        "__NVIC_EnableIRQ"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "__NVIC_EnableIRQ"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.333333,
+        "ndcg_at_10": 0.469279,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.333333
+      },
+      "missing_truth_symbols_from_label_free_pool": [
+        "__NVIC_SetPriority",
+        "__NVIC_SetPriorityGrouping"
+      ],
+      "operation_id": "interrupt.initialize",
+      "selected_grade": 3,
+      "selected_symbol": "Cy_SysInt_Init",
+      "top5": [
+        "Cy_SysInt_Init",
+        "Cy_ETHIF_Init",
+        "Cy_MIPIDSI_Init",
+        "Cy_IPC_Pipe_EndpointInit",
+        "Cy_IPC_Pipe_EndpointInitExt"
+      ],
+      "truth_symbols": [
+        "Cy_SysInt_Init",
+        "__NVIC_SetPriority",
+        "__NVIC_SetPriorityGrouping"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "Cy_SysInt_Init"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.366667,
+        "ndcg_at_10": 0.469279,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.333333
+      },
+      "missing_truth_symbols_from_label_free_pool": [
+        "__NVIC_SetVector"
+      ],
+      "operation_id": "interrupt.register",
+      "selected_grade": 3,
+      "selected_symbol": "Cy_SysInt_SetVector",
+      "top5": [
+        "Cy_SysInt_SetVector",
+        "Cy_SysInt_GetVector",
+        "mtb_hal_syspm_register_callback",
+        "Cy_SysPm_RegisterCallback",
+        "mtb_hal_memoryspi_register_callback"
+      ],
+      "truth_symbols": [
+        "Cy_SysInt_Init",
+        "Cy_SysInt_SetVector",
+        "__NVIC_SetVector"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "Cy_SysInt_Init",
+        "Cy_SysInt_SetVector"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "timer.initialize",
+      "selected_grade": 3,
+      "selected_symbol": "mtb_hal_timer_setup",
+      "top5": [
+        "mtb_hal_timer_setup",
+        "Cy_TCPWM_Counter_Init",
+        "_mtb_hal_lptimer_setup",
+        "mtb_hal_lptimer_setup",
+        "cy_rtos_timer_init"
+      ],
+      "truth_symbols": [
+        "Cy_TCPWM_Counter_Init",
+        "mtb_hal_timer_setup"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "Cy_TCPWM_Counter_Init",
+        "mtb_hal_timer_setup"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.363636,
+        "ndcg_at_10": 0.469279,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.333333
+      },
+      "missing_truth_symbols_from_label_free_pool": [
+        "Cy_TCPWM_Counter_Init"
+      ],
+      "operation_id": "timer.set_interval",
+      "selected_grade": 3,
+      "selected_symbol": "Cy_TCPWM_Counter_SetPeriod",
+      "top5": [
+        "Cy_TCPWM_Counter_SetPeriod",
+        "mtb_hal_timer_reset",
+        "mtb_hal_timer_read",
+        "Cy_TCPWM_Counter_SetCompare0Val",
+        "Cy_TCPWM_Counter_SetCompare0BufVal"
+      ],
+      "truth_symbols": [
+        "Cy_TCPWM_Counter_Init",
+        "Cy_TCPWM_Counter_SetPeriod",
+        "mtb_hal_timer_setup"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "Cy_TCPWM_Counter_SetPeriod",
+        "mtb_hal_timer_setup"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.680556,
+        "ndcg_at_10": 0.851959,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.666667
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "timer.start",
+      "selected_grade": 3,
+      "selected_symbol": "mtb_hal_timer_start",
+      "top5": [
+        "mtb_hal_timer_start",
+        "mtb_hal_timer_enable_event",
+        "Cy_TCPWM_Counter_Enable",
+        "_mtb_hal_timer_trigger_start",
+        "mtb_hal_lptimer_set_delay"
+      ],
+      "truth_symbols": [
+        "Cy_TCPWM_Counter_Enable",
+        "Cy_TCPWM_TriggerStart_Single",
+        "mtb_hal_timer_start"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "Cy_TCPWM_Counter_Enable",
+        "Cy_TCPWM_TriggerStart_Single",
+        "mtb_hal_timer_start"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.576923,
+        "ndcg_at_10": 0.671386,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.666667
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "timer.stop",
+      "selected_grade": 3,
+      "selected_symbol": "mtb_hal_timer_stop",
+      "top5": [
+        "mtb_hal_timer_stop",
+        "mtb_hal_timer_reset",
+        "mtb_hal_lptimer_set_delay",
+        "Cy_TCPWM_Counter_Disable",
+        "mtb_hal_timer_read"
+      ],
+      "truth_symbols": [
+        "Cy_TCPWM_Counter_Disable",
+        "Cy_TCPWM_TriggerStopOrKill_Single",
+        "mtb_hal_timer_stop"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "Cy_TCPWM_Counter_Disable",
+        "Cy_TCPWM_TriggerStopOrKill_Single",
+        "mtb_hal_timer_stop"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.333333,
+        "ndcg_at_10": 0.469279,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.333333
+      },
+      "missing_truth_symbols_from_label_free_pool": [
+        "mtb_hal_uart_config_async",
+        "mtb_hal_uart_set_baud"
+      ],
+      "operation_id": "uart.configure",
+      "selected_grade": 3,
+      "selected_symbol": "mtb_hal_uart_setup",
+      "top5": [
+        "mtb_hal_uart_setup",
+        "Cy_SCB_UART_Init",
+        "mtb_serial_memory_setup",
+        "usbd_cdc_acm_serial_init",
+        "MX_USART1_UART_Init"
+      ],
+      "truth_symbols": [
+        "mtb_hal_uart_config_async",
+        "mtb_hal_uart_set_baud",
+        "mtb_hal_uart_setup"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "mtb_hal_uart_setup"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "uart.read",
+      "selected_grade": 3,
+      "selected_symbol": "mtb_hal_uart_read",
+      "top5": [
+        "mtb_hal_uart_read",
+        "mtb_hal_uart_read_async",
+        "mtb_hal_uart_get_internal",
+        "mtb_hal_uart_read_abort",
+        "Cy_SCB_UART_GetReceiveStatus"
+      ],
+      "truth_symbols": [
+        "mtb_hal_uart_read",
+        "mtb_hal_uart_read_async"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "mtb_hal_uart_read",
+        "mtb_hal_uart_read_async"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "uart.write",
+      "selected_grade": 3,
+      "selected_symbol": "mtb_hal_uart_write",
+      "top5": [
+        "mtb_hal_uart_write",
+        "mtb_hal_uart_write_async",
+        "mtb_hal_uart_put_internal",
+        "usbh_serial_write",
+        "Cy_SCB_UART_Transmit"
+      ],
+      "truth_symbols": [
+        "mtb_hal_uart_write",
+        "mtb_hal_uart_write_async"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "mtb_hal_uart_write",
+        "mtb_hal_uart_write_async"
+      ]
+    }
+  ],
+  "schema_version": "frozen-operation-bundle-evaluation-v1",
+  "skipped_operation_records": [
+    {
+      "group_status": "no_public_api",
+      "operation_id": "gpio.attach_irq",
+      "reason": "已复核公开声明与实现；发现的接口只能完成触发/回调/使能等分步动作，没有单一稳定公开 callable API 可独立完成完整契约。"
+    }
+  ],
+  "summary": {
+    "bundle_operations": 19,
+    "operations": 18,
+    "skipped_operations": 1,
+    "truth_symbols": 53,
+    "truth_symbols_missing_from_label_free_pool": 11
+  },
+  "truth": "experiments/operation-ranking/external-test-truth/source/psoc-e84-edgi-talk-sdk/truth-audit-v1-final.json",
+  "truth_sha256": "3825add9dc934e72e77927ac1b2c4e1b457acc341e6b617eddf2a83c596db5e7"
+}

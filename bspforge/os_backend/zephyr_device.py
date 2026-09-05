@@ -30,6 +30,7 @@ class ZephyrDeviceModelGenerator:
             "bspforge_zephyr_clock_device",
             "bspforge_zephyr_counter_device",
             "bspforge_zephyr_gpio_device",
+            "bspforge_zephyr_gpio_input_device",
             "bspforge_zephyr_uart_device",
         ]
         return {
@@ -129,6 +130,7 @@ enum bspforge_zephyr_clock_subsystem {{
 const struct device *bspforge_zephyr_clock_device(void);
 const struct device *bspforge_zephyr_uart_device(void);
 const struct device *bspforge_zephyr_gpio_device(void);
+const struct device *bspforge_zephyr_gpio_input_device(void);
 const struct device *bspforge_zephyr_counter_device(void);
 
 #endif
@@ -466,6 +468,11 @@ DEVICE_DEFINE(bspforge_gpio, BSPFORGE_GPIO_NAME, bspforge_gpio_init_api, NULL,
               &bspforge_gpio_api);
 
 const struct device *bspforge_zephyr_gpio_device(void)
+{{
+    return DEVICE_GET(bspforge_gpio);
+}}
+
+const struct device *bspforge_zephyr_gpio_input_device(void)
 {{
     return DEVICE_GET(bspforge_gpio);
 }}

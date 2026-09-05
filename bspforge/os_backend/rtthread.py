@@ -49,6 +49,10 @@ class RTThreadBackend(OSBackend):
             self._materialize_build_tree(rtthread_root, board, output)
             generated_bsp = output / "bsp" / board
 
+        compatibility_repairs: list[dict[str, str]] = []
+        if profile_name == "psoc_e84_edgi_talk":
+            compatibility_repairs = self._repair_psoc_e84_hwtimer(generated_bsp)
+
         metadata = generated_bsp / "bspforge"
         metadata.mkdir(parents=True, exist_ok=True)
         strategy = options.get(
@@ -189,6 +193,7 @@ class RTThreadBackend(OSBackend):
                 "required": device_manifest["required_rtthread_features"],
                 "disabled": disabled_features,
             },
+            "compatibility_repairs": compatibility_repairs,
             "sdk_package": self._relative_or_absolute(sdk_package, output),
             "sdk_digest": ir["sdk"]["digest"],
             "sdk_materialization": "copied-from-analyzed-input",
@@ -412,7 +417,82 @@ Return('group')
         for key, destination in (("libraries_root", "libraries"), ("libs_root", "libs")):
             value = options.get(key)
             if value:
-                RTThreadBackend._link_or_copy(Path(value), output / destination)
+                mutable = options.get("mutable_library_subtrees", []) if destination == "libraries" else []
+                if mutable:
+                    RTThreadBackend._link_tree_with_mutable_subtrees(
+                        Path(value), output / destination, mutable
+                    )
+                else:
+                    RTThreadBackend._link_or_copy(Path(value), output / destination)
+
+    @staticmethod
+    def _link_tree_with_mutable_subtrees(
+        source: Path, destination: Path, mutable_subtrees: list[str]
+    ) -> None:
+        source = source.resolve()
+        destination.mkdir(parents=True)
+        mutable = {Path(item).as_posix().strip("/") for item in mutable_subtrees}
+        for child in source.iterdir():
+            target = destination / child.name
+            if child.name in mutable:
+                copytree_filtered(child, target)
+            elif child.is_dir():
+                RTThreadBackend._link_or_copy(child, target)
+            elif child.suffix not in {".o", ".elf", ".bin", ".map", ".pyc"}:
+                shutil.copy2(child, target)
+
+    @staticmethod
+    def _repair_psoc_e84_hwtimer(project: Path) -> list[dict[str, str]]:
+        """Adapt the vendor RT-Thread timer driver to current Device Configurator names."""
+        source_path = project / "libraries" / "HAL_Drivers" / "drv_hwtimer.c"
+        header_path = project / "libraries" / "HAL_Drivers" / "drv_hwtimer.h"
+        if not source_path.is_file() or not header_path.is_file():
+            raise FileNotFoundError("PSoC E84 hwtimer driver overlay is unavailable")
+
+        source = source_path.read_text(encoding="utf-8", errors="replace")
+        header = header_path.read_text(encoding="utf-8", errors="replace")
+        source = source.replace(
+            "CYBSP_TCPWM_0_GRP_0_COUNTER_0", "CYBSP_GENERAL_PURPOSE_TIMER"
+        )
+        header = header.replace(
+            "CYBSP_TCPWM_0_GRP_0_COUNTER_0", "CYBSP_GENERAL_PURPOSE_TIMER"
+        )
+        divider_member = "cy_en_divider_types_t dividerType;"
+        if "uint32_t dividerNum;" not in source:
+            source = source.replace(
+                divider_member,
+                divider_member + "\n    uint32_t dividerNum;",
+                1,
+            )
+        source = source.replace(
+            "tim->ipBlock, tim->dividerType, tim->cntNum",
+            "tim->ipBlock, tim->dividerType, tim->dividerNum",
+        )
+        header = header.replace(
+            ".source_clock_freq = 100000000,",
+            ".source_clock_freq = 200000000,",
+        )
+        header = header.replace(
+            ".ipBlock = PCLK_TCPWM0_CLOCK_COUNTER_EN2,",
+            ".ipBlock = (en_clk_dst_t)CYBSP_GENERAL_PURPOSE_TIMER_CLK_DIV_GRP_NUM,",
+        )
+        divider_line = ".dividerType = CY_SYSCLK_DIV_16_BIT,"
+        if ".dividerNum = CYBSP_GENERAL_PURPOSE_TIMER_CLK_DIV_NUM," not in header:
+            header = header.replace(
+                divider_line,
+                divider_line + "                                \\\n"
+                "        .dividerNum = CYBSP_GENERAL_PURPOSE_TIMER_CLK_DIV_NUM,",
+                1,
+            )
+        source_path.write_text(source, encoding="utf-8")
+        header_path.write_text(header, encoding="utf-8")
+        return [
+            {
+                "id": "psoc-e84-current-tcpwm-symbols",
+                "scope": "vendor RT-Thread hwtimer compatibility",
+                "reason": "map legacy TCPWM aliases and divider index to current generated SDK names",
+            }
+        ]
 
     @staticmethod
     def _link_or_copy(source: Path, destination: Path) -> None:

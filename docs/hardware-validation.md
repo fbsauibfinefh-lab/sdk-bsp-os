@@ -427,3 +427,9 @@ experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-full-10r
 ```
 
 当前最终结论是两套后端均为 10/10 次启动、90/90 条命令通过、失败 0、`unsupported` 0。Zephyr 已从 SDK 直调功能适配进一步更新为原生设备路径：生成的 `clock_control`、UART、GPIO 和 Counter `struct device` 通过标准 Zephyr API 接受测试请求，再调用 IR 可追溯的 SDK 绑定；PLIC 由 Zephyr 二级 IRQ 子系统分发。真实 IO7/IO6 UART 回环、IO8/IO9 GPIO 电平/中断和硬件 Counter 回调全部通过。最终 Zephyr BIN 为 34744 bytes，SHA-256 为 `c423e5162fc28e725f66406499a87d46c3a7b63a2e253982476298f7a631d809`，十轮平均启动时间为 32.608 ms。周期定时器十轮均严格得到 3 次回调；该用例验证模式、启动、停止和 IRQ 可达性，不用于宣称定时精度。本文前面的旧路径与旧哈希用于保留历史，后续 K210 复测应优先使用上述机器报告。
+
+## 11. PSoC E84 Edgi-Talk 实测更新（2026-09-06）
+
+PSoC E84 两套配置已切换到无目标标签的冻结 LambdaMART v2.4 包。RT-Thread 与 Zephyr 都生成 19/19 项绑定、一次编译成功，并在实板执行 10 轮自动 SWD 复位和每轮九命令。两者均为 10/10 次启动、80/90 命令通过、失败 10、`unsupported` 0；时钟、基础中断、GPIO 电平/IRQ、单次/周期定时器和稳定性全部通过，唯一失败为 CN5 Pin8/Pin10 的 UART5 外部回环。
+
+RT-Thread 不能只烧录重定位应用段，必须把厂商签名安全启动段的编程别名一并合并，否则会继续执行 `0x60100000` 中残留的 Zephyr 镜像。主机使用 OpenOCD 外部复位时应增加 `--keep-port-open-during-reset`，以捕获复位后立即输出的 boot 事件。完整固件哈希、接线、逐命令结果和失败边界见 `docs/psoc-e84-lambdamart-board-validation-v2.4.md`。

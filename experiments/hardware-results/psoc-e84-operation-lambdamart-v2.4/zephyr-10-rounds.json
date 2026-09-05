@@ -1,0 +1,1469 @@
+{
+  "board": "psoc-e84-edgi-talk",
+  "created_at": "2026-09-05T17:00:35.297213+00:00",
+  "firmware_artifact": {
+    "path": "\\\\wsl.localhost\\UbuntuD-22.04\\home\\whk\\RTT-porting\\bspforge\\workspace\\generated\\psoc-e84-zephyr-lambdamart\\build\\zephyr\\zephyr.signed.hex",
+    "sha256": "56a72d3da9f82a3b9b508058d124f645cc064e554cf16e27ab492b8a10845b51",
+    "size": 138004
+  },
+  "raw_log": [
+    "*** Booting Zephyr OS build v4.4.0 ***",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"kit_pse84_eval/pse846gps2dbzc4a/m33\",\"build_id\":\"operation-lambdamart-v2.4-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"9157995dff6d\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"723b3cee630f\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":32768,\"timer_hz\":100000000}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"35db489fd220\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"31c3e9c1d2e8\",\"command\":\"uart.loopback\",\"status\":\"fail\",\"metrics\":{\"bytes\":0,\"errors\":16}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d4eb7411427b\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0248ea87f795\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"f57d80b75931\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"830ec7203f54\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":303}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"61ee79bb1e82\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "*** Booting Zephyr OS build v4.4.0 ***",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"kit_pse84_eval/pse846gps2dbzc4a/m33\",\"build_id\":\"operation-lambdamart-v2.4-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2a1938321555\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"7ead443c687b\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":32768,\"timer_hz\":100000000}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"606a4edd9c4a\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3addd653021a\",\"command\":\"uart.loopback\",\"status\":\"fail\",\"metrics\":{\"bytes\":0,\"errors\":16}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"434c63d5e169\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"00194e310b3e\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"471a88b15e20\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"1d6f08945e49\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":303}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"f15234f21248\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "*** Booting Zephyr OS build v4.4.0 ***",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"kit_pse84_eval/pse846gps2dbzc4a/m33\",\"build_id\":\"operation-lambdamart-v2.4-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2e08afcd3911\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b17b2ab234f7\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":32768,\"timer_hz\":100000000}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"5238a032c47b\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"1f851fc2b3e2\",\"command\":\"uart.loopback\",\"status\":\"fail\",\"metrics\":{\"bytes\":0,\"errors\":16}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"9ab7a5938834\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"5f86488ed905\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ebeb759e61cb\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ac2c89543a1a\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":303}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"6d4e1d08496f\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "*** Booting Zephyr OS build v4.4.0 ***",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"kit_pse84_eval/pse846gps2dbzc4a/m33\",\"build_id\":\"operation-lambdamart-v2.4-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d649749f226d\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a72e3f44ade5\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":32768,\"timer_hz\":100000000}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"6573a4275ea7\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a187e282ec47\",\"command\":\"uart.loopback\",\"status\":\"fail\",\"metrics\":{\"bytes\":0,\"errors\":16}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"f17e2f18a2c8\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"7aacf0520f3d\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3add7ee689fc\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2e1260c51376\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":303}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3e12e9ad5a41\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "*** Booting Zephyr OS build v4.4.0 ***",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"kit_pse84_eval/pse846gps2dbzc4a/m33\",\"build_id\":\"operation-lambdamart-v2.4-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"749153b8b4fa\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"9ddc2549133d\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":32768,\"timer_hz\":100000000}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"5b25d134c84f\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0b283c7a5d5d\",\"command\":\"uart.loopback\",\"status\":\"fail\",\"metrics\":{\"bytes\":0,\"errors\":16}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"20cf2f6d30fb\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"586e3f07ade0\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"cc850573105e\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a94ec713e602\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":303}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"bf7b3e8c57d2\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "*** Booting Zephyr OS build v4.4.0 ***",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"kit_pse84_eval/pse846gps2dbzc4a/m33\",\"build_id\":\"operation-lambdamart-v2.4-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3f00f73c3986\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"27c8e76cd0f1\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":32768,\"timer_hz\":100000000}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2b1fa524c8ca\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"5980a0271258\",\"command\":\"uart.loopback\",\"status\":\"fail\",\"metrics\":{\"bytes\":0,\"errors\":16}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c4f84080d553\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"93f42fb41a0a\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"818f212ecc00\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"9ff772354bc5\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":303}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"337d92afaf80\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "*** Booting Zephyr OS build v4.4.0 ***",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"kit_pse84_eval/pse846gps2dbzc4a/m33\",\"build_id\":\"operation-lambdamart-v2.4-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d53b9f50cea2\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"1e36c1a4be05\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":32768,\"timer_hz\":100000000}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"6c53bf5baa52\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d06ad2d7cf8f\",\"command\":\"uart.loopback\",\"status\":\"fail\",\"metrics\":{\"bytes\":0,\"errors\":16}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"039dfdedae3c\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"93e3e928a9fc\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"66610fc8d1e8\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"277eda60a1ba\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":303}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"dcc7d1f05134\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "*** Booting Zephyr OS build v4.4.0 ***",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"kit_pse84_eval/pse846gps2dbzc4a/m33\",\"build_id\":\"operation-lambdamart-v2.4-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c24a5325e39a\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3d3eb3fe412d\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":32768,\"timer_hz\":100000000}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"8886fec88926\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a3d875b48523\",\"command\":\"uart.loopback\",\"status\":\"fail\",\"metrics\":{\"bytes\":0,\"errors\":16}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"24b9b3431e4d\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c01ed5ce9cbd\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"137bd42734e0\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ae219beb448f\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":303}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c7a19975f2d8\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "*** Booting Zephyr OS build v4.4.0 ***",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"kit_pse84_eval/pse846gps2dbzc4a/m33\",\"build_id\":\"operation-lambdamart-v2.4-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"cad1c2d2acd3\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"54c6bf4cef6b\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":32768,\"timer_hz\":100000000}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"733ab2262826\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ab50ac422a0f\",\"command\":\"uart.loopback\",\"status\":\"fail\",\"metrics\":{\"bytes\":0,\"errors\":16}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"940873a43e05\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0bfaf8f0dc44\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ce972bfa6ef3\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":100}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"fd854a9c20aa\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":303}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"cda8baf0ca3e\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "*** Booting Zephyr OS build v4.4.0 ***",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"zephyr\",\"board\":\"kit_pse84_eval/pse846gps2dbzc4a/m33\",\"build_id\":\"operation-lambdamart-v2.4-zephyr-native-device\",\"stage\":\"application\"}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"db5b971925e0\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"6718aa67de14\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":32768,\"timer_hz\":100000000}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"7ea88fb406be\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":100}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"9f4bec2ac62a\",\"command\":\"uart.loopback\",\"status\":\"fail\",\"metrics\":{\"bytes\":0,\"errors\":16}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2100b56744f2\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"96513c7e6d5e\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"elapsed_ms\":0}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b65190a7c53a\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"elapsed_ms\":101}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"82c20d506277\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"elapsed_ms\":303}}",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"6115a0d287b9\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{\"native_devices\":4}}"
+  ],
+  "rounds": [
+    {
+      "boot_event": {
+        "board": "kit_pse84_eval/pse846gps2dbzc4a/m33",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-v2.4-zephyr-native-device",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "zephyr",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "9157995dff6d",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "cpu_hz": 32768,
+            "timer_hz": 100000000
+          },
+          "protocol": "1.0",
+          "request_id": "723b3cee630f",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 110.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "35db489fd220",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 1610.0,
+          "metrics": {
+            "bytes": 0,
+            "errors": 16
+          },
+          "protocol": "1.0",
+          "request_id": "31c3e9c1d2e8",
+          "status": "fail"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "d4eb7411427b",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "elapsed_ms": 0,
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "0248ea87f795",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "f57d80b75931",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 312.0,
+          "metrics": {
+            "callbacks": 3,
+            "elapsed_ms": 303
+          },
+          "protocol": "1.0",
+          "request_id": "830ec7203f54",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "61ee79bb1e82",
+          "status": "pass"
+        }
+      ],
+      "round": 1
+    },
+    {
+      "boot_event": {
+        "board": "kit_pse84_eval/pse846gps2dbzc4a/m33",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-v2.4-zephyr-native-device",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "zephyr",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "2a1938321555",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "cpu_hz": 32768,
+            "timer_hz": 100000000
+          },
+          "protocol": "1.0",
+          "request_id": "7ead443c687b",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 109.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "606a4edd9c4a",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 1625.0,
+          "metrics": {
+            "bytes": 0,
+            "errors": 16
+          },
+          "protocol": "1.0",
+          "request_id": "3addd653021a",
+          "status": "fail"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "434c63d5e169",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "elapsed_ms": 0,
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "00194e310b3e",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "471a88b15e20",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 313.0,
+          "metrics": {
+            "callbacks": 3,
+            "elapsed_ms": 303
+          },
+          "protocol": "1.0",
+          "request_id": "1d6f08945e49",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 15.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "f15234f21248",
+          "status": "pass"
+        }
+      ],
+      "round": 2
+    },
+    {
+      "boot_event": {
+        "board": "kit_pse84_eval/pse846gps2dbzc4a/m33",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-v2.4-zephyr-native-device",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "zephyr",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "2e08afcd3911",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "cpu_hz": 32768,
+            "timer_hz": 100000000
+          },
+          "protocol": "1.0",
+          "request_id": "b17b2ab234f7",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "5238a032c47b",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 1609.0,
+          "metrics": {
+            "bytes": 0,
+            "errors": 16
+          },
+          "protocol": "1.0",
+          "request_id": "1f851fc2b3e2",
+          "status": "fail"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "9ab7a5938834",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "elapsed_ms": 0,
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "5f86488ed905",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "ebeb759e61cb",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 328.0,
+          "metrics": {
+            "callbacks": 3,
+            "elapsed_ms": 303
+          },
+          "protocol": "1.0",
+          "request_id": "ac2c89543a1a",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "6d4e1d08496f",
+          "status": "pass"
+        }
+      ],
+      "round": 3
+    },
+    {
+      "boot_event": {
+        "board": "kit_pse84_eval/pse846gps2dbzc4a/m33",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-v2.4-zephyr-native-device",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "zephyr",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 15.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "d649749f226d",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "cpu_hz": 32768,
+            "timer_hz": 100000000
+          },
+          "protocol": "1.0",
+          "request_id": "a72e3f44ade5",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "6573a4275ea7",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 1625.0,
+          "metrics": {
+            "bytes": 0,
+            "errors": 16
+          },
+          "protocol": "1.0",
+          "request_id": "a187e282ec47",
+          "status": "fail"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "f17e2f18a2c8",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "elapsed_ms": 0,
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "7aacf0520f3d",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 109.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "3add7ee689fc",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 328.0,
+          "metrics": {
+            "callbacks": 3,
+            "elapsed_ms": 303
+          },
+          "protocol": "1.0",
+          "request_id": "2e1260c51376",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "3e12e9ad5a41",
+          "status": "pass"
+        }
+      ],
+      "round": 4
+    },
+    {
+      "boot_event": {
+        "board": "kit_pse84_eval/pse846gps2dbzc4a/m33",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-v2.4-zephyr-native-device",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "zephyr",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "749153b8b4fa",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "cpu_hz": 32768,
+            "timer_hz": 100000000
+          },
+          "protocol": "1.0",
+          "request_id": "9ddc2549133d",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 109.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "5b25d134c84f",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 1625.0,
+          "metrics": {
+            "bytes": 0,
+            "errors": 16
+          },
+          "protocol": "1.0",
+          "request_id": "0b283c7a5d5d",
+          "status": "fail"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "20cf2f6d30fb",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "elapsed_ms": 0,
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "586e3f07ade0",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "cc850573105e",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 313.0,
+          "metrics": {
+            "callbacks": 3,
+            "elapsed_ms": 303
+          },
+          "protocol": "1.0",
+          "request_id": "a94ec713e602",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 15.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "bf7b3e8c57d2",
+          "status": "pass"
+        }
+      ],
+      "round": 5
+    },
+    {
+      "boot_event": {
+        "board": "kit_pse84_eval/pse846gps2dbzc4a/m33",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-v2.4-zephyr-native-device",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "zephyr",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 16.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 15.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "3f00f73c3986",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "cpu_hz": 32768,
+            "timer_hz": 100000000
+          },
+          "protocol": "1.0",
+          "request_id": "27c8e76cd0f1",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "2b1fa524c8ca",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 1609.0,
+          "metrics": {
+            "bytes": 0,
+            "errors": 16
+          },
+          "protocol": "1.0",
+          "request_id": "5980a0271258",
+          "status": "fail"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 32.0,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "c4f84080d553",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 15.0,
+          "metrics": {
+            "elapsed_ms": 0,
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "93f42fb41a0a",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "818f212ecc00",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 328.0,
+          "metrics": {
+            "callbacks": 3,
+            "elapsed_ms": 303
+          },
+          "protocol": "1.0",
+          "request_id": "9ff772354bc5",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "337d92afaf80",
+          "status": "pass"
+        }
+      ],
+      "round": 6
+    },
+    {
+      "boot_event": {
+        "board": "kit_pse84_eval/pse846gps2dbzc4a/m33",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-v2.4-zephyr-native-device",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "zephyr",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 16.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "d53b9f50cea2",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 15.0,
+          "metrics": {
+            "cpu_hz": 32768,
+            "timer_hz": 100000000
+          },
+          "protocol": "1.0",
+          "request_id": "1e36c1a4be05",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "6c53bf5baa52",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 1610.0,
+          "metrics": {
+            "bytes": 0,
+            "errors": 16
+          },
+          "protocol": "1.0",
+          "request_id": "d06ad2d7cf8f",
+          "status": "fail"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "039dfdedae3c",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "elapsed_ms": 0,
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "93e3e928a9fc",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "66610fc8d1e8",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 328.0,
+          "metrics": {
+            "callbacks": 3,
+            "elapsed_ms": 303
+          },
+          "protocol": "1.0",
+          "request_id": "277eda60a1ba",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 15.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "dcc7d1f05134",
+          "status": "pass"
+        }
+      ],
+      "round": 7
+    },
+    {
+      "boot_event": {
+        "board": "kit_pse84_eval/pse846gps2dbzc4a/m33",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-v2.4-zephyr-native-device",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "zephyr",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 15.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "c24a5325e39a",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "cpu_hz": 32768,
+            "timer_hz": 100000000
+          },
+          "protocol": "1.0",
+          "request_id": "3d3eb3fe412d",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "8886fec88926",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 1609.0,
+          "metrics": {
+            "bytes": 0,
+            "errors": 16
+          },
+          "protocol": "1.0",
+          "request_id": "a3d875b48523",
+          "status": "fail"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "24b9b3431e4d",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "elapsed_ms": 0,
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "c01ed5ce9cbd",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "137bd42734e0",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 328.0,
+          "metrics": {
+            "callbacks": 3,
+            "elapsed_ms": 303
+          },
+          "protocol": "1.0",
+          "request_id": "ae219beb448f",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "c7a19975f2d8",
+          "status": "pass"
+        }
+      ],
+      "round": 8
+    },
+    {
+      "boot_event": {
+        "board": "kit_pse84_eval/pse846gps2dbzc4a/m33",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-v2.4-zephyr-native-device",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "zephyr",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "cad1c2d2acd3",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 15.0,
+          "metrics": {
+            "cpu_hz": 32768,
+            "timer_hz": 100000000
+          },
+          "protocol": "1.0",
+          "request_id": "54c6bf4cef6b",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "733ab2262826",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 1610.0,
+          "metrics": {
+            "bytes": 0,
+            "errors": 16
+          },
+          "protocol": "1.0",
+          "request_id": "ab50ac422a0f",
+          "status": "fail"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "940873a43e05",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "elapsed_ms": 0,
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "0bfaf8f0dc44",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 100
+          },
+          "protocol": "1.0",
+          "request_id": "ce972bfa6ef3",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 328.0,
+          "metrics": {
+            "callbacks": 3,
+            "elapsed_ms": 303
+          },
+          "protocol": "1.0",
+          "request_id": "fd854a9c20aa",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 15.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "cda8baf0ca3e",
+          "status": "pass"
+        }
+      ],
+      "round": 9
+    },
+    {
+      "boot_event": {
+        "board": "kit_pse84_eval/pse846gps2dbzc4a/m33",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-v2.4-zephyr-native-device",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "zephyr",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "db5b971925e0",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "cpu_hz": 32768,
+            "timer_hz": 100000000
+          },
+          "protocol": "1.0",
+          "request_id": "6718aa67de14",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 100
+          },
+          "protocol": "1.0",
+          "request_id": "7ea88fb406be",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 1609.0,
+          "metrics": {
+            "bytes": 0,
+            "errors": 16
+          },
+          "protocol": "1.0",
+          "request_id": "9f4bec2ac62a",
+          "status": "fail"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 31.0,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "2100b56744f2",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "elapsed_ms": 0,
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "96513c7e6d5e",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 125.0,
+          "metrics": {
+            "callbacks": 1,
+            "elapsed_ms": 101
+          },
+          "protocol": "1.0",
+          "request_id": "b65190a7c53a",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 328.0,
+          "metrics": {
+            "callbacks": 3,
+            "elapsed_ms": 303
+          },
+          "protocol": "1.0",
+          "request_id": "82c20d506277",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 16.0,
+          "metrics": {
+            "native_devices": 4
+          },
+          "protocol": "1.0",
+          "request_id": "6115a0d287b9",
+          "status": "pass"
+        }
+      ],
+      "round": 10
+    }
+  ],
+  "rtos": "zephyr",
+  "schema_version": "1.1",
+  "summary": {
+    "boot_attempts": 10,
+    "boot_success_rate": 1.0,
+    "boot_successes": 10,
+    "boot_time_max_ms": 16.0,
+    "boot_time_mean_ms": 4.7,
+    "boot_time_min_ms": 0.0,
+    "command_pass_rate": 0.8889,
+    "commands_applicable": 90,
+    "commands_passed": 80,
+    "commands_total": 90,
+    "failed": 10,
+    "unsupported": 0
+  }
+}

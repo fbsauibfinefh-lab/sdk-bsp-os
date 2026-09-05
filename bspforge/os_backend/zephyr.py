@@ -68,6 +68,7 @@ class ZephyrBackend(OSBackend):
             build_id,
             functional=strategy == "generated-sdk-adapter",
             native_devices=strategy == "generated-sdk-adapter",
+            standard_devices=validation_options.get("standard_devices"),
         )
         source = Path(protocol_manifest["source"])
         (app / "CMakeLists.txt").write_text(
@@ -82,7 +83,8 @@ class ZephyrBackend(OSBackend):
         (app / "prj.conf").write_text(
             self._project_config(
                 options.get("native_executable", False),
-                device_manifest is not None,
+                device_manifest is not None
+                or bool(validation_options.get("standard_devices")),
             ),
             encoding="utf-8",
         )
@@ -120,16 +122,31 @@ class ZephyrBackend(OSBackend):
                 binding_plan=binding_plan,
             )
         if device_manifest is None:
-            devices = [
-                {"class": "serial", "source": "zephyr,console", "operations": ["poll_out"]},
-                {"class": "gpio", "source": "led0", "operations": ["configure", "toggle"]},
-                {"class": "timer", "source": "k_timer", "operations": ["init", "start"]},
-            ]
+            standard_devices = validation_options.get("standard_devices")
+            if standard_devices:
+                devices = [
+                    {"class": "serial", "source": standard_devices["uart_node"],
+                     "operations": ["fifo_fill", "fifo_read"]},
+                    {"class": "gpio", "source": standard_devices["gpio_output_node"],
+                     "operations": ["configure", "set", "get"]},
+                    {"class": "gpio", "source": standard_devices["gpio_input_node"],
+                     "operations": ["configure", "get", "interrupt", "callback"]},
+                    {"class": "counter", "source": standard_devices["counter_node"],
+                     "operations": ["start", "stop", "set_alarm"]},
+                ]
+                device_strategy = "zephyr-standard-devicetree-native-model"
+            else:
+                devices = [
+                    {"class": "serial", "source": "zephyr,console", "operations": ["poll_out"]},
+                    {"class": "gpio", "source": "led0", "operations": ["configure", "toggle"]},
+                    {"class": "timer", "source": "k_timer", "operations": ["init", "start"]},
+                ]
+                device_strategy = "zephyr-devicetree-native-model"
             device_manifest = {
                 "schema_version": "1.0",
                 "created_at": utc_now(),
                 "backend": "zephyr",
-                "strategy": "zephyr-devicetree-native-model",
+                "strategy": device_strategy,
                 "devices": devices,
                 "sources": [protocol_manifest["source"]],
                 "operation_tables": [],
@@ -385,7 +402,7 @@ CONFIG_MAIN_STACK_SIZE=4096
         if native_devices:
             config += """CONFIG_CLOCK_CONTROL=y
 CONFIG_COUNTER=y
-CONFIG_UART_USE_RUNTIME_CONFIGURE=y
+CONFIG_UART_INTERRUPT_DRIVEN=y
 """
         if native_executable:
             config += "CONFIG_UART_NATIVE_PTY_0_ON_STDINOUT=y\n"

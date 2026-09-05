@@ -20,8 +20,8 @@ def main() -> int:
     parser.add_argument(
         "--roles",
         nargs="+",
-        choices=("train", "external-test"),
-        default=("train", "external-test"),
+        choices=("train", "external-test", "runtime-inference"),
+        default=("train", "external-test", "runtime-inference"),
     )
     args = parser.parse_args()
     dataset = read_json(args.dataset)

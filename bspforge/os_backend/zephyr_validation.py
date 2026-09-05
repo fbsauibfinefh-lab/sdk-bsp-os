@@ -16,17 +16,31 @@ class ZephyrValidationGenerator:
         build_id: str,
         functional: bool,
         native_devices: bool = False,
+        standard_devices: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
+        if standard_devices:
+            header = source_dir / "bspforge_zephyr_devices.h"
+            header.write_text(
+                self._standard_device_header(standard_devices), encoding="utf-8"
+            )
         source = source_dir / "main.c"
         source.write_text(
-            self._source(board, build_id, functional, native_devices),
+            self._source(
+                board,
+                build_id,
+                functional,
+                native_devices or bool(standard_devices),
+                standard_devices=bool(standard_devices),
+            ),
             encoding="utf-8",
         )
         return {
             "schema_version": "1.0",
             "created_at": utc_now(),
             "strategy": (
-                "zephyr-native-sdk-device-selftest"
+                "zephyr-standard-devicetree-device-selftest"
+                if standard_devices
+                else "zephyr-native-sdk-device-selftest"
                 if native_devices
                 else (
                     "sdk-functional-binding-selftest"
@@ -49,8 +63,13 @@ class ZephyrValidationGenerator:
         build_id: str,
         functional: bool,
         native_devices: bool = False,
+        standard_devices: bool = False,
     ) -> str:
-        if native_devices:
+        if standard_devices:
+            binding_include = '#include "bspforge_zephyr_devices.h"\n'
+            functional_helpers = ZephyrValidationGenerator._native_device_helpers()
+            command_body = ZephyrValidationGenerator._standard_device_commands()
+        elif native_devices:
             binding_include = '#include "bspforge_zephyr_devices.h"\n'
             functional_helpers = ZephyrValidationGenerator._native_device_helpers()
             command_body = ZephyrValidationGenerator._native_device_commands()
@@ -166,7 +185,6 @@ int main(void)
         return r'''
 static volatile uint32_t bspforge_gpio_irq_fires;
 static volatile uint32_t bspforge_timer_fires;
-static volatile uint32_t bspforge_timer_target;
 static struct gpio_callback bspforge_gpio_callback_data;
 
 static void bspforge_native_gpio_callback(const struct device *device,
@@ -189,15 +207,6 @@ static void bspforge_native_alarm_callback(const struct device *device,
     ARG_UNUSED(ticks);
     ARG_UNUSED(user_data);
     bspforge_timer_fires++;
-}
-
-static void bspforge_native_top_callback(const struct device *device,
-                                          void *user_data)
-{
-    ARG_UNUSED(user_data);
-    bspforge_timer_fires++;
-    if (bspforge_timer_fires >= bspforge_timer_target)
-        (void)counter_stop(device);
 }
 
 static int bspforge_native_wait_counter(volatile uint32_t *counter,
@@ -225,17 +234,27 @@ static int bspforge_native_timer_test(bool periodic, uint32_t expected,
         return -ENODEV;
     (void)counter_stop(counter);
     bspforge_timer_fires = 0U;
-    bspforge_timer_target = expected;
     if (periodic) {
-        const struct counter_top_cfg top = {
+        const struct counter_alarm_cfg alarm = {
             .ticks = 10000000U,
-            .callback = bspforge_native_top_callback,
+            .callback = bspforge_native_alarm_callback,
             .user_data = NULL,
             .flags = 0U,
         };
-        result = counter_set_top_value(counter, &top);
-        if (result == 0)
-            result = counter_start(counter);
+        uint32_t total_elapsed = 0U;
+
+        result = counter_start(counter);
+        for (uint32_t target = 1U; result == 0 && target <= expected; ++target) {
+            uint32_t step_elapsed = 0U;
+
+            result = counter_set_channel_alarm(counter, 0U, &alarm);
+            if (result == 0)
+                result = bspforge_native_wait_counter(&bspforge_timer_fires,
+                                                       target, 500U,
+                                                       &step_elapsed);
+            total_elapsed += step_elapsed;
+        }
+        *elapsed_ms = total_elapsed;
     } else {
         const struct counter_alarm_cfg alarm = {
             .ticks = 10000000U,
@@ -247,7 +266,7 @@ static int bspforge_native_timer_test(bool periodic, uint32_t expected,
         if (result == 0)
             result = counter_set_channel_alarm(counter, 0U, &alarm);
     }
-    if (result == 0)
+    if (result == 0 && !periodic)
         result = bspforge_native_wait_counter(&bspforge_timer_fires, expected,
                                               1000U, elapsed_ms);
     (void)counter_stop(counter);
@@ -266,9 +285,11 @@ static int bspforge_native_timer_test(bool periodic, uint32_t expected,
         const struct device *clock = bspforge_zephyr_clock_device();
         const struct device *uart = bspforge_zephyr_uart_device();
         const struct device *gpio = bspforge_zephyr_gpio_device();
+        const struct device *gpio_input = bspforge_zephyr_gpio_input_device();
         const struct device *counter = bspforge_zephyr_counter_device();
         bool ready = device_is_ready(clock) && device_is_ready(uart) &&
-                     device_is_ready(gpio) && device_is_ready(counter);
+                     device_is_ready(gpio) && device_is_ready(gpio_input) &&
+                     device_is_ready(counter);
 
         bspforge_result(request_id, command, ready ? "pass" : "fail",
                         "{\"native_devices\":4}");
@@ -300,17 +321,9 @@ static int bspforge_native_timer_test(bool periodic, uint32_t expected,
     }
     if (strcmp(command, "uart.loopback") == 0) {
         const struct device *uart = bspforge_zephyr_uart_device();
-        const struct uart_config config = {
-            .baudrate = 115200U,
-            .parity = UART_CFG_PARITY_NONE,
-            .stop_bits = UART_CFG_STOP_BITS_1,
-            .data_bits = UART_CFG_DATA_BITS_8,
-            .flow_ctrl = UART_CFG_FLOW_CTRL_NONE,
-        };
         uint32_t bytes = 0U;
         uint32_t errors = 0U;
-        int result = device_is_ready(uart) ? uart_configure(uart, &config)
-                                           : -ENODEV;
+        int result = device_is_ready(uart) ? 0 : -ENODEV;
 
         for (uint32_t index = 0U; result == 0 && index < 16U; ++index) {
             uint8_t sent = (uint8_t)(0x31U + index * 7U);
@@ -318,15 +331,18 @@ static int bspforge_native_timer_test(bool periodic, uint32_t expected,
             int64_t deadline;
             int count = -1;
 
-            uart_poll_out(uart, sent);
+            if (uart_fifo_fill(uart, &sent, 1) != 1) {
+                errors++;
+                continue;
+            }
             deadline = k_uptime_get() + 100;
             do {
-                count = uart_poll_in(uart, &received);
-                if (count == 0)
+                count = uart_fifo_read(uart, &received, 1);
+                if (count == 1)
                     break;
                 k_busy_wait(50);
             } while (k_uptime_get() < deadline);
-            if (count != 0) {
+            if (count != 1) {
                 errors++;
                 continue;
             }
@@ -344,30 +360,32 @@ static int bspforge_native_timer_test(bool periodic, uint32_t expected,
     }
     if (strcmp(command, "gpio.toggle") == 0) {
         const struct device *gpio = bspforge_zephyr_gpio_device();
+        const struct device *gpio_input = bspforge_zephyr_gpio_input_device();
         int low_latch = -1;
         int high_latch = -1;
         int input_low = -1;
         int input_high = -1;
-        int result = device_is_ready(gpio) ? 0 : -ENODEV;
+        int result = device_is_ready(gpio) && device_is_ready(gpio_input)
+                         ? 0 : -ENODEV;
 
         if (result == 0)
             result = gpio_pin_configure(gpio, BSPFORGE_ZEPHYR_GPIO_OUTPUT_PIN,
                                         GPIO_OUTPUT_INACTIVE);
         if (result == 0)
-            result = gpio_pin_configure(gpio, BSPFORGE_ZEPHYR_GPIO_INPUT_PIN,
+            result = gpio_pin_configure(gpio_input, BSPFORGE_ZEPHYR_GPIO_INPUT_PIN,
                                         GPIO_INPUT | GPIO_PULL_DOWN);
         if (result == 0)
             result = gpio_pin_set(gpio, BSPFORGE_ZEPHYR_GPIO_OUTPUT_PIN, 0);
         k_msleep(2);
         if (result == 0) {
             low_latch = gpio_pin_get(gpio, BSPFORGE_ZEPHYR_GPIO_OUTPUT_PIN);
-            input_low = gpio_pin_get(gpio, BSPFORGE_ZEPHYR_GPIO_INPUT_PIN);
+            input_low = gpio_pin_get(gpio_input, BSPFORGE_ZEPHYR_GPIO_INPUT_PIN);
             result = gpio_pin_set(gpio, BSPFORGE_ZEPHYR_GPIO_OUTPUT_PIN, 1);
         }
         k_msleep(2);
         if (result == 0) {
             high_latch = gpio_pin_get(gpio, BSPFORGE_ZEPHYR_GPIO_OUTPUT_PIN);
-            input_high = gpio_pin_get(gpio, BSPFORGE_ZEPHYR_GPIO_INPUT_PIN);
+            input_high = gpio_pin_get(gpio_input, BSPFORGE_ZEPHYR_GPIO_INPUT_PIN);
         }
         if (low_latch != 0 || high_latch != 1 || input_low != 0 || input_high != 1)
             result = -EIO;
@@ -381,14 +399,16 @@ static int bspforge_native_timer_test(bool periodic, uint32_t expected,
     }
     if (strcmp(command, "gpio.irq") == 0) {
         const struct device *gpio = bspforge_zephyr_gpio_device();
+        const struct device *gpio_input = bspforge_zephyr_gpio_input_device();
         uint32_t elapsed_ms = 0U;
-        int result = device_is_ready(gpio) ? 0 : -ENODEV;
+        int result = device_is_ready(gpio) && device_is_ready(gpio_input)
+                         ? 0 : -ENODEV;
 
         if (result == 0)
             result = gpio_pin_configure(gpio, BSPFORGE_ZEPHYR_GPIO_OUTPUT_PIN,
                                         GPIO_OUTPUT_INACTIVE);
         if (result == 0)
-            result = gpio_pin_configure(gpio, BSPFORGE_ZEPHYR_GPIO_INPUT_PIN,
+            result = gpio_pin_configure(gpio_input, BSPFORGE_ZEPHYR_GPIO_INPUT_PIN,
                                         GPIO_INPUT | GPIO_PULL_DOWN);
         if (result == 0)
             result = gpio_pin_set(gpio, BSPFORGE_ZEPHYR_GPIO_OUTPUT_PIN, 0);
@@ -398,18 +418,18 @@ static int bspforge_native_timer_test(bool periodic, uint32_t expected,
                            bspforge_native_gpio_callback,
                            BIT(BSPFORGE_ZEPHYR_GPIO_INPUT_PIN));
         if (result == 0)
-            result = gpio_add_callback(gpio, &bspforge_gpio_callback_data);
+            result = gpio_add_callback(gpio_input, &bspforge_gpio_callback_data);
         if (result == 0)
             result = gpio_pin_interrupt_configure(
-                gpio, BSPFORGE_ZEPHYR_GPIO_INPUT_PIN, GPIO_INT_EDGE_RISING);
+                gpio_input, BSPFORGE_ZEPHYR_GPIO_INPUT_PIN, GPIO_INT_EDGE_RISING);
         if (result == 0)
             result = gpio_pin_set(gpio, BSPFORGE_ZEPHYR_GPIO_OUTPUT_PIN, 1);
         if (result == 0)
             result = bspforge_native_wait_counter(&bspforge_gpio_irq_fires,
                                                   1U, 500U, &elapsed_ms);
         (void)gpio_pin_interrupt_configure(
-            gpio, BSPFORGE_ZEPHYR_GPIO_INPUT_PIN, GPIO_INT_DISABLE);
-        (void)gpio_remove_callback(gpio, &bspforge_gpio_callback_data);
+            gpio_input, BSPFORGE_ZEPHYR_GPIO_INPUT_PIN, GPIO_INT_DISABLE);
+        (void)gpio_remove_callback(gpio_input, &bspforge_gpio_callback_data);
         snprintk(metrics, sizeof(metrics),
                  "{\"irq_callbacks\":%u,\"elapsed_ms\":%u}",
                  bspforge_gpio_irq_fires, elapsed_ms);
@@ -435,6 +455,92 @@ static int bspforge_native_timer_test(bool periodic, uint32_t expected,
     }
     bspforge_result(request_id, command, "fail", "{}");
 '''
+
+    @staticmethod
+    def _standard_device_header(options: dict[str, Any]) -> str:
+        required = {
+            "uart_node", "gpio_output_node", "gpio_input_node", "counter_node",
+            "gpio_output_pin", "gpio_input_pin",
+        }
+        missing = sorted(required - options.keys())
+        if missing:
+            raise ValueError("standard device validation lacks: " + ", ".join(missing))
+        nodes = {
+            key: str(options[key])
+            for key in ("uart_node", "gpio_output_node", "gpio_input_node", "counter_node")
+        }
+        if any(not value.replace("_", "").isalnum() for value in nodes.values()):
+            raise ValueError("Zephyr node labels must be alphanumeric identifiers")
+        return f'''/* Generated by BSPForge. Do not edit manually. */
+#ifndef BSPFORGE_ZEPHYR_DEVICES_H
+#define BSPFORGE_ZEPHYR_DEVICES_H
+
+#include <zephyr/device.h>
+#include <zephyr/devicetree.h>
+
+#define BSPFORGE_ZEPHYR_GPIO_OUTPUT_PIN {int(options["gpio_output_pin"])}U
+#define BSPFORGE_ZEPHYR_GPIO_INPUT_PIN {int(options["gpio_input_pin"])}U
+
+static inline const struct device *bspforge_zephyr_uart_device(void)
+{{ return DEVICE_DT_GET(DT_NODELABEL({nodes["uart_node"]})); }}
+static inline const struct device *bspforge_zephyr_gpio_device(void)
+{{ return DEVICE_DT_GET(DT_NODELABEL({nodes["gpio_output_node"]})); }}
+static inline const struct device *bspforge_zephyr_gpio_input_device(void)
+{{ return DEVICE_DT_GET(DT_NODELABEL({nodes["gpio_input_node"]})); }}
+static inline const struct device *bspforge_zephyr_counter_device(void)
+{{ return DEVICE_DT_GET(DT_NODELABEL({nodes["counter_node"]})); }}
+
+#endif
+'''
+
+    @staticmethod
+    def _standard_device_commands() -> str:
+        body = ZephyrValidationGenerator._native_device_commands()
+        old_info = '''        const struct device *clock = bspforge_zephyr_clock_device();
+        const struct device *uart = bspforge_zephyr_uart_device();
+        const struct device *gpio = bspforge_zephyr_gpio_device();
+        const struct device *gpio_input = bspforge_zephyr_gpio_input_device();
+        const struct device *counter = bspforge_zephyr_counter_device();
+        bool ready = device_is_ready(clock) && device_is_ready(uart) &&
+                     device_is_ready(gpio) && device_is_ready(gpio_input) &&
+                     device_is_ready(counter);
+
+        bspforge_result(request_id, command, ready ? "pass" : "fail",
+                        "{\\"native_devices\\":4}");'''
+        new_info = '''        const struct device *uart = bspforge_zephyr_uart_device();
+        const struct device *gpio = bspforge_zephyr_gpio_device();
+        const struct device *gpio_input = bspforge_zephyr_gpio_input_device();
+        const struct device *counter = bspforge_zephyr_counter_device();
+        bool ready = device_is_ready(uart) && device_is_ready(gpio) &&
+                     device_is_ready(gpio_input) && device_is_ready(counter);
+
+        bspforge_result(request_id, command, ready ? "pass" : "fail",
+                        "{\\"native_devices\\":4}");'''
+        old_clock = '''        const struct device *clock = bspforge_zephyr_clock_device();
+        clock_control_subsys_t cpu =
+            (clock_control_subsys_t)(uintptr_t)BSPFORGE_ZEPHYR_CLOCK_CPU;
+        clock_control_subsys_t timer =
+            (clock_control_subsys_t)(uintptr_t)BSPFORGE_ZEPHYR_CLOCK_TIMER;
+        uint32_t cpu_hz = 0U;
+        uint32_t timer_hz = 0U;
+        int result = device_is_ready(clock) ? 0 : -ENODEV;
+
+        if (result == 0)
+            result = clock_control_get_rate(clock, cpu, &cpu_hz);
+        if (result == 0)
+            result = clock_control_on(clock, timer);
+        if (result == 0)
+            result = clock_control_get_rate(clock, timer, &timer_hz);
+        if (device_is_ready(clock) && clock_control_off(clock, timer) != 0)
+            result = -EIO;'''
+        new_clock = '''        const struct device *counter = bspforge_zephyr_counter_device();
+        uint32_t cpu_hz = sys_clock_hw_cycles_per_sec();
+        uint32_t timer_hz = device_is_ready(counter)
+                                ? counter_get_frequency(counter) : 0U;
+        int result = cpu_hz > 0U && timer_hz > 0U ? 0 : -ENODEV;'''
+        if old_info not in body or old_clock not in body:
+            raise RuntimeError("Zephyr native validation template changed unexpectedly")
+        return body.replace(old_info, new_info, 1).replace(old_clock, new_clock, 1)
 
     @staticmethod
     def _functional_helpers() -> str:

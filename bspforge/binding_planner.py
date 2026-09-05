@@ -160,7 +160,9 @@ class BindingPlanner:
                     "candidate_rank": rank,
                     "signature": entity.get("signature"),
                     "file": entity.get("file"),
-                    "api_family": api_family_key(capability, row["symbol"]),
+                    "api_family": cls._compatible_family(
+                        capability, row["symbol"]
+                    ),
                 }
                 if accepted:
                     compatible[operation].append(enriched)
@@ -220,6 +222,15 @@ class BindingPlanner:
         }
 
     @staticmethod
+    def _compatible_family(capability: str, symbol: str) -> str:
+        lowered = symbol.lower()
+        if capability == "interrupt" and any(
+            marker in lowered for marker in ("sysint", "nvic", "plic")
+        ):
+            return "system-interrupt-controller"
+        return api_family_key(capability, symbol)
+
+    @staticmethod
     def _signature_compatible(
         capability: str,
         operation: str,
@@ -232,7 +243,7 @@ class BindingPlanner:
         count = len(parameters)
         capability_terms = {
             "clock": ("clock", "clk", "pll", "rcc", "sysctl"),
-            "interrupt": ("irq", "interrupt", "plic", "nvic"),
+            "interrupt": ("irq", "interrupt", "plic", "nvic", "sysint"),
             "uart": ("uart", "usart", "serial"),
             "gpio": ("gpio", "pin", "ioport"),
             "timer": ("timer", "counter", "tcpwm", "gptimer"),
@@ -258,10 +269,22 @@ class BindingPlanner:
             ("gpio", "write"): (2, ("pin", "value", "state")),
             ("gpio", "read"): (1, ("pin",)),
             ("gpio", "attach_irq"): (2, ("pin", "callback", "handler", "irq")),
-            ("timer", "initialize"): (1, ("timer", "device", "channel")),
-            ("timer", "start"): (1, ("timer", "device", "channel", "enable")),
-            ("timer", "stop"): (1, ("timer", "device", "channel", "disable")),
-            ("timer", "set_interval"): (2, ("timer", "interval", "period", "channel")),
+            ("timer", "initialize"): (
+                1,
+                ("timer", "device", "channel", "counter", "tcpwm", "cnt", "base", "obj"),
+            ),
+            ("timer", "start"): (
+                1,
+                ("timer", "device", "channel", "counter", "tcpwm", "cnt", "base", "obj"),
+            ),
+            ("timer", "stop"): (
+                1,
+                ("timer", "device", "channel", "counter", "tcpwm", "cnt", "base", "obj"),
+            ),
+            ("timer", "set_interval"): (
+                2,
+                ("timer", "interval", "period", "channel", "counter", "tcpwm", "cnt", "base", "obj"),
+            ),
         }
         minimum, semantic_tokens = contracts[(capability, operation)]
         if count < minimum:

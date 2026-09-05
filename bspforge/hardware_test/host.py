@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import selectors
 import shlex
 import subprocess
@@ -23,12 +24,21 @@ class Transport(Protocol):
 
 
 class SerialTransport:
-    def __init__(self, port: str, baudrate: int, timeout: float) -> None:
+    def __init__(
+        self,
+        port: str,
+        baudrate: int,
+        timeout: float,
+        reset_command: str | None = None,
+        close_port_for_reset: bool = True,
+    ) -> None:
         try:
             import serial
         except ImportError as error:
             raise RuntimeError("hardware test requires the 'hardware' optional dependency") from error
         self.serial = serial.Serial(port=port, baudrate=baudrate, timeout=timeout)
+        self.reset_command = reset_command
+        self.close_port_for_reset = close_port_for_reset
 
     def write(self, value: bytes) -> int:
         return self.serial.write(value)
@@ -40,6 +50,27 @@ class SerialTransport:
         self.serial.close()
 
     def reset(self) -> None:
+        if self.reset_command:
+            if self.close_port_for_reset:
+                self.serial.close()
+            else:
+                self.serial.reset_input_buffer()
+            command = shlex.split(self.reset_command, posix=os.name != "nt")
+            process = subprocess.run(
+                command,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                errors="replace",
+            )
+            if process.returncode != 0:
+                raise RuntimeError(
+                    "external reset command failed:\n" + process.stdout.rstrip()
+                )
+            if self.close_port_for_reset:
+                self.serial.open()
+                self.serial.reset_input_buffer()
+            return
         self.serial.dtr = False
         time.sleep(0.05)
         self.serial.reset_input_buffer()
@@ -229,6 +260,15 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--timeout", type=float, default=5.0)
     parser.add_argument("--rounds", type=int, default=1)
     parser.add_argument(
+        "--reset-command",
+        help="每轮测试前执行的外部复位命令；串口会在执行期间关闭",
+    )
+    parser.add_argument(
+        "--keep-port-open-during-reset",
+        action="store_true",
+        help="外部复位不占用串口时保持端口打开，以捕获早期启动事件",
+    )
+    parser.add_argument(
         "--firmware",
         type=Path,
         help="记录本次已烧录固件的路径、大小和 SHA-256",
@@ -245,7 +285,13 @@ def main(argv: list[str] | None = None) -> int:
     if args.firmware is not None and not args.firmware.is_file():
         parser.error(f"firmware artifact does not exist: {args.firmware}")
     active_transport: Transport = (
-        SerialTransport(args.port, args.baudrate, args.timeout)
+        SerialTransport(
+            args.port,
+            args.baudrate,
+            args.timeout,
+            args.reset_command,
+            close_port_for_reset=not args.keep_port_open_during_reset,
+        )
         if args.port
         else ProcessTransport(shlex.split(args.command), args.timeout)
     )
