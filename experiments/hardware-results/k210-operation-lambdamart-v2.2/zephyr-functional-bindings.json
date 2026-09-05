@@ -1,0 +1,1839 @@
+{
+  "backend": "zephyr",
+  "binding_plan_id": "038a7ce4d608a9eb",
+  "bindings": [
+    {
+      "auxiliary_symbols": [
+        "sysctl_clock_set_threshold"
+      ],
+      "capability": "clock",
+      "sdk_symbols": [
+        {
+          "entity_id": "fe66131e4faa7247",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "int sysctl_clock_set_clock_select(sysctl_clock_select_t which, int select)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 617,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/sysctl.c"
+          },
+          "symbol": "sysctl_clock_set_clock_select"
+        },
+        {
+          "entity_id": "0df02608f07f45bd",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "int sysctl_clock_enable(sysctl_clock_t clock)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 389,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/sysctl.c"
+          },
+          "symbol": "sysctl_clock_enable"
+        },
+        {
+          "entity_id": "3813e9f1f4e77ed8",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "int sysctl_clock_disable(sysctl_clock_t clock)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 398,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/sysctl.c"
+          },
+          "symbol": "sysctl_clock_disable"
+        },
+        {
+          "entity_id": "fee9d28d313185ea",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "uint32_t sysctl_clock_get_freq(sysctl_clock_t clock)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 1267,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/sysctl.c"
+          },
+          "symbol": "sysctl_clock_get_freq"
+        },
+        {
+          "entity_id": "a28505d16ea53cce",
+          "selection_method": "backend-adaptation-dependency",
+          "signature": "int sysctl_clock_set_threshold(sysctl_threshold_t which, int threshold)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 406,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/sysctl.c"
+          },
+          "symbol": "sysctl_clock_set_threshold"
+        }
+      ],
+      "selected_operations": [
+        {
+          "entity_id": "fe66131e4faa7247",
+          "operation": "initialize",
+          "symbol": "sysctl_clock_set_clock_select"
+        },
+        {
+          "entity_id": "0df02608f07f45bd",
+          "operation": "enable",
+          "symbol": "sysctl_clock_enable"
+        },
+        {
+          "entity_id": "3813e9f1f4e77ed8",
+          "operation": "disable",
+          "symbol": "sysctl_clock_disable"
+        },
+        {
+          "entity_id": "fee9d28d313185ea",
+          "operation": "get_frequency",
+          "symbol": "sysctl_clock_get_freq"
+        }
+      ],
+      "status": "generated"
+    },
+    {
+      "auxiliary_symbols": [
+        "plic_irq_unregister"
+      ],
+      "capability": "interrupt",
+      "sdk_symbols": [
+        {
+          "entity_id": "d9b7e5563768a1f4",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "void plic_init(void)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 26,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/plic.c"
+          },
+          "symbol": "plic_init"
+        },
+        {
+          "entity_id": "a2caa614acca4090",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "int plic_irq_enable(plic_irq_t irq_number)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 76,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/plic.c"
+          },
+          "symbol": "plic_irq_enable"
+        },
+        {
+          "entity_id": "d7b58e63853b7495",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "int plic_irq_disable(plic_irq_t irq_number)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 91,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/plic.c"
+          },
+          "symbol": "plic_irq_disable"
+        },
+        {
+          "entity_id": "eeb49e980af03c3e",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "void plic_irq_register(plic_irq_t irq, plic_irq_callback_t callback, void *ctx)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 140,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/plic.c"
+          },
+          "symbol": "plic_irq_register"
+        },
+        {
+          "entity_id": "fdacf5fb585e5490",
+          "selection_method": "backend-adaptation-dependency",
+          "signature": "void plic_irq_unregister(plic_irq_t irq)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 150,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/plic.c"
+          },
+          "symbol": "plic_irq_unregister"
+        }
+      ],
+      "selected_operations": [
+        {
+          "entity_id": "d9b7e5563768a1f4",
+          "operation": "initialize",
+          "symbol": "plic_init"
+        },
+        {
+          "entity_id": "a2caa614acca4090",
+          "operation": "enable",
+          "symbol": "plic_irq_enable"
+        },
+        {
+          "entity_id": "d7b58e63853b7495",
+          "operation": "disable",
+          "symbol": "plic_irq_disable"
+        },
+        {
+          "entity_id": "eeb49e980af03c3e",
+          "operation": "register",
+          "symbol": "plic_irq_register"
+        }
+      ],
+      "status": "generated"
+    },
+    {
+      "auxiliary_symbols": [
+        "uart_init"
+      ],
+      "capability": "uart",
+      "sdk_symbols": [
+        {
+          "entity_id": "c5c30b7bfe779782",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "void uart_configure(uart_device_number_t channel, uint32_t baud_rate, uart_bitwidth_t data_width, uart_stopbit_t stopbit, uart_parity_t parity)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 310,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/uart.c"
+          },
+          "symbol": "uart_configure"
+        },
+        {
+          "entity_id": "b5c9d7d2c9d54d50",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "int uart_send_data(uart_device_number_t channel, const char *buffer, size_t buf_len)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 245,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/uart.c"
+          },
+          "symbol": "uart_send_data"
+        },
+        {
+          "entity_id": "d260f48d1140b968",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "int uart_receive_data(uart_device_number_t channel, char *buffer, size_t buf_len)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 179,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/uart.c"
+          },
+          "symbol": "uart_receive_data"
+        },
+        {
+          "entity_id": "ec4dfae428ac1f42",
+          "selection_method": "backend-adaptation-dependency",
+          "signature": "void uart_init(uart_device_number_t channel)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 361,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/uart.c"
+          },
+          "symbol": "uart_init"
+        }
+      ],
+      "selected_operations": [
+        {
+          "entity_id": "c5c30b7bfe779782",
+          "operation": "configure",
+          "symbol": "uart_configure"
+        },
+        {
+          "entity_id": "b5c9d7d2c9d54d50",
+          "operation": "write",
+          "symbol": "uart_send_data"
+        },
+        {
+          "entity_id": "d260f48d1140b968",
+          "operation": "read",
+          "symbol": "uart_receive_data"
+        }
+      ],
+      "status": "generated"
+    },
+    {
+      "auxiliary_symbols": [
+        "gpiohs_set_pin_edge",
+        "gpiohs_irq_unregister"
+      ],
+      "capability": "gpio",
+      "sdk_symbols": [
+        {
+          "entity_id": "80c045af5528288a",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "void gpiohs_set_drive_mode(uint8_t pin, gpio_drive_mode_t mode)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 34,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/gpiohs.c"
+          },
+          "symbol": "gpiohs_set_drive_mode"
+        },
+        {
+          "entity_id": "22ac57c5e154f275",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "void gpiohs_set_pin(uint8_t pin, gpio_pin_value_t value)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 78,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/gpiohs.c"
+          },
+          "symbol": "gpiohs_set_pin"
+        },
+        {
+          "entity_id": "f68210bd135a59bb",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "gpio_pin_value_t gpiohs_get_pin(uint8_t pin)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 72,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/gpiohs.c"
+          },
+          "symbol": "gpiohs_get_pin"
+        },
+        {
+          "entity_id": "eecd5df3744d85e6",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "void gpiohs_irq_register(uint8_t pin, uint32_t priority, plic_irq_callback_t callback, void *ctx)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 185,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/gpiohs.c"
+          },
+          "symbol": "gpiohs_irq_register"
+        },
+        {
+          "entity_id": "fbcc856146d82483",
+          "selection_method": "backend-adaptation-dependency",
+          "signature": "void gpiohs_set_pin_edge(uint8_t pin, gpio_pin_edge_t edge)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 84,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/gpiohs.c"
+          },
+          "symbol": "gpiohs_set_pin_edge"
+        },
+        {
+          "entity_id": "f5fb3bd4bf80a811",
+          "selection_method": "backend-adaptation-dependency",
+          "signature": "void gpiohs_irq_unregister(uint8_t pin)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 196,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/gpiohs.c"
+          },
+          "symbol": "gpiohs_irq_unregister"
+        }
+      ],
+      "selected_operations": [
+        {
+          "entity_id": "80c045af5528288a",
+          "operation": "configure",
+          "symbol": "gpiohs_set_drive_mode"
+        },
+        {
+          "entity_id": "22ac57c5e154f275",
+          "operation": "write",
+          "symbol": "gpiohs_set_pin"
+        },
+        {
+          "entity_id": "f68210bd135a59bb",
+          "operation": "read",
+          "symbol": "gpiohs_get_pin"
+        },
+        {
+          "entity_id": "eecd5df3744d85e6",
+          "operation": "attach_irq",
+          "symbol": "gpiohs_irq_register"
+        }
+      ],
+      "status": "generated"
+    },
+    {
+      "auxiliary_symbols": [
+        "timer_irq_register",
+        "timer_irq_unregister",
+        "timer_set_mode",
+        "timer_enable_interrupt"
+      ],
+      "capability": "timer",
+      "sdk_symbols": [
+        {
+          "entity_id": "dd37c9af8e19bb9e",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "void timer_init(timer_device_number_t timer_number)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 44,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/timer.c"
+          },
+          "symbol": "timer_init"
+        },
+        {
+          "entity_id": "dd908c5c08a0dd9b",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "void timer_enable(timer_device_number_t timer_number, timer_channel_number_t channel)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 63,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/timer.c"
+          },
+          "symbol": "timer_enable"
+        },
+        {
+          "entity_id": "ceb8d4aa9fd0e6bb",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "void timer_disable(timer_device_number_t timer_number, timer_channel_number_t channel)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 68,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/timer.c"
+          },
+          "symbol": "timer_disable"
+        },
+        {
+          "entity_id": "60dc93b346d7b996",
+          "selection_method": "canonical-plan-selected-operation",
+          "signature": "size_t timer_set_interval(timer_device_number_t timer_number, timer_channel_number_t channel, size_t nanoseconds)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 157,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/timer.c"
+          },
+          "symbol": "timer_set_interval"
+        },
+        {
+          "entity_id": "6553f1d98cccbf26",
+          "selection_method": "backend-adaptation-dependency",
+          "signature": "int timer_irq_register(timer_device_number_t device, timer_channel_number_t channel, int is_single_shot, uint32_t priority, timer_callback_t callback, void *ctx)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 319,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/timer.c"
+          },
+          "symbol": "timer_irq_register"
+        },
+        {
+          "entity_id": "420b6948f7fb94d1",
+          "selection_method": "backend-adaptation-dependency",
+          "signature": "int timer_irq_unregister(timer_device_number_t device, timer_channel_number_t channel)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 340,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/timer.c"
+          },
+          "symbol": "timer_irq_unregister"
+        },
+        {
+          "entity_id": "7a58e1b66829cfcf",
+          "selection_method": "backend-adaptation-dependency",
+          "signature": "void timer_set_mode(timer_device_number_t timer_number, timer_channel_number_t channel, uint32_t mode)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 93,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/timer.c"
+          },
+          "symbol": "timer_set_mode"
+        },
+        {
+          "entity_id": "3c404ecdb8437721",
+          "selection_method": "backend-adaptation-dependency",
+          "signature": "void timer_enable_interrupt(timer_device_number_t timer_number, timer_channel_number_t channel)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 83,
+            "parser": "tree-sitter",
+            "path": "lib/drivers/timer.c"
+          },
+          "symbol": "timer_enable_interrupt"
+        }
+      ],
+      "selected_operations": [
+        {
+          "entity_id": "dd37c9af8e19bb9e",
+          "operation": "initialize",
+          "symbol": "timer_init"
+        },
+        {
+          "entity_id": "dd908c5c08a0dd9b",
+          "operation": "start",
+          "symbol": "timer_enable"
+        },
+        {
+          "entity_id": "ceb8d4aa9fd0e6bb",
+          "operation": "stop",
+          "symbol": "timer_disable"
+        },
+        {
+          "entity_id": "60dc93b346d7b996",
+          "operation": "set_interval",
+          "symbol": "timer_set_interval"
+        }
+      ],
+      "status": "generated"
+    }
+  ],
+  "compatibility_headers": [
+    "/home/whk/RTT-porting/bspforge/workspace/generated/k210-zephyr-lambdamart/app/src/machine/syscall.h",
+    "/home/whk/RTT-porting/bspforge/workspace/generated/k210-zephyr-lambdamart/app/src/math.h"
+  ],
+  "created_at": "2026-09-04T13:56:43.412183+00:00",
+  "header": "/home/whk/RTT-porting/bspforge/workspace/generated/k210-zephyr-lambdamart/app/src/bspforge_bindings.h",
+  "header_sha256": "af806caa0fd6eb914f5d935fa63265b63820da72fd2c7b4746f2b58a0094935c",
+  "ir_function_declarations": [
+    "gpio_pin_value_t gpiohs_get_pin(uint8_t pin);",
+    "int plic_irq_disable(plic_irq_t irq_number);",
+    "int plic_irq_enable(plic_irq_t irq_number);",
+    "int sysctl_clock_disable(sysctl_clock_t clock);",
+    "int sysctl_clock_enable(sysctl_clock_t clock);",
+    "int sysctl_clock_set_clock_select(sysctl_clock_select_t which, int select);",
+    "int sysctl_clock_set_threshold(sysctl_threshold_t which, int threshold);",
+    "int timer_irq_register(timer_device_number_t device, timer_channel_number_t channel, int is_single_shot, uint32_t priority, timer_callback_t callback, void *ctx);",
+    "int timer_irq_unregister(timer_device_number_t device, timer_channel_number_t channel);",
+    "int uart_receive_data(uart_device_number_t channel, char *buffer, size_t buf_len);",
+    "int uart_send_data(uart_device_number_t channel, const char *buffer, size_t buf_len);",
+    "size_t timer_set_interval(timer_device_number_t timer_number, timer_channel_number_t channel, size_t nanoseconds);",
+    "uint32_t sysctl_clock_get_freq(sysctl_clock_t clock);",
+    "void gpiohs_irq_register(uint8_t pin, uint32_t priority, plic_irq_callback_t callback, void *ctx);",
+    "void gpiohs_irq_unregister(uint8_t pin);",
+    "void gpiohs_set_drive_mode(uint8_t pin, gpio_drive_mode_t mode);",
+    "void gpiohs_set_pin(uint8_t pin, gpio_pin_value_t value);",
+    "void gpiohs_set_pin_edge(uint8_t pin, gpio_pin_edge_t edge);",
+    "void plic_init(void);",
+    "void plic_irq_register(plic_irq_t irq, plic_irq_callback_t callback, void *ctx);",
+    "void plic_irq_unregister(plic_irq_t irq);",
+    "void timer_disable(timer_device_number_t timer_number, timer_channel_number_t channel);",
+    "void timer_enable(timer_device_number_t timer_number, timer_channel_number_t channel);",
+    "void timer_enable_interrupt(timer_device_number_t timer_number, timer_channel_number_t channel);",
+    "void timer_init(timer_device_number_t timer_number);",
+    "void timer_set_mode(timer_device_number_t timer_number, timer_channel_number_t channel, uint32_t mode);",
+    "void uart_configure(uart_device_number_t channel, uint32_t baud_rate, uart_bitwidth_t data_width, uart_stopbit_t stopbit, uart_parity_t parity);",
+    "void uart_init(uart_device_number_t channel);"
+  ],
+  "missing_symbols": [],
+  "operation_bindings": [
+    {
+      "capability": "clock",
+      "decoder": {
+        "api_family": "sysctl_clock",
+        "candidate_rank": 5,
+        "method": "signature-family",
+        "original_top1_entity_id": "38edfb924595c514",
+        "original_top1_symbol": "sysctl_pll_set_freq",
+        "rejected_before_selection": [
+          {
+            "rank": 2,
+            "reason": "requires-at-least-1-parameters",
+            "symbol": "aes_clk_init"
+          },
+          {
+            "rank": 3,
+            "reason": "missing-contract-parameter",
+            "symbol": "sysctl_clock_set_threshold"
+          },
+          {
+            "rank": 7,
+            "reason": "missing-contract-parameter",
+            "symbol": "spi_clk_init"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_clock_device_en"
+          },
+          {
+            "rank": 9,
+            "reason": "missing-contract-parameter",
+            "symbol": "i2c_clk_init"
+          },
+          {
+            "rank": 10,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_pll_clear_slip"
+          },
+          {
+            "rank": 11,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_clock_bus_en"
+          },
+          {
+            "rank": 12,
+            "reason": "symbol-misses-capability",
+            "symbol": "pwm_set_frequency"
+          }
+        ],
+        "selection_changed": true
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "fe66131e4faa7247",
+      "operation": "initialize",
+      "selected_symbol": "sysctl_clock_set_clock_select",
+      "signature": "int sysctl_clock_set_clock_select(sysctl_clock_select_t which, int select)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 617,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/sysctl.c"
+      }
+    },
+    {
+      "capability": "clock",
+      "decoder": {
+        "api_family": "sysctl_clock",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "0df02608f07f45bd",
+        "original_top1_symbol": "sysctl_clock_enable",
+        "rejected_before_selection": [
+          {
+            "rank": 2,
+            "reason": "requires-at-least-1-parameters",
+            "symbol": "sysctl_enable_irq"
+          },
+          {
+            "rank": 3,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_pll_set_freq"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_cpu_set_freq"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_clock_bus_en"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_clock_set_threshold"
+          },
+          {
+            "rank": 8,
+            "reason": "requires-at-least-1-parameters",
+            "symbol": "sysctl_pll_fast_enable_pll"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_clock_set_clock_select"
+          },
+          {
+            "rank": 10,
+            "reason": "symbol-misses-operation",
+            "symbol": "aes_clk_init"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "0df02608f07f45bd",
+      "operation": "enable",
+      "selected_symbol": "sysctl_clock_enable",
+      "signature": "int sysctl_clock_enable(sysctl_clock_t clock)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 389,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/sysctl.c"
+      }
+    },
+    {
+      "capability": "clock",
+      "decoder": {
+        "api_family": "sysctl_clock",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "3813e9f1f4e77ed8",
+        "original_top1_symbol": "sysctl_clock_disable",
+        "rejected_before_selection": [
+          {
+            "rank": 2,
+            "reason": "requires-at-least-1-parameters",
+            "symbol": "sysctl_disable_irq"
+          },
+          {
+            "rank": 4,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_pll_set_freq"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_clock_set_threshold"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_cpu_set_freq"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_clock_bus_en"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_clock_set_clock_select"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_clock_device_en"
+          },
+          {
+            "rank": 10,
+            "reason": "symbol-misses-operation",
+            "symbol": "dvp_sccb_set_clk_rate"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "3813e9f1f4e77ed8",
+      "operation": "disable",
+      "selected_symbol": "sysctl_clock_disable",
+      "signature": "int sysctl_clock_disable(sysctl_clock_t clock)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 398,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/sysctl.c"
+      }
+    },
+    {
+      "capability": "clock",
+      "decoder": {
+        "api_family": "sysctl_clock",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "fee9d28d313185ea",
+        "original_top1_symbol": "sysctl_clock_get_freq",
+        "rejected_before_selection": [
+          {
+            "rank": 2,
+            "reason": "requires-at-least-1-parameters",
+            "symbol": "sysctl_get_freq"
+          },
+          {
+            "rank": 5,
+            "reason": "requires-at-least-1-parameters",
+            "symbol": "sysctl_cpu_get_freq"
+          },
+          {
+            "rank": 6,
+            "reason": "requires-at-least-1-parameters",
+            "symbol": "sysctl_get_time_us"
+          },
+          {
+            "rank": 7,
+            "reason": "requires-at-least-1-parameters",
+            "symbol": "rtc_timer_get_clock_frequency"
+          },
+          {
+            "rank": 9,
+            "reason": "missing-contract-parameter",
+            "symbol": "sysctl_clock_get_threshold"
+          },
+          {
+            "rank": 10,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_reset"
+          },
+          {
+            "rank": 11,
+            "reason": "symbol-misses-operation",
+            "symbol": "sysctl_clock_device_en"
+          },
+          {
+            "rank": 12,
+            "reason": "missing-contract-parameter",
+            "symbol": "wdt_get_pclk"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "fee9d28d313185ea",
+      "operation": "get_frequency",
+      "selected_symbol": "sysctl_clock_get_freq",
+      "signature": "uint32_t sysctl_clock_get_freq(sysctl_clock_t clock)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 1267,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/sysctl.c"
+      }
+    },
+    {
+      "capability": "interrupt",
+      "decoder": {
+        "api_family": "plic",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "d9b7e5563768a1f4",
+        "original_top1_symbol": "plic_init",
+        "rejected_before_selection": [
+          {
+            "rank": 2,
+            "reason": "symbol-misses-operation",
+            "symbol": "dvp_config_interrupt"
+          },
+          {
+            "rank": 3,
+            "reason": "symbol-misses-operation",
+            "symbol": "plic_set_priority"
+          },
+          {
+            "rank": 4,
+            "reason": "symbol-misses-capability",
+            "symbol": "_init_bsp"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-capability",
+            "symbol": "kpu_init"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-capability",
+            "symbol": "wdt_init"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-capability",
+            "symbol": "_init"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-capability",
+            "symbol": "i2s_init"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-capability",
+            "symbol": "dmac_init"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "replaced-by-os-backend",
+      "entity_id": "d9b7e5563768a1f4",
+      "operation": "initialize",
+      "selected_symbol": "plic_init",
+      "signature": "void plic_init(void)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 26,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/plic.c"
+      }
+    },
+    {
+      "capability": "interrupt",
+      "decoder": {
+        "api_family": "plic",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "a2caa614acca4090",
+        "original_top1_symbol": "plic_irq_enable",
+        "rejected_before_selection": [
+          {
+            "rank": 2,
+            "reason": "symbol-misses-operation",
+            "symbol": "uarths_set_irq"
+          },
+          {
+            "rank": 3,
+            "reason": "symbol-misses-operation",
+            "symbol": "plic_irq_unregister"
+          },
+          {
+            "rank": 4,
+            "reason": "symbol-misses-operation",
+            "symbol": "gpiohs_set_irq"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-operation",
+            "symbol": "plic_set_priority"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-operation",
+            "symbol": "rtc_alarm_irq_unregister"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-operation",
+            "symbol": "rtc_tick_irq_unregister"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-operation",
+            "symbol": "handle_irq_m_ext"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-operation",
+            "symbol": "dmac_irq_unregister"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "replaced-by-os-backend",
+      "entity_id": "a2caa614acca4090",
+      "operation": "enable",
+      "selected_symbol": "plic_irq_enable",
+      "signature": "int plic_irq_enable(plic_irq_t irq_number)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 76,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/plic.c"
+      }
+    },
+    {
+      "capability": "interrupt",
+      "decoder": {
+        "api_family": "plic",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "d7b58e63853b7495",
+        "original_top1_symbol": "plic_irq_disable",
+        "rejected_before_selection": [
+          {
+            "rank": 2,
+            "reason": "missing-contract-parameter",
+            "symbol": "gpiohs_irq_disable"
+          },
+          {
+            "rank": 3,
+            "reason": "symbol-misses-operation",
+            "symbol": "plic_irq_unregister"
+          },
+          {
+            "rank": 4,
+            "reason": "symbol-misses-operation",
+            "symbol": "uarths_set_irq"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-operation",
+            "symbol": "dmac_irq_unregister"
+          },
+          {
+            "rank": 6,
+            "reason": "missing-contract-parameter",
+            "symbol": "dmac_disable_channel_interrupt"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_irq_unregister"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-operation",
+            "symbol": "handle_irq_m_ext"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-operation",
+            "symbol": "rtc_tick_irq_unregister"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "replaced-by-os-backend",
+      "entity_id": "d7b58e63853b7495",
+      "operation": "disable",
+      "selected_symbol": "plic_irq_disable",
+      "signature": "int plic_irq_disable(plic_irq_t irq_number)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 91,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/plic.c"
+      }
+    },
+    {
+      "capability": "interrupt",
+      "decoder": {
+        "api_family": "plic",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "eeb49e980af03c3e",
+        "original_top1_symbol": "plic_irq_register",
+        "rejected_before_selection": [
+          {
+            "rank": 7,
+            "reason": "symbol-misses-operation",
+            "symbol": "dmac_irq_callback"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-operation",
+            "symbol": "rtc_irq_callback"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-operation",
+            "symbol": "uarths_irq_callback"
+          },
+          {
+            "rank": 10,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_irq_callback"
+          },
+          {
+            "rank": 11,
+            "reason": "symbol-misses-capability",
+            "symbol": "clint_ipi_register"
+          },
+          {
+            "rank": 12,
+            "reason": "symbol-misses-capability",
+            "symbol": "sys_register_putchar"
+          },
+          {
+            "rank": 13,
+            "reason": "symbol-misses-capability",
+            "symbol": "register_core1"
+          },
+          {
+            "rank": 14,
+            "reason": "symbol-misses-capability",
+            "symbol": "output_vector_adapter"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "replaced-by-os-backend",
+      "entity_id": "eeb49e980af03c3e",
+      "operation": "register",
+      "selected_symbol": "plic_irq_register",
+      "signature": "void plic_irq_register(plic_irq_t irq, plic_irq_callback_t callback, void *ctx)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 140,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/plic.c"
+      }
+    },
+    {
+      "capability": "uart",
+      "decoder": {
+        "api_family": "uart",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "c5c30b7bfe779782",
+        "original_top1_symbol": "uart_configure",
+        "rejected_before_selection": [
+          {
+            "rank": 2,
+            "reason": "requires-at-least-2-parameters",
+            "symbol": "uart_init"
+          },
+          {
+            "rank": 3,
+            "reason": "requires-at-least-2-parameters",
+            "symbol": "uart_debug_init"
+          },
+          {
+            "rank": 4,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_set_tat"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_set_det"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_handle_data_dma"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-operation",
+            "symbol": "uarths_config"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_set_work_mode"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_irq_register"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "c5c30b7bfe779782",
+      "operation": "configure",
+      "selected_symbol": "uart_configure",
+      "signature": "void uart_configure(uart_device_number_t channel, uint32_t baud_rate, uart_bitwidth_t data_width, uart_stopbit_t stopbit, uart_parity_t parity)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 310,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/uart.c"
+      }
+    },
+    {
+      "capability": "uart",
+      "decoder": {
+        "api_family": "uart",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "b5c9d7d2c9d54d50",
+        "original_top1_symbol": "uart_send_data",
+        "rejected_before_selection": [
+          {
+            "rank": 4,
+            "reason": "missing-contract-parameter",
+            "symbol": "uart_set_send_trigger"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_handle_data_dma"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_set_tat"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_irq_register"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_set_work_mode"
+          },
+          {
+            "rank": 10,
+            "reason": "missing-contract-parameter",
+            "symbol": "uart_channel_putc"
+          },
+          {
+            "rank": 11,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_set_det"
+          },
+          {
+            "rank": 12,
+            "reason": "requires-at-least-2-parameters",
+            "symbol": "uart_debug_putchar"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "b5c9d7d2c9d54d50",
+      "operation": "write",
+      "selected_symbol": "uart_send_data",
+      "signature": "int uart_send_data(uart_device_number_t channel, const char *buffer, size_t buf_len)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 245,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/uart.c"
+      }
+    },
+    {
+      "capability": "uart",
+      "decoder": {
+        "api_family": "uart",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "d260f48d1140b968",
+        "original_top1_symbol": "uart_receive_data",
+        "rejected_before_selection": [
+          {
+            "rank": 4,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_set_det"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_handle_data_dma"
+          },
+          {
+            "rank": 7,
+            "reason": "missing-contract-parameter",
+            "symbol": "uart_set_receive_trigger"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_set_tat"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_irq_register"
+          },
+          {
+            "rank": 10,
+            "reason": "symbol-misses-operation",
+            "symbol": "uart_set_work_mode"
+          },
+          {
+            "rank": 11,
+            "reason": "requires-at-least-2-parameters",
+            "symbol": "uart_debug_getchar"
+          },
+          {
+            "rank": 12,
+            "reason": "requires-at-least-2-parameters",
+            "symbol": "uart_channel_getc"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "d260f48d1140b968",
+      "operation": "read",
+      "selected_symbol": "uart_receive_data",
+      "signature": "int uart_receive_data(uart_device_number_t channel, char *buffer, size_t buf_len)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 179,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/uart.c"
+      }
+    },
+    {
+      "capability": "gpio",
+      "decoder": {
+        "api_family": "gpiohs",
+        "candidate_rank": 684,
+        "method": "signature-family",
+        "original_top1_entity_id": "8514be121f570a3d",
+        "original_top1_symbol": "gpio_init",
+        "rejected_before_selection": [
+          {
+            "rank": 1,
+            "reason": "requires-at-least-2-parameters",
+            "symbol": "gpio_init"
+          },
+          {
+            "rank": 2,
+            "reason": "symbol-misses-operation",
+            "symbol": "gpiohs_pin_onchange_isr"
+          },
+          {
+            "rank": 3,
+            "reason": "symbol-misses-capability",
+            "symbol": "fpioa_init"
+          },
+          {
+            "rank": 4,
+            "reason": "symbol-misses-capability",
+            "symbol": "spi_slave_config"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-capability",
+            "symbol": "uarths_config"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-capability",
+            "symbol": "spi_slave_dual_config"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-capability",
+            "symbol": "uart_configure"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-capability",
+            "symbol": "_init_bsp"
+          }
+        ],
+        "selection_changed": true
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "80c045af5528288a",
+      "operation": "configure",
+      "selected_symbol": "gpiohs_set_drive_mode",
+      "signature": "void gpiohs_set_drive_mode(uint8_t pin, gpio_drive_mode_t mode)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 34,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/gpiohs.c"
+      }
+    },
+    {
+      "capability": "gpio",
+      "decoder": {
+        "api_family": "gpiohs",
+        "candidate_rank": 2,
+        "method": "signature-family",
+        "original_top1_entity_id": "ac22502926e52f4f",
+        "original_top1_symbol": "gpio_set_pin",
+        "rejected_before_selection": [
+          {
+            "rank": 4,
+            "reason": "symbol-misses-operation",
+            "symbol": "gpiohs_pin_onchange_isr"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-capability",
+            "symbol": "fpioa_set_io_pull"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-operation",
+            "symbol": "gpio_init"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-capability",
+            "symbol": "fpioa_set_st"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-capability",
+            "symbol": "fpioa_set_io"
+          },
+          {
+            "rank": 10,
+            "reason": "symbol-misses-capability",
+            "symbol": "fpioa_set_io_driving"
+          },
+          {
+            "rank": 11,
+            "reason": "symbol-misses-capability",
+            "symbol": "fpioa_init"
+          },
+          {
+            "rank": 12,
+            "reason": "symbol-misses-capability",
+            "symbol": "fpioa_set_function"
+          }
+        ],
+        "selection_changed": true
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "22ac57c5e154f275",
+      "operation": "write",
+      "selected_symbol": "gpiohs_set_pin",
+      "signature": "void gpiohs_set_pin(uint8_t pin, gpio_pin_value_t value)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 78,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/gpiohs.c"
+      }
+    },
+    {
+      "capability": "gpio",
+      "decoder": {
+        "api_family": "gpiohs",
+        "candidate_rank": 2,
+        "method": "signature-family",
+        "original_top1_entity_id": "714e35be2c1fda8f",
+        "original_top1_symbol": "gpio_get_pin",
+        "rejected_before_selection": [
+          {
+            "rank": 3,
+            "reason": "symbol-misses-capability",
+            "symbol": "fpioa_get_io"
+          },
+          {
+            "rank": 4,
+            "reason": "symbol-misses-capability",
+            "symbol": "fpioa_get_io_pull"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-operation",
+            "symbol": "gpiohs_pin_onchange_isr"
+          },
+          {
+            "rank": 6,
+            "reason": "missing-contract-parameter",
+            "symbol": "get_gpio_bit"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-operation",
+            "symbol": "gpio_init"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-capability",
+            "symbol": "fpioa_get_io_driving"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-capability",
+            "symbol": "fpioa_get_io_by_function"
+          },
+          {
+            "rank": 10,
+            "reason": "symbol-misses-capability",
+            "symbol": "fpioa_init"
+          }
+        ],
+        "selection_changed": true
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "f68210bd135a59bb",
+      "operation": "read",
+      "selected_symbol": "gpiohs_get_pin",
+      "signature": "gpio_pin_value_t gpiohs_get_pin(uint8_t pin)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 72,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/gpiohs.c"
+      }
+    },
+    {
+      "capability": "gpio",
+      "decoder": {
+        "api_family": "gpiohs",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "eecd5df3744d85e6",
+        "original_top1_symbol": "gpiohs_irq_register",
+        "rejected_before_selection": [
+          {
+            "rank": 3,
+            "reason": "requires-at-least-2-parameters",
+            "symbol": "gpiohs_irq_unregister"
+          },
+          {
+            "rank": 4,
+            "reason": "requires-at-least-2-parameters",
+            "symbol": "gpiohs_irq_disable"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-operation",
+            "symbol": "gpiohs_pin_onchange_isr"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-operation",
+            "symbol": "gpio_set_pin"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-operation",
+            "symbol": "gpiohs_set_pin_edge"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-operation",
+            "symbol": "gpiohs_set_pin"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-operation",
+            "symbol": "gpio_init"
+          },
+          {
+            "rank": 10,
+            "reason": "symbol-misses-capability",
+            "symbol": "plic_irq_register"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "eecd5df3744d85e6",
+      "operation": "attach_irq",
+      "selected_symbol": "gpiohs_irq_register",
+      "signature": "void gpiohs_irq_register(uint8_t pin, uint32_t priority, plic_irq_callback_t callback, void *ctx)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 185,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/gpiohs.c"
+      }
+    },
+    {
+      "capability": "timer",
+      "decoder": {
+        "api_family": "timer",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "dd37c9af8e19bb9e",
+        "original_top1_symbol": "timer_init",
+        "rejected_before_selection": [
+          {
+            "rank": 2,
+            "reason": "requires-at-least-1-parameters",
+            "symbol": "clint_timer_init"
+          },
+          {
+            "rank": 3,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_irq_register"
+          },
+          {
+            "rank": 4,
+            "reason": "symbol-misses-operation",
+            "symbol": "clint_timer_register"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_irq_unregister"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-operation",
+            "symbol": "clint_timer_unregister"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_set_reload"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_isr"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_set_mode"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "dd37c9af8e19bb9e",
+      "operation": "initialize",
+      "selected_symbol": "timer_init",
+      "signature": "void timer_init(timer_device_number_t timer_number)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 44,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/timer.c"
+      }
+    },
+    {
+      "capability": "timer",
+      "decoder": {
+        "api_family": "timer",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "dd908c5c08a0dd9b",
+        "original_top1_symbol": "timer_enable",
+        "rejected_before_selection": [
+          {
+            "rank": 3,
+            "reason": "missing-contract-parameter",
+            "symbol": "clint_timer_start"
+          },
+          {
+            "rank": 4,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_init"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_set_irq"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_irq_register"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_set_mode"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-operation",
+            "symbol": "clint_timer_register"
+          },
+          {
+            "rank": 10,
+            "reason": "symbol-misses-operation",
+            "symbol": "clint_timer_set_interval"
+          },
+          {
+            "rank": 11,
+            "reason": "symbol-misses-operation",
+            "symbol": "clint_timer_init"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "dd908c5c08a0dd9b",
+      "operation": "start",
+      "selected_symbol": "timer_enable",
+      "signature": "void timer_enable(timer_device_number_t timer_number, timer_channel_number_t channel)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 63,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/timer.c"
+      }
+    },
+    {
+      "capability": "timer",
+      "decoder": {
+        "api_family": "timer",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "ceb8d4aa9fd0e6bb",
+        "original_top1_symbol": "timer_disable",
+        "rejected_before_selection": [
+          {
+            "rank": 3,
+            "reason": "requires-at-least-1-parameters",
+            "symbol": "clint_timer_stop"
+          },
+          {
+            "rank": 4,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_set_enable"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_init"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_irq_unregister"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_set_mode"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-operation",
+            "symbol": "clint_timer_set_interval"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_clear_interrupt"
+          },
+          {
+            "rank": 10,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_isr"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "ceb8d4aa9fd0e6bb",
+      "operation": "stop",
+      "selected_symbol": "timer_disable",
+      "signature": "void timer_disable(timer_device_number_t timer_number, timer_channel_number_t channel)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 68,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/timer.c"
+      }
+    },
+    {
+      "capability": "timer",
+      "decoder": {
+        "api_family": "timer",
+        "candidate_rank": 1,
+        "method": "signature-family",
+        "original_top1_entity_id": "60dc93b346d7b996",
+        "original_top1_symbol": "timer_set_interval",
+        "rejected_before_selection": [
+          {
+            "rank": 2,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_set_reload"
+          },
+          {
+            "rank": 3,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_init"
+          },
+          {
+            "rank": 4,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_set_mode"
+          },
+          {
+            "rank": 5,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_set_irq"
+          },
+          {
+            "rank": 6,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_irq_register"
+          },
+          {
+            "rank": 7,
+            "reason": "symbol-misses-operation",
+            "symbol": "rtc_timer_set"
+          },
+          {
+            "rank": 8,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_set_reload2"
+          },
+          {
+            "rank": 9,
+            "reason": "symbol-misses-operation",
+            "symbol": "timer_irq_unregister"
+          }
+        ],
+        "selection_changed": false
+      },
+      "direct_call_in_generated_source": true,
+      "disposition": "direct-generated-call",
+      "entity_id": "60dc93b346d7b996",
+      "operation": "set_interval",
+      "selected_symbol": "timer_set_interval",
+      "signature": "size_t timer_set_interval(timer_device_number_t timer_number, timer_channel_number_t channel, size_t nanoseconds)",
+      "source": {
+        "confidence": 0.9,
+        "kind": "definition",
+        "line": 157,
+        "parser": "tree-sitter",
+        "path": "lib/drivers/timer.c"
+      }
+    }
+  ],
+  "required_sources": [
+    "lib/drivers/fpioa.c",
+    "lib/drivers/gpiohs.c",
+    "lib/drivers/sysctl.c",
+    "lib/drivers/timer.c",
+    "lib/drivers/uart.c",
+    "lib/drivers/utils.c"
+  ],
+  "schema_version": "1.0",
+  "source": "/home/whk/RTT-porting/bspforge/workspace/generated/k210-zephyr-lambdamart/app/src/bspforge_bindings.c",
+  "source_sha256": "2b43cb40e400e74b8b3343c7a54333c8f607b41fac84fcbc7b38fab07763c364",
+  "strategy": "generated-sdk-adapter",
+  "summary": {
+    "capabilities": 5,
+    "direct_plan_operations": 15,
+    "missing_symbols": 0,
+    "os_replaced_operations": 4,
+    "plan_operations": 19,
+    "required_sources": 6,
+    "wrappers": 19
+  }
+}

@@ -543,3 +543,12 @@ H01 相对自动真值的 P@1、Recall@5、MAP 和 nDCG@10 分别提高 0.040、
 - 编译反馈改为消费规范计划和逐操作生成清单，区分直接调用、OS 替代和缺少生成证据，不再笼统地把“全工程构建成功”记到 Resolver 原始 Top1。Python 单元与组件集成回归为 `70 passed`，新增错误 GPIO Top1 被签名/家族解码纠正的回归测试。
 - 两套计划驱动工程已经完整重建。RT-Thread 第二轮由 Build Diagnoser 补入 `lib/bsp/syscalls.c` 后成功，19/19 操作编译可观测，BIN 为 468856 bytes，SHA-256 `aa268cd3e50e2fc6735c59d9cc4f6905f8e8aacec2e6b074e6248c6f1afd0485`。Zephyr 一次构建成功，19/19 操作均有生成处置记录，BIN 为 35144 bytes，SHA-256 `226882352910915c4ee365dbb1f1b5f5703eada3aa4957903f41cac97eb66f3d`。
 - 本轮实板复测尚未执行。Windows 当前把 K210 所在总线 `3-2` 枚举为 VID:PID `0000:0002`，状态为 Code 43“设备描述符请求失败”，CH9102/COM 口未出现，WSL 也没有 `/dev/ttyACM0`。持续 10 分钟监测仍未恢复，因此不能把 v3.0 的 10 轮结果复制为 v3.1 结果。恢复 USB 枚举后，需按内部手册分别烧录两套新 BIN，并重新执行每套 1 轮校准和 10 轮正式九命令回归。
+
+## v3.2：K210 计划驱动双 RTOS 最终实板闭环
+
+- USB 恢复后重新烧录 v2.2 计划驱动固件，并保留所有中间失败报告。首个 RT-Thread 校准报告显示 `interrupt.basic` 之后 UART 和后续命令超时。根因是 RT-Thread 已在启动阶段初始化 PLIC，验证命令再次调用计划中的 `plic_init()` 清空了 OS 中断状态。后端现将 `interrupt.initialize` 明确记为 `replaced-by-os-backend`，其余 18 项仍直接调用计划所选 SDK 实体；这属于 OS 生命周期所有权处理，不是目标真值回退。
+- RT-Thread 第一次十轮正式回归为 89/90，唯一异常是某轮 UART 收到 16 字节但全部错位。测试夹具在开始计数前增加两次有界 RX FIFO 清理，并在结果中报告 `discarded_rx_bytes`，原始 89/90 报告继续保留。补齐清单汇总字段后再次从 SDK IR 生成、两轮诊断构建并烧录，最终 BIN 为 468776 bytes，SHA-256 `174b0c613700da6c8fef487fef96e869c1ff87fac03cef59f831bebda1abe90b`；实板 10/10 次启动、90/90 条命令通过，平均启动时间 191.879 ms，最终报告 SHA-256 `beea6330368f12d6f012f021cc1b219b51bcb30c3e1583931fcfdab32f7b17e8`。
+- Zephyr 首轮计划驱动固件在 GPIO 设备初始化时触发 K210 SDK `gpiohs.c:38` 断言。寄存器诊断显示 IO8/IO9 的 FPIOA `ch_sel` 已正确写为 53/52，但 `fpioa_get_io_by_function()` 返回 -1。ELF 反汇编确认 GCC 14 将 `volatile` 位域读编译为 K210 FPIOA 不支持的 8 位 `lbu`。生成 Zephyr 工程现对 GNU 工具链启用 `-fstrict-volatile-bitfields`；修正后反汇编为 32 位 `lw` 加掩码，并增加 SDK 初始化和有界读回检查。
+- Zephyr 修正后的管线一次构建成功，15 项操作直接调用计划实体，4 项 PLIC 操作由 Zephyr IRQ 子系统接管，19/19 项均被编译反馈观察。最终 BIN 为 35584 bytes，SHA-256 `94146dffa0559993f759f96f792f35056bb689dd9c86ae862befe4f3de0e078b`；实板 10/10 次启动、90/90 条命令通过，失败和 `unsupported` 均为 0，平均启动时间 33.895 ms，报告 SHA-256 `f075dc63f388e4e007d051b981b1c6351df6f1a8fdd86e97cf0db0526ad24243`。
+- 九条命令覆盖设备发现、时钟与频率、中断回调、UART 双向回环、GPIO 电平与输入回读、GPIO 中断、定时器单次/周期回调和综合稳定性。验证路径只通过 RT-Thread 或 Zephyr 公共设备 API 进入生成设备与 SDK 绑定。最终计划、逐操作清单、编译反馈、产物验证、板测报告和失败诊断统一保存在 `experiments/hardware-results/k210-operation-lambdamart-v2.2/`。
+- Python 单元与组件集成回归仍为 `70 passed`，与两次目标构建、每个 RTOS 的 10 次启动和 90 条实板命令分别统计。为校验最新 RT-Thread 产物哈希，最后又烧录并复测 RT-Thread，因此当前板上最终保留的是 RT-Thread 固件。

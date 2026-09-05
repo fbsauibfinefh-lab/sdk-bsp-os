@@ -97,13 +97,17 @@ class RTThreadValidationGenerator:
 '''
             binding_helpers = rf'''
 static int bspforge_binding_uart_loopback(rt_uint32_t *bytes,
-                                          rt_uint32_t *errors)
+                                          rt_uint32_t *errors,
+                                          rt_uint32_t *discarded)
 {{
     rt_device_t serial;
     rt_uint32_t index;
+    rt_uint32_t drain_limit;
+    rt_uint8_t stale;
 
     *bytes = 0U;
     *errors = 0U;
+    *discarded = 0U;
     if ({uart_channel} < 0 || {uart_channel} > 2 ||
         {uart_tx_fpioa_io} < 0 || {uart_rx_fpioa_io} < 0)
         return -RT_ENOSYS;
@@ -118,6 +122,20 @@ static int bspforge_binding_uart_loopback(rt_uint32_t *bytes,
         return -RT_ENOSYS;
     if (rt_device_open(serial, RT_DEVICE_FLAG_RDWR) != RT_EOK)
         return -RT_ERROR;
+    /* Discard bounded reset/open noise before measuring the generated path. */
+    for (drain_limit = 0U; drain_limit < 64U; ++drain_limit)
+    {{
+        if (rt_device_read(serial, 0, &stale, 1U) != 1U)
+            break;
+        (*discarded)++;
+    }}
+    rt_thread_mdelay(2);
+    for (drain_limit = 0U; drain_limit < 64U; ++drain_limit)
+    {{
+        if (rt_device_read(serial, 0, &stale, 1U) != 1U)
+            break;
+        (*discarded)++;
+    }}
     for (index = 0U; index < 16U; ++index)
     {{
         rt_uint8_t sent = (rt_uint8_t)(0x31U + index * 7U);
@@ -395,16 +413,19 @@ int bspforge_selftest(int argc, char **argv)
     {{
         rt_uint32_t bytes = 0U;
         rt_uint32_t errors = 0U;
+        rt_uint32_t discarded = 0U;
         int result = -RT_ENOSYS;
-{('        result = bspforge_binding_uart_loopback(&bytes, &errors);' if binding_validation else '')}
+{('        result = bspforge_binding_uart_loopback(&bytes, &errors, &discarded);' if binding_validation else '')}
         status = result == RT_EOK ? "pass" :
                  result == -RT_ENOSYS ? "unsupported" : "fail";
         rt_kprintf("{{\"bspforge\":true,\"protocol\":\"1.0\","
                    "\"event\":\"result\",\"request_id\":\"%s\","
                    "\"command\":\"%s\",\"status\":\"%s\","
-                   "\"metrics\":{{\"bytes\":%lu,\"errors\":%lu}}}}\r\n",
+                   "\"metrics\":{{\"bytes\":%lu,\"errors\":%lu,"
+                   "\"discarded_rx_bytes\":%lu}}}}\r\n",
                    request_id, command, status,
-                   (unsigned long)bytes, (unsigned long)errors);
+                   (unsigned long)bytes, (unsigned long)errors,
+                   (unsigned long)discarded);
         return 0;
     }}
     else if (strcmp(command, "gpio.toggle") == 0 && bspforge_pin_number >= 0)

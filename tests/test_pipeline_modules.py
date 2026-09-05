@@ -1245,6 +1245,8 @@ class ModuleTests(unittest.TestCase):
         self.assertIn("HWTIMER_MODE_ONESHOT", source)
         self.assertIn('strcmp(command, "interrupt.basic")', source)
         self.assertIn('strcmp(command, "uart.loopback")', source)
+        self.assertIn("drain_limit < 64U", source)
+        self.assertIn('\\"discarded_rx_bytes\\":%lu', source)
         self.assertIn('strcmp(command, "gpio.irq")', source)
 
     def test_rtthread_backend_can_disable_nonrequired_board_feature(self) -> None:
@@ -1363,6 +1365,7 @@ class ModuleTests(unittest.TestCase):
         self.assertIn("src/bspforge_zephyr_devices.c", cmake)
         self.assertIn(str((self.sdk / "lib/drivers/uart.c").resolve()), cmake)
         self.assertIn("target_include_directories(app PRIVATE", cmake)
+        self.assertIn("-fstrict-volatile-bitfields", cmake)
         self.assertIn("asm=__asm__", cmake)
 
     def test_zephyr_k210_binding_validates_and_uses_configured_timer_irq(self) -> None:
@@ -1409,6 +1412,12 @@ class ModuleTests(unittest.TestCase):
         self.assertIn("#define BSPFORGE_TIMER_DEVICE 2U", source)
         self.assertIn("#define BSPFORGE_TIMER_CHANNEL 3U", source)
         self.assertIn("BSPFORGE_TIMER_CHANNEL / 2U", source)
+        self.assertLess(
+            source.index("if (fpioa_init() != 0)"),
+            source.index("fpioa_set_function(BSPFORGE_GPIO_OUTPUT_IO"),
+        )
+        self.assertIn("mapping_attempt < 16U", source)
+        self.assertIn("k_busy_wait(1U)", source)
         self.assertIn("timer_enable((timer_device_number_t)BSPFORGE_TIMER_DEVICE", source)
         self.assertIn("timer_disable((timer_device_number_t)BSPFORGE_TIMER_DEVICE", source)
         with self.assertRaisesRegex(ValueError, "timer device/channel"):

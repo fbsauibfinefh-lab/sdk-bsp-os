@@ -472,6 +472,13 @@ int bspforge_uart_read(void *buffer, size_t size)
 
 int bspforge_gpio_initialize(void)
 {{
+    int output_mapping;
+    int input_mapping;
+    uint32_t mapping_attempt;
+
+    /* GPIOHS drive-mode setup requires the SDK FPIOA clock/init contract. */
+    if (fpioa_init() != 0)
+        return -EIO;
     if (fpioa_set_function(BSPFORGE_GPIO_OUTPUT_IO,
                            FUNC_GPIOHS0 + BSPFORGE_GPIO_OUTPUT_PIN) != 0 ||
         fpioa_set_function(BSPFORGE_GPIO_INPUT_IO,
@@ -480,6 +487,24 @@ int bspforge_gpio_initialize(void)
     if (fpioa_set_io_pull(BSPFORGE_GPIO_OUTPUT_IO, FPIOA_PULL_DOWN) != 0 ||
         fpioa_set_io_pull(BSPFORGE_GPIO_INPUT_IO, FPIOA_PULL_DOWN) != 0)
         return -EIO;
+    output_mapping = -1;
+    input_mapping = -1;
+    for (mapping_attempt = 0U; mapping_attempt < 16U; ++mapping_attempt) {{
+        output_mapping = fpioa_get_io_by_function(
+            FUNC_GPIOHS0 + BSPFORGE_GPIO_OUTPUT_PIN);
+        input_mapping = fpioa_get_io_by_function(
+            FUNC_GPIOHS0 + BSPFORGE_GPIO_INPUT_PIN);
+        if (output_mapping == (int)BSPFORGE_GPIO_OUTPUT_IO &&
+            input_mapping == (int)BSPFORGE_GPIO_INPUT_IO)
+            break;
+        k_busy_wait(1U);
+    }}
+    if (output_mapping != (int)BSPFORGE_GPIO_OUTPUT_IO ||
+        input_mapping != (int)BSPFORGE_GPIO_INPUT_IO) {{
+        printk("bspforge: FPIOA mapping timeout output=%d input=%d\n",
+               output_mapping, input_mapping);
+        return -EIO;
+    }}
     @OP:gpio.configure@(BSPFORGE_GPIO_OUTPUT_PIN, GPIO_DM_OUTPUT);
     @OP:gpio.configure@(BSPFORGE_GPIO_INPUT_PIN, GPIO_DM_INPUT_PULL_DOWN);
     return 0;

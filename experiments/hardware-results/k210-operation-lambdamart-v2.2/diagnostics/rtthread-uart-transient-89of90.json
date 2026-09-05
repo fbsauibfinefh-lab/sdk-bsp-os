@@ -1,0 +1,1669 @@
+{
+  "board": "k210",
+  "created_at": "2026-09-04T13:30:39.782760+00:00",
+  "firmware_artifact": {
+    "path": "workspace/generated/k210-rtthread-lambdamart/bsp/k210/rtthread.bin",
+    "sha256": "a48a3f844f3f076b268815e5558322dc134187b9377bb08f20ff3a9a42c4dcf4",
+    "size": 468680
+  },
+  "raw_log": [
+    "heap: [0x8007c493 - 0x80600000]",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.2.1 build Sep  4 2026 21:29:46",
+    " 2006 - 2024 Copyright by RT-Thread team",
+    "\u001b[32m[13] I/utest: utest is initialize success.",
+    "\u001b[0m\u001b[32m[18] I/utest: total utest testcase num: (3)",
+    "\u001b[0m{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-plan-driven-v2.2-rtthread\",\"stage\":\"application\"}",
+    "Hello, world",
+    "msh />bspforge_selftest 5bf2e9491183 info",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"5bf2e9491183\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
+    "msh />",
+    "msh />bspforge_selftest 453cdaa3a8c3 clock.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"453cdaa3a8c3\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":403000000,\"timer_hz\":403000000}}",
+    "msh />",
+    "msh />bspforge_selftest 33124e9ffc19 interrupt.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"33124e9ffc19\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest 50937284a160 uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"50937284a160\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "msh />",
+    "msh />bspforge_selftest 82a10328953c gpio.toggle",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"82a10328953c\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "msh />",
+    "msh />bspforge_selftest d94cc234b017 gpio.irq",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d94cc234b017\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1}}",
+    "msh />",
+    "msh />bspforge_selftest 909a645c9f87 timer.oneshot",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"909a645c9f87\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest 966501dd078f timer.periodic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"966501dd078f\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"ticks\":31}}",
+    "msh />",
+    "msh />bspforge_selftest b237d69a1bca stability",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b237d69a1bca\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "heap: [0x8007c493 - 0x80600000]",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.2.1 build Sep  4 2026 21:29:46",
+    " 2006 - 2024 Copyright by RT-Thread team",
+    "\u001b[32m[13] I/utest: utest is initialize success.",
+    "\u001b[0m\u001b[32m[18] I/utest: total utest testcase num: (3)",
+    "\u001b[0m{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-plan-driven-v2.2-rtthread\",\"stage\":\"application\"}",
+    "Hello, world",
+    "msh />bspforge_selftest 26163b6c0c15 info",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"26163b6c0c15\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
+    "msh />",
+    "msh />bspforge_selftest f91345fdffbf clock.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"f91345fdffbf\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":403000000,\"timer_hz\":403000000}}",
+    "msh />",
+    "msh />bspforge_selftest 4899ae7da4f7 interrupt.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"4899ae7da4f7\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest e83aa5e2550b uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e83aa5e2550b\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "msh />",
+    "msh />bspforge_selftest 2860f24f4b4e gpio.toggle",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2860f24f4b4e\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "msh />",
+    "msh />bspforge_selftest aaf254f397b4 gpio.irq",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"aaf254f397b4\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1}}",
+    "msh />",
+    "msh />bspforge_selftest 565a41d1d8c2 timer.oneshot",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"565a41d1d8c2\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest 880d8faecfa9 timer.periodic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"880d8faecfa9\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"ticks\":31}}",
+    "msh />",
+    "msh />bspforge_selftest 634cfddf0dea stability",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"634cfddf0dea\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "heap: [0x8007c493 - 0x80600000]",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.2.1 build Sep  4 2026 21:29:46",
+    " 2006 - 2024 Copyright by RT-Thread team",
+    "\u001b[32m[13] I/utest: utest is initialize success.",
+    "\u001b[0m\u001b[32m[18] I/utest: total utest testcase num: (3)",
+    "\u001b[0m{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-plan-driven-v2.2-rtthread\",\"stage\":\"application\"}",
+    "Hello, world",
+    "msh />bspforge_selftest 580bc0258698 info",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"580bc0258698\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
+    "msh />",
+    "msh />bspforge_selftest 43c3b1bef3fb clock.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"43c3b1bef3fb\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":403000000,\"timer_hz\":403000000}}",
+    "msh />",
+    "msh />bspforge_selftest d3744b0158da interrupt.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d3744b0158da\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest 120d52dc55ac uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"120d52dc55ac\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "msh />",
+    "msh />bspforge_selftest f6c4a7ade7bd gpio.toggle",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"f6c4a7ade7bd\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "msh />",
+    "msh />bspforge_selftest 59956d828888 gpio.irq",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"59956d828888\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1}}",
+    "msh />",
+    "msh />bspforge_selftest e1f69088baea timer.oneshot",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e1f69088baea\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest 5b7689e6ff34 timer.periodic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"5b7689e6ff34\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"ticks\":31}}",
+    "msh />",
+    "msh />bspforge_selftest 6956dcda9035 stability",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"6956dcda9035\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "heap: [0x8007c493 - 0x80600000]",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.2.1 build Sep  4 2026 21:29:46",
+    " 2006 - 2024 Copyright by RT-Thread team",
+    "\u001b[32m[13] I/utest: utest is initialize success.",
+    "\u001b[0m\u001b[32m[18] I/utest: total utest testcase num: (3)",
+    "\u001b[0m{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-plan-driven-v2.2-rtthread\",\"stage\":\"application\"}",
+    "Hello, world",
+    "msh />bspforge_selftest 88fab25e7c94 info",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"88fab25e7c94\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
+    "msh />",
+    "msh />bspforge_selftest d2e5643a068c clock.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d2e5643a068c\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":403000000,\"timer_hz\":403000000}}",
+    "msh />",
+    "msh />bspforge_selftest c4e722d9e5cb interrupt.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c4e722d9e5cb\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest d42395b15afa uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d42395b15afa\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "msh />",
+    "msh />bspforge_selftest 7cde602e9b16 gpio.toggle",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"7cde602e9b16\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "msh />",
+    "msh />bspforge_selftest e8e236c00bfb gpio.irq",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e8e236c00bfb\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1}}",
+    "msh />",
+    "msh />bspforge_selftest 357cc5677ea5 timer.oneshot",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"357cc5677ea5\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest 653775fab5cf timer.periodic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"653775fab5cf\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"ticks\":31}}",
+    "msh />",
+    "msh />bspforge_selftest 025550f73f46 stability",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"025550f73f46\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "heap: [0x8007c493 - 0x80600000]",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.2.1 build Sep  4 2026 21:29:46",
+    " 2006 - 2024 Copyright by RT-Thread team",
+    "\u001b[32m[13] I/utest: utest is initialize success.",
+    "\u001b[0m\u001b[32m[18] I/utest: total utest testcase num: (3)",
+    "\u001b[0m{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-plan-driven-v2.2-rtthread\",\"stage\":\"application\"}",
+    "Hello, world",
+    "msh />bspforge_selftest 3dcad6ee9b30 info",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3dcad6ee9b30\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
+    "msh />",
+    "msh />bspforge_selftest 7f5c20c302ed clock.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"7f5c20c302ed\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":403000000,\"timer_hz\":403000000}}",
+    "msh />",
+    "msh />bspforge_selftest 2bb1cfe60931 interrupt.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2bb1cfe60931\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest 330ca9934421 uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"330ca9934421\",\"command\":\"uart.loopback\",\"status\":\"fail\",\"metrics\":{\"bytes\":16,\"errors\":16}}",
+    "msh />",
+    "msh />bspforge_selftest e34f2da3ebd8 gpio.toggle",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e34f2da3ebd8\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "msh />",
+    "msh />bspforge_selftest 7fbeb6169ec7 gpio.irq",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"7fbeb6169ec7\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1}}",
+    "msh />",
+    "msh />bspforge_selftest b083bc6b2c32 timer.oneshot",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b083bc6b2c32\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest 9b9cfebf0b2f timer.periodic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"9b9cfebf0b2f\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"ticks\":31}}",
+    "msh />",
+    "msh />bspforge_selftest c0e9b0bd36db stability",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c0e9b0bd36db\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "heap: [0x8007c493 - 0x80600000]",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.2.1 build Sep  4 2026 21:29:46",
+    " 2006 - 2024 Copyright by RT-Thread team",
+    "\u001b[32m[13] I/utest: utest is initialize success.",
+    "\u001b[0m\u001b[32m[18] I/utest: total utest testcase num: (3)",
+    "\u001b[0m{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-plan-driven-v2.2-rtthread\",\"stage\":\"application\"}",
+    "Hello, world",
+    "msh />bspforge_selftest ff579af46703 info",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ff579af46703\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
+    "msh />",
+    "msh />bspforge_selftest ae32ea6f7424 clock.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ae32ea6f7424\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":403000000,\"timer_hz\":403000000}}",
+    "msh />",
+    "msh />bspforge_selftest b302334bf042 interrupt.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b302334bf042\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest 744a4da0a220 uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"744a4da0a220\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "msh />",
+    "msh />bspforge_selftest 8e7e0fa36f5d gpio.toggle",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"8e7e0fa36f5d\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "msh />",
+    "msh />bspforge_selftest ceff0bc24b69 gpio.irq",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ceff0bc24b69\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1}}",
+    "msh />",
+    "msh />bspforge_selftest 852c734f8a62 timer.oneshot",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"852c734f8a62\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest 8a82d0a45d2b timer.periodic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"8a82d0a45d2b\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"ticks\":31}}",
+    "msh />",
+    "msh />bspforge_selftest 3a730fdbd951 stability",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3a730fdbd951\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "heap: [0x8007c493 - 0x80600000]",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.2.1 build Sep  4 2026 21:29:46",
+    " 2006 - 2024 Copyright by RT-Thread team",
+    "\u001b[32m[13] I/utest: utest is initialize success.",
+    "\u001b[0m\u001b[32m[18] I/utest: total utest testcase num: (3)",
+    "\u001b[0m{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-plan-driven-v2.2-rtthread\",\"stage\":\"application\"}",
+    "Hello, world",
+    "msh />bspforge_selftest 3adae5948530 info",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3adae5948530\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
+    "msh />",
+    "msh />bspforge_selftest bdb2803f49d3 clock.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"bdb2803f49d3\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":403000000,\"timer_hz\":403000000}}",
+    "msh />",
+    "msh />bspforge_selftest 57abc42d899c interrupt.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"57abc42d899c\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest 1474e2e3495d uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"1474e2e3495d\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "msh />",
+    "msh />bspforge_selftest d55b9d8887ec gpio.toggle",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d55b9d8887ec\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "msh />",
+    "msh />bspforge_selftest 9da94264beb4 gpio.irq",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"9da94264beb4\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1}}",
+    "msh />",
+    "msh />bspforge_selftest 0c6df798ad7c timer.oneshot",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0c6df798ad7c\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest e75f7e86e9aa timer.periodic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e75f7e86e9aa\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"ticks\":31}}",
+    "msh />",
+    "msh />bspforge_selftest 41aa77880207 stability",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"41aa77880207\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "heap: [0x8007c493 - 0x80600000]",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.2.1 build Sep  4 2026 21:29:46",
+    " 2006 - 2024 Copyright by RT-Thread team",
+    "\u001b[32m[13] I/utest: utest is initialize success.",
+    "\u001b[0m\u001b[32m[18] I/utest: total utest testcase num: (3)",
+    "\u001b[0m{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-plan-driven-v2.2-rtthread\",\"stage\":\"application\"}",
+    "Hello, world",
+    "msh />bspforge_selftest b5c06066a10a info",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"b5c06066a10a\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
+    "msh />",
+    "msh />bspforge_selftest eccdf6138959 clock.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"eccdf6138959\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":403000000,\"timer_hz\":403000000}}",
+    "msh />",
+    "msh />bspforge_selftest 64e181cfd849 interrupt.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"64e181cfd849\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest f75344e672a2 uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"f75344e672a2\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "msh />",
+    "msh />bspforge_selftest 203a3394a593 gpio.toggle",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"203a3394a593\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "msh />",
+    "msh />bspforge_selftest 0236f7f7a19c gpio.irq",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0236f7f7a19c\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1}}",
+    "msh />",
+    "msh />bspforge_selftest 2e591a5947c1 timer.oneshot",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"2e591a5947c1\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest 7c721f3d7f96 timer.periodic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"7c721f3d7f96\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"ticks\":31}}",
+    "msh />",
+    "msh />bspforge_selftest dacc9346e714 stability",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"dacc9346e714\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "heap: [0x8007c493 - 0x80600000]",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.2.1 build Sep  4 2026 21:29:46",
+    " 2006 - 2024 Copyright by RT-Thread team",
+    "\u001b[32m[13] I/utest: utest is initialize success.",
+    "\u001b[0m\u001b[32m[18] I/utest: total utest testcase num: (3)",
+    "\u001b[0m{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-plan-driven-v2.2-rtthread\",\"stage\":\"application\"}",
+    "Hello, world",
+    "msh />bspforge_selftest c810ac8560f3 info",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c810ac8560f3\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
+    "msh />",
+    "msh />bspforge_selftest c73fe6b3049b clock.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c73fe6b3049b\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":403000000,\"timer_hz\":403000000}}",
+    "msh />",
+    "msh />bspforge_selftest 5b22ba5baedf interrupt.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"5b22ba5baedf\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest ab33066a4a72 uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"ab33066a4a72\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "msh />",
+    "msh />bspforge_selftest 349189bfcf13 gpio.toggle",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"349189bfcf13\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "msh />",
+    "msh />bspforge_selftest fd6d885f4ef9 gpio.irq",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"fd6d885f4ef9\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1}}",
+    "msh />",
+    "msh />bspforge_selftest 75620e2a16aa timer.oneshot",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"75620e2a16aa\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest 9ed4cffc107a timer.periodic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"9ed4cffc107a\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"ticks\":31}}",
+    "msh />",
+    "msh />bspforge_selftest aea943153443 stability",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"aea943153443\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}",
+    "heap: [0x8007c493 - 0x80600000]",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.2.1 build Sep  4 2026 21:29:46",
+    " 2006 - 2024 Copyright by RT-Thread team",
+    "\u001b[32m[13] I/utest: utest is initialize success.",
+    "\u001b[0m\u001b[32m[18] I/utest: total utest testcase num: (3)",
+    "\u001b[0m{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-plan-driven-v2.2-rtthread\",\"stage\":\"application\"}",
+    "Hello, world",
+    "msh />bspforge_selftest 16a7444d2b37 info",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"16a7444d2b37\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
+    "msh />",
+    "msh />bspforge_selftest a278e5f3590e clock.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a278e5f3590e\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":403000000,\"timer_hz\":403000000}}",
+    "msh />",
+    "msh />bspforge_selftest d3fe6a2375b2 interrupt.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d3fe6a2375b2\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest c93be8807dfd uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"c93be8807dfd\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0}}",
+    "msh />",
+    "msh />bspforge_selftest eeac4eeac28d gpio.toggle",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"eeac4eeac28d\",\"command\":\"gpio.toggle\",\"status\":\"pass\",\"metrics\":{\"output_low_latch\":0,\"output_high_latch\":1,\"input_low\":0,\"input_high\":1}}",
+    "msh />",
+    "msh />bspforge_selftest 95a605ce2432 gpio.irq",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"95a605ce2432\",\"command\":\"gpio.irq\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1}}",
+    "msh />",
+    "msh />bspforge_selftest 8be81b6f6334 timer.oneshot",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"8be81b6f6334\",\"command\":\"timer.oneshot\",\"status\":\"pass\",\"metrics\":{\"callbacks\":1,\"ticks\":11}}",
+    "msh />",
+    "msh />bspforge_selftest eb8af26689d8 timer.periodic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"eb8af26689d8\",\"command\":\"timer.periodic\",\"status\":\"pass\",\"metrics\":{\"callbacks\":3,\"ticks\":31}}",
+    "msh />",
+    "msh />bspforge_selftest fdcf6225608c stability",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"fdcf6225608c\",\"command\":\"stability\",\"status\":\"pass\",\"metrics\":{}}"
+  ],
+  "rounds": [
+    {
+      "boot_event": {
+        "board": "k210",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-plan-driven-v2.2-rtthread",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 191.088,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 17.52,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "5bf2e9491183",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 22.509,
+          "metrics": {
+            "cpu_hz": 403000000,
+            "timer_hz": 403000000
+          },
+          "protocol": "1.0",
+          "request_id": "453cdaa3a8c3",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 32.626,
+          "metrics": {
+            "irq_callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "33124e9ffc19",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 37.17,
+          "metrics": {
+            "bytes": 16,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "50937284a160",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 28.464,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "82a10328953c",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 21.407,
+          "metrics": {
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "d94cc234b017",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 32.006,
+          "metrics": {
+            "callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "909a645c9f87",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 52.834,
+          "metrics": {
+            "callbacks": 3,
+            "ticks": 31
+          },
+          "protocol": "1.0",
+          "request_id": "966501dd078f",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 18.514,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "b237d69a1bca",
+          "status": "pass"
+        }
+      ],
+      "round": 1
+    },
+    {
+      "boot_event": {
+        "board": "k210",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-plan-driven-v2.2-rtthread",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 190.885,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 17.323,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "26163b6c0c15",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 22.503,
+          "metrics": {
+            "cpu_hz": 403000000,
+            "timer_hz": 403000000
+          },
+          "protocol": "1.0",
+          "request_id": "f91345fdffbf",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 32.963,
+          "metrics": {
+            "irq_callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "4899ae7da4f7",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 37.273,
+          "metrics": {
+            "bytes": 16,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "e83aa5e2550b",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 28.298,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "2860f24f4b4e",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 21.684,
+          "metrics": {
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "aaf254f397b4",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 31.878,
+          "metrics": {
+            "callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "565a41d1d8c2",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 52.715,
+          "metrics": {
+            "callbacks": 3,
+            "ticks": 31
+          },
+          "protocol": "1.0",
+          "request_id": "880d8faecfa9",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 18.42,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "634cfddf0dea",
+          "status": "pass"
+        }
+      ],
+      "round": 2
+    },
+    {
+      "boot_event": {
+        "board": "k210",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-plan-driven-v2.2-rtthread",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 191.223,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 17.49,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "580bc0258698",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 22.533,
+          "metrics": {
+            "cpu_hz": 403000000,
+            "timer_hz": 403000000
+          },
+          "protocol": "1.0",
+          "request_id": "43c3b1bef3fb",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 32.492,
+          "metrics": {
+            "irq_callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "d3744b0158da",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 37.28,
+          "metrics": {
+            "bytes": 16,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "120d52dc55ac",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 28.326,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "f6c4a7ade7bd",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 21.345,
+          "metrics": {
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "59956d828888",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 32.067,
+          "metrics": {
+            "callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "e1f69088baea",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 52.687,
+          "metrics": {
+            "callbacks": 3,
+            "ticks": 31
+          },
+          "protocol": "1.0",
+          "request_id": "5b7689e6ff34",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 18.49,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "6956dcda9035",
+          "status": "pass"
+        }
+      ],
+      "round": 3
+    },
+    {
+      "boot_event": {
+        "board": "k210",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-plan-driven-v2.2-rtthread",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 190.865,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 17.488,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "88fab25e7c94",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 22.45,
+          "metrics": {
+            "cpu_hz": 403000000,
+            "timer_hz": 403000000
+          },
+          "protocol": "1.0",
+          "request_id": "d2e5643a068c",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 32.922,
+          "metrics": {
+            "irq_callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "c4e722d9e5cb",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 37.482,
+          "metrics": {
+            "bytes": 16,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "d42395b15afa",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 43.631,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "7cde602e9b16",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 21.243,
+          "metrics": {
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "e8e236c00bfb",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 32.208,
+          "metrics": {
+            "callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "357cc5677ea5",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 52.729,
+          "metrics": {
+            "callbacks": 3,
+            "ticks": 31
+          },
+          "protocol": "1.0",
+          "request_id": "653775fab5cf",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 18.283,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "025550f73f46",
+          "status": "pass"
+        }
+      ],
+      "round": 4
+    },
+    {
+      "boot_event": {
+        "board": "k210",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-plan-driven-v2.2-rtthread",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 190.78,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 17.326,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "3dcad6ee9b30",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 22.42,
+          "metrics": {
+            "cpu_hz": 403000000,
+            "timer_hz": 403000000
+          },
+          "protocol": "1.0",
+          "request_id": "7f5c20c302ed",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 33.036,
+          "metrics": {
+            "irq_callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "2bb1cfe60931",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 29.141,
+          "metrics": {
+            "bytes": 16,
+            "errors": 16
+          },
+          "protocol": "1.0",
+          "request_id": "330ca9934421",
+          "status": "fail"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 36.511,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "e34f2da3ebd8",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 21.506,
+          "metrics": {
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "7fbeb6169ec7",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 32.031,
+          "metrics": {
+            "callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "b083bc6b2c32",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 52.695,
+          "metrics": {
+            "callbacks": 3,
+            "ticks": 31
+          },
+          "protocol": "1.0",
+          "request_id": "9b9cfebf0b2f",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 18.352,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "c0e9b0bd36db",
+          "status": "pass"
+        }
+      ],
+      "round": 5
+    },
+    {
+      "boot_event": {
+        "board": "k210",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-plan-driven-v2.2-rtthread",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 190.964,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 17.393,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "ff579af46703",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 38.414,
+          "metrics": {
+            "cpu_hz": 403000000,
+            "timer_hz": 403000000
+          },
+          "protocol": "1.0",
+          "request_id": "ae32ea6f7424",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 32.395,
+          "metrics": {
+            "irq_callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "b302334bf042",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 37.296,
+          "metrics": {
+            "bytes": 16,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "744a4da0a220",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 28.355,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "8e7e0fa36f5d",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 21.25,
+          "metrics": {
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "ceff0bc24b69",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 32.171,
+          "metrics": {
+            "callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "852c734f8a62",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 52.729,
+          "metrics": {
+            "callbacks": 3,
+            "ticks": 31
+          },
+          "protocol": "1.0",
+          "request_id": "8a82d0a45d2b",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 18.387,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "3a730fdbd951",
+          "status": "pass"
+        }
+      ],
+      "round": 6
+    },
+    {
+      "boot_event": {
+        "board": "k210",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-plan-driven-v2.2-rtthread",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 190.911,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 17.397,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "3adae5948530",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 22.697,
+          "metrics": {
+            "cpu_hz": 403000000,
+            "timer_hz": 403000000
+          },
+          "protocol": "1.0",
+          "request_id": "bdb2803f49d3",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 32.599,
+          "metrics": {
+            "irq_callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "57abc42d899c",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 36.932,
+          "metrics": {
+            "bytes": 16,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "1474e2e3495d",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 28.772,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "d55b9d8887ec",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 21.332,
+          "metrics": {
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "9da94264beb4",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 32.034,
+          "metrics": {
+            "callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "0c6df798ad7c",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 52.71,
+          "metrics": {
+            "callbacks": 3,
+            "ticks": 31
+          },
+          "protocol": "1.0",
+          "request_id": "e75f7e86e9aa",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 18.581,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "41aa77880207",
+          "status": "pass"
+        }
+      ],
+      "round": 7
+    },
+    {
+      "boot_event": {
+        "board": "k210",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-plan-driven-v2.2-rtthread",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 190.87,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 17.509,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "b5c06066a10a",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 22.576,
+          "metrics": {
+            "cpu_hz": 403000000,
+            "timer_hz": 403000000
+          },
+          "protocol": "1.0",
+          "request_id": "eccdf6138959",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 32.713,
+          "metrics": {
+            "irq_callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "64e181cfd849",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 37.292,
+          "metrics": {
+            "bytes": 16,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "f75344e672a2",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 28.344,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "203a3394a593",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 21.28,
+          "metrics": {
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "0236f7f7a19c",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 32.293,
+          "metrics": {
+            "callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "2e591a5947c1",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 52.685,
+          "metrics": {
+            "callbacks": 3,
+            "ticks": 31
+          },
+          "protocol": "1.0",
+          "request_id": "7c721f3d7f96",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 18.751,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "dacc9346e714",
+          "status": "pass"
+        }
+      ],
+      "round": 8
+    },
+    {
+      "boot_event": {
+        "board": "k210",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-plan-driven-v2.2-rtthread",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 190.851,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 17.492,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "c810ac8560f3",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 22.542,
+          "metrics": {
+            "cpu_hz": 403000000,
+            "timer_hz": 403000000
+          },
+          "protocol": "1.0",
+          "request_id": "c73fe6b3049b",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 32.738,
+          "metrics": {
+            "irq_callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "5b22ba5baedf",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 37.39,
+          "metrics": {
+            "bytes": 16,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "ab33066a4a72",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 29.383,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "349189bfcf13",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 21.532,
+          "metrics": {
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "fd6d885f4ef9",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 31.724,
+          "metrics": {
+            "callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "75620e2a16aa",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 53.05,
+          "metrics": {
+            "callbacks": 3,
+            "ticks": 31
+          },
+          "protocol": "1.0",
+          "request_id": "9ed4cffc107a",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 18.682,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "aea943153443",
+          "status": "pass"
+        }
+      ],
+      "round": 9
+    },
+    {
+      "boot_event": {
+        "board": "k210",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-plan-driven-v2.2-rtthread",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 190.983,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 31.047,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "16a7444d2b37",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 22.946,
+          "metrics": {
+            "cpu_hz": 403000000,
+            "timer_hz": 403000000
+          },
+          "protocol": "1.0",
+          "request_id": "a278e5f3590e",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 33.161,
+          "metrics": {
+            "irq_callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "d3fe6a2375b2",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 37.105,
+          "metrics": {
+            "bytes": 16,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "c93be8807dfd",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.toggle",
+          "event": "result",
+          "host_round_trip_ms": 28.456,
+          "metrics": {
+            "input_high": 1,
+            "input_low": 0,
+            "output_high_latch": 1,
+            "output_low_latch": 0
+          },
+          "protocol": "1.0",
+          "request_id": "eeac4eeac28d",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "gpio.irq",
+          "event": "result",
+          "host_round_trip_ms": 21.259,
+          "metrics": {
+            "irq_callbacks": 1
+          },
+          "protocol": "1.0",
+          "request_id": "95a605ce2432",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.oneshot",
+          "event": "result",
+          "host_round_trip_ms": 32.37,
+          "metrics": {
+            "callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "8be81b6f6334",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "timer.periodic",
+          "event": "result",
+          "host_round_trip_ms": 52.593,
+          "metrics": {
+            "callbacks": 3,
+            "ticks": 31
+          },
+          "protocol": "1.0",
+          "request_id": "eb8af26689d8",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "stability",
+          "event": "result",
+          "host_round_trip_ms": 18.929,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "fdcf6225608c",
+          "status": "pass"
+        }
+      ],
+      "round": 10
+    }
+  ],
+  "rtos": "rtthread",
+  "schema_version": "1.1",
+  "summary": {
+    "boot_attempts": 10,
+    "boot_success_rate": 1.0,
+    "boot_successes": 10,
+    "boot_time_max_ms": 191.223,
+    "boot_time_mean_ms": 190.942,
+    "boot_time_min_ms": 190.78,
+    "command_pass_rate": 0.9889,
+    "commands_applicable": 90,
+    "commands_passed": 89,
+    "commands_total": 90,
+    "failed": 1,
+    "unsupported": 0
+  }
+}

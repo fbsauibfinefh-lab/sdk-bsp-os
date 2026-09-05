@@ -1,0 +1,281 @@
+{
+  "build_success": true,
+  "created_at": "2026-09-05T02:26:04.939828+00:00",
+  "records": [
+    {
+      "calibration_score": 1.0,
+      "capability": "clock",
+      "entity_id": "fe66131e4faa7247",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "initialize",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "sysctl_clock_set_clock_select"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "clock",
+      "entity_id": "0df02608f07f45bd",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "enable",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "sysctl_clock_enable"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "clock",
+      "entity_id": "3813e9f1f4e77ed8",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "disable",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "sysctl_clock_disable"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "clock",
+      "entity_id": "fee9d28d313185ea",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "get_frequency",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "sysctl_clock_get_freq"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "interrupt",
+      "entity_id": "d9b7e5563768a1f4",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "replaced-by-os-backend"
+      ],
+      "generation_disposition": "replaced-by-os-backend",
+      "operation": "initialize",
+      "semantic_correctness_proven": false,
+      "status": "os-replacement-compiled-and-artifact-verified",
+      "symbol": "plic_init"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "interrupt",
+      "entity_id": "a2caa614acca4090",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "enable",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "plic_irq_enable"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "interrupt",
+      "entity_id": "d7b58e63853b7495",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "disable",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "plic_irq_disable"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "interrupt",
+      "entity_id": "eeb49e980af03c3e",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "register",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "plic_irq_register"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "uart",
+      "entity_id": "c5c30b7bfe779782",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "configure",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "uart_configure"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "uart",
+      "entity_id": "b5c9d7d2c9d54d50",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "write",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "uart_send_data"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "uart",
+      "entity_id": "d260f48d1140b968",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "read",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "uart_receive_data"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "gpio",
+      "entity_id": "80c045af5528288a",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "configure",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "gpiohs_set_drive_mode"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "gpio",
+      "entity_id": "22ac57c5e154f275",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "write",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "gpiohs_set_pin"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "gpio",
+      "entity_id": "f68210bd135a59bb",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "read",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "gpiohs_get_pin"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "gpio",
+      "entity_id": "eecd5df3744d85e6",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "attach_irq",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "gpiohs_irq_register"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "timer",
+      "entity_id": "dd37c9af8e19bb9e",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "initialize",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "timer_init"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "timer",
+      "entity_id": "dd908c5c08a0dd9b",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "start",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "timer_enable"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "timer",
+      "entity_id": "ceb8d4aa9fd0e6bb",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "stop",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "timer_disable"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "timer",
+      "entity_id": "60dc93b346d7b996",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed",
+        "direct-generated-call"
+      ],
+      "generation_disposition": "direct-generated-call",
+      "operation": "set_interval",
+      "semantic_correctness_proven": false,
+      "status": "generated-call-compiled-and-artifact-verified",
+      "symbol": "timer_set_interval"
+    }
+  ],
+  "schema_version": "1.0",
+  "scope": "compile-link-artifact feedback only; runtime device semantics excluded",
+  "sdk_id": "kendryte-k210-standalone-sdk-0.5.6",
+  "summary": {
+    "bindings": 19,
+    "compiled": 19,
+    "implicated": 0,
+    "unobserved": 0
+  }
+}

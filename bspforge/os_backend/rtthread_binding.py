@@ -72,7 +72,7 @@ rt_uint32_t bspforge_clock_frequency(rt_uint32_t clock)
         "definitions": r"""
 void bspforge_irq_initialize(void)
 {
-    @OP:interrupt.initialize@();
+    /* RT-Thread initializes the interrupt controller during board startup. */
 }
 
 rt_err_t bspforge_irq_enable(rt_uint32_t irq)
@@ -434,7 +434,11 @@ class RTThreadBindingGenerator:
         source_path = board_dir / "bspforge_bindings.c"
         header_path.write_text(self._header(declarations), encoding="utf-8")
         call_source = self._source(headers, definitions)
-        operation_bindings = operation_manifest(selections, call_source)
+        operation_bindings = operation_manifest(
+            selections,
+            call_source,
+            replaced_operations={("interrupt", "initialize")},
+        )
         ir_declarations = function_declarations(function_index, callable_symbols)
         generated_source = self._source(headers, definitions, ir_declarations)
         source_path.write_text(generated_source, encoding="utf-8")
@@ -463,6 +467,10 @@ class RTThreadBindingGenerator:
                 "plan_operations": len(operation_bindings),
                 "direct_plan_operations": sum(
                     item["direct_call_in_generated_source"]
+                    for item in operation_bindings
+                ),
+                "os_replaced_operations": sum(
+                    item["disposition"] == "replaced-by-os-backend"
                     for item in operation_bindings
                 ),
             },

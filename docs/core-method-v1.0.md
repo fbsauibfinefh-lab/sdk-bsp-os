@@ -428,6 +428,8 @@ H01/H02 源码仲裁后的 H03 在 284 个可达查询上重新运行 v0.3。严
 
 K210 的代表性案例是 `gpio.configure`。原始 Top1 `gpio_init(void)` 缺少 pin 和 mode 参数，不能实现 RTOS 针脚设备的逐引脚配置；它因此被签名约束排除。最终 GPIO 四项统一选择 `gpiohs_set_drive_mode`、`gpiohs_set_pin`、`gpiohs_get_pin` 和 `gpiohs_irq_register`。这不是将错误结果替换为人工真值，而是在不访问标签的条件下，把学习排序转换为满足目标接口契约的可执行组合。
 
-计划生成后，OS Backend 不得再次选择目标函数。RT-Thread 的 19 项操作全部由生成 C 代码直接调用；Zephyr 的时钟、UART、GPIO 和定时器共 15 项直接调用，PLIC 四项因中断控制器所有权冲突由 Zephyr 二级 IRQ 框架等价接管。每项处置、实体 ID、函数签名和源码证据写入 `functional-bindings.json`，再由编译反馈逐项关联。辅助函数只能承担初始化补充、回调注销和状态清理，并与目标选择分栏记录。
+计划生成后，OS Backend 不得再次选择目标函数。RT-Thread 的 18 项操作由生成 C 代码直接调用，PLIC 初始化因 RT-Thread 启动阶段已经完成而由 OS 等价接管；Zephyr 的时钟、UART、GPIO 和定时器共 15 项直接调用，PLIC 四项因中断控制器所有权冲突由 Zephyr 二级 IRQ 框架等价接管。每项处置、实体 ID、函数签名和源码证据写入 `functional-bindings.json`，再由编译反馈逐项关联。辅助函数只能承担初始化补充、参数适配、回调注销、状态清理和工具链访问宽度约束，并与目标选择分栏记录。
 
 论文应把该层定位为“硬约束保护的部署解码”，而不是新的学习模型，也不能把解码后的实板通过率混入原始排序 P@1。核心学习贡献仍是多视图硬件效果证据与 LambdaMART；计划驱动解码负责把统计排序安全地落到可编译的 OS 接口上，双 RTOS 构建和实板结果负责验证端到端可执行性。
+
+最终 K210 实板证据不反向参与模型训练或部署解码。RT-Thread 和 Zephyr 的规范计划均含 19 项操作，编译反馈均逐项可观察；两套固件分别完成 10 次启动和每轮 9 条命令，共 90/90 条通过。RT-Thread 的 UART 测试在正式计数前有界清理复位残留并报告 `discarded_rx_bytes`；Zephyr 对 K210 SDK 的 FPIOA `volatile` 位域强制使用 32 位 MMIO 访问。二者属于测试有效性和 SDK/工具链兼容约束，不改变 LambdaMART 分数、原始候选顺序或签名家族解码结果。

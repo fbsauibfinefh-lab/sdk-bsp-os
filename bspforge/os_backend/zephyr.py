@@ -355,6 +355,9 @@ target_include_directories(app PRIVATE
     {sdk_root / 'lib/utils/include'}
 )
 target_compile_options(app PRIVATE -std=gnu17)
+if(CMAKE_C_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(app PRIVATE -fstrict-volatile-bitfields)
+endif()
 target_compile_definitions(app PRIVATE asm=__asm__ typeof=__typeof__)
 """
         return f"""cmake_minimum_required(VERSION 3.20.0)

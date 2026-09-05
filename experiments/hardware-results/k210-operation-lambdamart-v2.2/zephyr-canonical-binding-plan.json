@@ -1,0 +1,2253 @@
+{
+  "capabilities": [
+    {
+      "capability": "clock",
+      "operations": [
+        {
+          "alternatives": [],
+          "confidence": 3.449984633,
+          "decoder": {
+            "api_family": "sysctl_clock",
+            "candidate_rank": 5,
+            "method": "signature-family",
+            "original_top1_entity_id": "38edfb924595c514",
+            "original_top1_symbol": "sysctl_pll_set_freq",
+            "rejected_before_selection": [
+              {
+                "rank": 2,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "aes_clk_init"
+              },
+              {
+                "rank": 3,
+                "reason": "missing-contract-parameter",
+                "symbol": "sysctl_clock_set_threshold"
+              },
+              {
+                "rank": 7,
+                "reason": "missing-contract-parameter",
+                "symbol": "spi_clk_init"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_clock_device_en"
+              },
+              {
+                "rank": 9,
+                "reason": "missing-contract-parameter",
+                "symbol": "i2c_clk_init"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_pll_clear_slip"
+              },
+              {
+                "rank": 11,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_clock_bus_en"
+              },
+              {
+                "rank": 12,
+                "reason": "symbol-misses-capability",
+                "symbol": "pwm_set_frequency"
+              }
+            ],
+            "selection_changed": true
+          },
+          "entity_id": "fe66131e4faa7247",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "clock",
+                "sysctl"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "set"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "sysctl"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "clock",
+                "sysctl"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "sysctl"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "clock"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "initialize",
+          "parameter_sources": [
+            {
+              "parameter": "clock",
+              "source": "sdk-clock-model"
+            }
+          ],
+          "selected_symbol": "sysctl_clock_set_clock_select",
+          "signature": "int sysctl_clock_set_clock_select(sysctl_clock_select_t which, int select)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [],
+          "confidence": 4.388613901,
+          "decoder": {
+            "api_family": "sysctl_clock",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "0df02608f07f45bd",
+            "original_top1_symbol": "sysctl_clock_enable",
+            "rejected_before_selection": [
+              {
+                "rank": 2,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "sysctl_enable_irq"
+              },
+              {
+                "rank": 3,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_pll_set_freq"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_cpu_set_freq"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_clock_bus_en"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_clock_set_threshold"
+              },
+              {
+                "rank": 8,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "sysctl_pll_fast_enable_pll"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_clock_set_clock_select"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-operation",
+                "symbol": "aes_clk_init"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "0df02608f07f45bd",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "clock",
+                "sysctl"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "enable"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "sysctl"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "clock",
+                "sysctl"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "sysctl"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "clock",
+                "sysctl"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "clock"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "enable",
+          "parameter_sources": [
+            {
+              "parameter": "clock",
+              "source": "sdk-clock-model"
+            }
+          ],
+          "selected_symbol": "sysctl_clock_enable",
+          "signature": "int sysctl_clock_enable(sysctl_clock_t clock)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [],
+          "confidence": 4.277130385,
+          "decoder": {
+            "api_family": "sysctl_clock",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "3813e9f1f4e77ed8",
+            "original_top1_symbol": "sysctl_clock_disable",
+            "rejected_before_selection": [
+              {
+                "rank": 2,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "sysctl_disable_irq"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_pll_set_freq"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_clock_set_threshold"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_cpu_set_freq"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_clock_bus_en"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_clock_set_clock_select"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_clock_device_en"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-operation",
+                "symbol": "dvp_sccb_set_clk_rate"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "3813e9f1f4e77ed8",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "clock",
+                "sysctl"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "disable"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "sysctl"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "clock",
+                "sysctl"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "sysctl"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "clock",
+                "sysctl"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "clock"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "disable",
+          "parameter_sources": [
+            {
+              "parameter": "clock",
+              "source": "sdk-clock-model"
+            }
+          ],
+          "selected_symbol": "sysctl_clock_disable",
+          "signature": "int sysctl_clock_disable(sysctl_clock_t clock)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "9fd1648601e239cd",
+              "score": 4.699680298,
+              "symbol": "sysctl_clock_source_get_freq"
+            },
+            {
+              "entity_id": "9c6a9d02eb57f313",
+              "score": 3.902808821,
+              "symbol": "sysctl_clock_get_clock_select"
+            }
+          ],
+          "confidence": 5.359887344,
+          "decoder": {
+            "api_family": "sysctl_clock",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "fee9d28d313185ea",
+            "original_top1_symbol": "sysctl_clock_get_freq",
+            "rejected_before_selection": [
+              {
+                "rank": 2,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "sysctl_get_freq"
+              },
+              {
+                "rank": 5,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "sysctl_cpu_get_freq"
+              },
+              {
+                "rank": 6,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "sysctl_get_time_us"
+              },
+              {
+                "rank": 7,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "rtc_timer_get_clock_frequency"
+              },
+              {
+                "rank": 9,
+                "reason": "missing-contract-parameter",
+                "symbol": "sysctl_clock_get_threshold"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_reset"
+              },
+              {
+                "rank": 11,
+                "reason": "symbol-misses-operation",
+                "symbol": "sysctl_clock_device_en"
+              },
+              {
+                "rank": 12,
+                "reason": "missing-contract-parameter",
+                "symbol": "wdt_get_pclk"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "fee9d28d313185ea",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "clock",
+                "sysctl"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "freq",
+                "get"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "sysctl"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "clock",
+                "sysctl"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "sysctl"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "clock",
+                "sysctl"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "clock"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "get_frequency",
+          "parameter_sources": [
+            {
+              "parameter": "clock",
+              "source": "sdk-clock-model"
+            }
+          ],
+          "selected_symbol": "sysctl_clock_get_freq",
+          "signature": "uint32_t sysctl_clock_get_freq(sysctl_clock_t clock)",
+          "status": "inferred"
+        }
+      ],
+      "status": "resolved"
+    },
+    {
+      "capability": "interrupt",
+      "operations": [
+        {
+          "alternatives": [],
+          "confidence": 7.118853636,
+          "decoder": {
+            "api_family": "plic",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "d9b7e5563768a1f4",
+            "original_top1_symbol": "plic_init",
+            "rejected_before_selection": [
+              {
+                "rank": 2,
+                "reason": "symbol-misses-operation",
+                "symbol": "dvp_config_interrupt"
+              },
+              {
+                "rank": 3,
+                "reason": "symbol-misses-operation",
+                "symbol": "plic_set_priority"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-capability",
+                "symbol": "_init_bsp"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-capability",
+                "symbol": "kpu_init"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-capability",
+                "symbol": "wdt_init"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-capability",
+                "symbol": "_init"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-capability",
+                "symbol": "i2s_init"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-capability",
+                "symbol": "dmac_init"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "d9b7e5563768a1f4",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "plic"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "init"
+              ],
+              "weight": 0.24
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "plic"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "plic"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "plic"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "initialize",
+          "parameter_sources": [],
+          "selected_symbol": "plic_init",
+          "signature": "void plic_init(void)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [],
+          "confidence": 6.442172703,
+          "decoder": {
+            "api_family": "plic",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "a2caa614acca4090",
+            "original_top1_symbol": "plic_irq_enable",
+            "rejected_before_selection": [
+              {
+                "rank": 2,
+                "reason": "symbol-misses-operation",
+                "symbol": "uarths_set_irq"
+              },
+              {
+                "rank": 3,
+                "reason": "symbol-misses-operation",
+                "symbol": "plic_irq_unregister"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-operation",
+                "symbol": "gpiohs_set_irq"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-operation",
+                "symbol": "plic_set_priority"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "rtc_alarm_irq_unregister"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "rtc_tick_irq_unregister"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "handle_irq_m_ext"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "dmac_irq_unregister"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "a2caa614acca4090",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "irq",
+                "plic"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "enable"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "plic"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "irq",
+                "plic"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "plic"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "enable",
+          "parameter_sources": [
+            {
+              "parameter": "irq",
+              "source": "sdk-enumeration"
+            }
+          ],
+          "selected_symbol": "plic_irq_enable",
+          "signature": "int plic_irq_enable(plic_irq_t irq_number)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [],
+          "confidence": 6.464123124,
+          "decoder": {
+            "api_family": "plic",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "d7b58e63853b7495",
+            "original_top1_symbol": "plic_irq_disable",
+            "rejected_before_selection": [
+              {
+                "rank": 2,
+                "reason": "missing-contract-parameter",
+                "symbol": "gpiohs_irq_disable"
+              },
+              {
+                "rank": 3,
+                "reason": "symbol-misses-operation",
+                "symbol": "plic_irq_unregister"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-operation",
+                "symbol": "uarths_set_irq"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-operation",
+                "symbol": "dmac_irq_unregister"
+              },
+              {
+                "rank": 6,
+                "reason": "missing-contract-parameter",
+                "symbol": "dmac_disable_channel_interrupt"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_irq_unregister"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "handle_irq_m_ext"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "rtc_tick_irq_unregister"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "d7b58e63853b7495",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "irq",
+                "plic"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "disable"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "plic"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "irq",
+                "plic"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "plic"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "disable",
+          "parameter_sources": [
+            {
+              "parameter": "irq",
+              "source": "sdk-enumeration"
+            }
+          ],
+          "selected_symbol": "plic_irq_disable",
+          "signature": "int plic_irq_disable(plic_irq_t irq_number)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [],
+          "confidence": 9.036790272,
+          "decoder": {
+            "api_family": "plic",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "eeb49e980af03c3e",
+            "original_top1_symbol": "plic_irq_register",
+            "rejected_before_selection": [
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "dmac_irq_callback"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "rtc_irq_callback"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "uarths_irq_callback"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_irq_callback"
+              },
+              {
+                "rank": 11,
+                "reason": "symbol-misses-capability",
+                "symbol": "clint_ipi_register"
+              },
+              {
+                "rank": 12,
+                "reason": "symbol-misses-capability",
+                "symbol": "sys_register_putchar"
+              },
+              {
+                "rank": 13,
+                "reason": "symbol-misses-capability",
+                "symbol": "register_core1"
+              },
+              {
+                "rank": 14,
+                "reason": "symbol-misses-capability",
+                "symbol": "output_vector_adapter"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "eeb49e980af03c3e",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "irq",
+                "plic"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "register"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "plic"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "irq",
+                "plic"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "plic"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "register",
+          "parameter_sources": [
+            {
+              "parameter": "irq",
+              "source": "sdk-enumeration"
+            }
+          ],
+          "selected_symbol": "plic_irq_register",
+          "signature": "void plic_irq_register(plic_irq_t irq, plic_irq_callback_t callback, void *ctx)",
+          "status": "inferred"
+        }
+      ],
+      "status": "resolved"
+    },
+    {
+      "capability": "uart",
+      "operations": [
+        {
+          "alternatives": [],
+          "confidence": 4.619509102,
+          "decoder": {
+            "api_family": "uart",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "c5c30b7bfe779782",
+            "original_top1_symbol": "uart_configure",
+            "rejected_before_selection": [
+              {
+                "rank": 2,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "uart_init"
+              },
+              {
+                "rank": 3,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "uart_debug_init"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_set_tat"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_set_det"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_handle_data_dma"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "uarths_config"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_set_work_mode"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_irq_register"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "c5c30b7bfe779782",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "configure"
+              ],
+              "weight": 0.24
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "baud",
+                "uart"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "configure",
+          "parameter_sources": [
+            {
+              "parameter": "baud",
+              "source": "board-policy"
+            },
+            {
+              "parameter": "channel",
+              "source": "board-policy"
+            }
+          ],
+          "selected_symbol": "uart_configure",
+          "signature": "void uart_configure(uart_device_number_t channel, uint32_t baud_rate, uart_bitwidth_t data_width, uart_stopbit_t stopbit, uart_parity_t parity)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "9def4dec923c963f",
+              "score": 3.840307286,
+              "symbol": "uart_send_data_dma"
+            },
+            {
+              "entity_id": "3aa439aea294a7c9",
+              "score": 3.628874042,
+              "symbol": "uart_send_data_dma_irq"
+            }
+          ],
+          "confidence": 4.440210373,
+          "decoder": {
+            "api_family": "uart",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "b5c9d7d2c9d54d50",
+            "original_top1_symbol": "uart_send_data",
+            "rejected_before_selection": [
+              {
+                "rank": 4,
+                "reason": "missing-contract-parameter",
+                "symbol": "uart_set_send_trigger"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_handle_data_dma"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_set_tat"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_irq_register"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_set_work_mode"
+              },
+              {
+                "rank": 10,
+                "reason": "missing-contract-parameter",
+                "symbol": "uart_channel_putc"
+              },
+              {
+                "rank": 11,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_set_det"
+              },
+              {
+                "rank": 12,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "uart_debug_putchar"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "b5c9d7d2c9d54d50",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "send"
+              ],
+              "weight": 0.2
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "write",
+          "parameter_sources": [
+            {
+              "parameter": "channel",
+              "source": "board-policy"
+            }
+          ],
+          "selected_symbol": "uart_send_data",
+          "signature": "int uart_send_data(uart_device_number_t channel, const char *buffer, size_t buf_len)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "a8e47223955ec145",
+              "score": 4.194474651,
+              "symbol": "uart_receive_data_dma"
+            },
+            {
+              "entity_id": "5511bc8152be9792",
+              "score": 3.885951574,
+              "symbol": "uart_receive_data_dma_irq"
+            }
+          ],
+          "confidence": 4.48984219,
+          "decoder": {
+            "api_family": "uart",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "d260f48d1140b968",
+            "original_top1_symbol": "uart_receive_data",
+            "rejected_before_selection": [
+              {
+                "rank": 4,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_set_det"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_handle_data_dma"
+              },
+              {
+                "rank": 7,
+                "reason": "missing-contract-parameter",
+                "symbol": "uart_set_receive_trigger"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_set_tat"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_irq_register"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-operation",
+                "symbol": "uart_set_work_mode"
+              },
+              {
+                "rank": 11,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "uart_debug_getchar"
+              },
+              {
+                "rank": 12,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "uart_channel_getc"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "d260f48d1140b968",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "receive"
+              ],
+              "weight": 0.2
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "read",
+          "parameter_sources": [
+            {
+              "parameter": "channel",
+              "source": "board-policy"
+            }
+          ],
+          "selected_symbol": "uart_receive_data",
+          "signature": "int uart_receive_data(uart_device_number_t channel, char *buffer, size_t buf_len)",
+          "status": "inferred"
+        }
+      ],
+      "status": "resolved"
+    },
+    {
+      "capability": "gpio",
+      "operations": [
+        {
+          "alternatives": [],
+          "confidence": -0.846534376,
+          "decoder": {
+            "api_family": "gpiohs",
+            "candidate_rank": 684,
+            "method": "signature-family",
+            "original_top1_entity_id": "8514be121f570a3d",
+            "original_top1_symbol": "gpio_init",
+            "rejected_before_selection": [
+              {
+                "rank": 1,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "gpio_init"
+              },
+              {
+                "rank": 2,
+                "reason": "symbol-misses-operation",
+                "symbol": "gpiohs_pin_onchange_isr"
+              },
+              {
+                "rank": 3,
+                "reason": "symbol-misses-capability",
+                "symbol": "fpioa_init"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-capability",
+                "symbol": "spi_slave_config"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-capability",
+                "symbol": "uarths_config"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-capability",
+                "symbol": "spi_slave_dual_config"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-capability",
+                "symbol": "uart_configure"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-capability",
+                "symbol": "_init_bsp"
+              }
+            ],
+            "selection_changed": true
+          },
+          "entity_id": "80c045af5528288a",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "gpio",
+                "gpiohs"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "drive",
+                "mode",
+                "set"
+              ],
+              "weight": 0.18666666666666668
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "gpio",
+                "gpiohs"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "gpio",
+                "gpiohs",
+                "pin"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "fpioa",
+                "gpio",
+                "gpiohs"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "fpioa",
+                "gpio"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "gpio",
+                "gpiohs",
+                "pin"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "configure",
+          "parameter_sources": [
+            {
+              "parameter": "pin",
+              "source": "board-or-sdk-constant"
+            }
+          ],
+          "selected_symbol": "gpiohs_set_drive_mode",
+          "signature": "void gpiohs_set_drive_mode(uint8_t pin, gpio_drive_mode_t mode)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "fbcc856146d82483",
+              "score": 4.222721438,
+              "symbol": "gpiohs_set_pin_edge"
+            },
+            {
+              "entity_id": "66caab1f2ccae6c6",
+              "score": -1.764251262,
+              "symbol": "gpiohs_set_irq"
+            },
+            {
+              "entity_id": "80c045af5528288a",
+              "score": -7.28331018,
+              "symbol": "gpiohs_set_drive_mode"
+            }
+          ],
+          "confidence": 4.589454236,
+          "decoder": {
+            "api_family": "gpiohs",
+            "candidate_rank": 2,
+            "method": "signature-family",
+            "original_top1_entity_id": "ac22502926e52f4f",
+            "original_top1_symbol": "gpio_set_pin",
+            "rejected_before_selection": [
+              {
+                "rank": 4,
+                "reason": "symbol-misses-operation",
+                "symbol": "gpiohs_pin_onchange_isr"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-capability",
+                "symbol": "fpioa_set_io_pull"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "gpio_init"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-capability",
+                "symbol": "fpioa_set_st"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-capability",
+                "symbol": "fpioa_set_io"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-capability",
+                "symbol": "fpioa_set_io_driving"
+              },
+              {
+                "rank": 11,
+                "reason": "symbol-misses-capability",
+                "symbol": "fpioa_init"
+              },
+              {
+                "rank": 12,
+                "reason": "symbol-misses-capability",
+                "symbol": "fpioa_set_function"
+              }
+            ],
+            "selection_changed": true
+          },
+          "entity_id": "22ac57c5e154f275",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "gpio",
+                "gpiohs",
+                "pin"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "set"
+              ],
+              "weight": 0.2
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "gpio",
+                "gpiohs"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "gpio",
+                "gpiohs",
+                "pin"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "fpioa",
+                "gpio",
+                "gpiohs"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "gpio",
+                "gpiohs",
+                "pin"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "write",
+          "parameter_sources": [
+            {
+              "parameter": "pin",
+              "source": "board-or-sdk-constant"
+            }
+          ],
+          "selected_symbol": "gpiohs_set_pin",
+          "signature": "void gpiohs_set_pin(uint8_t pin, gpio_pin_value_t value)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [],
+          "confidence": 5.172160906,
+          "decoder": {
+            "api_family": "gpiohs",
+            "candidate_rank": 2,
+            "method": "signature-family",
+            "original_top1_entity_id": "714e35be2c1fda8f",
+            "original_top1_symbol": "gpio_get_pin",
+            "rejected_before_selection": [
+              {
+                "rank": 3,
+                "reason": "symbol-misses-capability",
+                "symbol": "fpioa_get_io"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-capability",
+                "symbol": "fpioa_get_io_pull"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-operation",
+                "symbol": "gpiohs_pin_onchange_isr"
+              },
+              {
+                "rank": 6,
+                "reason": "missing-contract-parameter",
+                "symbol": "get_gpio_bit"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "gpio_init"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-capability",
+                "symbol": "fpioa_get_io_driving"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-capability",
+                "symbol": "fpioa_get_io_by_function"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-capability",
+                "symbol": "fpioa_init"
+              }
+            ],
+            "selection_changed": true
+          },
+          "entity_id": "f68210bd135a59bb",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "gpio",
+                "gpiohs",
+                "pin"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "get"
+              ],
+              "weight": 0.2
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "gpio",
+                "gpiohs"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "gpio",
+                "gpiohs",
+                "pin"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "fpioa",
+                "gpio",
+                "gpiohs"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "gpio",
+                "gpiohs",
+                "pin"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "read",
+          "parameter_sources": [
+            {
+              "parameter": "pin",
+              "source": "board-or-sdk-constant"
+            }
+          ],
+          "selected_symbol": "gpiohs_get_pin",
+          "signature": "gpio_pin_value_t gpiohs_get_pin(uint8_t pin)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "66caab1f2ccae6c6",
+              "score": 4.517107308,
+              "symbol": "gpiohs_set_irq"
+            }
+          ],
+          "confidence": 4.959099725,
+          "decoder": {
+            "api_family": "gpiohs",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "eecd5df3744d85e6",
+            "original_top1_symbol": "gpiohs_irq_register",
+            "rejected_before_selection": [
+              {
+                "rank": 3,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "gpiohs_irq_unregister"
+              },
+              {
+                "rank": 4,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "gpiohs_irq_disable"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-operation",
+                "symbol": "gpiohs_pin_onchange_isr"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "gpio_set_pin"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "gpiohs_set_pin_edge"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "gpiohs_set_pin"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "gpio_init"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-capability",
+                "symbol": "plic_irq_register"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "eecd5df3744d85e6",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "gpio",
+                "gpiohs"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "irq"
+              ],
+              "weight": 0.2
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "gpio",
+                "gpiohs"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "gpio",
+                "gpiohs",
+                "pin"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "fpioa",
+                "gpio",
+                "gpiohs"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "gpio",
+                "gpiohs",
+                "pin"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "attach_irq",
+          "parameter_sources": [
+            {
+              "parameter": "pin",
+              "source": "board-or-sdk-constant"
+            },
+            {
+              "parameter": "irq",
+              "source": "sdk-enumeration"
+            }
+          ],
+          "selected_symbol": "gpiohs_irq_register",
+          "signature": "void gpiohs_irq_register(uint8_t pin, uint32_t priority, plic_irq_callback_t callback, void *ctx)",
+          "status": "inferred"
+        }
+      ],
+      "status": "resolved"
+    },
+    {
+      "capability": "timer",
+      "operations": [
+        {
+          "alternatives": [],
+          "confidence": 6.197619079,
+          "decoder": {
+            "api_family": "timer",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "dd37c9af8e19bb9e",
+            "original_top1_symbol": "timer_init",
+            "rejected_before_selection": [
+              {
+                "rank": 2,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "clint_timer_init"
+              },
+              {
+                "rank": 3,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_irq_register"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-operation",
+                "symbol": "clint_timer_register"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_irq_unregister"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "clint_timer_unregister"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_set_reload"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_isr"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_set_mode"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "dd37c9af8e19bb9e",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "init"
+              ],
+              "weight": 0.24
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "initialize",
+          "parameter_sources": [],
+          "selected_symbol": "timer_init",
+          "signature": "void timer_init(timer_device_number_t timer_number)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "b54c09beacbeb8dc",
+              "score": 5.941300322,
+              "symbol": "timer_set_enable"
+            },
+            {
+              "entity_id": "3c404ecdb8437721",
+              "score": 5.401871225,
+              "symbol": "timer_enable_interrupt"
+            }
+          ],
+          "confidence": 6.256522347,
+          "decoder": {
+            "api_family": "timer",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "dd908c5c08a0dd9b",
+            "original_top1_symbol": "timer_enable",
+            "rejected_before_selection": [
+              {
+                "rank": 3,
+                "reason": "missing-contract-parameter",
+                "symbol": "clint_timer_start"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_init"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_set_irq"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_irq_register"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_set_mode"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "clint_timer_register"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-operation",
+                "symbol": "clint_timer_set_interval"
+              },
+              {
+                "rank": 11,
+                "reason": "symbol-misses-operation",
+                "symbol": "clint_timer_init"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "dd908c5c08a0dd9b",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "enable"
+              ],
+              "weight": 0.24
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "start",
+          "parameter_sources": [
+            {
+              "parameter": "channel",
+              "source": "board-policy"
+            }
+          ],
+          "selected_symbol": "timer_enable",
+          "signature": "void timer_enable(timer_device_number_t timer_number, timer_channel_number_t channel)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "6305db35c8531816",
+              "score": 5.776484717,
+              "symbol": "timer_disable_interrupt"
+            }
+          ],
+          "confidence": 6.093183406,
+          "decoder": {
+            "api_family": "timer",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "ceb8d4aa9fd0e6bb",
+            "original_top1_symbol": "timer_disable",
+            "rejected_before_selection": [
+              {
+                "rank": 3,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "clint_timer_stop"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_set_enable"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_init"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_irq_unregister"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_set_mode"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "clint_timer_set_interval"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_clear_interrupt"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_isr"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "ceb8d4aa9fd0e6bb",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "disable"
+              ],
+              "weight": 0.24
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "stop",
+          "parameter_sources": [
+            {
+              "parameter": "channel",
+              "source": "board-policy"
+            }
+          ],
+          "selected_symbol": "timer_disable",
+          "signature": "void timer_disable(timer_device_number_t timer_number, timer_channel_number_t channel)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [],
+          "confidence": 6.015560368,
+          "decoder": {
+            "api_family": "timer",
+            "candidate_rank": 1,
+            "method": "signature-family",
+            "original_top1_entity_id": "60dc93b346d7b996",
+            "original_top1_symbol": "timer_set_interval",
+            "rejected_before_selection": [
+              {
+                "rank": 2,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_set_reload"
+              },
+              {
+                "rank": 3,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_init"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_set_mode"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_set_irq"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_irq_register"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "rtc_timer_set"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_set_reload2"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "timer_irq_unregister"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "60dc93b346d7b996",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "interval"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "tim",
+                "timer"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "set_interval",
+          "parameter_sources": [
+            {
+              "parameter": "channel",
+              "source": "board-policy"
+            }
+          ],
+          "selected_symbol": "timer_set_interval",
+          "signature": "size_t timer_set_interval(timer_device_number_t timer_number, timer_channel_number_t channel, size_t nanoseconds)",
+          "status": "inferred"
+        }
+      ],
+      "status": "resolved"
+    }
+  ],
+  "created_at": "2026-09-04T13:56:43.315890+00:00",
+  "decoder": "signature-family",
+  "id": "038a7ce4d608a9eb",
+  "method": "capability-schema-and-ranked-evidence",
+  "schema_version": "1.0",
+  "sdk_id": "kendryte-k210-standalone-sdk-0.5.6",
+  "summary": {
+    "capabilities": 5,
+    "inferred_operations": 19,
+    "missing_operations": 0,
+    "operations": 19,
+    "resolved_capabilities": 5
+  }
+}

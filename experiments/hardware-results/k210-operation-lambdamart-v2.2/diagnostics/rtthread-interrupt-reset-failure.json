@@ -1,0 +1,142 @@
+{
+  "board": "k210",
+  "created_at": "2026-09-04T13:24:36.808520+00:00",
+  "firmware_artifact": {
+    "path": "workspace/generated/k210-rtthread-lambdamart/bsp/k210/rtthread.bin",
+    "sha256": "aa268cd3e50e2fc6735c59d9cc4f6905f8e8aacec2e6b074e6248c6f1afd0485",
+    "size": 468856
+  },
+  "raw_log": [
+    "heap: [0x8007c513 - 0x80600000]",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.2.1 build Sep  4 2026 15:06:18",
+    " 2006 - 2024 Copyright by RT-Thread team",
+    "\u001b[32m[13] I/utest: utest is initialize success.",
+    "\u001b[0m\u001b[32m[18] I/utest: total utest testcase num: (3)",
+    "\u001b[0m{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"k210\",\"build_id\":\"operation-lambdamart-plan-driven-v2.2-rtthread\",\"stage\":\"application\"}",
+    "Hello, world",
+    "msh />bspforge_selftest a02375dcdb46 info",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a02375dcdb46\",\"command\":\"info\",\"status\":\"pass\",\"metrics\":{}}",
+    "msh />",
+    "msh />bspforge_selftest 730dfc6c1167 clock.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"730dfc6c1167\",\"command\":\"clock.basic\",\"status\":\"pass\",\"metrics\":{\"cpu_hz\":403000000,\"timer_hz\":403000000}}",
+    "msh />",
+    "msh />bspforge_selftest 3d32a2ae33a8 interrupt.basic",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3d32a2ae33a8\",\"command\":\"interrupt.basic\",\"status\":\"pass\",\"metrics\":{\"irq_callbacks\":1,\"ticks\":11}}",
+    "msh />"
+  ],
+  "rounds": [
+    {
+      "boot_event": {
+        "board": "k210",
+        "bspforge": true,
+        "build_id": "operation-lambdamart-plan-driven-v2.2-rtthread",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 188.932,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "info",
+          "event": "result",
+          "host_round_trip_ms": 17.57,
+          "metrics": {},
+          "protocol": "1.0",
+          "request_id": "a02375dcdb46",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "clock.basic",
+          "event": "result",
+          "host_round_trip_ms": 22.296,
+          "metrics": {
+            "cpu_hz": 403000000,
+            "timer_hz": 403000000
+          },
+          "protocol": "1.0",
+          "request_id": "730dfc6c1167",
+          "status": "pass"
+        },
+        {
+          "bspforge": true,
+          "command": "interrupt.basic",
+          "event": "result",
+          "host_round_trip_ms": 31.12,
+          "metrics": {
+            "irq_callbacks": 1,
+            "ticks": 11
+          },
+          "protocol": "1.0",
+          "request_id": "3d32a2ae33a8",
+          "status": "pass"
+        },
+        {
+          "command": "uart.loopback",
+          "host_round_trip_ms": 8085.625,
+          "reason": "host-timeout",
+          "request_id": "8fb8cc6cf65b",
+          "status": "fail"
+        },
+        {
+          "command": "gpio.toggle",
+          "host_round_trip_ms": 8079.015,
+          "reason": "host-timeout",
+          "request_id": "75d356370e92",
+          "status": "fail"
+        },
+        {
+          "command": "gpio.irq",
+          "host_round_trip_ms": 8072.964,
+          "reason": "host-timeout",
+          "request_id": "1bbc7bdc800f",
+          "status": "fail"
+        },
+        {
+          "command": "timer.oneshot",
+          "host_round_trip_ms": 8043.061,
+          "reason": "host-timeout",
+          "request_id": "32293dc0dbfa",
+          "status": "fail"
+        },
+        {
+          "command": "timer.periodic",
+          "host_round_trip_ms": 8118.84,
+          "reason": "host-timeout",
+          "request_id": "dbab35484bf8",
+          "status": "fail"
+        },
+        {
+          "command": "stability",
+          "host_round_trip_ms": 8079.169,
+          "reason": "host-timeout",
+          "request_id": "d6e930d55c00",
+          "status": "fail"
+        }
+      ],
+      "round": 1
+    }
+  ],
+  "rtos": "rtthread",
+  "schema_version": "1.1",
+  "summary": {
+    "boot_attempts": 1,
+    "boot_success_rate": 1.0,
+    "boot_successes": 1,
+    "boot_time_max_ms": 188.932,
+    "boot_time_mean_ms": 188.932,
+    "boot_time_min_ms": 188.932,
+    "command_pass_rate": 0.3333,
+    "commands_applicable": 9,
+    "commands_passed": 3,
+    "commands_total": 9,
+    "failed": 6,
+    "unsupported": 0
+  }
+}

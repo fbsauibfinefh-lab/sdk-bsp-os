@@ -1,0 +1,101 @@
+{
+  "board": "k210",
+  "created_at": "2026-09-04T13:46:09.168329+00:00",
+  "firmware_artifact": {
+    "path": "workspace/generated/k210-zephyr-lambdamart/build/zephyr/zephyr.bin",
+    "sha256": "412c3eb2a0f5adc70e871003010776a6374db221e28c03050ad1e7bd430b06f9",
+    "size": 35296
+  },
+  "raw_log": [
+    "(/mnt/d/Wuhk/AIOT/k210sdk/kendryte-standalone-sdk/lib/drivers/gpiohs.c:38) io_number >= 0"
+  ],
+  "rounds": [
+    {
+      "boot_event": null,
+      "boot_success": false,
+      "boot_time_ms": null,
+      "commands": [
+        {
+          "command": "info",
+          "host_round_trip_ms": 8012.727,
+          "reason": "host-timeout",
+          "request_id": "2a06c3b1055b",
+          "status": "fail"
+        },
+        {
+          "command": "clock.basic",
+          "host_round_trip_ms": 8012.399,
+          "reason": "host-timeout",
+          "request_id": "f4cb84133e1c",
+          "status": "fail"
+        },
+        {
+          "command": "interrupt.basic",
+          "host_round_trip_ms": 8009.32,
+          "reason": "host-timeout",
+          "request_id": "eb85cbada704",
+          "status": "fail"
+        },
+        {
+          "command": "uart.loopback",
+          "host_round_trip_ms": 8017.903,
+          "reason": "host-timeout",
+          "request_id": "438f0ad8e2d6",
+          "status": "fail"
+        },
+        {
+          "command": "gpio.toggle",
+          "host_round_trip_ms": 8024.985,
+          "reason": "host-timeout",
+          "request_id": "b82e4fe28616",
+          "status": "fail"
+        },
+        {
+          "command": "gpio.irq",
+          "host_round_trip_ms": 8020.555,
+          "reason": "host-timeout",
+          "request_id": "41d1a9209eb2",
+          "status": "fail"
+        },
+        {
+          "command": "timer.oneshot",
+          "host_round_trip_ms": 8023.619,
+          "reason": "host-timeout",
+          "request_id": "6ad3ffd995bd",
+          "status": "fail"
+        },
+        {
+          "command": "timer.periodic",
+          "host_round_trip_ms": 8022.167,
+          "reason": "host-timeout",
+          "request_id": "2f3403fc430c",
+          "status": "fail"
+        },
+        {
+          "command": "stability",
+          "host_round_trip_ms": 8020.259,
+          "reason": "host-timeout",
+          "request_id": "fee30e932a49",
+          "status": "fail"
+        }
+      ],
+      "round": 1
+    }
+  ],
+  "rtos": "zephyr",
+  "schema_version": "1.1",
+  "summary": {
+    "boot_attempts": 1,
+    "boot_success_rate": 0.0,
+    "boot_successes": 0,
+    "boot_time_max_ms": null,
+    "boot_time_mean_ms": null,
+    "boot_time_min_ms": null,
+    "command_pass_rate": 0.0,
+    "commands_applicable": 9,
+    "commands_passed": 0,
+    "commands_total": 9,
+    "failed": 9,
+    "unsupported": 0
+  }
+}

@@ -1,0 +1,99 @@
+{
+  "artifacts": [
+    {
+      "kind": "elf",
+      "path": "/home/whk/RTT-porting/bspforge/workspace/generated/k210-rtthread-lambdamart/bsp/k210/rtthread.elf",
+      "sha256": "3ef8c55670fabe6464fb7ec5fe3815d248f95f070a1cbc3a1df5bad4f56228ec",
+      "size": 663752
+    },
+    {
+      "kind": "bin",
+      "path": "/home/whk/RTT-porting/bspforge/workspace/generated/k210-rtthread-lambdamart/bsp/k210/rtthread.bin",
+      "sha256": "174b0c613700da6c8fef487fef96e869c1ff87fac03cef59f831bebda1abe90b",
+      "size": 468776
+    }
+  ],
+  "checks": [
+    {
+      "name": "elf-exists",
+      "success": true
+    },
+    {
+      "name": "bin-exists",
+      "success": true
+    },
+    {
+      "expected": "RISC-V",
+      "name": "elf-machine",
+      "observed": "RISC-V",
+      "success": true
+    },
+    {
+      "name": "elf-sections-readable",
+      "success": true
+    },
+    {
+      "expected": [
+        "bspforge_hwtimer_devices_init",
+        "bspforge_hwtimer_ops",
+        "bspforge_pin_ops",
+        "bspforge_rtthread_devices_init",
+        "bspforge_selftest",
+        "bspforge_uart_ops",
+        "bspforge_validation_init",
+        "bspforge_validation_run"
+      ],
+      "missing": [],
+      "name": "generated-device-symbols-linked",
+      "present": [
+        "bspforge_hwtimer_devices_init",
+        "bspforge_hwtimer_ops",
+        "bspforge_pin_ops",
+        "bspforge_rtthread_devices_init",
+        "bspforge_selftest",
+        "bspforge_uart_ops",
+        "bspforge_validation_init",
+        "bspforge_validation_run"
+      ],
+      "success": true
+    }
+  ],
+  "created_at": "2026-09-05T02:26:04.938011+00:00",
+  "elf_header": {
+    "Class": "ELF64",
+    "Data": "2's complement, little endian",
+    "Entry point address": "0x80000000",
+    "Machine": "RISC-V",
+    "Type": "EXEC (Executable file)"
+  },
+  "expected_machine": "RISC-V",
+  "expected_symbols": [
+    "bspforge_hwtimer_devices_init",
+    "bspforge_hwtimer_ops",
+    "bspforge_pin_ops",
+    "bspforge_rtthread_devices_init",
+    "bspforge_selftest",
+    "bspforge_uart_ops",
+    "bspforge_validation_init",
+    "bspforge_validation_run"
+  ],
+  "missing_symbols": [],
+  "present_symbols": [
+    "bspforge_hwtimer_devices_init",
+    "bspforge_hwtimer_ops",
+    "bspforge_pin_ops",
+    "bspforge_rtthread_devices_init",
+    "bspforge_selftest",
+    "bspforge_uart_ops",
+    "bspforge_validation_init",
+    "bspforge_validation_run"
+  ],
+  "schema_version": "1.0",
+  "section_sizes": {
+    "bss": 40363,
+    "data": 3856,
+    "dec": 509055,
+    "text": 464836
+  },
+  "success": true
+}

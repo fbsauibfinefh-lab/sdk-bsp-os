@@ -213,6 +213,8 @@ K210 论文部署不再让 OS 后端从静态平台符号表决定 19 项目标�
 
 `02b-canonical-binding-plan.json` 对每项操作同时保存原始 Top1、最终实体、原始候选名次、家族、签名和过滤理由。当前 K210 中，模型原始 `gpio.configure` 为无参数的 `gpio_init(void)`；签名过滤将其排除，完整家族解码选择 GPIOHS 的 configure/write/read/attach_irq 组合。该变化属于可复用部署约束，不修改 LambdaMART 原始排序指标。
 
-两个后端必须调用 `validate_operation_plan()`，缺少计划、实体不存在、实体与符号不一致或某项操作缺失时立即失败。生成器用 `@OP:capability.operation@` 占位符写入计划所选函数，并输出逐操作 `operation_bindings`。RT-Thread 当前 19 项均为 `direct-generated-call`；Zephyr 的 15 项 SDK 操作为直接调用，4 项 PLIC 操作为 `replaced-by-os-backend`，由 Zephyr 二级 IRQ 框架承担等价职责。后端辅助依赖仅用于参数适配、回调注销和状态清理，不得替换目标操作。
+两个后端必须调用 `validate_operation_plan()`，缺少计划、实体不存在、实体与符号不一致或某项操作缺失时立即失败。生成器用 `@OP:capability.operation@` 占位符写入计划所选函数，并输出逐操作 `operation_bindings`。RT-Thread 有 18 项 `direct-generated-call`，PLIC 初始化由 RT-Thread 启动序列接管并记为 1 项 `replaced-by-os-backend`，避免设备已经运行后再次清空中断控制器状态；Zephyr 的 15 项 SDK 操作为直接调用，4 项 PLIC 操作为 `replaced-by-os-backend`，由 Zephyr 二级 IRQ 框架承担等价职责。后端辅助依赖仅用于参数适配、初始化前置条件、回调注销和状态清理，不得替换目标操作。
 
 对于 SDK 源文件中存在定义但公共头文件未声明的全局函数，生成器从 IR 实体的真实签名恢复原型，并把原型清单写入 `functional-bindings.json`。直接调用审计在加入这些原型前执行，避免把函数声明误计为调用。`compile_feedback.py` 以规范计划和逐操作生成清单为准，区分直接调用编译成功、OS 替代编译成功和缺少生成证据三种状态；所有状态仍只代表编译/链接/产物成立，不替代实板语义验证。
+
+K210 实板闭环进一步验证了 OS 生命周期与 SDK 前置条件必须纳入后端契约。RT-Thread 在板级启动中已经初始化 PLIC，因此运行时 `interrupt.initialize` 只能由 OS 接管；Zephyr 使用 GCC 14 编译 K210 SDK 时对寄存器 `volatile` 位域启用 `-fstrict-volatile-bitfields`，确保 FPIOA 采用 32 位 MMIO 访问，并在 GPIOHS 配置前执行 SDK 初始化与有界映射读回。两项处理均保留计划选择，改变的是调用时机或编译 ABI，而不是用真值替换候选。最终两套固件的编译反馈均为 19/19，实板均为 10/10 次启动和 90/90 条命令通过。
