@@ -1,0 +1,2276 @@
+{
+  "capabilities": [
+    {
+      "capability": "clock",
+      "operations": [
+        {
+          "alternatives": [
+            {
+              "entity_id": "88c70d1201154713",
+              "score": 3.349189239,
+              "symbol": "LL_USART_ClockInit"
+            },
+            {
+              "entity_id": "cade099358218af1",
+              "score": 3.262271857,
+              "symbol": "LL_RCC_PLL_SetMainSource"
+            },
+            {
+              "entity_id": "fad7a574d474a40f",
+              "score": 3.093707798,
+              "symbol": "LL_RCC_SetSysClkSource"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 4.180250214,
+          "decoder": {
+            "api_family": "ll-clock",
+            "candidate_rank": 3,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "a49e08aa673fa9b3",
+            "original_top1_symbol": "HAL_RCC_ClockConfig",
+            "rejected_before_selection": [
+              {
+                "rank": 1,
+                "reason": "missing-contract-parameter",
+                "symbol": "HAL_RCC_ClockConfig"
+              },
+              {
+                "rank": 4,
+                "reason": "missing-contract-parameter",
+                "symbol": "HAL_RCCEx_PeriphCLKConfig"
+              },
+              {
+                "rank": 13,
+                "reason": "missing-contract-parameter",
+                "symbol": "LL_RCC_SetAPB1Prescaler"
+              },
+              {
+                "rank": 14,
+                "reason": "missing-contract-parameter",
+                "symbol": "LL_RCC_SetAPB2Prescaler"
+              },
+              {
+                "rank": 15,
+                "reason": "missing-contract-parameter",
+                "symbol": "LL_RCC_SetAHBPrescaler"
+              },
+              {
+                "rank": 16,
+                "reason": "missing-contract-parameter",
+                "symbol": "LL_RCC_HSI_SetCalibTrimming"
+              },
+              {
+                "rank": 23,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_ClearResetFlags"
+              },
+              {
+                "rank": 25,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_InitTick"
+              }
+            ],
+            "selection_changed": true
+          },
+          "entity_id": "d6c5f3e6911b8571",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "clock"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "set"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "clk",
+                "clock",
+                "frequency"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "rcc"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "clk",
+                "frequency",
+                "pll"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "initialize",
+          "parameter_sources": [
+            {
+              "parameter": "clock",
+              "source": "sdk-clock-model"
+            }
+          ],
+          "selected_symbol": "LL_SetSystemCoreClock",
+          "signature": "void LL_SetSystemCoreClock(uint32_t HCLKFrequency)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "9ee04c354199aa11",
+              "score": 2.764427155,
+              "symbol": "LL_APB1_GRP1_EnableClock"
+            },
+            {
+              "entity_id": "1c5c748d8006c9de",
+              "score": 2.738987196,
+              "symbol": "LL_APB2_GRP1_EnableClock"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 2.777984119,
+          "decoder": {
+            "api_family": "ll-clock",
+            "candidate_rank": 18,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "a6b107fb23cacd2a",
+            "original_top1_symbol": "LL_RCC_PLL_Enable",
+            "rejected_before_selection": [
+              {
+                "rank": 1,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_PLL_Enable"
+              },
+              {
+                "rank": 2,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_HSE_Enable"
+              },
+              {
+                "rank": 3,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_PLL2_Enable"
+              },
+              {
+                "rank": 4,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "HAL_RCC_EnableCSS"
+              },
+              {
+                "rank": 5,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_LSI_Enable"
+              },
+              {
+                "rank": 6,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_LSE_Enable"
+              },
+              {
+                "rank": 8,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_HSE_EnableCSS"
+              },
+              {
+                "rank": 9,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_HSI_Enable"
+              }
+            ],
+            "selection_changed": true
+          },
+          "entity_id": "e1e7d8c37ab11834",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "clock"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "enable"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "clock"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "rcc"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "enable",
+          "parameter_sources": [
+            {
+              "parameter": "clock",
+              "source": "sdk-clock-model"
+            }
+          ],
+          "selected_symbol": "LL_AHB1_GRP1_EnableClock",
+          "signature": "__STATIC_INLINE void LL_AHB1_GRP1_EnableClock(uint32_t Periphs)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "b62e8ea4697cb2a9",
+              "score": 2.520319061,
+              "symbol": "LL_APB2_GRP1_DisableClock"
+            },
+            {
+              "entity_id": "12653c93cca54e8a",
+              "score": 2.50270974,
+              "symbol": "LL_AHB1_GRP1_DisableClock"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 2.527935531,
+          "decoder": {
+            "api_family": "ll-clock",
+            "candidate_rank": 23,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "8b12f2bf9d851208",
+            "original_top1_symbol": "LL_RCC_PLL_Disable",
+            "rejected_before_selection": [
+              {
+                "rank": 1,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_PLL_Disable"
+              },
+              {
+                "rank": 2,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "HAL_RCC_DisableCSS"
+              },
+              {
+                "rank": 3,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_LSE_Disable"
+              },
+              {
+                "rank": 4,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_PLL2_Disable"
+              },
+              {
+                "rank": 5,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_DisableIT_PLL2RDY"
+              },
+              {
+                "rank": 6,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "HAL_RCCEx_DisablePLL2"
+              },
+              {
+                "rank": 7,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_DisableIT_PLLRDY"
+              },
+              {
+                "rank": 8,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_RCC_LSI_Disable"
+              }
+            ],
+            "selection_changed": true
+          },
+          "entity_id": "d70797eb830a9c99",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "clock"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "disable"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "clock"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "rcc"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "disable",
+          "parameter_sources": [
+            {
+              "parameter": "clock",
+              "source": "sdk-clock-model"
+            }
+          ],
+          "selected_symbol": "LL_APB1_GRP1_DisableClock",
+          "signature": "__STATIC_INLINE void LL_APB1_GRP1_DisableClock(uint32_t Periphs)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "8faab82127f606e9",
+              "score": 3.967512955,
+              "symbol": "LL_RCC_GetADCClockFreq"
+            },
+            {
+              "entity_id": "af4c2e284e1ebd82",
+              "score": 3.84281494,
+              "symbol": "LL_RCC_GetI2SClockFreq"
+            },
+            {
+              "entity_id": "be2542426c651ac1",
+              "score": 3.737676798,
+              "symbol": "LL_RCC_GetUSBClockFreq"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 4.237448649,
+          "decoder": {
+            "api_family": "ll-clock",
+            "candidate_rank": 9,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "6936d9c9456cafed",
+            "original_top1_symbol": "RCC_GetHCLKClockFreq",
+            "rejected_before_selection": [
+              {
+                "rank": 2,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "RCC_PLL2_GetFreqClockFreq"
+              },
+              {
+                "rank": 3,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "RCC_GetSystemClockFreq"
+              },
+              {
+                "rank": 5,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "HAL_RCC_GetSysClockFreq"
+              },
+              {
+                "rank": 6,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "HAL_RCC_GetPCLK1Freq"
+              },
+              {
+                "rank": 10,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "HAL_RCC_GetPCLK2Freq"
+              },
+              {
+                "rank": 12,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "HAL_RCC_GetHCLKFreq"
+              },
+              {
+                "rank": 14,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "RCC_PLL_GetFreqDomain_SYS"
+              },
+              {
+                "rank": 16,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_RCC_ClockConfig"
+              }
+            ],
+            "selection_changed": true
+          },
+          "entity_id": "49be5a711684fca4",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "clock",
+                "rcc"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "freq",
+                "get"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "rcc"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "clock",
+                "rcc"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "rcc"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "clk",
+                "clock",
+                "rcc"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "clk",
+                "rcc"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "get_frequency",
+          "parameter_sources": [
+            {
+              "parameter": "clock",
+              "source": "sdk-clock-model"
+            }
+          ],
+          "selected_symbol": "LL_RCC_GetSystemClocksFreq",
+          "signature": "void LL_RCC_GetSystemClocksFreq(LL_RCC_ClocksTypeDef *RCC_Clocks)",
+          "status": "inferred"
+        }
+      ],
+      "status": "resolved"
+    },
+    {
+      "capability": "interrupt",
+      "operations": [
+        {
+          "alternatives": [
+            {
+              "entity_id": "74bb4c90381963e6",
+              "score": 2.385767308,
+              "symbol": "HAL_NVIC_SetPriorityGrouping"
+            },
+            {
+              "entity_id": "f022a7fe6e7616a1",
+              "score": 1.417615564,
+              "symbol": "TZ_NVIC_SetPriority_NS"
+            },
+            {
+              "entity_id": "cc4270900f680917",
+              "score": 1.135925417,
+              "symbol": "TZ_NVIC_GetPriority_NS"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 3.113117573,
+          "decoder": {
+            "api_family": "system-interrupt-controller",
+            "candidate_rank": 2,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "153d34ce57c32737",
+            "original_top1_symbol": "IRQ_Initialize",
+            "rejected_before_selection": [
+              {
+                "rank": 3,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_Init"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_HCD_HC_Init"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-capability",
+                "symbol": "GIC_CPUInterfaceInit"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_InitTick"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_IRDA_Init"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_NOR_Init"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIM_IC_Init"
+              },
+              {
+                "rank": 11,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_SRAM_Init"
+              }
+            ],
+            "selection_changed": true
+          },
+          "entity_id": "0287a9f851cead49",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "nvic"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "priority",
+                "set"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "irq",
+                "nvic"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "nvic"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "initialize",
+          "parameter_sources": [
+            {
+              "parameter": "irq",
+              "source": "sdk-enumeration"
+            }
+          ],
+          "selected_symbol": "HAL_NVIC_SetPriority",
+          "signature": "void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t SubPriority)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "ecc44cc0f0a002fe",
+              "score": 3.540974814,
+              "symbol": "__NVIC_EnableIRQ"
+            },
+            {
+              "entity_id": "3e5ba98575b2663a",
+              "score": 3.433702991,
+              "symbol": "TZ_NVIC_EnableIRQ_NS"
+            },
+            {
+              "entity_id": "78fcbb07f622d75d",
+              "score": 3.353792449,
+              "symbol": "__NVIC_GetEnableIRQ"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 3.95224913,
+          "decoder": {
+            "api_family": "system-interrupt-controller",
+            "candidate_rank": 1,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "2318e27c0ee44e9b",
+            "original_top1_symbol": "HAL_NVIC_EnableIRQ",
+            "rejected_before_selection": [
+              {
+                "rank": 4,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_NVIC_SetPriority"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_NVIC_SetPendingIRQ"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_NVIC_SetPriorityGrouping"
+              },
+              {
+                "rank": 12,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_NVIC_ClearPendingIRQ"
+              },
+              {
+                "rank": 13,
+                "reason": "symbol-misses-capability",
+                "symbol": "GIC_EnableInterface"
+              },
+              {
+                "rank": 14,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_NVIC_SystemReset"
+              },
+              {
+                "rank": 15,
+                "reason": "symbol-misses-capability",
+                "symbol": "GIC_Enable"
+              },
+              {
+                "rank": 16,
+                "reason": "symbol-misses-capability",
+                "symbol": "GIC_EnableDistributor"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "2318e27c0ee44e9b",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "irq",
+                "nvic"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "enable"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "irq",
+                "nvic"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "irq",
+                "nvic"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "enable",
+          "parameter_sources": [
+            {
+              "parameter": "irq",
+              "source": "sdk-enumeration"
+            }
+          ],
+          "selected_symbol": "HAL_NVIC_EnableIRQ",
+          "signature": "void HAL_NVIC_EnableIRQ(IRQn_Type IRQn)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "0de74130577b900b",
+              "score": 4.209131225,
+              "symbol": "__NVIC_DisableIRQ"
+            },
+            {
+              "entity_id": "f3c99e5933cef104",
+              "score": 3.975627592,
+              "symbol": "TZ_NVIC_DisableIRQ_NS"
+            },
+            {
+              "entity_id": "4824995057d8fa0d",
+              "score": 1.148808419,
+              "symbol": "__NVIC_DisableIRQ"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 4.516898438,
+          "decoder": {
+            "api_family": "system-interrupt-controller",
+            "candidate_rank": 2,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "dfa2798fa3f63d43",
+            "original_top1_symbol": "IRQ_Disable",
+            "rejected_before_selection": [
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_NVIC_SetPriority"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_NVIC_SetPendingIRQ"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_NVIC_ClearPendingIRQ"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_NVIC_SetPriorityGrouping"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-capability",
+                "symbol": "GIC_DisableInterface"
+              },
+              {
+                "rank": 11,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_NVIC_SystemReset"
+              },
+              {
+                "rank": 12,
+                "reason": "symbol-misses-capability",
+                "symbol": "GIC_DisableDistributor"
+              },
+              {
+                "rank": 43,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_NVIC_GetPendingIRQ"
+              }
+            ],
+            "selection_changed": true
+          },
+          "entity_id": "98aa060bce61925b",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "irq",
+                "nvic"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "disable"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "irq",
+                "nvic"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "irq",
+                "nvic"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "disable",
+          "parameter_sources": [
+            {
+              "parameter": "irq",
+              "source": "sdk-enumeration"
+            }
+          ],
+          "selected_symbol": "HAL_NVIC_DisableIRQ",
+          "signature": "void HAL_NVIC_DisableIRQ(IRQn_Type IRQn)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "d4269517057e3d9c",
+              "score": 1.283716304,
+              "symbol": "__NVIC_SetVector"
+            },
+            {
+              "entity_id": "d4aa488a761560e5",
+              "score": 1.2778305,
+              "symbol": "__NVIC_SetVector"
+            },
+            {
+              "entity_id": "0598474a5dbbdee9",
+              "score": 1.271190741,
+              "symbol": "__NVIC_SetVector"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 4.293494588,
+          "decoder": {
+            "api_family": "system-interrupt-controller",
+            "candidate_rank": 1,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "2158b3a07099fa84",
+            "original_top1_symbol": "__NVIC_SetVector",
+            "rejected_before_selection": [
+              {
+                "rank": 2,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_IRDA_RegisterCallback"
+              },
+              {
+                "rank": 3,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_I2S_RegisterCallback"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_CEC_RegisterRxCpltCallback"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_RTC_RegisterCallback"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_PCCARD_RegisterCallback"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_HCD_RegisterHC_NotifyURBChangeCallback"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_PCD_RegisterCallback"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_MMC_RegisterCallback"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "2158b3a07099fa84",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "nvic"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "set"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "irq",
+                "nvic"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "nvic"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "register",
+          "parameter_sources": [
+            {
+              "parameter": "irq",
+              "source": "sdk-enumeration"
+            }
+          ],
+          "selected_symbol": "__NVIC_SetVector",
+          "signature": "__STATIC_INLINE void __NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)",
+          "status": "inferred"
+        }
+      ],
+      "status": "resolved"
+    },
+    {
+      "capability": "uart",
+      "operations": [
+        {
+          "alternatives": [
+            {
+              "entity_id": "119efc9a16bfa0ea",
+              "score": 3.935660591,
+              "symbol": "HAL_UART_MspInit"
+            },
+            {
+              "entity_id": "d8d37d9c80b9e07f",
+              "score": 0.76560522,
+              "symbol": "HAL_UART_MspInit"
+            },
+            {
+              "entity_id": "3e72a417464c5cbe",
+              "score": 0.50331282,
+              "symbol": "HAL_UART_MspInit"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 5.0521287,
+          "decoder": {
+            "api_family": "hal_uart",
+            "candidate_rank": 1,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "c38c55dc242c0e4b",
+            "original_top1_symbol": "HAL_UART_Init",
+            "rejected_before_selection": [
+              {
+                "rank": 11,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "BSP_SERIAL_FLASH_Init"
+              },
+              {
+                "rank": 12,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_USART_IRQHandler"
+              },
+              {
+                "rank": 13,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_LIN_Init"
+              },
+              {
+                "rank": 14,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_HalfDuplex_Init"
+              },
+              {
+                "rank": 15,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_MultiProcessor_Init"
+              },
+              {
+                "rank": 16,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_SMARTCARD_Init"
+              },
+              {
+                "rank": 17,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_MMC_Init"
+              },
+              {
+                "rank": 18,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_HallSensor_Init"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "c38c55dc242c0e4b",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "init"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "configure",
+          "parameter_sources": [
+            {
+              "parameter": "handle",
+              "source": "sdk-instance-object"
+            }
+          ],
+          "selected_symbol": "HAL_UART_Init",
+          "signature": "HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef *huart)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "3d30385d5c77c78c",
+              "score": 3.285472623,
+              "symbol": "HAL_UART_Transmit_IT"
+            },
+            {
+              "entity_id": "1c000dd8113851f6",
+              "score": 3.154955152,
+              "symbol": "HAL_UART_Transmit_DMA"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 3.345271702,
+          "decoder": {
+            "api_family": "hal_uart",
+            "candidate_rank": 1,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "b8aac94549921688",
+            "original_top1_symbol": "HAL_UART_Transmit",
+            "rejected_before_selection": [
+              {
+                "rank": 5,
+                "reason": "missing-contract-parameter",
+                "symbol": "LL_USART_TransmitData8"
+              },
+              {
+                "rank": 9,
+                "reason": "missing-contract-parameter",
+                "symbol": "LL_USART_TransmitData9"
+              },
+              {
+                "rank": 10,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "UART_Transmit_IT"
+              },
+              {
+                "rank": 11,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "HAL_UART_AbortTransmit_IT"
+              },
+              {
+                "rank": 12,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_UART_IRQHandler"
+              },
+              {
+                "rank": 14,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "UART_EndTransmit_IT"
+              },
+              {
+                "rank": 15,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "UART_DMATransmitCplt"
+              },
+              {
+                "rank": 16,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "USART_Transmit_IT"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "b8aac94549921688",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "write",
+          "parameter_sources": [
+            {
+              "parameter": "handle",
+              "source": "sdk-instance-object"
+            }
+          ],
+          "selected_symbol": "HAL_UART_Transmit",
+          "signature": "HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "f4a4f7ea37b54896",
+              "score": 3.675554466,
+              "symbol": "HAL_UART_Receive_IT"
+            },
+            {
+              "entity_id": "7a55c9d835705cbf",
+              "score": 3.477680235,
+              "symbol": "HAL_UART_Receive_DMA"
+            },
+            {
+              "entity_id": "12ccf14809ea9884",
+              "score": 2.961384082,
+              "symbol": "HAL_UARTEx_ReceiveToIdle"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 3.936222397,
+          "decoder": {
+            "api_family": "hal_uart",
+            "candidate_rank": 1,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "38804aec9b749df8",
+            "original_top1_symbol": "HAL_UART_Receive",
+            "rejected_before_selection": [
+              {
+                "rank": 7,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "UART_Receive_IT"
+              },
+              {
+                "rank": 12,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "LL_USART_ReceiveData8"
+              },
+              {
+                "rank": 14,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "HAL_UART_AbortReceive_IT"
+              },
+              {
+                "rank": 15,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_UART_IRQHandler"
+              },
+              {
+                "rank": 16,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "LL_USART_ReceiveData9"
+              },
+              {
+                "rank": 17,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "USART_Receive_IT"
+              },
+              {
+                "rank": 19,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "HAL_UART_AbortReceive"
+              },
+              {
+                "rank": 20,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "UART_DMAReceiveCplt"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "38804aec9b749df8",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "receive"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "uart"
+              ],
+              "weight": 0.1
+            }
+          ],
+          "operation": "read",
+          "parameter_sources": [
+            {
+              "parameter": "handle",
+              "source": "sdk-instance-object"
+            }
+          ],
+          "selected_symbol": "HAL_UART_Receive",
+          "signature": "HAL_StatusTypeDef HAL_UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout)",
+          "status": "inferred"
+        }
+      ],
+      "status": "resolved"
+    },
+    {
+      "capability": "gpio",
+      "operations": [
+        {
+          "alternatives": [],
+          "composite_symbols": [],
+          "confidence": 4.530684934,
+          "decoder": {
+            "api_family": "hal_gpio",
+            "candidate_rank": 1,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "c478a16c09dc09a2",
+            "original_top1_symbol": "HAL_GPIO_Init",
+            "rejected_before_selection": [
+              {
+                "rank": 3,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "LL_GPIO_StructInit"
+              },
+              {
+                "rank": 5,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "HAL_PCCARD_MspInit"
+              },
+              {
+                "rank": 6,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "HAL_SMARTCARD_MspInit"
+              },
+              {
+                "rank": 7,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "HAL_I2S_MspInit"
+              },
+              {
+                "rank": 8,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "HAL_TIM_PWM_MspInit"
+              },
+              {
+                "rank": 9,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "HAL_SRAM_MspInit"
+              },
+              {
+                "rank": 10,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "HAL_IRDA_MspInit"
+              },
+              {
+                "rank": 11,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "HAL_I2C_MspInit"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "c478a16c09dc09a2",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "init"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "gpio",
+                "pin"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "configure",
+          "parameter_sources": [],
+          "selected_symbol": "HAL_GPIO_Init",
+          "signature": "void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [],
+          "composite_symbols": [],
+          "confidence": 4.672988298,
+          "decoder": {
+            "api_family": "hal_gpio",
+            "candidate_rank": 1,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "80348213889b98d4",
+            "original_top1_symbol": "HAL_GPIO_WritePin",
+            "rejected_before_selection": [
+              {
+                "rank": 5,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_GPIO_TogglePin"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_GPIO_LockPin"
+              },
+              {
+                "rank": 11,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_GPIO_DeInit"
+              },
+              {
+                "rank": 15,
+                "reason": "missing-contract-parameter",
+                "symbol": "LL_GPIO_AF_SetEXTISource"
+              },
+              {
+                "rank": 16,
+                "reason": "symbol-misses-capability",
+                "symbol": "AUDIO_IO_Write"
+              },
+              {
+                "rank": 17,
+                "reason": "symbol-misses-capability",
+                "symbol": "SDIO_WriteFIFO"
+              },
+              {
+                "rank": 18,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_HCD_ResetPort"
+              },
+              {
+                "rank": 19,
+                "reason": "symbol-misses-capability",
+                "symbol": "IOE_Write"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "80348213889b98d4",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "gpio",
+                "pin"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "write"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "gpio",
+                "pin"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "gpio",
+                "pin"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "write",
+          "parameter_sources": [
+            {
+              "parameter": "pin",
+              "source": "board-or-sdk-constant"
+            }
+          ],
+          "selected_symbol": "HAL_GPIO_WritePin",
+          "signature": "void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [],
+          "composite_symbols": [],
+          "confidence": 4.280306584,
+          "decoder": {
+            "api_family": "hal_gpio",
+            "candidate_rank": 1,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "5eb701f4c139ac17",
+            "original_top1_symbol": "HAL_GPIO_ReadPin",
+            "rejected_before_selection": [
+              {
+                "rank": 4,
+                "reason": "missing-contract-parameter",
+                "symbol": "LL_GPIO_ReadOutputPort"
+              },
+              {
+                "rank": 5,
+                "reason": "missing-contract-parameter",
+                "symbol": "LL_GPIO_ReadInputPort"
+              },
+              {
+                "rank": 8,
+                "reason": "missing-contract-parameter",
+                "symbol": "LL_GPIO_AF_GetEXTISource"
+              },
+              {
+                "rank": 10,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "LL_DBGMCU_GetTracePinAssignment"
+              },
+              {
+                "rank": 11,
+                "reason": "requires-at-least-1-parameters",
+                "symbol": "HAL_NVIC_GetPriorityGrouping"
+              },
+              {
+                "rank": 12,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_NAND_Read_SpareArea_16b"
+              },
+              {
+                "rank": 13,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_NAND_Read_SpareArea_8b"
+              },
+              {
+                "rank": 14,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_I2C_Mem_Read"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "5eb701f4c139ac17",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "gpio",
+                "pin"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "read"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "gpio",
+                "pin"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "gpio",
+                "pin"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "read",
+          "parameter_sources": [
+            {
+              "parameter": "pin",
+              "source": "board-or-sdk-constant"
+            }
+          ],
+          "selected_symbol": "HAL_GPIO_ReadPin",
+          "signature": "GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [],
+          "composite_symbols": [
+            {
+              "candidate_rank": 4,
+              "entity_id": "ff5085581e71a470",
+              "role": "callback-entry",
+              "signature": "__weak void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)",
+              "symbol": "HAL_GPIO_EXTI_Callback"
+            },
+            {
+              "candidate_rank": 2,
+              "entity_id": "c478a16c09dc09a2",
+              "role": "configure-edge-source",
+              "signature": "void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)",
+              "symbol": "HAL_GPIO_Init"
+            },
+            {
+              "candidate_rank": 1,
+              "entity_id": "fd10969df3a69fbb",
+              "role": "interrupt-dispatch",
+              "signature": "void HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)",
+              "symbol": "HAL_GPIO_EXTI_IRQHandler"
+            }
+          ],
+          "confidence": 3.900758982,
+          "decoder": {
+            "api_family": "hal_gpio",
+            "candidate_rank": 2,
+            "composition_required": true,
+            "method": "signature-family",
+            "original_top1_entity_id": "fd10969df3a69fbb",
+            "original_top1_symbol": "HAL_GPIO_EXTI_IRQHandler",
+            "rejected_before_selection": [
+              {
+                "rank": 1,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "HAL_GPIO_EXTI_IRQHandler"
+              },
+              {
+                "rank": 2,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_GPIO_Init"
+              },
+              {
+                "rank": 3,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_GPIO_TogglePin"
+              },
+              {
+                "rank": 4,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_GPIO_EXTI_Callback"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_GPIO_LockPin"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_GPIO_DeInit"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-capability",
+                "symbol": "HCD_Port_IRQHandler"
+              },
+              {
+                "rank": 8,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_GPIOEx_ConfigEventout"
+              }
+            ],
+            "selection_changed": true
+          },
+          "entity_id": "c478a16c09dc09a2",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "init"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "gpio",
+                "pin"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "gpio"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "attach_irq",
+          "parameter_sources": [],
+          "selected_symbol": "HAL_GPIO_Init",
+          "signature": "void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)",
+          "status": "inferred"
+        }
+      ],
+      "status": "resolved"
+    },
+    {
+      "capability": "timer",
+      "operations": [
+        {
+          "alternatives": [
+            {
+              "entity_id": "6bc9232a60404977",
+              "score": 3.375108783,
+              "symbol": "LL_TIM_StructInit"
+            },
+            {
+              "entity_id": "dcc7a5a246e112df",
+              "score": 3.194509454,
+              "symbol": "LL_TIM_BDTR_StructInit"
+            },
+            {
+              "entity_id": "2453b7a832364121",
+              "score": 3.126381725,
+              "symbol": "LL_TIM_HALLSENSOR_StructInit"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 3.591771256,
+          "decoder": {
+            "api_family": "ll-timer",
+            "candidate_rank": 1,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "b1aaa67e1107d337",
+            "original_top1_symbol": "LL_TIM_Init",
+            "rejected_before_selection": [
+              {
+                "rank": 4,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_InitTick"
+              },
+              {
+                "rank": 15,
+                "reason": "symbol-misses-capability",
+                "symbol": "LL_Init1msTick"
+              },
+              {
+                "rank": 17,
+                "reason": "symbol-misses-capability",
+                "symbol": "LL_RTC_ALARM_Init"
+              },
+              {
+                "rank": 21,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_HallSensor_Init"
+              },
+              {
+                "rank": 24,
+                "reason": "symbol-misses-capability",
+                "symbol": "LL_InitTick"
+              },
+              {
+                "rank": 26,
+                "reason": "symbol-misses-capability",
+                "symbol": "LL_RTC_TIME_Init"
+              },
+              {
+                "rank": 29,
+                "reason": "symbol-misses-capability",
+                "symbol": "LL_RTC_ALARM_StructInit"
+              },
+              {
+                "rank": 31,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_HallSensor_MspInit"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "b1aaa67e1107d337",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "tim"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "init"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "tim"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "tim"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "include",
+              "matches": [
+                "tim"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "call-context",
+              "matches": [
+                "counter",
+                "tim"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "counter",
+                "tim"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "initialize",
+          "parameter_sources": [],
+          "selected_symbol": "LL_TIM_Init",
+          "signature": "ErrorStatus LL_TIM_Init(TIM_TypeDef *TIMx, const LL_TIM_InitTypeDef *TIM_InitStruct)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "3ab30857968f1f7c",
+              "score": 2.658330469,
+              "symbol": "LL_TIM_EnableExternalClock"
+            },
+            {
+              "entity_id": "d417283986f8950d",
+              "score": 2.52011282,
+              "symbol": "LL_TIM_EnableUpdateEvent"
+            },
+            {
+              "entity_id": "95491c3585d1ae26",
+              "score": 2.486155808,
+              "symbol": "LL_TIM_CC_EnableChannel"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 3.499294296,
+          "decoder": {
+            "api_family": "ll-timer",
+            "candidate_rank": 1,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "d690f8c1905368d4",
+            "original_top1_symbol": "LL_TIM_EnableCounter",
+            "rejected_before_selection": [
+              {
+                "rank": 4,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_OCN_Start"
+              },
+              {
+                "rank": 5,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_PWMN_Start_IT"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_PWMN_Start"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_OCN_Start_IT"
+              },
+              {
+                "rank": 36,
+                "reason": "symbol-misses-capability",
+                "symbol": "LL_GPIO_AF_EnableRemap_TIM12"
+              },
+              {
+                "rank": 37,
+                "reason": "symbol-misses-capability",
+                "symbol": "LL_GPIO_AF_EnableRemap_TIM14"
+              },
+              {
+                "rank": 38,
+                "reason": "symbol-misses-capability",
+                "symbol": "LL_GPIO_AF_EnableRemap_TIM16"
+              },
+              {
+                "rank": 39,
+                "reason": "symbol-misses-capability",
+                "symbol": "LL_GPIO_AF_EnableRemap_TIM11"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "d690f8c1905368d4",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "counter",
+                "tim"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "enable"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "tim"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "counter",
+                "tim"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "counter",
+                "tim"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "start",
+          "parameter_sources": [],
+          "selected_symbol": "LL_TIM_EnableCounter",
+          "signature": "__STATIC_INLINE void LL_TIM_EnableCounter(TIM_TypeDef *TIMx)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "394e5e371a1a69c6",
+              "score": 3.120212968,
+              "symbol": "LL_TIM_DisableUpdateEvent"
+            },
+            {
+              "entity_id": "4f37f2e8b342995f",
+              "score": 3.108115417,
+              "symbol": "LL_TIM_DisableExternalClock"
+            },
+            {
+              "entity_id": "d0b60f949d1e7a90",
+              "score": 3.074625604,
+              "symbol": "LL_TIM_DisableBRK"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 4.703698356,
+          "decoder": {
+            "api_family": "ll-timer",
+            "candidate_rank": 1,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "11cf4ec8435badeb",
+            "original_top1_symbol": "LL_TIM_DisableCounter",
+            "rejected_before_selection": [
+              {
+                "rank": 5,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_PWMN_Stop_IT"
+              },
+              {
+                "rank": 6,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_OCN_Stop_IT"
+              },
+              {
+                "rank": 7,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_PWMN_Stop"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_OCN_Stop"
+              },
+              {
+                "rank": 16,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_TIM_Base_DeInit"
+              },
+              {
+                "rank": 31,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_PWMN_Stop_DMA"
+              },
+              {
+                "rank": 36,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_OCN_Stop_DMA"
+              },
+              {
+                "rank": 41,
+                "reason": "symbol-misses-capability",
+                "symbol": "HAL_TIMEx_HallSensor_Stop_IT"
+              }
+            ],
+            "selection_changed": false
+          },
+          "entity_id": "11cf4ec8435badeb",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "counter",
+                "tim"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "name-action",
+              "matches": [
+                "disable"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "tim"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "counter",
+                "tim"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "counter",
+                "tim"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "stop",
+          "parameter_sources": [],
+          "selected_symbol": "LL_TIM_DisableCounter",
+          "signature": "__STATIC_INLINE void LL_TIM_DisableCounter(TIM_TypeDef *TIMx)",
+          "status": "inferred"
+        },
+        {
+          "alternatives": [
+            {
+              "entity_id": "46bc458726a49ea8",
+              "score": 2.679731067,
+              "symbol": "LL_TIM_OC_SetCompareCH3"
+            },
+            {
+              "entity_id": "e5ca301396bd04c1",
+              "score": 2.663429682,
+              "symbol": "LL_TIM_OC_SetCompareCH4"
+            },
+            {
+              "entity_id": "fa777a170e1446f7",
+              "score": 2.657291636,
+              "symbol": "LL_TIM_OC_SetCompareCH1"
+            }
+          ],
+          "composite_symbols": [],
+          "confidence": 2.689840265,
+          "decoder": {
+            "api_family": "ll-timer",
+            "candidate_rank": 5,
+            "composition_required": false,
+            "method": "signature-family",
+            "original_top1_entity_id": "9a702cda1b01890f",
+            "original_top1_symbol": "LL_TIM_SetAutoReload",
+            "rejected_before_selection": [
+              {
+                "rank": 1,
+                "reason": "symbol-misses-operation",
+                "symbol": "LL_TIM_SetAutoReload"
+              },
+              {
+                "rank": 2,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_TIM_Base_Init"
+              },
+              {
+                "rank": 3,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "TIM_DMAPeriodElapsedCplt"
+              },
+              {
+                "rank": 4,
+                "reason": "requires-at-least-2-parameters",
+                "symbol": "TIM_DMAPeriodElapsedHalfCplt"
+              },
+              {
+                "rank": 9,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_TIM_IRQHandler"
+              },
+              {
+                "rank": 10,
+                "reason": "symbol-misses-operation",
+                "symbol": "HAL_TIM_Base_DeInit"
+              },
+              {
+                "rank": 11,
+                "reason": "symbol-misses-operation",
+                "symbol": "LL_IWDG_ReloadCounter"
+              },
+              {
+                "rank": 12,
+                "reason": "symbol-misses-operation",
+                "symbol": "LL_IWDG_SetReloadCounter"
+              }
+            ],
+            "selection_changed": true
+          },
+          "entity_id": "84519cabeede4c4e",
+          "evidence": [
+            {
+              "kind": "name-capability",
+              "matches": [
+                "tim"
+              ],
+              "weight": 0.3
+            },
+            {
+              "kind": "path",
+              "matches": [
+                "tim"
+              ],
+              "weight": 0.16
+            },
+            {
+              "kind": "signature",
+              "matches": [
+                "tim"
+              ],
+              "weight": 0.1
+            },
+            {
+              "kind": "macro-context",
+              "matches": [
+                "counter",
+                "tim"
+              ],
+              "weight": 0.08
+            }
+          ],
+          "operation": "set_interval",
+          "parameter_sources": [],
+          "selected_symbol": "LL_TIM_OC_SetCompareCH2",
+          "signature": "__STATIC_INLINE void LL_TIM_OC_SetCompareCH2(TIM_TypeDef *TIMx, uint32_t CompareValue)",
+          "status": "inferred"
+        }
+      ],
+      "status": "resolved"
+    }
+  ],
+  "created_at": "2026-09-06T07:35:07.265028+00:00",
+  "decoder": "signature-family",
+  "id": "aad1bad3e9c68a88",
+  "method": "capability-schema-and-ranked-evidence",
+  "schema_version": "1.0",
+  "sdk_id": "stm32cube-f1",
+  "summary": {
+    "capabilities": 5,
+    "inferred_operations": 19,
+    "missing_operations": 0,
+    "operations": 19,
+    "resolved_capabilities": 5
+  }
+}

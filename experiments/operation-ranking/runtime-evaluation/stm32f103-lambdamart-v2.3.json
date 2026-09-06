@@ -1,0 +1,575 @@
+{
+  "adjudication": "experiments/operation-ranking/external-test-truth/source/equivalence-adjudication-20260902.json",
+  "aggregate": {
+    "hit_at_5": 0.944444,
+    "map": 0.58596,
+    "ndcg_at_10": 0.673738,
+    "precision_at_1": 0.611111,
+    "recall_at_5": 0.642593
+  },
+  "bundle": "models/runtime/stm32f103-operation-lambdamart-h03-eq-r1-v2.3.json",
+  "bundle_sha256": "c7e19064c7d920c08d427fed357d501aecae28e3252cd04d4d90f8aa29d9b4e0",
+  "created_at": "2026-09-06T07:03:19.098421+00:00",
+  "post_hoc_truth_only": true,
+  "records": [
+    {
+      "metrics": {
+        "hit_at_5": 0.0,
+        "map": 0.142677,
+        "ndcg_at_10": 0.16716,
+        "precision_at_1": 0.0,
+        "recall_at_5": 0.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "clock.disable",
+      "selected_grade": 0,
+      "selected_symbol": "LL_RCC_PLL_Disable",
+      "top5": [
+        "LL_RCC_PLL_Disable",
+        "HAL_RCC_DisableCSS",
+        "LL_RCC_LSE_Disable",
+        "LL_RCC_PLL2_Disable",
+        "LL_RCC_DisableIT_PLL2RDY"
+      ],
+      "truth_symbols": [
+        "HAL_RCCEx_DisablePLL2",
+        "HAL_RCCEx_DisablePLLI2S",
+        "HAL_RCC_OscConfig"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_RCCEx_DisablePLL2",
+        "HAL_RCCEx_DisablePLLI2S",
+        "HAL_RCC_OscConfig"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.371429,
+        "ndcg_at_10": 0.520507,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.25
+      },
+      "missing_truth_symbols_from_label_free_pool": [
+        "HAL_RCC_OscConfig"
+      ],
+      "operation_id": "clock.enable",
+      "selected_grade": 2,
+      "selected_symbol": "LL_RCC_PLL_Enable",
+      "top5": [
+        "LL_RCC_PLL_Enable",
+        "LL_RCC_HSE_Enable",
+        "LL_RCC_PLL2_Enable",
+        "HAL_RCC_EnableCSS",
+        "LL_RCC_LSI_Enable"
+      ],
+      "truth_symbols": [
+        "HAL_RCCEx_EnablePLL2",
+        "HAL_RCCEx_EnablePLLI2S",
+        "HAL_RCC_OscConfig",
+        "LL_RCC_PLL_Enable"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_RCCEx_EnablePLL2",
+        "HAL_RCCEx_EnablePLLI2S",
+        "LL_RCC_PLL_Enable"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.355714,
+        "ndcg_at_10": 0.463109,
+        "precision_at_1": 0.0,
+        "recall_at_5": 0.2
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "clock.get_frequency",
+      "selected_grade": 0,
+      "selected_symbol": "RCC_GetHCLKClockFreq",
+      "top5": [
+        "RCC_GetHCLKClockFreq",
+        "RCC_PLL2_GetFreqClockFreq",
+        "RCC_GetSystemClockFreq",
+        "RCC_GetPCLK2ClockFreq",
+        "HAL_RCC_GetSysClockFreq"
+      ],
+      "truth_symbols": [
+        "HAL_RCCEx_GetPeriphCLKFreq",
+        "HAL_RCC_GetHCLKFreq",
+        "HAL_RCC_GetPCLK1Freq",
+        "HAL_RCC_GetPCLK2Freq",
+        "HAL_RCC_GetSysClockFreq"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_RCCEx_GetPeriphCLKFreq",
+        "HAL_RCC_GetHCLKFreq",
+        "HAL_RCC_GetPCLK1Freq",
+        "HAL_RCC_GetPCLK2Freq",
+        "HAL_RCC_GetSysClockFreq"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.6875,
+        "ndcg_at_10": 0.80481,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.75
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "clock.initialize",
+      "selected_grade": 3,
+      "selected_symbol": "HAL_RCC_ClockConfig",
+      "top5": [
+        "HAL_RCC_ClockConfig",
+        "HAL_RCC_OscConfig",
+        "LL_SetSystemCoreClock",
+        "HAL_RCCEx_PeriphCLKConfig",
+        "HAL_RCC_MCOConfig"
+      ],
+      "truth_symbols": [
+        "HAL_RCCEx_PeriphCLKConfig",
+        "HAL_RCC_ClockConfig",
+        "HAL_RCC_DeInit",
+        "HAL_RCC_OscConfig"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_RCCEx_PeriphCLKConfig",
+        "HAL_RCC_ClockConfig",
+        "HAL_RCC_DeInit",
+        "HAL_RCC_OscConfig"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.5,
+        "ndcg_at_10": 0.613147,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.5
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "gpio.configure",
+      "selected_grade": 3,
+      "selected_symbol": "HAL_GPIO_Init",
+      "top5": [
+        "HAL_GPIO_Init",
+        "LL_GPIO_Init",
+        "LL_GPIO_StructInit",
+        "stmpe811_IO_InitPin",
+        "HAL_PCCARD_MspInit"
+      ],
+      "truth_symbols": [
+        "HAL_GPIO_DeInit",
+        "HAL_GPIO_Init"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_GPIO_DeInit",
+        "HAL_GPIO_Init"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "gpio.read",
+      "selected_grade": 3,
+      "selected_symbol": "HAL_GPIO_ReadPin",
+      "top5": [
+        "HAL_GPIO_ReadPin",
+        "LL_GPIO_GetPinPull",
+        "BSP_IO_ReadPin",
+        "LL_GPIO_ReadOutputPort",
+        "LL_GPIO_ReadInputPort"
+      ],
+      "truth_symbols": [
+        "HAL_GPIO_ReadPin"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_GPIO_ReadPin"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.7,
+        "ndcg_at_10": 0.850345,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "gpio.write",
+      "selected_grade": 3,
+      "selected_symbol": "HAL_GPIO_WritePin",
+      "top5": [
+        "HAL_GPIO_WritePin",
+        "LL_GPIO_SetOutputPin",
+        "LL_GPIO_SetPinOutputType",
+        "LL_GPIO_SetPinPull",
+        "HAL_GPIO_TogglePin"
+      ],
+      "truth_symbols": [
+        "HAL_GPIO_TogglePin",
+        "HAL_GPIO_WritePin"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_GPIO_TogglePin",
+        "HAL_GPIO_WritePin"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.583333,
+        "ndcg_at_10": 0.693426,
+        "precision_at_1": 0.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "interrupt.disable",
+      "selected_grade": 0,
+      "selected_symbol": "IRQ_Disable",
+      "top5": [
+        "IRQ_Disable",
+        "HAL_NVIC_DisableIRQ",
+        "__NVIC_DisableIRQ",
+        "TZ_NVIC_DisableIRQ_NS",
+        "GIC_DisableIRQ"
+      ],
+      "truth_symbols": [
+        "HAL_NVIC_DisableIRQ",
+        "__NVIC_DisableIRQ"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_NVIC_DisableIRQ",
+        "__NVIC_DisableIRQ"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.833333,
+        "ndcg_at_10": 0.919721,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "interrupt.enable",
+      "selected_grade": 3,
+      "selected_symbol": "HAL_NVIC_EnableIRQ",
+      "top5": [
+        "HAL_NVIC_EnableIRQ",
+        "IRQ_Enable",
+        "__NVIC_EnableIRQ",
+        "HAL_NVIC_SetPriority",
+        "TZ_NVIC_EnableIRQ_NS"
+      ],
+      "truth_symbols": [
+        "HAL_NVIC_EnableIRQ",
+        "__NVIC_EnableIRQ"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_NVIC_EnableIRQ",
+        "__NVIC_EnableIRQ"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.196429,
+        "ndcg_at_10": 0.376429,
+        "precision_at_1": 0.0,
+        "recall_at_5": 0.25
+      },
+      "missing_truth_symbols_from_label_free_pool": [
+        "__NVIC_SetPriority",
+        "__NVIC_SetPriorityGrouping"
+      ],
+      "operation_id": "interrupt.initialize",
+      "selected_grade": 0,
+      "selected_symbol": "IRQ_Initialize",
+      "top5": [
+        "IRQ_Initialize",
+        "HAL_NVIC_SetPriority",
+        "HAL_Init",
+        "HAL_HCD_HC_Init",
+        "GIC_CPUInterfaceInit"
+      ],
+      "truth_symbols": [
+        "HAL_NVIC_SetPriority",
+        "HAL_NVIC_SetPriorityGrouping",
+        "__NVIC_SetPriority",
+        "__NVIC_SetPriorityGrouping"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_NVIC_SetPriority",
+        "HAL_NVIC_SetPriorityGrouping"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "interrupt.register",
+      "selected_grade": 2,
+      "selected_symbol": "__NVIC_SetVector",
+      "top5": [
+        "__NVIC_SetVector",
+        "HAL_IRDA_RegisterCallback",
+        "HAL_I2S_RegisterCallback",
+        "HAL_CEC_RegisterRxCpltCallback",
+        "HAL_RTC_RegisterCallback"
+      ],
+      "truth_symbols": [
+        "__NVIC_SetVector"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "__NVIC_SetVector"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.25,
+        "ndcg_at_10": 0.386853,
+        "precision_at_1": 0.0,
+        "recall_at_5": 0.5
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "timer.initialize",
+      "selected_grade": 0,
+      "selected_symbol": "LL_TIM_Init",
+      "top5": [
+        "LL_TIM_Init",
+        "HAL_TIM_Base_Init",
+        "LL_TIM_StructInit",
+        "HAL_InitTick",
+        "LL_TIM_BDTR_StructInit"
+      ],
+      "truth_symbols": [
+        "HAL_TIM_Base_DeInit",
+        "HAL_TIM_Base_Init"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_TIM_Base_DeInit",
+        "HAL_TIM_Base_Init"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.5,
+        "ndcg_at_10": 0.63093,
+        "precision_at_1": 0.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "timer.set_interval",
+      "selected_grade": 0,
+      "selected_symbol": "LL_TIM_SetAutoReload",
+      "top5": [
+        "LL_TIM_SetAutoReload",
+        "HAL_TIM_Base_Init",
+        "TIM_DMAPeriodElapsedCplt",
+        "TIM_DMAPeriodElapsedHalfCplt",
+        "LL_TIM_OC_SetCompareCH2"
+      ],
+      "truth_symbols": [
+        "HAL_TIM_Base_Init"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_TIM_Base_Init"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.488889,
+        "ndcg_at_10": 0.666373,
+        "precision_at_1": 0.0,
+        "recall_at_5": 0.666667
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "timer.start",
+      "selected_grade": 0,
+      "selected_symbol": "LL_TIM_EnableCounter",
+      "top5": [
+        "LL_TIM_EnableCounter",
+        "HAL_TIM_Base_Start_IT",
+        "HAL_TIM_Base_Start",
+        "HAL_TIMEx_OCN_Start",
+        "HAL_TIMEx_PWMN_Start_IT"
+      ],
+      "truth_symbols": [
+        "HAL_TIM_Base_Start",
+        "HAL_TIM_Base_Start_DMA",
+        "HAL_TIM_Base_Start_IT"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_TIM_Base_Start",
+        "HAL_TIM_Base_Start_DMA",
+        "HAL_TIM_Base_Start_IT"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.875,
+        "ndcg_at_10": 0.955024,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.75
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "timer.stop",
+      "selected_grade": 2,
+      "selected_symbol": "LL_TIM_DisableCounter",
+      "top5": [
+        "LL_TIM_DisableCounter",
+        "HAL_TIM_Base_Stop",
+        "HAL_TIM_Base_Stop_IT",
+        "HAL_TIM_OC_Stop",
+        "HAL_TIMEx_PWMN_Stop_IT"
+      ],
+      "truth_symbols": [
+        "HAL_TIM_Base_Stop",
+        "HAL_TIM_Base_Stop_DMA",
+        "HAL_TIM_Base_Stop_IT",
+        "LL_TIM_DisableCounter"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_TIM_Base_Stop",
+        "HAL_TIM_Base_Stop_DMA",
+        "HAL_TIM_Base_Stop_IT",
+        "LL_TIM_DisableCounter"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.32696,
+        "ndcg_at_10": 0.33916,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.2
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "uart.configure",
+      "selected_grade": 3,
+      "selected_symbol": "HAL_UART_Init",
+      "top5": [
+        "HAL_UART_Init",
+        "LL_USART_Init",
+        "HAL_USART_Init",
+        "HAL_UART_MspInit",
+        "LL_USART_ClockInit"
+      ],
+      "truth_symbols": [
+        "HAL_HalfDuplex_Init",
+        "HAL_LIN_Init",
+        "HAL_MultiProcessor_Init",
+        "HAL_UART_DeInit",
+        "HAL_UART_Init"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_HalfDuplex_Init",
+        "HAL_LIN_Init",
+        "HAL_MultiProcessor_Init",
+        "HAL_UART_DeInit",
+        "HAL_UART_Init"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 0.736014,
+        "ndcg_at_10": 0.740285,
+        "precision_at_1": 1.0,
+        "recall_at_5": 0.5
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "uart.read",
+      "selected_grade": 3,
+      "selected_symbol": "HAL_UART_Receive",
+      "top5": [
+        "HAL_UART_Receive",
+        "HAL_UART_Receive_IT",
+        "HAL_UART_Receive_DMA",
+        "HAL_USART_Receive",
+        "HAL_USART_Receive_IT"
+      ],
+      "truth_symbols": [
+        "HAL_UARTEx_ReceiveToIdle",
+        "HAL_UARTEx_ReceiveToIdle_DMA",
+        "HAL_UARTEx_ReceiveToIdle_IT",
+        "HAL_UART_Receive",
+        "HAL_UART_Receive_DMA",
+        "HAL_UART_Receive_IT"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_UARTEx_ReceiveToIdle",
+        "HAL_UARTEx_ReceiveToIdle_DMA",
+        "HAL_UARTEx_ReceiveToIdle_IT",
+        "HAL_UART_Receive",
+        "HAL_UART_Receive_DMA",
+        "HAL_UART_Receive_IT"
+      ]
+    },
+    {
+      "metrics": {
+        "hit_at_5": 1.0,
+        "map": 1.0,
+        "ndcg_at_10": 1.0,
+        "precision_at_1": 1.0,
+        "recall_at_5": 1.0
+      },
+      "missing_truth_symbols_from_label_free_pool": [],
+      "operation_id": "uart.write",
+      "selected_grade": 3,
+      "selected_symbol": "HAL_UART_Transmit",
+      "top5": [
+        "HAL_UART_Transmit",
+        "HAL_UART_Transmit_IT",
+        "HAL_UART_Transmit_DMA",
+        "HAL_USART_Transmit_IT",
+        "LL_USART_TransmitData8"
+      ],
+      "truth_symbols": [
+        "HAL_UART_Transmit",
+        "HAL_UART_Transmit_DMA",
+        "HAL_UART_Transmit_IT"
+      ],
+      "truth_symbols_in_label_free_pool": [
+        "HAL_UART_Transmit",
+        "HAL_UART_Transmit_DMA",
+        "HAL_UART_Transmit_IT"
+      ]
+    }
+  ],
+  "schema_version": "frozen-operation-bundle-evaluation-v1",
+  "skipped_operation_records": [
+    {
+      "group_status": "no_public_api",
+      "operation_id": "gpio.attach_irq",
+      "reason": "已复核公开声明与实现；发现的接口只能完成触发/回调/使能等分步动作，没有单一稳定公开 callable API 可独立完成完整契约。"
+    }
+  ],
+  "summary": {
+    "bundle_operations": 19,
+    "operations": 18,
+    "skipped_operations": 1,
+    "truth_symbols": 54,
+    "truth_symbols_missing_from_label_free_pool": 3
+  },
+  "truth": "experiments/operation-ranking/external-test-truth/source/stm32cube-f1/truth-audit-v1-final.json",
+  "truth_sha256": "e3b49efd3fab69016913d8e2ccd5bcd750c8dff46e887d05b31c13991d479d91"
+}

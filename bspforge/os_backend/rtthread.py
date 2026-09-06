@@ -105,6 +105,11 @@ class RTThreadBackend(OSBackend):
                 sdk_package = self._install_sdk_input(
                     generated_bsp, Path(ir["sdk"]["root"]), closure, [], profile_name
                 )
+                compatibility_repairs.extend(
+                    self._configure_stm32_validation_uart(
+                        generated_bsp, options.get("validation", {})
+                    )
+                )
             else:
                 sdk_package = Path(ir["sdk"]["root"])
             driver_roots = [
@@ -139,13 +144,17 @@ class RTThreadBackend(OSBackend):
 
         default_prefix = "riscv-none-embed-" if profile["architecture"] == "riscv64" else "arm-none-eabi-"
         self._make_prefix_configurable(generated_bsp / "rtconfig.py", default_prefix)
+        enabled_features = sorted(set(
+            device_manifest["required_rtthread_features"]
+            + list(options.get("enabled_rtthread_features", []))
+        ))
         self._enable_rtthread_features(
             generated_bsp / "rtconfig.h",
-            device_manifest["required_rtthread_features"],
+            enabled_features,
         )
         disabled_features = list(options.get("disabled_rtthread_features", []))
         required_disabled = sorted(
-            set(device_manifest["required_rtthread_features"]) & set(disabled_features)
+            set(enabled_features) & set(disabled_features)
         )
         if required_disabled:
             raise ValueError(
@@ -153,6 +162,16 @@ class RTThreadBackend(OSBackend):
                 + ", ".join(required_disabled)
             )
         self._disable_rtthread_features(generated_bsp / "rtconfig.h", disabled_features)
+        protocol_console_buffer_size = int(
+            options.get("protocol_console_buffer_size", 512)
+        )
+        if protocol_console_buffer_size < 256:
+            raise ValueError("RT-Thread protocol console buffer must be at least 256 bytes")
+        self._set_numeric_define(
+            generated_bsp / "rtconfig.h",
+            "RT_CONSOLEBUF_SIZE",
+            protocol_console_buffer_size,
+        )
 
         device_sources = device_manifest.get("sources", [device_manifest.get("source")])
         device_sources = [item for item in device_sources if item]
@@ -190,9 +209,10 @@ class RTThreadBackend(OSBackend):
                 "summary": device_manifest["summary"],
             },
             "rtthread_features": {
-                "required": device_manifest["required_rtthread_features"],
+                "required": enabled_features,
                 "disabled": disabled_features,
             },
+            "protocol_console_buffer_size": protocol_console_buffer_size,
             "compatibility_repairs": compatibility_repairs,
             "sdk_package": self._relative_or_absolute(sdk_package, output),
             "sdk_digest": ir["sdk"]["digest"],
@@ -293,12 +313,15 @@ class RTThreadBackend(OSBackend):
             sdk_root / "Drivers" / "CMSIS" / "Device" / "ST" / "STM32F1xx",
             cmsis_device,
         )
+        startup_repairs = RTThreadBackend._repair_stm32_gcc_startup(cmsis_device)
         copytree_filtered(sdk_root / "Drivers" / "STM32F1xx_HAL_Driver", hal)
         (cmsis_core / "SConscript").write_text(RTThreadBackend._cmsis_core_sconscript(), encoding="utf-8")
         (cmsis_device / "SConscript").write_text(
             RTThreadBackend._stm32_cmsis_sconscript(), encoding="utf-8"
         )
-        (hal / "SConscript").write_text(RTThreadBackend._stm32_hal_sconscript(), encoding="utf-8")
+        (hal / "SConscript").write_text(
+            RTThreadBackend._stm32_hal_sconscript(closure), encoding="utf-8"
+        )
         (packages / "SConscript").write_text(
             "import os\nfrom building import *\nobjs = []\ncwd = GetCurrentDir()\n"
             "for item in os.listdir(cwd):\n"
@@ -316,9 +339,130 @@ class RTThreadBackend(OSBackend):
                 "Drivers/CMSIS/Device/ST/STM32F1xx",
                 "Drivers/STM32F1xx_HAL_Driver",
             ],
+            "startup_repairs": startup_repairs,
             "note": "Package payloads are copied from the analyzed STM32CubeF1 input.",
         })
         return packages
+
+    @staticmethod
+    def _repair_stm32_gcc_startup(cmsis_device: Path) -> list[dict[str, str]]:
+        """Route stock CMSIS reset handlers through RT-Thread's GCC entry point."""
+        repairs: list[dict[str, str]] = []
+        startup_root = cmsis_device / "Source" / "Templates" / "gcc"
+        for path in sorted(startup_root.glob("startup_stm32f1*.s")):
+            text = path.read_text(encoding="utf-8", errors="replace")
+            updated, count = re.subn(
+                r"(?m)^(\s*bl\s+)main(\s*(?:/\*.*\*/)?\s*)$",
+                r"\1entry\2",
+                text,
+                count=1,
+            )
+            if count == 0:
+                if re.search(r"(?m)^\s*bl\s+entry\b", text):
+                    continue
+                raise RuntimeError(f"Could not locate CMSIS GCC main branch in {path}")
+            path.write_text(updated, encoding="utf-8")
+            repairs.append({
+                "file": str(path.relative_to(cmsis_device)),
+                "from": "bl main",
+                "to": "bl entry",
+                "reason": "RT-Thread GCC startup requires rtthread_startup before user main",
+            })
+        if not repairs:
+            raise RuntimeError(f"No STM32F1 GCC startup files found in {startup_root}")
+        return repairs
+
+    @staticmethod
+    def _configure_stm32_validation_uart(
+        generated_bsp: Path, validation: dict[str, Any]
+    ) -> list[dict[str, str]]:
+        uart_name = str(validation.get("uart", "")).lower()
+        match = re.fullmatch(r"uart([1-3])", uart_name)
+        if not match:
+            return []
+        number = match.group(1)
+        instance = f"USART{number}"
+        msp = (
+            generated_bsp / "board" / "CubeMX_Config" / "Src"
+            / "stm32f1xx_hal_msp.c"
+        )
+        if not msp.is_file():
+            return []
+        text = msp.read_text(encoding="utf-8", errors="replace")
+        if f"if(huart->Instance=={instance})" in text:
+            return []
+        defaults = {
+            "1": {"tx": "PA9", "rx": "PA10"},
+            "2": {"tx": "PA2", "rx": "PA3"},
+            "3": {"tx": "PB10", "rx": "PB11"},
+        }
+        pins = {**defaults[number], **validation.get("uart_pins", {})}
+        tx_port, tx_pin = RTThreadBackend._stm32_pin_tokens(pins["tx"])
+        rx_port, rx_pin = RTThreadBackend._stm32_pin_tokens(pins["rx"])
+        if tx_port != rx_port:
+            raise ValueError("STM32 validation UART TX/RX must use the same GPIO port")
+        init_branch = f"""
+  else if(huart->Instance=={instance})
+  {{
+    __HAL_RCC_{instance}_CLK_ENABLE();
+    __HAL_RCC_{tx_port}_CLK_ENABLE();
+    GPIO_InitStruct.Pin = {tx_pin};
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
+    HAL_GPIO_Init({tx_port}, &GPIO_InitStruct);
+    GPIO_InitStruct.Pin = {rx_pin};
+    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    HAL_GPIO_Init({rx_port}, &GPIO_InitStruct);
+  }}
+"""
+        deinit_branch = f"""
+  else if(huart->Instance=={instance})
+  {{
+    __HAL_RCC_{instance}_CLK_DISABLE();
+    HAL_GPIO_DeInit({tx_port}, {tx_pin}|{rx_pin});
+  }}
+"""
+        text = RTThreadBackend._insert_function_tail(
+            text, "void HAL_UART_MspInit(UART_HandleTypeDef* huart)", init_branch
+        )
+        text = RTThreadBackend._insert_function_tail(
+            text, "void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)", deinit_branch
+        )
+        msp.write_text(text, encoding="utf-8")
+        return [{
+            "file": str(msp.relative_to(generated_bsp)),
+            "action": "add-uart-msp-branch",
+            "instance": instance,
+            "tx": pins["tx"],
+            "rx": pins["rx"],
+            "reason": "RT-Thread native UART driver delegates pin/clock setup to HAL MSP",
+        }]
+
+    @staticmethod
+    def _stm32_pin_tokens(pin: str) -> tuple[str, str]:
+        match = re.fullmatch(r"P([A-G])(\d{1,2})", str(pin).upper())
+        if not match or int(match.group(2)) > 15:
+            raise ValueError(f"Invalid STM32 GPIO pin: {pin}")
+        return f"GPIO{match.group(1)}", f"GPIO_PIN_{int(match.group(2))}"
+
+    @staticmethod
+    def _insert_function_tail(text: str, signature: str, insertion: str) -> str:
+        start = text.find(signature)
+        if start < 0:
+            raise RuntimeError(f"Could not locate function: {signature}")
+        opening = text.find("{", start + len(signature))
+        if opening < 0:
+            raise RuntimeError(f"Could not locate opening brace for: {signature}")
+        depth = 0
+        for index in range(opening, len(text)):
+            if text[index] == "{":
+                depth += 1
+            elif text[index] == "}":
+                depth -= 1
+                if depth == 0:
+                    return text[:index] + insertion + text[index:]
+        raise RuntimeError(f"Could not locate closing brace for: {signature}")
 
     @staticmethod
     def _cmsis_core_sconscript() -> str:
@@ -348,20 +492,34 @@ Return('group')
 """
 
     @staticmethod
-    def _stm32_hal_sconscript() -> str:
+    def _stm32_hal_sconscript(closure: dict[str, Any]) -> str:
+        baseline = {
+            "stm32f1xx_hal.c", "stm32f1xx_hal_cortex.c", "stm32f1xx_hal_dma.c",
+            "stm32f1xx_hal_gpio.c", "stm32f1xx_hal_gpio_ex.c", "stm32f1xx_hal_pwr.c",
+            "stm32f1xx_hal_rcc.c", "stm32f1xx_hal_rcc_ex.c", "stm32f1xx_hal_uart.c",
+            "stm32f1xx_hal_usart.c",
+        }
+        selected = {
+            Path(item["path"]).name
+            for item in closure.get("selected_files", [])
+            if item.get("path", "").startswith("Drivers/STM32F1xx_HAL_Driver/Src/")
+        }
+        selected.update(
+            Path(path).name
+            for path in closure.get("repair_sources", [])
+            if path.startswith("Drivers/STM32F1xx_HAL_Driver/Src/")
+        )
+        names = sorted(baseline | selected)
         return """from building import *
 import os
 cwd = GetCurrentDir()
 src_path = os.path.join(cwd, 'Src')
-names = ['stm32f1xx_hal.c', 'stm32f1xx_hal_cortex.c', 'stm32f1xx_hal_dma.c',
-         'stm32f1xx_hal_gpio.c', 'stm32f1xx_hal_gpio_ex.c', 'stm32f1xx_hal_pwr.c',
-         'stm32f1xx_hal_rcc.c', 'stm32f1xx_hal_rcc_ex.c', 'stm32f1xx_hal_uart.c',
-         'stm32f1xx_hal_usart.c']
+names = %r
 src = [os.path.join(src_path, name) for name in names]
 group = DefineGroup('STM32F1-HAL', src, depend=['PKG_USING_STM32F1_HAL_DRIVER'],
                     CPPPATH=[os.path.join(cwd, 'Inc')], CPPDEFINES=['USE_HAL_DRIVER'])
 Return('group')
-"""
+""" % names
 
     @staticmethod
     def _materialize_build_tree(rtthread_root: Path, board: str, output: Path) -> None:
@@ -605,6 +763,20 @@ int bspforge_mapping_count(void)
                 "",
                 text,
             )
+        path.write_text(text, encoding="utf-8")
+
+    @staticmethod
+    def _set_numeric_define(path: Path, name: str, value: int) -> None:
+        text = path.read_text(encoding="utf-8", errors="replace")
+        replacement = f"#define {name} {value}"
+        text, count = re.subn(
+            rf"(?m)^\s*#define\s+{re.escape(name)}\s+\d+\s*$",
+            replacement,
+            text,
+            count=1,
+        )
+        if count == 0:
+            text = f"{text.rstrip()}\n{replacement}\n"
         path.write_text(text, encoding="utf-8")
 
     @staticmethod

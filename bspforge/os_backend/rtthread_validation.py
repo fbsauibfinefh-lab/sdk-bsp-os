@@ -466,14 +466,13 @@ exit:
 
 int bspforge_validation_run(void)
 {{
-    static const char banner[] =
-        "{{\"bspforge\":true,\"protocol\":\"1.0\","
-        "\"event\":\"boot\",\"rtos\":\"rtthread\","
-        "\"board\":\"{board}\",\"build_id\":\"{build_id}\","
-        "\"stage\":\"application\"}}\r\n";
     rt_device_t serial = rt_device_find(bspforge_uart_name);
 
-    rt_kprintf("%s", banner);
+    rt_kprintf("{{\"bspforge\":true,\"protocol\":\"1.0\","
+               "\"event\":\"boot\",\"rtos\":\"rtthread\",");
+    rt_kprintf("\"board\":\"{board}\",");
+    rt_kprintf("\"build_id\":\"{build_id}\","
+               "\"stage\":\"application\"}}\r\n");
     if (serial == RT_NULL)
         return -RT_ENOSYS;
     if (bspforge_pin_number >= 0)

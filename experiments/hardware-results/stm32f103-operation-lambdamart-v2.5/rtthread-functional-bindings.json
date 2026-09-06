@@ -1,0 +1,557 @@
+{
+  "backend": "rtthread",
+  "binding_plan_id": "aad1bad3e9c68a88",
+  "bindings": [
+    {
+      "capability": "clock",
+      "sdk_symbols": [
+        {
+          "driver_references": [],
+          "entity_id": "e1e7d8c37ab11834",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "__STATIC_INLINE void LL_AHB1_GRP1_EnableClock(uint32_t Periphs)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 267,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_bus.h"
+          },
+          "symbol": "LL_AHB1_GRP1_EnableClock"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "d70797eb830a9c99",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "__STATIC_INLINE void LL_APB1_GRP1_DisableClock(uint32_t Periphs)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 573,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_bus.h"
+          },
+          "symbol": "LL_APB1_GRP1_DisableClock"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "49be5a711684fca4",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "void LL_RCC_GetSystemClocksFreq(LL_RCC_ClocksTypeDef *RCC_Clocks)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 188,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_rcc.c"
+          },
+          "symbol": "LL_RCC_GetSystemClocksFreq"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "d6c5f3e6911b8571",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "void LL_SetSystemCoreClock(uint32_t HCLKFrequency)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 269,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_utils.c"
+          },
+          "symbol": "LL_SetSystemCoreClock"
+        }
+      ],
+      "status": "evidence-only",
+      "strategy": "native-driver-trace"
+    },
+    {
+      "capability": "interrupt",
+      "sdk_symbols": [
+        {
+          "driver_references": [
+            {
+              "line": 199,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_can.c"
+            },
+            {
+              "line": 467,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_gpio.c"
+            },
+            {
+              "line": 374,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_rtc.c"
+            },
+            {
+              "line": 265,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_usart.c"
+            },
+            {
+              "line": 242,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_usart_v2.c"
+            }
+          ],
+          "entity_id": "98aa060bce61925b",
+          "linked_by_native_driver": true,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "void HAL_NVIC_DisableIRQ(IRQn_Type IRQn)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 202,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c"
+          },
+          "symbol": "HAL_NVIC_DisableIRQ"
+        },
+        {
+          "driver_references": [
+            {
+              "line": 263,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_can.c"
+            },
+            {
+              "line": 465,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_crypto.c"
+            },
+            {
+              "line": 127,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_eth.c"
+            },
+            {
+              "line": 444,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_gpio.c"
+            },
+            {
+              "line": 104,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_hard_i2c.c"
+            },
+            {
+              "line": 233,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_lcd.c"
+            },
+            {
+              "line": 63,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_lcd_mipi.c"
+            },
+            {
+              "line": 122,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_pulse_encoder.c"
+            }
+          ],
+          "entity_id": "2318e27c0ee44e9b",
+          "linked_by_native_driver": true,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "void HAL_NVIC_EnableIRQ(IRQn_Type IRQn)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 186,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c"
+          },
+          "symbol": "HAL_NVIC_EnableIRQ"
+        },
+        {
+          "driver_references": [
+            {
+              "line": 262,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_can.c"
+            },
+            {
+              "line": 464,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_crypto.c"
+            },
+            {
+              "line": 126,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_eth.c"
+            },
+            {
+              "line": 443,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_gpio.c"
+            },
+            {
+              "line": 103,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_hard_i2c.c"
+            },
+            {
+              "line": 232,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_lcd.c"
+            },
+            {
+              "line": 60,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_lcd_mipi.c"
+            },
+            {
+              "line": 119,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_pulse_encoder.c"
+            }
+          ],
+          "entity_id": "0287a9f851cead49",
+          "linked_by_native_driver": true,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t SubPriority)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 164,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c"
+          },
+          "symbol": "HAL_NVIC_SetPriority"
+        },
+        {
+          "driver_references": [
+            {
+              "line": 1208,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/CMSIS/Include/core_armv8mbl.h"
+            },
+            {
+              "line": 2078,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/CMSIS/Include/core_armv8mml.h"
+            },
+            {
+              "line": 595,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/CMSIS/Include/core_cm0.h"
+            },
+            {
+              "line": 713,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/CMSIS/Include/core_cm0plus.h"
+            },
+            {
+              "line": 622,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/CMSIS/Include/core_cm1.h"
+            },
+            {
+              "line": 1283,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/CMSIS/Include/core_cm23.h"
+            },
+            {
+              "line": 1458,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/CMSIS/Include/core_cm3.h"
+            },
+            {
+              "line": 2153,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/CMSIS/Include/core_cm33.h"
+            }
+          ],
+          "entity_id": "5a38b15fa8a23ffa",
+          "linked_by_native_driver": true,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "__STATIC_INLINE void __NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 1717,
+            "parser": "tree-sitter",
+            "path": "Drivers/CMSIS/Include/core_sc300.h"
+          },
+          "symbol": "__NVIC_SetVector"
+        }
+      ],
+      "status": "resolved",
+      "strategy": "native-driver-trace"
+    },
+    {
+      "capability": "uart",
+      "sdk_symbols": [
+        {
+          "driver_references": [
+            {
+              "line": 228,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_usart.c"
+            },
+            {
+              "line": 195,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_usart_v2.c"
+            },
+            {
+              "line": 77,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/nano/drv_console.c"
+            }
+          ],
+          "entity_id": "c38c55dc242c0e4b",
+          "linked_by_native_driver": true,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef *huart)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 354,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c"
+          },
+          "symbol": "HAL_UART_Init"
+        },
+        {
+          "driver_references": [
+            {
+              "line": 105,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/nano/drv_console.c"
+            }
+          ],
+          "entity_id": "38804aec9b749df8",
+          "linked_by_native_driver": true,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "HAL_StatusTypeDef HAL_UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 1224,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c"
+          },
+          "symbol": "HAL_UART_Receive"
+        },
+        {
+          "driver_references": [
+            {
+              "line": 95,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/nano/drv_console.c"
+            }
+          ],
+          "entity_id": "b8aac94549921688",
+          "linked_by_native_driver": true,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 1138,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c"
+          },
+          "symbol": "HAL_UART_Transmit"
+        }
+      ],
+      "status": "resolved",
+      "strategy": "native-driver-trace"
+    },
+    {
+      "capability": "gpio",
+      "sdk_symbols": [
+        {
+          "driver_references": [
+            {
+              "line": 549,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_gpio.c"
+            }
+          ],
+          "entity_id": "bc16deb675171932",
+          "linked_by_native_driver": true,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 250,
+            "parser": "tree-sitter",
+            "path": "Projects/STM32VL-Discovery/Examples/UART/UART_TwoBoards_ComPolling/Src/main.c"
+          },
+          "symbol": "HAL_GPIO_EXTI_Callback"
+        },
+        {
+          "driver_references": [
+            {
+              "line": 559,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_gpio.c"
+            }
+          ],
+          "entity_id": "fd10969df3a69fbb",
+          "linked_by_native_driver": true,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "void HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 546,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c"
+          },
+          "symbol": "HAL_GPIO_EXTI_IRQHandler"
+        },
+        {
+          "driver_references": [
+            {
+              "line": 294,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_gpio.c"
+            },
+            {
+              "line": 105,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/nano/drv_gpio.c"
+            },
+            {
+              "line": 115,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/stm32f103-atk-warshipv3/board/CubeMX_Config/Src/stm32f1xx_hal_msp.c"
+            }
+          ],
+          "entity_id": "c478a16c09dc09a2",
+          "linked_by_native_driver": true,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 178,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c"
+          },
+          "symbol": "HAL_GPIO_Init"
+        },
+        {
+          "driver_references": [
+            {
+              "line": 239,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_gpio.c"
+            },
+            {
+              "line": 123,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/nano/drv_gpio.c"
+            }
+          ],
+          "entity_id": "5eb701f4c139ac17",
+          "linked_by_native_driver": true,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 431,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c"
+          },
+          "symbol": "HAL_GPIO_ReadPin"
+        },
+        {
+          "driver_references": [
+            {
+              "line": 225,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/drivers/drv_gpio.c"
+            },
+            {
+              "line": 115,
+              "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/libraries/HAL_Drivers/nano/drv_gpio.c"
+            }
+          ],
+          "entity_id": "80348213889b98d4",
+          "linked_by_native_driver": true,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 465,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c"
+          },
+          "symbol": "HAL_GPIO_WritePin"
+        }
+      ],
+      "status": "resolved",
+      "strategy": "native-driver-trace"
+    },
+    {
+      "capability": "timer",
+      "sdk_symbols": [
+        {
+          "driver_references": [],
+          "entity_id": "11cf4ec8435badeb",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "__STATIC_INLINE void LL_TIM_DisableCounter(TIM_TypeDef *TIMx)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 1062,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_tim.h"
+          },
+          "symbol": "LL_TIM_DisableCounter"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "d690f8c1905368d4",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "__STATIC_INLINE void LL_TIM_EnableCounter(TIM_TypeDef *TIMx)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 1051,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_tim.h"
+          },
+          "symbol": "LL_TIM_EnableCounter"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "b1aaa67e1107d337",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "ErrorStatus LL_TIM_Init(TIM_TypeDef *TIMx, const LL_TIM_InitTypeDef *TIM_InitStruct)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 324,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_ll_tim.c"
+          },
+          "symbol": "LL_TIM_Init"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "84519cabeede4c4e",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": false,
+          "provider_references": [],
+          "signature": "__STATIC_INLINE void LL_TIM_OC_SetCompareCH2(TIM_TypeDef *TIMx, uint32_t CompareValue)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 2058,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Inc/stm32f1xx_ll_tim.h"
+          },
+          "symbol": "LL_TIM_OC_SetCompareCH2"
+        }
+      ],
+      "status": "evidence-only",
+      "strategy": "native-driver-trace"
+    }
+  ],
+  "created_at": "2026-09-06T12:59:40.834967+00:00",
+  "required_sources": [],
+  "schema_version": "1.1",
+  "sdk_profile": "stm32f103",
+  "strategy": "native-driver-trace",
+  "summary": {
+    "capabilities": 5,
+    "driver_linked_symbols": 12,
+    "provider_symbols": 0,
+    "resolved_capabilities": 3,
+    "sdk_symbols": 20
+  }
+}

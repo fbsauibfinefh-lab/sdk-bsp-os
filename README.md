@@ -17,6 +17,8 @@ K210/RT-Thread 路径会生成真实参与链接的 `rt_uart_ops`、`rt_pin_ops`
 
 当前论文部署方法为结构先验与目标可行性保护增强的 LambdaMART。K210 部署候选由 IR 独立生成，不读取目标板真值；系统对 14,814 个候选行计算字段语义、代码双视图、寄存器效果图和结构特征，并保留每项操作的完整候选排名。事后独立真值评测覆盖 48/48 个真值符号，原始模型 P@1 为 0.895、nDCG@10 为 0.816。部署解码器再用参数签名可封装性和同能力 API 家族完整性构造 19 项规范计划，避免把高分但签名不满足操作契约的函数直接写入后端。RT-Thread 有 18 项直接调用计划所选 SDK 实体，PLIC 初始化由 RT-Thread 启动阶段等价接管；Zephyr 有 15 项直接调用，4 项 PLIC 操作由 Zephyr 二级 IRQ 框架等价实现。两套处置均在逐操作清单中明确记录，编译反馈均覆盖 19/19 项操作。计划驱动固件已完成 K210 实板复测：RT-Thread 和 Zephyr 各 10/10 次启动、90/90 条协议命令通过，失败与 `unsupported` 均为 0。Zephyr 路径把恢复所得 SDK 绑定生成为 `clock_control`、UART、GPIO 和 Counter 四类原生 `struct device` 驱动，PLIC 则按 Zephyr 中断控制器子系统接入；验证程序只通过两种 RTOS 的公共设备 API 访问生成实现。完整证据见 `experiments/hardware-results/k210-operation-lambdamart-v2.2/`。
 
+PSoC E84 和 STM32F103 也已完成双 RTOS 实板验证。PSoC 在更换故障 UART 跳线后，两套固件的五类能力均获得通过证据；STM32F103 两套固件均完成 10/10 次启动和 90/90 条功能命令，其中 Zephyr 明确记录两次 USB-UART 传输重试。各板原始语义指标、编译闭包和实板结果分开报告，不用硬件通过率覆盖模型错误。
+
 ## 快速开始
 
 ```bash
@@ -108,6 +110,8 @@ conda run --no-capture-output -n AIoT-v1.0 python -m bspforge.cli pipeline \
 - [论文核心方法与整体工作梳理 v1.0](docs/core-method-v1.0.md)
 - [LambdaMART 主方法与三板外部评估 v0.6](docs/lambdamart-method-and-external-board-evaluation-v0.6.md)
 - [冻结 LambdaMART Resolver 与 K210 实板验证 v2.1](docs/frozen-lambdamart-resolver-k210-v2.1.md)
+- [PSoC E84 冻结 LambdaMART 双 RTOS 实板验证 v2.4](docs/psoc-e84-lambdamart-board-validation-v2.4.md)
+- [STM32F103 冻结 LambdaMART 双 RTOS 实板验证 v2.5](docs/stm32f103-lambdamart-board-validation-v2.5.md)
 - [方法引用与知识产权风险检查](docs/related-work-citation-and-ip-risk-v0.9.md)
 - [第三方组件与许可证说明](THIRD_PARTY_NOTICES.md)
 - [实验规模与仿真方案](docs/experiment-scale-and-simulation-plan.md)

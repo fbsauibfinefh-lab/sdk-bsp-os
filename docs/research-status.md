@@ -563,3 +563,13 @@ H01 相对自动真值的 P@1、Recall@5、MAP 和 nDCG@10 分别提高 0.040、
 - 初次完整回归中，两套正式固件均完成 10/10 次启动和 80/90 条命令通过，0 项 `unsupported`；十轮失败全部来自 CN5 Pin8/Pin10 UART5 外部回环。更换该跳线后，不修改绑定、后端或固件，RT-Thread 与 Zephyr 的 UART5 独立复测均为 10/10 次启动、10/10 条命令通过，每轮收发 16 bytes、0 errors。
 - 结合初次回归中时钟、基础中断、GPIO 电平、GPIO IRQ、单次/周期定时器及稳定性的 80/80 通过记录，五类能力的适用测试均已获得通过证据。该组合证据不是换线后重新执行的一次完整 90/90 回归。原故障随跳线更换消失，支持将其归因为外部跳线接触或导通问题，而不是语义选择、OS 后端或固件缺陷。
 - 公开方法与结果见 `docs/psoc-e84-lambdamart-board-validation-v2.4.md`，内部逐步命令见 `docs/internaldocs/edgitalk-board-validation-20260906.md`，机器报告位于 `experiments/hardware-results/psoc-e84-operation-lambdamart-v2.4/`。
+
+## v3.4：STM32F103 冻结 LambdaMART 双 RTOS 实板闭环
+
+- 从 STM32CubeF1 的 3,921 个文件、15,250 个函数和 50,411 条 IR 边生成不含目标标签的 Top-256 运行时包。18 个可用单函数真值操作的严格后验评估为 P@1 0.611、Recall@5 0.643、MAP 0.586、nDCG@10 0.674、Hit@5 0.944；`gpio.attach_irq` 作为组合接口单独记录。
+- RT-Thread 与 Zephyr 配置均固定为 `operation-lambdamart` 和 `signature-family` 解码，共恢复 19 项规范操作。RT-Thread 闭包由 Build Diagnoser 依次补入 HAL TIM 与 TIM_EX 源文件，第三次构建成功；Zephyr 第一次构建成功。两套均有 19/19 项编译反馈。
+- RT-Thread 后端新增 STM32 CMSIS 启动入口修正、按 UART 实例/引脚生成 HAL MSP 分支、机器协议 512 字节控制台缓冲区和 USART3/PB10/PB11 验证配置。规则按芯片族、配置和源码结构触发，不读取目标真值或硬编码本轮候选实体。
+- 主机串口默认在打开 COM 口前关闭 DTR/RTS，避免控制线扰动板卡；协议解析容忍 RT-Thread JSON 后紧随 FinSH 提示符。J-Link 脚本统一完成探测、寄存器读取、复位和带校验烧录。
+- RT-Thread 最终 BIN 为 87,184 bytes，SHA-256 `f108a92c4411d14dd617646a3ee482e470a88bf5da3cc574ca604d53fe56c4bd`。实板为 10/10 次启动、90/90 条命令通过、失败 0、`unsupported` 0，平均启动 2.891 ms。
+- Zephyr 最终 BIN 为 28,600 bytes，SHA-256 `0a4f5521299f674ed3bb07faa4c64cc30d8b63d2018508b6e0d4af7019d0f675`。不重试的两次原始运行分别为 89/90 和 88/90，均表现为 CH340 接收帧丢字节；显式记录重试后为 10/10 次启动、90/90 条功能命令通过，其中 2 条命令各重试一次，平均启动 2.233 ms。
+- PB10/PB11 用于 USART3 外部回环，PB0/PB1 用于 GPIO 电平和边沿中断。五类能力均通过 RT-Thread 或 Zephyr 公共设备接口进入最终驱动路径。完整过程见 `docs/stm32f103-lambdamart-board-validation-v2.5.md`，机器证据位于 `experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/`。

@@ -236,7 +236,7 @@ static int bspforge_native_timer_test(bool periodic, uint32_t expected,
     bspforge_timer_fires = 0U;
     if (periodic) {
         const struct counter_alarm_cfg alarm = {
-            .ticks = 10000000U,
+            .ticks = BSPFORGE_ZEPHYR_COUNTER_ALARM_TICKS,
             .callback = bspforge_native_alarm_callback,
             .user_data = NULL,
             .flags = 0U,
@@ -257,7 +257,7 @@ static int bspforge_native_timer_test(bool periodic, uint32_t expected,
         *elapsed_ms = total_elapsed;
     } else {
         const struct counter_alarm_cfg alarm = {
-            .ticks = 10000000U,
+            .ticks = BSPFORGE_ZEPHYR_COUNTER_ALARM_TICKS,
             .callback = bspforge_native_alarm_callback,
             .user_data = NULL,
             .flags = 0U,
@@ -480,6 +480,7 @@ static int bspforge_native_timer_test(bool periodic, uint32_t expected,
 
 #define BSPFORGE_ZEPHYR_GPIO_OUTPUT_PIN {int(options["gpio_output_pin"])}U
 #define BSPFORGE_ZEPHYR_GPIO_INPUT_PIN {int(options["gpio_input_pin"])}U
+#define BSPFORGE_ZEPHYR_COUNTER_ALARM_TICKS {int(options.get("counter_alarm_ticks", 10000000))}U
 
 static inline const struct device *bspforge_zephyr_uart_device(void)
 {{ return DEVICE_DT_GET(DT_NODELABEL({nodes["uart_node"]})); }}

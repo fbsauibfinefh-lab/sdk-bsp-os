@@ -67,3 +67,9 @@ cd /home/whk/RTT-porting/bspforge
 PSoC E84 Edgi-Talk 已用冻结 LambdaMART v2.4 重新运行双 RTOS 流水线。两套均从 3,254 个 SDK 文件、17,423 个函数和 66,698 条 IR 边出发，形成 19/19 项绑定、270 个闭包文件和 18 条构建规则，并在第一次构建成功。RT-Thread ELF 为 1,503,296 bytes，Zephyr ELF 为 976,188 bytes；19/19 绑定均被编译反馈观察。
 
 初次完整回归中，两套均 10/10 次启动、80/90 条命令通过，唯一失败为 UART5 外部回环。更换 Pin8/Pin10 跳线后，在不修改绑定、后端和固件的条件下独立复测 UART5，两套均 10/10 次启动、10/10 条回环命令通过，每轮 16 bytes、0 errors。结合原完整回归的其余 80/80 条通过记录，五类能力的适用测试均已获得通过证据；该结果不是换线后重新执行的一次完整 90/90 回归。详见 `docs/psoc-e84-lambdamart-board-validation-v2.4.md`。
+
+## STM32F103 冻结方法增量结果（2026-09-06）
+
+STM32CubeF1 的冻结 Top-256 运行时包包含 19 项操作；后验严格评估在 18 个单函数组上得到 P@1 0.611、Recall@5 0.643、MAP 0.586、nDCG@10 0.674 和 Hit@5 0.944。RT-Thread 形成 334 文件闭包，Build Diagnoser 两次补齐 TIM/TIM_EX 源后第三次构建成功；Zephyr 首次构建成功。两套均生成并编译观察到 19/19 项操作。
+
+RT-Thread ELF/BIN 分别为 617,664/87,184 bytes，实板 10/10 次启动、90/90 条命令通过。Zephyr ELF/BIN 分别为 601,304/28,600 bytes，实板 10/10 次启动、90/90 条功能命令通过；两条命令发生一次可见的传输重试。关闭重试的原始运行也已保存，分别为 89/90 和 88/90。详见 `docs/stm32f103-lambdamart-board-validation-v2.5.md`。

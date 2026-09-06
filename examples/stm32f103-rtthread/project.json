@@ -1,5 +1,5 @@
 {
-  "run_id": "stm32f103-rtthread-v0.4",
+  "run_id": "stm32f103-rtthread-lambdamart-v2.5",
   "workspace": "workspace",
   "ir_store": "workspace/ir",
   "ingestor": {"mode": "hybrid"},
@@ -8,11 +8,13 @@
     "path": "sdk/stm32f103/source"
   },
   "resolver": {
-    "method": "operation-weighted",
+    "method": "operation-lambdamart",
+    "model_path": "models/runtime/stm32f103-operation-lambdamart-h03-eq-r1-v2.3.json",
+    "binding_decoder": "signature-family",
     "operation_min_margin": 0.0,
     "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
     "threshold": 0.42,
-    "top_k": 8
+    "top_k": 256
   },
   "toolchain": {
     "architecture": "arm",
@@ -34,12 +36,24 @@
     "sdk_profile": "stm32f103",
     "binding_strategy": "native-driver-trace",
     "rtthread_root": "third_party/rt-thread",
-    "output": "workspace/generated/stm32f103-rtthread",
+    "output": "workspace/generated/stm32f103-rtthread-lambdamart",
     "native_driver_roots": ["bsp/stm32/libraries/HAL_Drivers"],
+    "enabled_rtthread_features": [
+      "BSP_USING_UART3",
+      "BSP_USING_TIM",
+      "BSP_USING_TIM2",
+      "RT_USING_HWTIMER"
+    ],
     "validation": {
-      "uart": "uart1",
+      "native_device_validation": true,
+      "firmware_build_id": "operation-lambdamart-v2.5-rtthread-native-device",
+      "uart": "uart3",
+      "uart_pins": {"tx": "PB10", "rx": "PB11"},
       "pin_device": "pin",
-      "pin": -1
+      "pin": -1,
+      "gpio_output_pin": 16,
+      "gpio_input_pin": 17,
+      "hwtimer": "timer2"
     },
     "artifacts": {
       "elf": "rt-thread.elf",

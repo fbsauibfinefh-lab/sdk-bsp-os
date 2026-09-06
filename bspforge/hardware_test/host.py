@@ -36,7 +36,16 @@ class SerialTransport:
             import serial
         except ImportError as error:
             raise RuntimeError("hardware test requires the 'hardware' optional dependency") from error
-        self.serial = serial.Serial(port=port, baudrate=baudrate, timeout=timeout)
+        self.serial = serial.Serial()
+        self.serial.port = port
+        self.serial.baudrate = baudrate
+        self.serial.timeout = timeout
+        # Deassert modem-control lines before opening. Some development boards
+        # wire DTR/RTS into their reset circuit, so pyserial defaults can hold
+        # the target in reset while an external probe is trying to restart it.
+        self.serial.dtr = False
+        self.serial.rts = False
+        self.serial.open()
         self.reset_command = reset_command
         self.close_port_for_reset = close_port_for_reset
 
@@ -149,6 +158,7 @@ class HardwareTestRunner:
     rtos: str
     timeout: float = 5.0
     firmware_artifact: Path | None = None
+    command_retries: int = 0
 
     def run(self, rounds: int = 1, commands: list[str] | None = None) -> dict[str, Any]:
         commands = commands or DEFAULT_COMMANDS
@@ -166,22 +176,40 @@ class HardwareTestRunner:
             boot_ms = round((time.monotonic() - boot_started) * 1000, 3)
             results: list[dict[str, Any]] = []
             for command in commands:
-                request_id = uuid.uuid4().hex[:12]
                 started = time.monotonic()
-                self.transport.write(request_line(request_id, command))
-                event = self._wait_for(
-                    lambda item, request_id=request_id: item.get("request_id") == request_id,
-                    raw_lines,
-                    timeout=self.timeout,
-                )
+                event = None
+                attempts: list[dict[str, Any]] = []
+                for attempt in range(1, self.command_retries + 2):
+                    request_id = uuid.uuid4().hex[:12]
+                    attempt_started = time.monotonic()
+                    self.transport.write(request_line(request_id, command))
+                    event = self._wait_for(
+                        lambda item, request_id=request_id: (
+                            item.get("request_id") == request_id
+                        ),
+                        raw_lines,
+                        timeout=self.timeout,
+                    )
+                    attempts.append({
+                        "attempt": attempt,
+                        "request_id": request_id,
+                        "received": event is not None,
+                        "round_trip_ms": round(
+                            (time.monotonic() - attempt_started) * 1000, 3
+                        ),
+                    })
+                    if event is not None:
+                        break
                 results.append({
                     **(event or {
-                        "request_id": request_id,
+                        "request_id": attempts[-1]["request_id"],
                         "command": command,
                         "status": "fail",
                         "reason": "host-timeout",
                     }),
                     "host_round_trip_ms": round((time.monotonic() - started) * 1000, 3),
+                    "transport_attempts": attempts,
+                    "retry_count": len(attempts) - 1,
                 })
             round_reports.append({
                 "round": round_number,
@@ -245,6 +273,8 @@ class HardwareTestRunner:
                 else None,
                 "unsupported": sum(item.get("status") == "unsupported" for item in commands),
                 "failed": sum(item.get("status") == "fail" for item in commands),
+                "commands_retried": sum(item.get("retry_count", 0) > 0 for item in commands),
+                "transport_retries": sum(item.get("retry_count", 0) for item in commands),
             },
         }
 
@@ -259,6 +289,12 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--baudrate", type=int, default=115200)
     parser.add_argument("--timeout", type=float, default=5.0)
     parser.add_argument("--rounds", type=int, default=1)
+    parser.add_argument(
+        "--command-retries",
+        type=int,
+        default=0,
+        help="协议回包超时时对同一幂等命令的最大重试次数",
+    )
     parser.add_argument(
         "--reset-command",
         help="每轮测试前执行的外部复位命令；串口会在执行期间关闭",
@@ -302,6 +338,7 @@ def main(argv: list[str] | None = None) -> int:
             args.rtos,
             args.timeout,
             args.firmware,
+            args.command_retries,
         ).run(args.rounds, commands=args.test_commands)
     finally:
         active_transport.close()

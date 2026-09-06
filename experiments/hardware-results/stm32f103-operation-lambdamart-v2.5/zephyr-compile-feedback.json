@@ -1,0 +1,262 @@
+{
+  "build_success": true,
+  "created_at": "2026-09-06T07:35:55.626507+00:00",
+  "records": [
+    {
+      "calibration_score": 1.0,
+      "capability": "clock",
+      "entity_id": "d6c5f3e6911b8571",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "initialize",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "LL_SetSystemCoreClock"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "clock",
+      "entity_id": "e1e7d8c37ab11834",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "enable",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "LL_AHB1_GRP1_EnableClock"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "clock",
+      "entity_id": "d70797eb830a9c99",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "disable",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "LL_APB1_GRP1_DisableClock"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "clock",
+      "entity_id": "49be5a711684fca4",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "get_frequency",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "LL_RCC_GetSystemClocksFreq"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "interrupt",
+      "entity_id": "0287a9f851cead49",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "initialize",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "HAL_NVIC_SetPriority"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "interrupt",
+      "entity_id": "2318e27c0ee44e9b",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "enable",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "HAL_NVIC_EnableIRQ"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "interrupt",
+      "entity_id": "98aa060bce61925b",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "disable",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "HAL_NVIC_DisableIRQ"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "interrupt",
+      "entity_id": "2158b3a07099fa84",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "register",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "__NVIC_SetVector"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "uart",
+      "entity_id": "c38c55dc242c0e4b",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "configure",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "HAL_UART_Init"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "uart",
+      "entity_id": "b8aac94549921688",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "write",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "HAL_UART_Transmit"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "uart",
+      "entity_id": "38804aec9b749df8",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "read",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "HAL_UART_Receive"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "gpio",
+      "entity_id": "c478a16c09dc09a2",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "configure",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "HAL_GPIO_Init"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "gpio",
+      "entity_id": "80348213889b98d4",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "write",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "HAL_GPIO_WritePin"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "gpio",
+      "entity_id": "5eb701f4c139ac17",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "read",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "HAL_GPIO_ReadPin"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "gpio",
+      "entity_id": "c478a16c09dc09a2",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "attach_irq",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "HAL_GPIO_Init"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "timer",
+      "entity_id": "b1aaa67e1107d337",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "initialize",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "LL_TIM_Init"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "timer",
+      "entity_id": "d690f8c1905368d4",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "start",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "LL_TIM_EnableCounter"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "timer",
+      "entity_id": "11cf4ec8435badeb",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "stop",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "LL_TIM_DisableCounter"
+    },
+    {
+      "calibration_score": 1.0,
+      "capability": "timer",
+      "entity_id": "84519cabeede4c4e",
+      "evidence": [
+        "whole-project-build-and-artifact-verification-passed"
+      ],
+      "generation_disposition": null,
+      "operation": "set_interval",
+      "semantic_correctness_proven": false,
+      "status": "compiled-linked-and-artifact-verified",
+      "symbol": "LL_TIM_OC_SetCompareCH2"
+    }
+  ],
+  "schema_version": "1.0",
+  "scope": "compile-link-artifact feedback only; runtime device semantics excluded",
+  "sdk_id": "stm32cube-f1",
+  "summary": {
+    "bindings": 19,
+    "compiled": 19,
+    "implicated": 0,
+    "unobserved": 0
+  }
+}

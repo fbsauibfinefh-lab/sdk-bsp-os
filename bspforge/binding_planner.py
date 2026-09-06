@@ -65,6 +65,7 @@ class BindingPlanner:
                         for item in candidates[1:4]
                     ],
                     "parameter_sources": self._parameter_sources(entity),
+                    "composite_symbols": selected.get("composite_symbols", []) if selected else [],
                     "evidence": selected.get("evidence", []) if selected else [],
                     "decoder": (
                         {
@@ -75,6 +76,9 @@ class BindingPlanner:
                             "original_top1_entity_id": original["entity_id"],
                             "selection_changed": (
                                 selected["entity_id"] != original["entity_id"]
+                            ),
+                            "composition_required": bool(
+                                selected.get("composite_symbols")
                             ),
                             "rejected_before_selection": choice["rejected"],
                         }
@@ -173,6 +177,10 @@ class BindingPlanner:
                         "reason": reason,
                     })
             if not compatible[operation]:
+                compatible[operation] = cls._composite_candidates(
+                    capability, operation, rows, functions
+                )
+            if not compatible[operation]:
                 raise ValueError(
                     f"No signature-compatible candidate: {capability}.{operation}"
                 )
@@ -224,11 +232,64 @@ class BindingPlanner:
     @staticmethod
     def _compatible_family(capability: str, symbol: str) -> str:
         lowered = symbol.lower()
+        if lowered.startswith("ll_"):
+            return f"ll-{capability}"
         if capability == "interrupt" and any(
             marker in lowered for marker in ("sysint", "nvic", "plic")
         ):
             return "system-interrupt-controller"
         return api_family_key(capability, symbol)
+
+    @classmethod
+    def _composite_candidates(
+        cls,
+        capability: str,
+        operation: str,
+        rows: list[dict[str, Any]],
+        functions: dict[str, dict[str, Any]],
+    ) -> list[dict[str, Any]]:
+        """Recover a traceable multi-function GPIO interrupt composition."""
+        if (capability, operation) != ("gpio", "attach_irq"):
+            return []
+        parts: dict[str, dict[str, Any]] = {}
+        for rank, row in enumerate(rows, start=1):
+            symbol = row["symbol"].lower()
+            if not any(token in symbol for token in ("gpio", "pin", "ioport")):
+                continue
+            role = None
+            if any(token in symbol for token in ("init", "config", "mode", "setup")):
+                role = "configure-edge-source"
+            elif "callback" in symbol:
+                role = "callback-entry"
+            elif any(token in symbol for token in ("irqhandler", "interrupt_handler")):
+                role = "interrupt-dispatch"
+            if role is None or role in parts:
+                continue
+            entity = functions.get(row["entity_id"])
+            if entity is None:
+                continue
+            parts[role] = {
+                **row,
+                "candidate_rank": rank,
+                "signature": entity.get("signature"),
+                "file": entity.get("file"),
+                "api_family": cls._compatible_family(capability, row["symbol"]),
+                "composition_role": role,
+            }
+        primary = parts.get("configure-edge-source")
+        if primary is None or not ({"callback-entry", "interrupt-dispatch"} & parts.keys()):
+            return []
+        primary["composite_symbols"] = [
+            {
+                "role": role,
+                "symbol": item["symbol"],
+                "entity_id": item["entity_id"],
+                "signature": item["signature"],
+                "candidate_rank": item["candidate_rank"],
+            }
+            for role, item in sorted(parts.items())
+        ]
+        return [primary]
 
     @staticmethod
     def _signature_compatible(
@@ -246,7 +307,7 @@ class BindingPlanner:
             "interrupt": ("irq", "interrupt", "plic", "nvic", "sysint"),
             "uart": ("uart", "usart", "serial"),
             "gpio": ("gpio", "pin", "ioport"),
-            "timer": ("timer", "counter", "tcpwm", "gptimer"),
+            "timer": ("timer", "tim_", "counter", "tcpwm", "gptimer"),
         }
         if not any(token in lowered_symbol for token in capability_terms[capability]):
             return False, "symbol-misses-capability"
@@ -254,36 +315,54 @@ class BindingPlanner:
         if not any(alias in lowered_symbol for alias in aliases):
             return False, "symbol-misses-operation"
         contracts: dict[tuple[str, str], tuple[int, tuple[str, ...]]] = {
-            ("clock", "initialize"): (1, ("freq", "clock", "pll")),
-            ("clock", "enable"): (1, ("clock", "pll")),
-            ("clock", "disable"): (1, ("clock", "pll")),
-            ("clock", "get_frequency"): (1, ("clock", "freq", "pll")),
+            ("clock", "initialize"): (
+                1,
+                ("freq", "clock", "pll", "osc", "source", "config"),
+            ),
+            ("clock", "enable"): (
+                1,
+                ("clock", "pll", "periph", "module", "gate", "mask", "id"),
+            ),
+            ("clock", "disable"): (
+                1,
+                ("clock", "pll", "periph", "module", "gate", "mask", "id"),
+            ),
+            ("clock", "get_frequency"): (
+                1,
+                ("clock", "freq", "pll", "source", "bus", "periph"),
+            ),
             ("interrupt", "initialize"): (0, ()),
             ("interrupt", "enable"): (1, ("irq", "interrupt")),
             ("interrupt", "disable"): (1, ("irq", "interrupt")),
             ("interrupt", "register"): (2, ("irq", "callback", "handler")),
-            ("uart", "configure"): (2, ("baud", "config", "channel")),
+            ("uart", "configure"): (
+                1,
+                ("baud", "config", "channel", "handle", "uart", "usart", "init"),
+            ),
             ("uart", "write"): (2, ("buffer", "data", "size", "len")),
             ("uart", "read"): (2, ("buffer", "data", "size", "len")),
-            ("gpio", "configure"): (2, ("pin", "mode", "flag", "direction")),
+            ("gpio", "configure"): (
+                2,
+                ("pin", "mode", "flag", "direction", "gpio", "port", "init", "config"),
+            ),
             ("gpio", "write"): (2, ("pin", "value", "state")),
             ("gpio", "read"): (1, ("pin",)),
             ("gpio", "attach_irq"): (2, ("pin", "callback", "handler", "irq")),
             ("timer", "initialize"): (
                 1,
-                ("timer", "device", "channel", "counter", "tcpwm", "cnt", "base", "obj"),
+                ("timer", "tim", "device", "channel", "counter", "tcpwm", "cnt", "base", "obj"),
             ),
             ("timer", "start"): (
                 1,
-                ("timer", "device", "channel", "counter", "tcpwm", "cnt", "base", "obj"),
+                ("timer", "tim", "device", "channel", "counter", "tcpwm", "cnt", "base", "obj"),
             ),
             ("timer", "stop"): (
                 1,
-                ("timer", "device", "channel", "counter", "tcpwm", "cnt", "base", "obj"),
+                ("timer", "tim", "device", "channel", "counter", "tcpwm", "cnt", "base", "obj"),
             ),
             ("timer", "set_interval"): (
                 2,
-                ("timer", "interval", "period", "channel", "counter", "tcpwm", "cnt", "base", "obj"),
+                ("timer", "tim", "interval", "period", "channel", "counter", "tcpwm", "cnt", "base", "obj"),
             ),
         }
         minimum, semantic_tokens = contracts[(capability, operation)]

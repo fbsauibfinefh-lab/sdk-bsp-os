@@ -433,3 +433,11 @@ experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-full-10r
 PSoC E84 两套配置已切换到无目标标签的冻结 LambdaMART v2.4 包。RT-Thread 与 Zephyr 都生成 19/19 项绑定、一次编译成功。初次完整实板回归均为 10/10 次启动、80/90 条命令通过，唯一失败为 CN5 Pin8/Pin10 的 UART5 外部回环。更换该跳线后，在不修改绑定、后端和固件的条件下独立执行 UART5 十轮复测，两套均为 10/10 次启动、10/10 条命令通过，每轮收发 16 bytes、0 errors。结合原回归中其余命令的 80/80 结果，五类能力的适用测试均已获得通过证据；这不是换线后重新执行的一次完整 90/90 回归。
 
 RT-Thread 不能只烧录重定位应用段，必须把厂商签名安全启动段的编程别名一并合并，否则会继续执行 `0x60100000` 中残留的 Zephyr 镜像。主机使用 OpenOCD 外部复位时应增加 `--keep-port-open-during-reset`，以捕获复位后立即输出的 boot 事件。完整固件哈希、接线、逐命令结果和失败边界见 `docs/psoc-e84-lambdamart-board-validation-v2.4.md`。
+
+## 12. STM32F103 战舰 V3 实测更新（2026-09-06）
+
+STM32F103 两套配置已切换到冻结 LambdaMART v2.5 部署链。接线为 PB10/PB11 的 USART3 外部回环与 PB0/PB1 的 GPIO 输出/输入回环，控制台使用板载 USB_UART 的 Windows COM5，烧录使用 J-Link SWD。
+
+RT-Thread 经过两次自动闭包增量后第三次构建成功，最终为 10/10 次启动、90/90 条命令通过。Zephyr 一次构建成功；两次关闭重试的原始运行因 CH340 接收帧缺字节分别得到 89/90 和 88/90。启用可审计的幂等命令重试后，最终为 10/10 次启动、90/90 条功能命令通过，其中两条命令各重试一次。论文应把“功能通过率”和“传输层重试数”分栏报告。
+
+完整的工程生成、J-Link 烧录、十轮回归命令、产物哈希和解释边界见 `docs/stm32f103-lambdamart-board-validation-v2.5.md`。可提交机器证据位于 `experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/`。

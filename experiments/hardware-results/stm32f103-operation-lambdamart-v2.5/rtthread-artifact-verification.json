@@ -1,0 +1,79 @@
+{
+  "artifacts": [
+    {
+      "kind": "elf",
+      "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/stm32f103-atk-warshipv3/rt-thread.elf",
+      "sha256": "2103a5eae72335eeabf57ea1de23099f51f62072e3d0ad7567164db7b412e5f9",
+      "size": 617664
+    },
+    {
+      "kind": "bin",
+      "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-rtthread-lambdamart/bsp/stm32/stm32f103-atk-warshipv3/rtthread.bin",
+      "sha256": "f108a92c4411d14dd617646a3ee482e470a88bf5da3cc574ca604d53fe56c4bd",
+      "size": 87184
+    }
+  ],
+  "checks": [
+    {
+      "name": "elf-exists",
+      "success": true
+    },
+    {
+      "name": "bin-exists",
+      "success": true
+    },
+    {
+      "expected": "ARM",
+      "name": "elf-machine",
+      "observed": "ARM",
+      "success": true
+    },
+    {
+      "name": "elf-sections-readable",
+      "success": true
+    },
+    {
+      "expected": [
+        "bspforge_selftest",
+        "bspforge_validation_init",
+        "bspforge_validation_run"
+      ],
+      "missing": [],
+      "name": "generated-device-symbols-linked",
+      "present": [
+        "bspforge_selftest",
+        "bspforge_validation_init",
+        "bspforge_validation_run"
+      ],
+      "success": true
+    }
+  ],
+  "created_at": "2026-09-06T12:59:57.157838+00:00",
+  "elf_header": {
+    "Class": "ELF32",
+    "Data": "2's complement, little endian",
+    "Entry point address": "0x80047ad",
+    "Machine": "ARM",
+    "Type": "EXEC (Executable file)"
+  },
+  "expected_machine": "ARM",
+  "expected_symbols": [
+    "bspforge_selftest",
+    "bspforge_validation_init",
+    "bspforge_validation_run"
+  ],
+  "missing_symbols": [],
+  "present_symbols": [
+    "bspforge_selftest",
+    "bspforge_validation_init",
+    "bspforge_validation_run"
+  ],
+  "schema_version": "1.0",
+  "section_sizes": {
+    "bss": 4516,
+    "data": 1340,
+    "dec": 91700,
+    "text": 85844
+  },
+  "success": true
+}

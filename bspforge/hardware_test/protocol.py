@@ -39,7 +39,7 @@ def parse_event(line: bytes | str) -> dict[str, Any] | None:
     # same physical line immediately before the machine-readable event.
     text = text[marker_index:]
     try:
-        event = json.loads(text)
+        event, _ = json.JSONDecoder().raw_decode(text)
     except json.JSONDecodeError as error:
         raise ProtocolError(f"invalid BSPForge event: {error}") from error
     if event.get("protocol") != PROTOCOL_VERSION:

@@ -6,7 +6,7 @@ from typing import Any
 CAPABILITY_SCHEMA: dict[str, dict[str, Any]] = {
     "clock": {
         "operations": {
-            "initialize": ["init", "configure", "set"],
+            "initialize": ["init", "config", "configure", "set"],
             "enable": ["enable"],
             "disable": ["disable"],
             "get_frequency": ["get", "frequency", "freq"],
@@ -14,7 +14,7 @@ CAPABILITY_SCHEMA: dict[str, dict[str, Any]] = {
     },
     "interrupt": {
         "operations": {
-            "initialize": ["init", "configure"],
+            "initialize": ["init", "config", "configure", "priority"],
             "enable": ["enable"],
             "disable": ["disable"],
             "register": ["register", "attach", "setvector"],
@@ -22,7 +22,7 @@ CAPABILITY_SCHEMA: dict[str, dict[str, Any]] = {
     },
     "uart": {
         "operations": {
-            "configure": ["init", "configure", "setup"],
+            "configure": ["init", "config", "configure", "setup"],
             "write": ["send", "write", "put", "transmit"],
             "read": ["receive", "read", "get"],
         },
@@ -37,7 +37,7 @@ CAPABILITY_SCHEMA: dict[str, dict[str, Any]] = {
     },
     "timer": {
         "operations": {
-            "initialize": ["init", "configure", "setup"],
+            "initialize": ["init", "config", "configure", "setup"],
             "start": ["start", "enable"],
             "stop": ["stop", "disable"],
             "set_interval": ["interval", "period", "compare"],

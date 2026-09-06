@@ -23,6 +23,7 @@ from bspforge.frozen_operation_ranker import FrozenOperationRanker
 from bspforge.ir_store import IRStore
 from bspforge.hardware_effect_graph import HardwareEffectGraph
 from bspforge.hardware_test.host import HardwareTestRunner, ProcessTransport
+from bspforge.hardware_test.protocol import parse_event
 from bspforge.os_backend import RTThreadBackend, ZephyrBackend
 from bspforge.os_backend.artifact_verifier import FirmwareArtifactVerifier
 from bspforge.os_backend.native_binding import NativeDriverBindingTracer
@@ -100,6 +101,15 @@ class ModuleTests(unittest.TestCase):
         )
         self.sdk = sdk
 
+    def test_protocol_accepts_shell_prompt_after_json_event(self) -> None:
+        line = (
+            b'{"bspforge":true,"protocol":"1.0","event":"result",'
+            b'"request_id":"abc","status":"pass"}\r\x00msh >\r\n'
+        )
+        event = parse_event(line)
+        self.assertEqual(event["request_id"], "abc")
+        self.assertEqual(event["status"], "pass")
+
     def tearDown(self) -> None:
         self.temporary.cleanup()
 
@@ -162,6 +172,22 @@ class ModuleTests(unittest.TestCase):
             "cy_en_sysint_status_t Cy_SysInt_Init(const cy_stc_sysint_t *config, cy_israddress user_isr)",
         )
 
+        self.assertTrue(accepted, reason)
+
+        accepted, reason = BindingPlanner._signature_compatible(
+            "gpio",
+            "configure",
+            "HAL_GPIO_Init",
+            "void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)",
+        )
+        self.assertTrue(accepted, reason)
+
+        accepted, reason = BindingPlanner._signature_compatible(
+            "uart",
+            "configure",
+            "HAL_UART_Init",
+            "HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef *huart)",
+        )
         self.assertTrue(accepted, reason)
         self.assertEqual(
             BindingPlanner._compatible_family("interrupt", "Cy_SysInt_Init"),
@@ -1151,7 +1177,10 @@ class ModuleTests(unittest.TestCase):
             ir,
             resolution,
             closure,
-            {"_binding_plan": binding_plan},
+            {
+                "_binding_plan": binding_plan,
+                "enabled_rtthread_features": ["BSP_USING_UART3"],
+            },
         )
         self.assertTrue((Path(manifest["bsp_path"]) / "board" / "bspforge_sdk_adapter.c").exists())
         self.assertTrue((output / manifest["sdk_package"] / "bspforge-input.json").exists())
@@ -1169,6 +1198,52 @@ class ModuleTests(unittest.TestCase):
         self.assertIn("riscv-none-embed-", (bsp / "rtconfig.py").read_text(encoding="utf-8"))
         generated_config = (Path(manifest["bsp_path"]) / "rtconfig.py").read_text(encoding="utf-8")
         self.assertIn("BSPFORGE_TOOLCHAIN_PREFIX", generated_config)
+        generated_header = (Path(manifest["bsp_path"]) / "rtconfig.h").read_text(encoding="utf-8")
+        self.assertIn("#define BSP_USING_UART3", generated_header)
+        self.assertIn("#define RT_CONSOLEBUF_SIZE 512", generated_header)
+        self.assertEqual(manifest["protocol_console_buffer_size"], 512)
+        self.assertIn("BSP_USING_UART3", manifest["rtthread_features"]["required"])
+
+    def test_stm32_cmsis_startup_enters_rtthread_before_user_main(self) -> None:
+        device = self.root / "stm32-cmsis"
+        startup = device / "Source" / "Templates" / "gcc" / "startup_stm32f103xe.s"
+        startup.parent.mkdir(parents=True)
+        startup.write_text(
+            "Reset_Handler:\n  bl SystemInit\n  bl main\n",
+            encoding="utf-8",
+        )
+
+        repairs = RTThreadBackend._repair_stm32_gcc_startup(device)
+
+        self.assertEqual(len(repairs), 1)
+        self.assertIn("bl entry", startup.read_text(encoding="utf-8"))
+        self.assertEqual(repairs[0]["reason"], (
+            "RT-Thread GCC startup requires rtthread_startup before user main"
+        ))
+
+    def test_stm32_validation_uart_adds_configured_hal_msp_branch(self) -> None:
+        bsp = self.root / "stm32-bsp"
+        msp = bsp / "board" / "CubeMX_Config" / "Src" / "stm32f1xx_hal_msp.c"
+        msp.parent.mkdir(parents=True)
+        msp.write_text(
+            "void HAL_UART_MspInit(UART_HandleTypeDef* huart)\n"
+            "{\n  GPIO_InitTypeDef GPIO_InitStruct = {0};\n"
+            "  if(huart->Instance==USART1) {}\n}\n"
+            "void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)\n"
+            "{\n  if(huart->Instance==USART1) {}\n}\n",
+            encoding="utf-8",
+        )
+
+        repairs = RTThreadBackend._configure_stm32_validation_uart(
+            bsp, {"uart": "uart3", "uart_pins": {"tx": "PB10", "rx": "PB11"}}
+        )
+
+        source = msp.read_text(encoding="utf-8")
+        self.assertIn("else if(huart->Instance==USART3)", source)
+        self.assertIn("__HAL_RCC_USART3_CLK_ENABLE();", source)
+        self.assertIn("HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);", source)
+        self.assertIn("GPIO_PIN_10|GPIO_PIN_11", source)
+        self.assertEqual(repairs[0]["tx"], "PB10")
 
     def test_native_rtthread_device_models_are_generated_from_config(self) -> None:
         bsp = self.root / "native-bsp"
@@ -1241,7 +1316,8 @@ class ModuleTests(unittest.TestCase):
         )
         source = Path(manifest["source"]).read_text(encoding="utf-8")
         self.assertIn('bspforge_uart_name[] = "uart2"', source)
-        self.assertIn('rt_kprintf("%s", banner)', source)
+        self.assertGreaterEqual(source.count("rt_kprintf("), 3)
+        self.assertNotIn('rt_kprintf("%s", banner)', source)
         self.assertIn("rt_device_open", source)
         self.assertIn("rt_pin_write", source)
         self.assertIn("rt_timer_start", source)
@@ -1319,6 +1395,80 @@ class ModuleTests(unittest.TestCase):
         self.assertNotIn("#define RT_USING_SMP", value)
         self.assertIn("#define RT_CPUS_NR 2", value)
         self.assertIn("#define RT_USING_SERIAL", value)
+
+    def test_stm32_hal_sconscript_consumes_closure_repairs(self) -> None:
+        source = RTThreadBackend._stm32_hal_sconscript({
+            "selected_files": [],
+            "repair_sources": [
+                "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c"
+            ],
+        })
+        self.assertIn("stm32f1xx_hal_tim.c", source)
+        self.assertIn("stm32f1xx_hal_uart.c", source)
+
+    def test_signature_decoder_accepts_peripheral_clock_masks(self) -> None:
+        accepted, reason = BindingPlanner._signature_compatible(
+            "clock",
+            "disable",
+            "LL_APB1_GRP1_DisableClock",
+            "void LL_APB1_GRP1_DisableClock(uint32_t Periphs)",
+        )
+        self.assertTrue(accepted, reason)
+
+    def test_signature_decoder_recovers_composite_gpio_irq(self) -> None:
+        rows = [
+            {"symbol": "HAL_GPIO_EXTI_IRQHandler", "entity_id": "handler", "score": 0.9},
+            {"symbol": "HAL_GPIO_Init", "entity_id": "config", "score": 0.8},
+            {"symbol": "HAL_GPIO_EXTI_Callback", "entity_id": "callback", "score": 0.7},
+        ]
+        functions = {
+            "handler": {"signature": "void HAL_GPIO_EXTI_IRQHandler(uint16_t pin)", "file": "gpio.c"},
+            "config": {"signature": "void HAL_GPIO_Init(GPIO_TypeDef *port, GPIO_InitTypeDef *config)", "file": "gpio.c"},
+            "callback": {"signature": "void HAL_GPIO_EXTI_Callback(uint16_t pin)", "file": "gpio.c"},
+        }
+        candidates = BindingPlanner._composite_candidates(
+            "gpio", "attach_irq", rows, functions
+        )
+        self.assertEqual(candidates[0]["symbol"], "HAL_GPIO_Init")
+        self.assertEqual(
+            {item["role"] for item in candidates[0]["composite_symbols"]},
+            {"callback-entry", "configure-edge-source", "interrupt-dispatch"},
+        )
+
+        accepted, reason = BindingPlanner._signature_compatible(
+            "timer",
+            "initialize",
+            "HAL_TIM_Base_Init",
+            "HAL_StatusTypeDef HAL_TIM_Base_Init(TIM_HandleTypeDef *htim)",
+        )
+        self.assertTrue(accepted, reason)
+
+        families = {
+            BindingPlanner._compatible_family("clock", symbol)
+            for symbol in (
+                "LL_RCC_SetSysClkSource",
+                "LL_APB1_GRP1_EnableClock",
+                "LL_AHB1_GRP1_DisableClock",
+                "LL_RCC_GetSysClkSource",
+            )
+        }
+        self.assertEqual(families, {"ll-clock"})
+
+        accepted, reason = BindingPlanner._signature_compatible(
+            "interrupt",
+            "initialize",
+            "HAL_NVIC_SetPriorityGrouping",
+            "void HAL_NVIC_SetPriorityGrouping(uint32_t PriorityGroup)",
+        )
+        self.assertTrue(accepted, reason)
+
+        accepted, reason = BindingPlanner._signature_compatible(
+            "clock",
+            "initialize",
+            "HAL_RCC_OscConfig",
+            "HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *config)",
+        )
+        self.assertTrue(accepted, reason)
 
     def test_psoc_e84_timer_repair_maps_current_generated_symbols(self) -> None:
         project = self.root / "psoc-timer-repair"
@@ -1436,6 +1586,7 @@ class ModuleTests(unittest.TestCase):
                 "counter_node": "counter0_0",
                 "gpio_output_pin": 7,
                 "gpio_input_pin": 4,
+                "counter_alarm_ticks": 1234,
             },
         )
         source = Path(manifest["source"]).read_text(encoding="utf-8")
@@ -1446,6 +1597,8 @@ class ModuleTests(unittest.TestCase):
         self.assertIn("DT_NODELABEL(uart5)", header)
         self.assertIn("DT_NODELABEL(gpio_prt8)", header)
         self.assertIn("DT_NODELABEL(gpio_prt21)", header)
+        self.assertIn("BSPFORGE_ZEPHYR_COUNTER_ALARM_TICKS 1234U", header)
+        self.assertIn(".ticks = BSPFORGE_ZEPHYR_COUNTER_ALARM_TICKS", source)
         self.assertIn("bspforge_zephyr_gpio_input_device", source)
         self.assertIn("sys_clock_hw_cycles_per_sec", source)
         self.assertIn("counter_get_frequency", source)
@@ -1678,6 +1831,43 @@ class ModuleTests(unittest.TestCase):
         self.assertEqual(report["summary"]["unsupported"], 1)
         self.assertEqual(report["firmware_artifact"]["size"], 8)
         self.assertEqual(len(report["firmware_artifact"]["sha256"]), 64)
+
+    def test_hardware_protocol_retries_lost_idempotent_response(self) -> None:
+        class RetryTransport:
+            def __init__(self) -> None:
+                self.lines = [
+                    b'{"bspforge":true,"protocol":"1.0","event":"boot"}\n'
+                ]
+                self.writes = 0
+
+            def write(self, value: bytes) -> int:
+                self.writes += 1
+                _, request_id, command = value.decode().strip().split()
+                if self.writes > 1:
+                    self.lines.append(
+                        (
+                            '{"bspforge":true,"protocol":"1.0","event":"result",'
+                            f'"request_id":"{request_id}","command":"{command}",'
+                            '"status":"pass","metrics":{}}\n'
+                        ).encode()
+                    )
+                return len(value)
+
+            def readline(self) -> bytes:
+                return self.lines.pop(0) if self.lines else b""
+
+            def close(self) -> None:
+                pass
+
+        report = HardwareTestRunner(
+            RetryTransport(), "fixture", "zephyr", timeout=0.01,
+            command_retries=1,
+        ).run(commands=["info"])
+        command = report["rounds"][0]["commands"][0]
+        self.assertEqual(command["status"], "pass")
+        self.assertEqual(command["retry_count"], 1)
+        self.assertEqual(report["summary"]["commands_retried"], 1)
+        self.assertEqual(report["summary"]["transport_retries"], 1)
 
     def test_artifact_output_parsers(self) -> None:
         header = FirmwareArtifactVerifier._parse_elf_header(

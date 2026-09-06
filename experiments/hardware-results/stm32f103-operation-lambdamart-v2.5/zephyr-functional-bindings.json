@@ -1,0 +1,551 @@
+{
+  "backend": "zephyr",
+  "binding_plan_id": null,
+  "bindings": [
+    {
+      "capability": "clock",
+      "sdk_symbols": [
+        {
+          "driver_references": [],
+          "entity_id": "1b58925380183e45",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 1155,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_rcc.h"
+            },
+            {
+              "line": 345,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_rcc.c"
+            },
+            {
+              "line": 115,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_timebase_rtc_alarm_template.c"
+            }
+          ],
+          "signature": "HAL_StatusTypeDef HAL_RCC_OscConfig(const RCC_OscInitTypeDef *RCC_OscInitStruct)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 345,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c"
+          },
+          "symbol": "HAL_RCC_OscConfig"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "a49e08aa673fa9b3",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 1156,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_rcc.h"
+            },
+            {
+              "line": 113,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal.c"
+            },
+            {
+              "line": 811,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_rcc.c"
+            },
+            {
+              "line": 83,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_timebase_rtc_alarm_template.c"
+            },
+            {
+              "line": 50,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_timebase_tim_template.c"
+            },
+            {
+              "line": 136,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/soc/system_stm32f1xx.c"
+            }
+          ],
+          "signature": "HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef *RCC_ClkInitStruct, uint32_t FLatency)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 811,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c"
+          },
+          "symbol": "HAL_RCC_ClockConfig"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "dca71b2470d51e29",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 1171,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_rcc.h"
+            },
+            {
+              "line": 290,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_eth.c"
+            },
+            {
+              "line": 1187,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_pcd.c"
+            },
+            {
+              "line": 796,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_rcc.c"
+            },
+            {
+              "line": 135,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/soc/system_stm32f1xx.c"
+            }
+          ],
+          "signature": "uint32_t HAL_RCC_GetHCLKFreq(void)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 1174,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_rcc.c"
+          },
+          "symbol": "HAL_RCC_GetHCLKFreq"
+        }
+      ],
+      "status": "provider-only",
+      "strategy": "native-driver-trace"
+    },
+    {
+      "capability": "interrupt",
+      "sdk_symbols": [
+        {
+          "driver_references": [],
+          "entity_id": "0287a9f851cead49",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 262,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_cortex.h"
+            },
+            {
+              "line": 245,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal.c"
+            },
+            {
+              "line": 39,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_can.c"
+            },
+            {
+              "line": 25,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_cortex.c"
+            },
+            {
+              "line": 43,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_dma.c"
+            },
+            {
+              "line": 78,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_gpio.c"
+            },
+            {
+              "line": 52,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_mmc.c"
+            },
+            {
+              "line": 53,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_sd.c"
+            }
+          ],
+          "signature": "void HAL_NVIC_SetPriority(IRQn_Type IRQn, uint32_t PreemptPriority, uint32_t SubPriority)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 164,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c"
+          },
+          "symbol": "HAL_NVIC_SetPriority"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "2318e27c0ee44e9b",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 263,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_cortex.h"
+            },
+            {
+              "line": 101,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_adc.c"
+            },
+            {
+              "line": 40,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_can.c"
+            },
+            {
+              "line": 26,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_cortex.c"
+            },
+            {
+              "line": 44,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_dma.c"
+            },
+            {
+              "line": 79,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_gpio.c"
+            },
+            {
+              "line": 54,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_mmc.c"
+            },
+            {
+              "line": 54,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_sd.c"
+            }
+          ],
+          "signature": "void HAL_NVIC_EnableIRQ(IRQn_Type IRQn)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 186,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c"
+          },
+          "symbol": "HAL_NVIC_EnableIRQ"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "98aa060bce61925b",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 264,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_cortex.h"
+            },
+            {
+              "line": 202,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_cortex.c"
+            }
+          ],
+          "signature": "void HAL_NVIC_DisableIRQ(IRQn_Type IRQn)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 202,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_cortex.c"
+          },
+          "symbol": "HAL_NVIC_DisableIRQ"
+        }
+      ],
+      "status": "provider-only",
+      "strategy": "native-driver-trace"
+    },
+    {
+      "capability": "uart",
+      "sdk_symbols": [
+        {
+          "driver_references": [],
+          "entity_id": "c38c55dc242c0e4b",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 604,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_uart.h"
+            },
+            {
+              "line": 58,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_uart.c"
+            }
+          ],
+          "signature": "HAL_StatusTypeDef HAL_UART_Init(UART_HandleTypeDef *huart)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 354,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c"
+          },
+          "symbol": "HAL_UART_Init"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "b8aac94549921688",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 749,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_uart.h"
+            },
+            {
+              "line": 153,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_uart.c"
+            }
+          ],
+          "signature": "HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 1138,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c"
+          },
+          "symbol": "HAL_UART_Transmit"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "38804aec9b749df8",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 750,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_uart.h"
+            },
+            {
+              "line": 154,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_uart.c"
+            }
+          ],
+          "signature": "HAL_StatusTypeDef HAL_UART_Receive(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 1224,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_uart.c"
+          },
+          "symbol": "HAL_UART_Receive"
+        }
+      ],
+      "status": "provider-only",
+      "strategy": "native-driver-trace"
+    },
+    {
+      "capability": "gpio",
+      "sdk_symbols": [
+        {
+          "driver_references": [],
+          "entity_id": "c478a16c09dc09a2",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 223,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_gpio.h"
+            },
+            {
+              "line": 43,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/Legacy/stm32f1xx_hal_can.c"
+            },
+            {
+              "line": 97,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_adc.c"
+            },
+            {
+              "line": 65,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_gpio.c"
+            },
+            {
+              "line": 45,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_mmc.c"
+            },
+            {
+              "line": 1022,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_rcc.c"
+            },
+            {
+              "line": 45,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_sd.c"
+            },
+            {
+              "line": 77,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_tim.c"
+            }
+          ],
+          "signature": "void HAL_GPIO_Init(GPIO_TypeDef *GPIOx, GPIO_InitTypeDef *GPIO_Init)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 178,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c"
+          },
+          "symbol": "HAL_GPIO_Init"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "5eb701f4c139ac17",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 233,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_gpio.h"
+            },
+            {
+              "line": 81,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_gpio.c"
+            }
+          ],
+          "signature": "GPIO_PinState HAL_GPIO_ReadPin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 431,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c"
+          },
+          "symbol": "HAL_GPIO_ReadPin"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "80348213889b98d4",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 234,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_gpio.h"
+            },
+            {
+              "line": 84,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_gpio.c"
+            }
+          ],
+          "signature": "void HAL_GPIO_WritePin(GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin, GPIO_PinState PinState)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 465,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_gpio.c"
+          },
+          "symbol": "HAL_GPIO_WritePin"
+        }
+      ],
+      "status": "provider-only",
+      "strategy": "native-driver-trace"
+    },
+    {
+      "capability": "timer",
+      "sdk_symbols": [
+        {
+          "driver_references": [],
+          "entity_id": "e35a644f6425fb59",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 1888,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_tim.h"
+            },
+            {
+              "line": 86,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_tim.c"
+            },
+            {
+              "line": 103,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_timebase_tim_template.c"
+            }
+          ],
+          "signature": "HAL_StatusTypeDef HAL_TIM_Base_Init(TIM_HandleTypeDef *htim)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 266,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c"
+          },
+          "symbol": "HAL_TIM_Base_Init"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "5cbcb41b3331fd04",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 1893,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_tim.h"
+            },
+            {
+              "line": 98,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_tim.c"
+            }
+          ],
+          "signature": "HAL_StatusTypeDef HAL_TIM_Base_Start(TIM_HandleTypeDef *htim)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 400,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c"
+          },
+          "symbol": "HAL_TIM_Base_Start"
+        },
+        {
+          "driver_references": [],
+          "entity_id": "20c280211661f9ef",
+          "linked_by_native_driver": false,
+          "present_in_native_provider": true,
+          "provider_references": [
+            {
+              "line": 1894,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/include/stm32f1xx_hal_tim.h"
+            },
+            {
+              "line": 439,
+              "path": "/home/whk/RTT-porting/modules/hal/stm32/stm32cube/stm32f1xx/drivers/src/stm32f1xx_hal_tim.c"
+            }
+          ],
+          "signature": "HAL_StatusTypeDef HAL_TIM_Base_Stop(TIM_HandleTypeDef *htim)",
+          "source": {
+            "confidence": 0.9,
+            "kind": "definition",
+            "line": 439,
+            "parser": "tree-sitter",
+            "path": "Drivers/STM32F1xx_HAL_Driver/Src/stm32f1xx_hal_tim.c"
+          },
+          "symbol": "HAL_TIM_Base_Stop"
+        }
+      ],
+      "status": "provider-only",
+      "strategy": "native-driver-trace"
+    }
+  ],
+  "compiled_driver_sources": [
+    "/home/whk/RTT-porting/zephyr/drivers/clock_control/clock_stm32_ll_common.c",
+    "/home/whk/RTT-porting/zephyr/drivers/clock_control/clock_stm32f1.c",
+    "/home/whk/RTT-porting/zephyr/drivers/console/uart_console.c",
+    "/home/whk/RTT-porting/zephyr/drivers/counter/counter_stm32_timer.c",
+    "/home/whk/RTT-porting/zephyr/drivers/gpio/gpio_stm32.c",
+    "/home/whk/RTT-porting/zephyr/drivers/interrupt_controller/intc_exti_stm32.c",
+    "/home/whk/RTT-porting/zephyr/drivers/interrupt_controller/intc_gpio_stm32.c",
+    "/home/whk/RTT-porting/zephyr/drivers/pinctrl/common.c",
+    "/home/whk/RTT-porting/zephyr/drivers/pinctrl/pinctrl_stm32.c",
+    "/home/whk/RTT-porting/zephyr/drivers/reset/reset_stm32.c",
+    "/home/whk/RTT-porting/zephyr/drivers/serial/uart_stm32.c",
+    "/home/whk/RTT-porting/zephyr/drivers/timer/cortex_m_systick.c",
+    "/home/whk/RTT-porting/zephyr/drivers/timer/sys_clock_init.c"
+  ],
+  "created_at": "2026-09-06T07:35:55.527904+00:00",
+  "required_sources": [],
+  "schema_version": "1.1",
+  "sdk_profile": "stm32f103",
+  "strategy": "native-driver-trace",
+  "summary": {
+    "capabilities": 5,
+    "driver_linked_symbols": 0,
+    "provider_symbols": 15,
+    "resolved_capabilities": 0,
+    "sdk_symbols": 15
+  }
+}

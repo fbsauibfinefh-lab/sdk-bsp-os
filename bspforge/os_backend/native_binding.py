@@ -30,9 +30,16 @@ class NativeDriverBindingTracer:
         if binding_plan is not None:
             expected_by_capability = {
                 item["capability"]: sorted({
-                    operation["selected_symbol"]
+                    symbol
                     for operation in item["operations"]
-                    if operation.get("selected_symbol")
+                    for symbol in (
+                        [operation["selected_symbol"]]
+                        if operation.get("selected_symbol")
+                        else []
+                    ) + [
+                        member["symbol"]
+                        for member in operation.get("composite_symbols", [])
+                    ]
                 })
                 for item in binding_plan["capabilities"]
             }

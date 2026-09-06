@@ -1,5 +1,5 @@
 {
-  "run_id": "stm32f103-zephyr-v0.4",
+  "run_id": "stm32f103-zephyr-lambdamart-v2.5",
   "workspace": "workspace",
   "ir_store": "workspace/ir",
   "ingestor": {"mode": "hybrid"},
@@ -8,11 +8,13 @@
     "path": "sdk/stm32f103/source"
   },
   "resolver": {
-    "method": "operation-weighted",
+    "method": "operation-lambdamart",
+    "model_path": "models/runtime/stm32f103-operation-lambdamart-h03-eq-r1-v2.3.json",
+    "binding_decoder": "signature-family",
     "operation_min_margin": 0.0,
     "capabilities": ["clock", "interrupt", "uart", "gpio", "timer"],
     "threshold": 0.42,
-    "top_k": 8
+    "top_k": 256
   },
   "toolchain": {
     "architecture": "arm",
@@ -30,12 +32,26 @@
   },
   "backend": {
     "type": "zephyr",
-    "board": "stm32_min_dev@black/stm32f103xb",
+    "board": "waveshare_open103z",
     "sdk_profile": "stm32f103",
     "zephyr_root": "third_party/zephyr",
     "toolchain_variant": "gnuarmemb",
     "native_provider_roots": ["modules/hal/stm32/stm32cube/stm32f1xx"],
-    "output": "workspace/generated/stm32f103-zephyr"
+    "output": "workspace/generated/stm32f103-zephyr-lambdamart",
+    "validation": {
+      "board": "stm32/stm32f103-atk-warshipv3",
+      "firmware_build_id": "operation-lambdamart-v2.5-zephyr-native-device",
+      "standard_devices": {
+        "uart_node": "usart3",
+        "gpio_output_node": "gpiob",
+        "gpio_input_node": "gpiob",
+        "counter_node": "counter2",
+        "gpio_output_pin": 0,
+        "gpio_input_pin": 1,
+        "counter_alarm_ticks": 10000
+      }
+    },
+    "overlay": "&i2c2 { status = \"disabled\"; };\n&usart3 { pinctrl-0 = <&usart3_tx_pb10 &usart3_rx_pb11>; pinctrl-names = \"default\"; current-speed = <115200>; status = \"okay\"; };\n&gpiob { status = \"okay\"; };\n&timers2 { status = \"okay\"; counter2: counter { status = \"okay\"; }; };"
   },
   "build": {
     "jobs": 8,

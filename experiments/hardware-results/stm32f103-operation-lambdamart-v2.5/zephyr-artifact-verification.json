@@ -1,0 +1,75 @@
+{
+  "artifacts": [
+    {
+      "kind": "elf",
+      "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-zephyr-lambdamart/build/zephyr/zephyr.elf",
+      "sha256": "15a62d4320cb6ef362ae076289dac430bb76b22637d3abfcc4e3f446dfa07645",
+      "size": 601304
+    },
+    {
+      "kind": "bin",
+      "path": "/home/whk/RTT-porting/bspforge/workspace/generated/stm32f103-zephyr-lambdamart/build/zephyr/zephyr.bin",
+      "sha256": "0a4f5521299f674ed3bb07faa4c64cc30d8b63d2018508b6e0d4af7019d0f675",
+      "size": 28600
+    }
+  ],
+  "checks": [
+    {
+      "name": "elf-exists",
+      "success": true
+    },
+    {
+      "name": "bin-exists",
+      "success": true
+    },
+    {
+      "expected": "ARM",
+      "name": "elf-machine",
+      "observed": "ARM",
+      "success": true
+    },
+    {
+      "name": "elf-sections-readable",
+      "success": true
+    },
+    {
+      "expected": [
+        "bspforge_zephyr_validation_init",
+        "bspforge_zephyr_validation_run"
+      ],
+      "missing": [],
+      "name": "generated-device-symbols-linked",
+      "present": [
+        "bspforge_zephyr_validation_init",
+        "bspforge_zephyr_validation_run"
+      ],
+      "success": true
+    }
+  ],
+  "created_at": "2026-09-06T07:35:55.625777+00:00",
+  "elf_header": {
+    "Class": "ELF32",
+    "Data": "2's complement, little endian",
+    "Entry point address": "0x8001619",
+    "Machine": "ARM",
+    "Type": "EXEC (Executable file)"
+  },
+  "expected_machine": "ARM",
+  "expected_symbols": [
+    "bspforge_zephyr_validation_init",
+    "bspforge_zephyr_validation_run"
+  ],
+  "missing_symbols": [],
+  "present_symbols": [
+    "bspforge_zephyr_validation_init",
+    "bspforge_zephyr_validation_run"
+  ],
+  "schema_version": "1.0",
+  "section_sizes": {
+    "bss": 7162,
+    "data": 132,
+    "dec": 35762,
+    "text": 28468
+  },
+  "success": true
+}

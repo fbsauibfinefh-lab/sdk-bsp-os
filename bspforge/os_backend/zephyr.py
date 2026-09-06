@@ -64,7 +64,7 @@ class ZephyrBackend(OSBackend):
             raise ValueError(f"Unsupported Zephyr binding strategy: {strategy}")
         protocol_manifest = ZephyrValidationGenerator().generate(
             source_dir,
-            board,
+            str(validation_options.get("board", board)),
             build_id,
             functional=strategy == "generated-sdk-adapter",
             native_devices=strategy == "generated-sdk-adapter",
