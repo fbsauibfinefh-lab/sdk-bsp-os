@@ -560,6 +560,6 @@ H01 相对自动真值的 P@1、Recall@5、MAP 和 nDCG@10 分别提高 0.040、
 - 部署解码补充两项通用语义：`SysInt/NVIC/PLIC` 归并为系统中断控制器族；`base/obj/counter/cnt/tcpwm` 识别为定时器实例参数。修正解决成熟 SDK 跨公共层中断组合和控制器实例命名问题，不含 PSoC 白名单、实体 ID 或真值回退。
 - RT-Thread 与 Zephyr 均从 IR 重新生成 19/19 项绑定和 270 文件闭包，各一次编译成功，19/19 绑定获得编译反馈。RT-Thread 必须把安全启动段的编程别名与重定位应用合并；仅烧录应用段会继续执行闪存中残留的旧 Zephyr 镜像。
 - 主机工具新增 `--keep-port-open-during-reset`。KitProg3 SWD 复位不占用 COM8，保持串口打开后可捕获早期 boot 事件，避免命令可运行但启动率误记为 0。
-- 两套正式固件均完成 10/10 次启动和 80/90 条命令通过，0 项 `unsupported`。时钟、基础中断、GPIO 电平、GPIO IRQ、单次/周期定时器及稳定性各 10/10；CN5 Pin8/Pin10 UART5 外部回环均为 0/16 bytes，十轮失败全部来自这一项。
-- 原理图确认 UART5 经常使能的 TXS0108E 连接 P17.1/P17.0；两个 OS 及直接 GPIO 诊断均无法让外部短接线传播低电平。当前不能声称五类能力全部通过，需人工检查跳线接触、电平转换器供电和波形后复测 UART5。
+- 初次完整回归中，两套正式固件均完成 10/10 次启动和 80/90 条命令通过，0 项 `unsupported`；十轮失败全部来自 CN5 Pin8/Pin10 UART5 外部回环。更换该跳线后，不修改绑定、后端或固件，RT-Thread 与 Zephyr 的 UART5 独立复测均为 10/10 次启动、10/10 条命令通过，每轮收发 16 bytes、0 errors。
+- 结合初次回归中时钟、基础中断、GPIO 电平、GPIO IRQ、单次/周期定时器及稳定性的 80/80 通过记录，五类能力的适用测试均已获得通过证据。该组合证据不是换线后重新执行的一次完整 90/90 回归。原故障随跳线更换消失，支持将其归因为外部跳线接触或导通问题，而不是语义选择、OS 后端或固件缺陷。
 - 公开方法与结果见 `docs/psoc-e84-lambdamart-board-validation-v2.4.md`，内部逐步命令见 `docs/internaldocs/edgitalk-board-validation-20260906.md`，机器报告位于 `experiments/hardware-results/psoc-e84-operation-lambdamart-v2.4/`。

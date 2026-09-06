@@ -430,6 +430,6 @@ experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-full-10r
 
 ## 11. PSoC E84 Edgi-Talk 实测更新（2026-09-06）
 
-PSoC E84 两套配置已切换到无目标标签的冻结 LambdaMART v2.4 包。RT-Thread 与 Zephyr 都生成 19/19 项绑定、一次编译成功，并在实板执行 10 轮自动 SWD 复位和每轮九命令。两者均为 10/10 次启动、80/90 命令通过、失败 10、`unsupported` 0；时钟、基础中断、GPIO 电平/IRQ、单次/周期定时器和稳定性全部通过，唯一失败为 CN5 Pin8/Pin10 的 UART5 外部回环。
+PSoC E84 两套配置已切换到无目标标签的冻结 LambdaMART v2.4 包。RT-Thread 与 Zephyr 都生成 19/19 项绑定、一次编译成功。初次完整实板回归均为 10/10 次启动、80/90 条命令通过，唯一失败为 CN5 Pin8/Pin10 的 UART5 外部回环。更换该跳线后，在不修改绑定、后端和固件的条件下独立执行 UART5 十轮复测，两套均为 10/10 次启动、10/10 条命令通过，每轮收发 16 bytes、0 errors。结合原回归中其余命令的 80/80 结果，五类能力的适用测试均已获得通过证据；这不是换线后重新执行的一次完整 90/90 回归。
 
 RT-Thread 不能只烧录重定位应用段，必须把厂商签名安全启动段的编程别名一并合并，否则会继续执行 `0x60100000` 中残留的 Zephyr 镜像。主机使用 OpenOCD 外部复位时应增加 `--keep-port-open-during-reset`，以捕获复位后立即输出的 boot 事件。完整固件哈希、接线、逐命令结果和失败边界见 `docs/psoc-e84-lambdamart-board-validation-v2.4.md`。

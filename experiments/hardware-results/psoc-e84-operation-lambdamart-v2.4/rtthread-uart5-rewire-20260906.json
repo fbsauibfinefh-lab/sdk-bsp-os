@@ -1,0 +1,488 @@
+{
+  "board": "psoc-e84-edgi-talk",
+  "created_at": "2026-09-06T05:27:58.463721+00:00",
+  "firmware_artifact": {
+    "path": "\\\\wsl.localhost\\UbuntuD-22.04\\home\\whk\\RTT-porting\\bspforge\\workspace\\generated\\psoc-e84-rtthread-lambdamart\\rtthread-programming-combined.hex",
+    "sha256": "33985f092b64302baa0e08fd2fbf419e67661841ccd3ce13b45344cd6ac754aa",
+    "size": 481713
+  },
+  "raw_log": [
+    "\u001b[2J\u001b[;H****************** PSOC Edge MCU: CM33 Secure Mode******************",
+    "PSRAM Cache is Enabled",
+    "PSRAM init successful",
+    "****************** PSOC Edge MCU: CM33 Secure Mode Exit******************",
+    "",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.0.2 build Sep  6 2026 00:48:42",
+    " 2006 - 2022 Copyright by RT-Thread team",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"psoc_e84-edgi-talk\",\"build_id\":\"b82c1945e240\",\"stage\":\"application\"}",
+    "Hello RT-Thread",
+    "This core is cortex-m33",
+    "msh >bspforge_selftest eee25621d2b1 uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"eee25621d2b1\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0,\"discarded_rx_bytes\":0}}",
+    "msh >",
+    "msh >\u001b[2J\u001b[;H****************** PSOC Edge MCU: CM33 Secure Mode******************",
+    "PSRAM Cache is Enabled",
+    "PSRAM init successful",
+    "****************** PSOC Edge MCU: CM33 Secure Mode Exit******************",
+    "",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.0.2 build Sep  6 2026 00:48:42",
+    " 2006 - 2022 Copyright by RT-Thread team",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"psoc_e84-edgi-talk\",\"build_id\":\"b82c1945e240\",\"stage\":\"application\"}",
+    "Hello RT-Thread",
+    "This core is cortex-m33",
+    "msh >bspforge_selftest e5675ae44888 uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e5675ae44888\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0,\"discarded_rx_bytes\":0}}",
+    "sh >",
+    "msh >\u001b[2J\u001b[;H****************** PSOC Edge MCU: CM33 Secure Mode******************",
+    "PSRAM Cache is Enabled",
+    "PSRAM init successful",
+    "****************** PSOC Edge MCU: CM33 Secure Mode Exit******************",
+    "",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.0.2 build Sep  6 2026 00:48:42",
+    " 2006 - 2022 Copyright by RT-Thread team",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"psoc_e84-edgi-talk\",\"build_id\":\"b82c1945e240\",\"stage\":\"application\"}",
+    "Hello RT-Thread",
+    "This core is cortex-m33",
+    "msh >bspforge_selftest bb514d749a2d uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"bb514d749a2d\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0,\"discarded_rx_bytes\":0}}",
+    "msh >",
+    "msh >\u001b[2J\u001b[;H****************** PSOC Edge MCU: CM33 Secure Mode******************",
+    "PSRAM Cache is Enabled",
+    "PSRAM init successful",
+    "****************** PSOC Edge MCU: CM33 Secure Mode Exit******************",
+    "",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.0.2 build Sep  6 2026 00:48:42",
+    " 2006 - 2022 Copyright by RT-Thread team",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"psoc_e84-edgi-talk\",\"build_id\":\"b82c1945e240\",\"stage\":\"application\"}",
+    "Hello RT-Thread",
+    "This core is cortex-m33",
+    "msh >bspforge_selftest 721e76fb7c9a uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"721e76fb7c9a\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0,\"discarded_rx_bytes\":0}}",
+    "msh >",
+    "msh >\u001b[2J\u001b[;H****************** PSOC Edge MCU: CM33 Secure Mode******************",
+    "PSRAM Cache is Enabled",
+    "PSRAM init successful",
+    "****************** PSOC Edge MCU: CM33 Secure Mode Exit******************",
+    "",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.0.2 build Sep  6 2026 00:48:42",
+    " 2006 - 2022 Copyright by RT-Thread team",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"psoc_e84-edgi-talk\",\"build_id\":\"b82c1945e240\",\"stage\":\"application\"}",
+    "Hello RT-Thread",
+    "This core is cortex-m33",
+    "msh >bspforge_selftest be3c9244ecf3 uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"be3c9244ecf3\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0,\"discarded_rx_bytes\":0}}",
+    "msh >",
+    "msh >\u001b[2J\u001b[;H****************** PSOC Edge MCU: CM33 Secure Mode******************",
+    "PSRAM Cache is Enabled",
+    "PSRAM init successful",
+    "****************** PSOC Edge MCU: CM33 Secure Mode Exit******************",
+    "",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.0.2 build Sep  6 2026 00:48:42",
+    " 2006 - 2022 Copyright by RT-Thread team",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"psoc_e84-edgi-talk\",\"build_id\":\"b82c1945e240\",\"stage\":\"application\"}",
+    "Hello RT-Thread",
+    "This core is cortex-m33",
+    "msh >bspforge_selftest e780e95761da uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"e780e95761da\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0,\"discarded_rx_bytes\":0}}",
+    "msh >",
+    "msh >\u001b[2J\u001b[;H****************** PSOC Edge MCU: CM33 Secure Mode******************",
+    "PSRAM Cache is Enabled",
+    "PSRAM init successful",
+    "****************** PSOC Edge MCU: CM33 Secure Mode Exit******************",
+    "",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.0.2 build Sep  6 2026 00:48:42",
+    " 2006 - 2022 Copyright by RT-Thread team",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"psoc_e84-edgi-talk\",\"build_id\":\"b82c1945e240\",\"stage\":\"application\"}",
+    "Hello RT-Thread",
+    "This core is cortex-m33",
+    "msh >bspforge_selftest 3ad3a0f51041 uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"3ad3a0f51041\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0,\"discarded_rx_bytes\":0}}",
+    "sh >",
+    "msh >\u001b[2J\u001b[;H****************** PSOC Edge MCU: CM33 Secure Mode******************",
+    "PSRAM Cache is Enabled",
+    "PSRAM init successful",
+    "****************** PSOC Edge MCU: CM33 Secure Mode Exit******************",
+    "",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.0.2 build Sep  6 2026 00:48:42",
+    " 2006 - 2022 Copyright by RT-Thread team",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"psoc_e84-edgi-talk\",\"build_id\":\"b82c1945e240\",\"stage\":\"application\"}",
+    "Hello RT-Thread",
+    "This core is cortex-m33",
+    "msh >bspforge_selftest d165655c9201 uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"d165655c9201\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0,\"discarded_rx_bytes\":0}}",
+    "msh >",
+    "msh >\u001b[2J\u001b[;H****************** PSOC Edge MCU: CM33 Secure Mode******************",
+    "PSRAM Cache is Enabled",
+    "PSRAM init successful",
+    "****************** PSOC Edge MCU: CM33 Secure Mode Exit******************",
+    "",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.0.2 build Sep  6 2026 00:48:42",
+    " 2006 - 2022 Copyright by RT-Thread team",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"psoc_e84-edgi-talk\",\"build_id\":\"b82c1945e240\",\"stage\":\"application\"}",
+    "Hello RT-Thread",
+    "This core is cortex-m33",
+    "msh >bspforge_selftest 0950292346be uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"0950292346be\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0,\"discarded_rx_bytes\":0}}",
+    "msh >",
+    "msh >\u001b[2J\u001b[;H****************** PSOC Edge MCU: CM33 Secure Mode******************",
+    "PSRAM Cache is Enabled",
+    "PSRAM init successful",
+    "****************** PSOC Edge MCU: CM33 Secure Mode Exit******************",
+    "",
+    "",
+    " \\ | /",
+    "- RT -     Thread Operating System",
+    " / | \\     5.0.2 build Sep  6 2026 00:48:42",
+    " 2006 - 2022 Copyright by RT-Thread team",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"boot\",\"rtos\":\"rtthread\",\"board\":\"psoc_e84-edgi-talk\",\"build_id\":\"b82c1945e240\",\"stage\":\"application\"}",
+    "Hello RT-Thread",
+    "This core is cortex-m33",
+    "msh >bspforge_selftest a2e90ba1b9c3 uart.loopback",
+    "{\"bspforge\":true,\"protocol\":\"1.0\",\"event\":\"result\",\"request_id\":\"a2e90ba1b9c3\",\"command\":\"uart.loopback\",\"status\":\"pass\",\"metrics\":{\"bytes\":16,\"errors\":0,\"discarded_rx_bytes\":0}}"
+  ],
+  "rounds": [
+    {
+      "boot_event": {
+        "board": "psoc_e84-edgi-talk",
+        "bspforge": true,
+        "build_id": "b82c1945e240",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 297.0,
+          "metrics": {
+            "bytes": 16,
+            "discarded_rx_bytes": 0,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "eee25621d2b1",
+          "status": "pass"
+        }
+      ],
+      "round": 1
+    },
+    {
+      "boot_event": {
+        "board": "psoc_e84-edgi-talk",
+        "bspforge": true,
+        "build_id": "b82c1945e240",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 282.0,
+          "metrics": {
+            "bytes": 16,
+            "discarded_rx_bytes": 0,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "e5675ae44888",
+          "status": "pass"
+        }
+      ],
+      "round": 2
+    },
+    {
+      "boot_event": {
+        "board": "psoc_e84-edgi-talk",
+        "bspforge": true,
+        "build_id": "b82c1945e240",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 281.0,
+          "metrics": {
+            "bytes": 16,
+            "discarded_rx_bytes": 0,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "bb514d749a2d",
+          "status": "pass"
+        }
+      ],
+      "round": 3
+    },
+    {
+      "boot_event": {
+        "board": "psoc_e84-edgi-talk",
+        "bspforge": true,
+        "build_id": "b82c1945e240",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 297.0,
+          "metrics": {
+            "bytes": 16,
+            "discarded_rx_bytes": 0,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "721e76fb7c9a",
+          "status": "pass"
+        }
+      ],
+      "round": 4
+    },
+    {
+      "boot_event": {
+        "board": "psoc_e84-edgi-talk",
+        "bspforge": true,
+        "build_id": "b82c1945e240",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 282.0,
+          "metrics": {
+            "bytes": 16,
+            "discarded_rx_bytes": 0,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "be3c9244ecf3",
+          "status": "pass"
+        }
+      ],
+      "round": 5
+    },
+    {
+      "boot_event": {
+        "board": "psoc_e84-edgi-talk",
+        "bspforge": true,
+        "build_id": "b82c1945e240",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 281.0,
+          "metrics": {
+            "bytes": 16,
+            "discarded_rx_bytes": 0,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "e780e95761da",
+          "status": "pass"
+        }
+      ],
+      "round": 6
+    },
+    {
+      "boot_event": {
+        "board": "psoc_e84-edgi-talk",
+        "bspforge": true,
+        "build_id": "b82c1945e240",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 297.0,
+          "metrics": {
+            "bytes": 16,
+            "discarded_rx_bytes": 0,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "3ad3a0f51041",
+          "status": "pass"
+        }
+      ],
+      "round": 7
+    },
+    {
+      "boot_event": {
+        "board": "psoc_e84-edgi-talk",
+        "bspforge": true,
+        "build_id": "b82c1945e240",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 297.0,
+          "metrics": {
+            "bytes": 16,
+            "discarded_rx_bytes": 0,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "d165655c9201",
+          "status": "pass"
+        }
+      ],
+      "round": 8
+    },
+    {
+      "boot_event": {
+        "board": "psoc_e84-edgi-talk",
+        "bspforge": true,
+        "build_id": "b82c1945e240",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 281.0,
+          "metrics": {
+            "bytes": 16,
+            "discarded_rx_bytes": 0,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "0950292346be",
+          "status": "pass"
+        }
+      ],
+      "round": 9
+    },
+    {
+      "boot_event": {
+        "board": "psoc_e84-edgi-talk",
+        "bspforge": true,
+        "build_id": "b82c1945e240",
+        "event": "boot",
+        "protocol": "1.0",
+        "rtos": "rtthread",
+        "stage": "application"
+      },
+      "boot_success": true,
+      "boot_time_ms": 0.0,
+      "commands": [
+        {
+          "bspforge": true,
+          "command": "uart.loopback",
+          "event": "result",
+          "host_round_trip_ms": 297.0,
+          "metrics": {
+            "bytes": 16,
+            "discarded_rx_bytes": 0,
+            "errors": 0
+          },
+          "protocol": "1.0",
+          "request_id": "a2e90ba1b9c3",
+          "status": "pass"
+        }
+      ],
+      "round": 10
+    }
+  ],
+  "rtos": "rtthread",
+  "schema_version": "1.1",
+  "summary": {
+    "boot_attempts": 10,
+    "boot_success_rate": 1.0,
+    "boot_successes": 10,
+    "boot_time_max_ms": 0.0,
+    "boot_time_mean_ms": 0.0,
+    "boot_time_min_ms": 0.0,
+    "command_pass_rate": 1.0,
+    "commands_applicable": 10,
+    "commands_passed": 10,
+    "commands_total": 10,
+    "failed": 0,
+    "unsupported": 0
+  }
+}

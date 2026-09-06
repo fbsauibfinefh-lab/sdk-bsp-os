@@ -72,26 +72,26 @@ RT-Thread ELF 为 1,503,296 bytes，Zephyr ELF 为 976,188 bytes。两者均为 
 | `info` | 10/10 | 10/10 | 验证服务和原生设备可用 |
 | `clock.basic` | 10/10 | 10/10 | 时钟源非零，OS 时间持续前进 |
 | `interrupt.basic` | 10/10 | 10/10 | 回调计数为 1 |
-| `uart.loopback` | 0/10 | 0/10 | UART5 收到 0/16 bytes |
+| `uart.loopback` | 10/10 | 10/10 | 更换 Pin8/Pin10 跳线后独立复测，每轮收发 16 bytes、0 errors |
 | `gpio.toggle` | 10/10 | 10/10 | 输出锁存及跨线输入低/高一致 |
 | `gpio.irq` | 10/10 | 10/10 | 边沿回调计数为 1 |
 | `timer.oneshot` | 10/10 | 10/10 | 单次回调计数为 1 |
 | `timer.periodic` | 10/10 | 10/10 | 周期回调计数为 3 |
 | `stability` | 10/10 | 10/10 | 命令末尾服务仍可用 |
 
-两套固件均为 10/10 次启动、80/90 条命令通过、10 条失败、0 条 `unsupported`。失败不是十种不同故障，而是同一 UART5 外部回环在十轮中的重复失败。
+初次完整回归中，两套固件均为 10/10 次启动、80/90 条命令通过，唯一失败为 UART5 外部回环。更换 Pin8/Pin10 跳线后，没有重新生成绑定、修改后端或重新编译固件，仅分别重新烧录原有固件并独立执行 UART5 十轮复测；RT-Thread 与 Zephyr 均为 10/10 次启动、10/10 条回环命令通过，每轮收发 16 bytes、0 errors、0 `unsupported`。结合此前其余八类命令的 80/80 结果，五类能力的适用测试均已获得通过证据。该组合证据等价覆盖每套固件的 90 条命令，但不是换线后重新执行的一次完整 90/90 回归，论文应如实说明复测方式。
 
-CN5 原理图确认 Pin8/Pin10 经常使能的 TXS0108E 连接 P17.1/P17.0。调试阶段把两端改为普通 GPIO并交换方向后，输出锁存能变化，但另一端始终读高；同一现象跨 RT-Thread 和 Zephyr 重现。因此当前证据支持 UART 后端已实现且协议控制台 UART 可双向工作，但不能声称 CN5 UART5 外部通道通过。应检查跳线接触、排针方向、电平转换器两侧电压和实际波形后重测。
+CN5 原理图确认 Pin8/Pin10 经常使能的 TXS0108E 连接 P17.1/P17.0。原跳线下两个 OS 以及直接 GPIO 诊断均无法传播低电平；更换跳线后两套未修改固件立即稳定通过，因而原失败应归因于外部跳线接触或导通，而不是语义选择、OS 后端或生成固件缺陷。
 
 最终机器报告：
 
 ```text
 experiments/hardware-results/psoc-e84-operation-lambdamart-v2.4/rtthread-10-rounds.json
 experiments/hardware-results/psoc-e84-operation-lambdamart-v2.4/zephyr-10-rounds.json
+experiments/hardware-results/psoc-e84-operation-lambdamart-v2.4/rtthread-uart5-rewire-20260906.json
+experiments/hardware-results/psoc-e84-operation-lambdamart-v2.4/zephyr-uart5-rewire-20260906.json
 ```
 
 ## 6. 可支持的结论
 
-本轮可以支持：同一冻结语义包能生成两种 RTOS 的 19 项绑定，完成闭包并一次编译；两套固件均可稳定启动，并通过时钟、中断、GPIO、GPIO 中断、单次和周期定时器的 OS 原生 API 路径。
-
-本轮不能支持“PSoC E84 五类能力全部正常”或“90/90 命令通过”。UART5 仍是公开待解决项。当前 0.833 的 P@1 是独立语义评测结果，80/90 是端到端行为结果，19/19 是生成和编译观察结果，三者分母和含义不同，不得合并成一个成功率。
+本轮可以支持：同一冻结语义包能生成两种 RTOS 的 19 项绑定，完成闭包并一次编译；两套固件均可稳定启动，并通过时钟、中断、UART5 外部回环、GPIO、GPIO 中断、单次和周期定时器的 OS 原生 API 路径。当前 0.833 的 P@1 是独立语义评测结果，端到端行为结果与 19/19 生成和编译观察结果的分母和含义不同，不得合并成一个成功率。
