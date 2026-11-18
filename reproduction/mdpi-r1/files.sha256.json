@@ -1,0 +1,1655 @@
+{
+  "schema_version": "1.0",
+  "release_tag": "mdpi-r1-20261118",
+  "hash_algorithm": "sha256",
+  "files": {
+    ".github/workflows/ci.yml": {
+      "size": 355,
+      "sha256": "ecb5424936c8303c3db6173d7291ec9879563542a24d1320bebca18b805dcf4f"
+    },
+    ".gitignore": {
+      "size": 1496,
+      "sha256": "ba74452ad7c94d5277353de2b3efc3b5368e5c6b052177c541dbcd2397eadd16"
+    },
+    "CHANGELOG.md": {
+      "size": 3736,
+      "sha256": "20f8b420d3d41b8fe47d2bd88af2c0d0ea966689e02edc319240bd7e87e6a9bb"
+    },
+    "CITATION.cff": {
+      "size": 779,
+      "sha256": "0e8d271fe23fd5b09c0c73ae650cdcafd956edf62cb0d9bde573d5d0b120df01"
+    },
+    "CONTRIBUTING.md": {
+      "size": 813,
+      "sha256": "28130dbe0b54a8c28d1b7833a96af9c885d66ac70caba6c47b10c7a630d2cb86"
+    },
+    "LICENSE": {
+      "size": 1078,
+      "sha256": "9041db9ba1d6b6ed4f251def89bdda6ec6f6dee17bb4cdc4775ed4ee69fc7554"
+    },
+    "README.md": {
+      "size": 9175,
+      "sha256": "9f8ef3576471dabfa227d75bef4ab9d68c561e201add40658cafe51366d19f8c"
+    },
+    "THIRD_PARTY_NOTICES.md": {
+      "size": 3723,
+      "sha256": "98377b256c43c3f826a13870f20683c0d53028b818ceccc20567f98c9ac8d48e"
+    },
+    "bspforge/__init__.py": {
+      "size": 58,
+      "sha256": "8e358c72593c2f5e159512cef037ec82e510b84ae5afd7374084739a3d82bb65"
+    },
+    "bspforge/adaptive_field_ranker.py": {
+      "size": 7804,
+      "sha256": "f41c4e05954e14ad83d1bcda4439a62bc31cac98d5bbfa4cce59743b8820894f"
+    },
+    "bspforge/binding_contract_guard.py": {
+      "size": 5180,
+      "sha256": "0681850a06d89a403b1461bd657d61a0bb68458f9aee4651b90ceb25b77c25fe"
+    },
+    "bspforge/binding_planner.py": {
+      "size": 17783,
+      "sha256": "36cf1928546b271caac89f1f22299f526cf97936be38486bc8732e50a299b14b"
+    },
+    "bspforge/build_diagnoser/__init__.py": {
+      "size": 69,
+      "sha256": "4c7f8f3211b7b09c28b183a9ba99c0d07ffcc28301f8dbfda7a4897e31a46870"
+    },
+    "bspforge/build_diagnoser/diagnoser.py": {
+      "size": 12739,
+      "sha256": "b3813bc299b7a57c26989ce3d10bbb931a9304ab7de3d773f682d6a2e8746a13"
+    },
+    "bspforge/capability_schema.py": {
+      "size": 1619,
+      "sha256": "60e5454954ed8fe7d912d0124295bc7ba08f5d0d242ecda0fb80ff072a3d7863"
+    },
+    "bspforge/cli.py": {
+      "size": 5144,
+      "sha256": "5f308a66f4f85e39228fc09aad80ffca01ff924a14adb7e0a061bd7c60726730"
+    },
+    "bspforge/closure_solver/__init__.py": {
+      "size": 64,
+      "sha256": "9aa47405549c2d9959d47ed35f6086ba781a94f8c6e933652a5a52abfde76f01"
+    },
+    "bspforge/closure_solver/solver.py": {
+      "size": 18826,
+      "sha256": "e01f70426fb7c487b72ca1f6414dd28b213effeebacb54cd76c4dea36e824ad6"
+    },
+    "bspforge/code_effect_encoder.py": {
+      "size": 7007,
+      "sha256": "2f854ef4f69e3a265464116067142a494349a4a989a3dee5b5c47a1f2c202590"
+    },
+    "bspforge/common.py": {
+      "size": 2534,
+      "sha256": "738e6d117ddeaa6cd98fc919304b460fa9f1f379ee4bbcfb0a6dc25da376ca46"
+    },
+    "bspforge/compile_feedback.py": {
+      "size": 4850,
+      "sha256": "fde2c577aea3bc2a8a998f3f085c0d61346f6070a14bd75356badfa26ea7d7a1"
+    },
+    "bspforge/cross_operation_coherence.py": {
+      "size": 11765,
+      "sha256": "1886ab1e0c6fcf373e03a8eb4913a72c5ffb9ef33685605b4bafc535525360d6"
+    },
+    "bspforge/evaluation.py": {
+      "size": 10004,
+      "sha256": "67072ef2ef9adb253f3397f636dfa3722521e781c1c2b3e701cc6a87e667053f"
+    },
+    "bspforge/field_late_interaction.py": {
+      "size": 8279,
+      "sha256": "29c37ce7276db6e2390f9cd5c850489be2bdbec16a3c3e578c867cf511b5b599"
+    },
+    "bspforge/frozen_operation_ranker.py": {
+      "size": 3494,
+      "sha256": "fd23f93e29ee9d3e764315e610f5a678cf6ac8a50c2d17ee42e115a2e27754a3"
+    },
+    "bspforge/hardware_effect_graph.py": {
+      "size": 26418,
+      "sha256": "f12e71d7bfc102827dd28e3c9f6c249251afc2f57338fd95ec7b5f6bf2e47926"
+    },
+    "bspforge/hardware_effect_ranker.py": {
+      "size": 5245,
+      "sha256": "42160eae892e51ba16e79a3a69f0606c1b24b287c883a7018a2e367e10c163d7"
+    },
+    "bspforge/hardware_test/__init__.py": {
+      "size": 259,
+      "sha256": "300897766a0db41bc8b49ae4affe481bae4a6f2eea3528259f418f02c5f08aae"
+    },
+    "bspforge/hardware_test/host.py": {
+      "size": 14318,
+      "sha256": "c548b23020ad6f8b3de7e70b4c8357e5ab3fede5be044383c69f880698f37a7c"
+    },
+    "bspforge/hardware_test/protocol.py": {
+      "size": 1369,
+      "sha256": "e984ae7d62d07644779a60c82e4fd3b4f46e650b8aee7867d1028994da417ffd"
+    },
+    "bspforge/hardware_test/state_assertions.py": {
+      "size": 3607,
+      "sha256": "42172435e8f77cd6334b68f78f9bb51677d71c6d5905ff6927080924494f2ae3"
+    },
+    "bspforge/ir_store/__init__.py": {
+      "size": 51,
+      "sha256": "93d6e500e36e170d9fe704d4c1dc4c771bea4bee3206307e10ea1789a8fe84f2"
+    },
+    "bspforge/ir_store/store.py": {
+      "size": 1546,
+      "sha256": "2db43213cf4726b8a395c6224c82e069045a5bdbf131227df4239b8d8190703a"
+    },
+    "bspforge/joint_pair_ranker.py": {
+      "size": 7959,
+      "sha256": "d391b9a5c1b738e3b1a22a15e8f5cb5e64e3d07fa3e3ab2d30e1e850a8b836b6"
+    },
+    "bspforge/joint_shortlist.py": {
+      "size": 2592,
+      "sha256": "681c11619e299b1a5c9f64e4d9d5f6bd0168015112c697f2f13dd5a0c8ae6f2d"
+    },
+    "bspforge/multiview_effect_encoder.py": {
+      "size": 6479,
+      "sha256": "f33ff885c41c685da33a9be9c6463dd1a5043792afc39a56ff72ca4548b93dbf"
+    },
+    "bspforge/multiview_effect_ranker.py": {
+      "size": 10830,
+      "sha256": "97d843756d15f753d3582a47ff478bd158e6d6e51715c6e5bd2a9a7e92a9d1bb"
+    },
+    "bspforge/operation_constraints.py": {
+      "size": 7664,
+      "sha256": "7c8bc32ca8db223fa108b1d829d98ed3eb86703087c2d95bc2d7da1a13f66d8f"
+    },
+    "bspforge/operation_dataset.py": {
+      "size": 11705,
+      "sha256": "a05f5764150c1807b1f653d0847223e20cb9d7a37476f97134b1004d84908cca"
+    },
+    "bspforge/operation_encoder.py": {
+      "size": 2133,
+      "sha256": "6b261dd71328c52714a8b2a6f26582b43c527d86d9c62f4f100f539fbf0dc2b3"
+    },
+    "bspforge/operation_ranking.py": {
+      "size": 15657,
+      "sha256": "90b1a82b807dd9fffa36d67813106dd87e2c6d0b47f6cb97461e1f6914931d72"
+    },
+    "bspforge/os_backend/__init__.py": {
+      "size": 204,
+      "sha256": "e71109787ff21eaa700dc82248919fffb7df4f612f54f94be41db4ee6670113b"
+    },
+    "bspforge/os_backend/artifact_verifier.py": {
+      "size": 5040,
+      "sha256": "ff59aaeaaf1c2225f12f11553773cf751580b18fddf99ebae7e57e9a0b186ea5"
+    },
+    "bspforge/os_backend/base.py": {
+      "size": 616,
+      "sha256": "620e373c82be8b8c51b6f90f29c385e3dd89cff07106a20a0b5fd21c81a16ec7"
+    },
+    "bspforge/os_backend/native_binding.py": {
+      "size": 5264,
+      "sha256": "24247f372e33aad945d7d9a8d6efecf495e9cd926332f9e8dafef243edba6cce"
+    },
+    "bspforge/os_backend/plan_binding.py": {
+      "size": 4582,
+      "sha256": "bdc9a7a91d0bbb451fbf2143db9016a9e66eedab6213b9f8b10210151bb2cf3f"
+    },
+    "bspforge/os_backend/profiles.py": {
+      "size": 2508,
+      "sha256": "e8c6d2b4d2a5bd22d320622b3e8594948b6d91c856fe555521f16f8354124b15"
+    },
+    "bspforge/os_backend/rtthread.py": {
+      "size": 35538,
+      "sha256": "8f77f260177b2952a3523643a223a190944987c72622a9e2b398469ac191419d"
+    },
+    "bspforge/os_backend/rtthread_binding.py": {
+      "size": 18780,
+      "sha256": "dbbae2fa1c253ca27b7f2ae6fb45b078f577413853b7bb7e82545c535f63b46d"
+    },
+    "bspforge/os_backend/rtthread_device.py": {
+      "size": 20334,
+      "sha256": "81110c662ef156769f7e87cb207a3a5418ce09d298dc6505eebc2c9aa6cf6054"
+    },
+    "bspforge/os_backend/rtthread_validation.py": {
+      "size": 25509,
+      "sha256": "25cf5b1550a0f8cc0f3de9477c524e55efe34414d9fcb971ebadb0c6d8dbc2c0"
+    },
+    "bspforge/os_backend/zephyr.py": {
+      "size": 19668,
+      "sha256": "51761cacff222d0b4b57b1e0c75422b43313dfdc09074928196508980fef945c"
+    },
+    "bspforge/os_backend/zephyr_binding.py": {
+      "size": 20618,
+      "sha256": "208c05ffaa7a6a50c4f9637d389435a2fe69f212824df8e5385b8be6108d91f5"
+    },
+    "bspforge/os_backend/zephyr_device.py": {
+      "size": 21128,
+      "sha256": "d779fd317d61bc638fb010c66da43fd945131fbf004baae37810731b74745cee"
+    },
+    "bspforge/os_backend/zephyr_validation.py": {
+      "size": 29581,
+      "sha256": "ac2900bf34fd51286e9b88ec874ccd5da80030d75f07145a32e015b681f046dd"
+    },
+    "bspforge/pipeline.py": {
+      "size": 18272,
+      "sha256": "88def0af0a87ec79bf9729a87a9a02280be6833da97be21e790e6007775ad1de"
+    },
+    "bspforge/pretrained_effect_ranker.py": {
+      "size": 6937,
+      "sha256": "48a0048710af322b12e16b366603c1e24da94e2a7d3084242878e04ffd6be65f"
+    },
+    "bspforge/ranking_dataset.py": {
+      "size": 7797,
+      "sha256": "75feef05c3c9feb09b4dd5ce3775bf1aee3989918671cfd81992b326f8cee728"
+    },
+    "bspforge/ranking_diagnostics.py": {
+      "size": 5157,
+      "sha256": "5ca4b6c21c793ab28adf3d2291367f0e4821484726862f2f033ce3bdda3ad6c4"
+    },
+    "bspforge/sdk_ingestor/__init__.py": {
+      "size": 117,
+      "sha256": "18711d145a6591ee1dcc2a89eef7aa288506b5b57503d0ebae8dc998b35d7c3d"
+    },
+    "bspforge/sdk_ingestor/frontends.py": {
+      "size": 10749,
+      "sha256": "2cd10713e2fc9448ef632d567b23e4f059f6fe77bcf78be6f449f25b0b8a7413"
+    },
+    "bspforge/sdk_ingestor/ingestor.py": {
+      "size": 13846,
+      "sha256": "83d387815a362eb062cbf2d970d08763a8b6210059c4210343a112916a1b3fae"
+    },
+    "bspforge/semantic_adapter.py": {
+      "size": 6474,
+      "sha256": "34cfccc5e7fe6cd00ca9b5b321d67de49afe8be7fa675aa8da90692daba92c74"
+    },
+    "bspforge/semantic_feasibility.py": {
+      "size": 3878,
+      "sha256": "bfe6d2bfefad2e8620c94629ac9bd32420ed486de94f688c750a27eb04d100b4"
+    },
+    "bspforge/semantic_resolver/__init__.py": {
+      "size": 72,
+      "sha256": "fd66de473dc4bcaae5768fce3cc87ed632a3d9d424189cb23e684fdbcab2dec3"
+    },
+    "bspforge/semantic_resolver/learning.py": {
+      "size": 5007,
+      "sha256": "2942dff7a255164d5c70d72f5abdff32de812d709234a9199f7ace1a1ac3915f"
+    },
+    "bspforge/semantic_resolver/resolver.py": {
+      "size": 27676,
+      "sha256": "58e6f5bfeeabb972d6c480affc16fa7d80af48675d55700565405184072d39ef"
+    },
+    "bspforge/source_syntax.py": {
+      "size": 9915,
+      "sha256": "ad705f1c360459ff7aa57dfa0f5473844cf8720956922ad13c9eb5bc739324ef"
+    },
+    "bspforge/structured_retrieval.py": {
+      "size": 30908,
+      "sha256": "ad5d6dd9c621ab102da6892062cee5c0830f6bfb4ccb573e9b278b02d069d783"
+    },
+    "docs/adaptive-gate-human-truth-rerun-20260828.md": {
+      "size": 7920,
+      "sha256": "07e7bd0560277e58a55f94c980ffeaafb921a02c52ce992fd7bf5034def50ed6"
+    },
+    "docs/architecture.md": {
+      "size": 21724,
+      "sha256": "1524cae189dda55d2436d50fe4a7c01d9805f626792422d3d728a35c2f996957"
+    },
+    "docs/baseline-results.md": {
+      "size": 3656,
+      "sha256": "6fd326ac580e5d885efff08846b9323ecede76f4c6d2bd0c833548fcf75f969e"
+    },
+    "docs/board-six-combination-operation-comparison.md": {
+      "size": 24698,
+      "sha256": "d3a095704c44ae27345186941acfc0e3fd6de86ea9ad8b4a68e301aa3e35329c"
+    },
+    "docs/core-method-v1.0.md": {
+      "size": 60340,
+      "sha256": "ebf8af6c59ce605a2a4c44884c9aaa46ac84c15d23a9c1c86f0b1d6aa9ee8b4d"
+    },
+    "docs/cross-operation-effect-contrast-error-report-v0.4.md": {
+      "size": 26264,
+      "sha256": "c51933a2e6ebecc825ceb72b0fa54a6a39e5ba2b3e79101e8c371913d3a4ecc7"
+    },
+    "docs/cross-operation-effect-contrast-v0.4.md": {
+      "size": 5648,
+      "sha256": "2a1ff12d12df59acf88ea2286d0c601f45b256e6bcc84ce76ece204c01fa7e69"
+    },
+    "docs/deterministic-ranking-low-score-diagnostics-v1.2.md": {
+      "size": 5829,
+      "sha256": "7282696417f6bb316bcdf724020a955f38bf14bbdb82d135b49c092f50b5665b"
+    },
+    "docs/deterministic-selective-acceptance-v1.1.md": {
+      "size": 6762,
+      "sha256": "d608cea163b69a66fe66acb584fd78d5d670b29924b771e7de5b1f3de3981217"
+    },
+    "docs/effect-slice-multiview-error-report-v0.3.md": {
+      "size": 25761,
+      "sha256": "6feab3b6acc31d0fd5771c2786899514f97aa02d3b640245ecc81a7fcc85e750"
+    },
+    "docs/effect-slice-multiview-ranking-v0.3.md": {
+      "size": 18291,
+      "sha256": "4799387e5b4f6992d0348bbbab4ec6754a95af494f4682c3b5a4eff3837b077c"
+    },
+    "docs/experiment-scale-and-simulation-plan.md": {
+      "size": 6175,
+      "sha256": "e7dc08aed777bf256a36ee9b37f13103361ee3a76f771b221877033d6206b2d3"
+    },
+    "docs/extending.md": {
+      "size": 2233,
+      "sha256": "52aaebdac1bc700b59a2993d9106b89027abf085fdcee2f4ce3bcd59c15e101b"
+    },
+    "docs/field-aware-structured-ranking-v0.9.md": {
+      "size": 13726,
+      "sha256": "00dc5483ceeed80bf439b54dfb0f636d12d53eda6b563d207a4d9bf8f13285d5"
+    },
+    "docs/frozen-lambdamart-resolver-k210-v2.1.md": {
+      "size": 13866,
+      "sha256": "6c65754c2953c7a9d2d01eb1c09afd9d28b73c432455a132939835c9cb642940"
+    },
+    "docs/hardware-effect-graph-pu-error-report-v0.1.md": {
+      "size": 44395,
+      "sha256": "d69ed2f173609b1501df3d1bfda6be0ff8360db783c4c6d554cebc4025e8c1f7"
+    },
+    "docs/hardware-effect-graph-pu-ranking-v0.1.md": {
+      "size": 32181,
+      "sha256": "84e825ddbe06402ed716353dc0bbff4ddb86bbaa211779975f064dd8fb9dcd11"
+    },
+    "docs/hardware-validation.md": {
+      "size": 25189,
+      "sha256": "ca6ede9ed1df553a7fa043a900bfa6a7dcacc21c1c20a5051df7dafeb0d25fa4"
+    },
+    "docs/ir-schema.md": {
+      "size": 2407,
+      "sha256": "9b13e431636475c5ad3120194421da042f8c10013b26980cdb90aaf4852a12a7"
+    },
+    "docs/ir-semantic-reranking-v0.8.md": {
+      "size": 13614,
+      "sha256": "c591aa6103a19da91e4460633526d259665bb3e6ce286ebc22d3cd2d3ac671d1"
+    },
+    "docs/lambdamart-h03-training-optimization-v0.5.md": {
+      "size": 12168,
+      "sha256": "e3b13b5553fc6412fe5278314c5d976a20a9015868df153a5da70d81663516ed"
+    },
+    "docs/lambdamart-method-and-external-board-evaluation-v0.6.md": {
+      "size": 22024,
+      "sha256": "860cd8261df742ea56fbef5aa87bebd05b6b92f8ad975207f294e1966aeccb88"
+    },
+    "docs/matrix-results.md": {
+      "size": 6753,
+      "sha256": "c3299e90ee8d0ab326a51d6b017eeb46db75e95ce53bac6e70fcebf966300484"
+    },
+    "docs/operation-ranking-v0.7.md": {
+      "size": 13104,
+      "sha256": "6f645de30df82c9cce5817a2aac2c74143ee40731f3239207dd3b12feb191560"
+    },
+    "docs/pretrained-code-effect-error-report-v0.2.md": {
+      "size": 34267,
+      "sha256": "139e21e65790d1b6e1e7c2c7d121d7e1467f1400380e1d862da36b8dbf6781e0"
+    },
+    "docs/pretrained-code-effect-ranking-v0.2.md": {
+      "size": 16019,
+      "sha256": "cf422512b5c2c75dff6cdd35e610a9940104999b7725249fb7e35f0811b493ae"
+    },
+    "docs/psoc-e84-lambdamart-board-validation-v2.4.md": {
+      "size": 6681,
+      "sha256": "998c380e2d7aa145fd896c698746b3fcddd633f83aa4cb1ffca4ba269126d0b6"
+    },
+    "docs/related-task-metric-reference-v0.4.md": {
+      "size": 6671,
+      "sha256": "90ac95a2b50aa87dfe4e9b459308351af80daa25ddc469beb77c593e0245c437"
+    },
+    "docs/related-work-citation-and-ip-risk-v0.9.md": {
+      "size": 11490,
+      "sha256": "2478d11b0add4271b20759bf857aedf52664ea9a4c3a32bb930f6a467a40b639"
+    },
+    "docs/reproduction.md": {
+      "size": 3248,
+      "sha256": "37c7ecb9b35eb3f02e394ac3b5d25a0c8189528da5b5042db07cfcaca7e10c68"
+    },
+    "docs/research-status.md": {
+      "size": 82253,
+      "sha256": "2970eef15c3cf2457da3c5d6f0a958ff2f0934d6ff97d568c57d20464cac131c"
+    },
+    "docs/semantic-ranking.md": {
+      "size": 4605,
+      "sha256": "fcc05c4f8aeea647efd014ed6f6ed3d0681e8ace29100b8c0fdeef38fa26478a"
+    },
+    "docs/stm32f103-lambdamart-board-validation-v2.5.md": {
+      "size": 7330,
+      "sha256": "85a2ae5638e8b9005f479d62fc5a86fb392230c37ca407f9a3eedc8e95350faa"
+    },
+    "environment.yml": {
+      "size": 172,
+      "sha256": "becb6c45e7916d47685d46832ba34fe10db8747c01996ca2c65d63f878f6ecd0"
+    },
+    "examples/k210-rtthread/project-semantic.json": {
+      "size": 1544,
+      "sha256": "38622e4d1e17746aad75237c4451425eefbcb0b1a92cb71ed4efab7683ac5deb"
+    },
+    "examples/k210-rtthread/project.json": {
+      "size": 1939,
+      "sha256": "2aec511bf78409a152375c4582dcc80a0befebeb91253499430ca1f78d4515f5"
+    },
+    "examples/k210-zephyr/project.json": {
+      "size": 1663,
+      "sha256": "e128279b0b6ff7496767eda97bde3cd20449042f0266ac88e9ddb1f397cec53a"
+    },
+    "examples/psoc-e84-rtthread/project.json": {
+      "size": 1979,
+      "sha256": "cb8d913e34fd1d2353491d2a06f3d15f9ced2458e18e8336e819a0b6ce6a2da1"
+    },
+    "examples/psoc-e84-zephyr/project.json": {
+      "size": 2358,
+      "sha256": "deb4917782d233084898308ad5c1d8ff75d13565500309c8278f1b49e79f1dd2"
+    },
+    "examples/simulation-zephyr-native/project.json": {
+      "size": 1032,
+      "sha256": "48587cb001f43cdf90f45078711ca7d13158197c0b87b6eb0404e7e22ac9ac28"
+    },
+    "examples/stm32f103-rtthread/project.json": {
+      "size": 1883,
+      "sha256": "128f501fa9cff754f8579160fbac0b65f4a2ca4a3d5bdf6f65fc3c3c3bab0c6b"
+    },
+    "examples/stm32f103-zephyr/project.json": {
+      "size": 2011,
+      "sha256": "4a02681ef5d7fca9ae94572de81c33fc598f91a555833061a660d69d377c2307"
+    },
+    "experiments/generated/adaptive-field-ranker-training-v1.json": {
+      "size": 25403,
+      "sha256": "ac20d7830dc8c920fa499c1a6dcd8091be89c5408fdbf216ebf345deb949101c"
+    },
+    "experiments/generated/corpus-ingest-report.json": {
+      "size": 5315,
+      "sha256": "146735b88fe891bc918903c9a065c2b5c369dd56483ab5a00950cc7a26970dde"
+    },
+    "experiments/generated/ground-truth-audit.json": {
+      "size": 108929,
+      "sha256": "f949d2df8299a104931684eb3af401b70229aaf9ff1be18e1de6eff7cbd3b99e"
+    },
+    "experiments/generated/operation-corpus-report.json": {
+      "size": 15948,
+      "sha256": "8e1200741425c118d5ca9910e9fbb5470d2e491efca0316d894a77b02c1288c2"
+    },
+    "experiments/generated/operation-encoder-training.json": {
+      "size": 2694,
+      "sha256": "c8d5d6d1ac3a7341cf4698b0ff7cbc88d57948e16eb1cb9e8da9b76bc4d49bbd"
+    },
+    "experiments/generated/operation-query-adapter-training.json": {
+      "size": 7527,
+      "sha256": "43047d328a466a7131858b62f90f7b3670803a3313c80123d931e9847f57ca72"
+    },
+    "experiments/generated/operation-ranking-results-adapter-cascade-k10.json": {
+      "size": 15352,
+      "sha256": "90e8031cbd4d4286cbc7f7b12792174165235b6d7a2c0d0d39505b73646f1753"
+    },
+    "experiments/generated/operation-ranking-results-adapter-ensemble.json": {
+      "size": 15268,
+      "sha256": "a3c0e1e0213693b64c5e110ac020995e33dcac1b6a6a253b7ee5cb42a4f868f9"
+    },
+    "experiments/generated/operation-ranking-results-embedded.json": {
+      "size": 684720,
+      "sha256": "5f64bad71a13aed6149794ce6b6def916b4ba90b0fb0bec6ad7b2663f5c1daf2"
+    },
+    "experiments/generated/operation-ranking-results.json": {
+      "size": 339081,
+      "sha256": "79e680e52e30d2619985131951e4df05a586859b052c18dc84eb085cd8a32198"
+    },
+    "experiments/generated/operation-reranker-training.json": {
+      "size": 2665,
+      "sha256": "747600f09974881f5bf8d11e7d507fc4801442b35920015fb03e47d4033694b3"
+    },
+    "experiments/generated/semantic-ranking-cv.json": {
+      "size": 433526,
+      "sha256": "864d05796e8ce2e0ac1beb8b41bc89762f463eb8d0732256a20101fac17f1454"
+    },
+    "experiments/generated/semantic-ranking-dataset.json": {
+      "size": 4372805,
+      "sha256": "6ee43dc311032470719ccf24a03787530c620bad4b8d55adad1700cb3cbe2394"
+    },
+    "experiments/generated/zephyr-native-simulation.json": {
+      "size": 81754,
+      "sha256": "fa34646d00c07527b213b137424768c9b17193d78c69665fb94045fd4f5abf1c"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-rtthread-full-10rounds.json": {
+      "size": 63196,
+      "sha256": "b5a7a2196ffa67245665228716730381647212d1f44bcdc985a2583bfabc850e"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-full-10rounds.json": {
+      "size": 56081,
+      "sha256": "f07d10e63fe8f69fe7d1acd59c3025b4ddf4fe8f96a5db8875dcd46da24cf326"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-native-artifact-verification.json": {
+      "size": 2460,
+      "sha256": "e3928f79a0fa28ebf8f97049fd3623de38896d5dd71b9bdb0c37ad8a4fc712fa"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-native-device-model.json": {
+      "size": 2980,
+      "sha256": "37b25a18f97cc532aa027eb5c43f373d5880115d80f26457fd66e6a1275b5338"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.1/k210-zephyr-native-method-evaluation.json": {
+      "size": 8779,
+      "sha256": "81199f7f1b64533f25d17ed026415fc85b5b4f073b54ef4159fd21f82dce4595"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/README.md": {
+      "size": 1822,
+      "sha256": "0957eacdb37e6bca936027b7b307404f2e0d8edc4d8f3f9c1247cea7a50ee830"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/diagnostics/rtthread-interrupt-reset-failure.json": {
+      "size": 4614,
+      "sha256": "44779ec0882aaf8376ce38bdb7734f9db9d4d430c5e42f8631b4c95bed92b15e"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/diagnostics/rtthread-uart-transient-89of90.json": {
+      "size": 63415,
+      "sha256": "ceb75e4943298f0a9673454d2097a1b4a0a59ad96f3cc68f19250e83a7dbf366"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/diagnostics/zephyr-fpioa-access-width-diagnostic.json": {
+      "size": 6332,
+      "sha256": "fcb0e0c07291dd7daf9b2930001cf0887fcd0eb0a942ae57e42b2a6aae6ca14f"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/diagnostics/zephyr-fpioa-sdk-assertion.json": {
+      "size": 2763,
+      "sha256": "082c375bfa963e3edf200500f63c425a3c99a0c4c92bb9e32594a92cb520d454"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/rtthread-artifact-verification.json": {
+      "size": 2557,
+      "sha256": "ef45dc0633443388682752e61a4fbae1789caa53cb6173ca3ecdc1ae4caa5f2c"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/rtthread-canonical-binding-plan.json": {
+      "size": 64217,
+      "sha256": "bbaeee1ac33e428fd947804dd900af651ffec8cad3ec3f1750a3ba4b97f21951"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/rtthread-compile-feedback.json": {
+      "size": 9303,
+      "sha256": "b9de5de7738128870db920f26db153e7e5f97b49a5e6339be1692da21cc632d6"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/rtthread-final-10rounds.json": {
+      "size": 64043,
+      "sha256": "beea6330368f12d6f012f021cc1b219b51bcb30c3e1583931fcfdab32f7b17e8"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/rtthread-functional-bindings.json": {
+      "size": 58077,
+      "sha256": "8936557a165ccf58d8549f8176c219d06d5ce88c507326ba652e7a3a73de3b4f"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/zephyr-artifact-verification.json": {
+      "size": 2460,
+      "sha256": "1f7dd7bf44a7da2a20cfd2fef05ca22752ab1d6abbc442983001f1b34200b053"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/zephyr-canonical-binding-plan.json": {
+      "size": 64217,
+      "sha256": "ee72cae36abc202d54ad478748789a3faacba6cae468e912bd758054d69705da"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/zephyr-compile-feedback.json": {
+      "size": 9309,
+      "sha256": "689e5e363a3975629a4dd1478971772749a9eb5143ac7e2e3cd5a29711198334"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/zephyr-final-10rounds.json": {
+      "size": 56218,
+      "sha256": "f075dc63f388e4e007d051b981b1c6351df6f1a8fdd86e97cf0db0526ad24243"
+    },
+    "experiments/hardware-results/k210-operation-lambdamart-v2.2/zephyr-functional-bindings.json": {
+      "size": 57773,
+      "sha256": "a2a5e5f0fa9d1a74fbb6eb60fe04e7cf649e70057c411c975e7a003bca5f08fe"
+    },
+    "experiments/hardware-results/psoc-e84-operation-lambdamart-v2.4/rtthread-10-rounds.json": {
+      "size": 64420,
+      "sha256": "e6a5286f5d8d41291a118e49774c778e4c12f724e6c1abb2072b7b564d861086"
+    },
+    "experiments/hardware-results/psoc-e84-operation-lambdamart-v2.4/rtthread-uart5-rewire-20260906.json": {
+      "size": 17386,
+      "sha256": "7d99aef49852da02c908da7845d60fe790ac68f0ac159cc00f01bbd1c0816729"
+    },
+    "experiments/hardware-results/psoc-e84-operation-lambdamart-v2.4/zephyr-10-rounds.json": {
+      "size": 56529,
+      "sha256": "4a8a0470be2d84d78437eddd8225e0c90369e9f473f963a1d73723aa5effce3e"
+    },
+    "experiments/hardware-results/psoc-e84-operation-lambdamart-v2.4/zephyr-uart5-rewire-20260906.json": {
+      "size": 12854,
+      "sha256": "d32afecb239b172abd772cff3bbc644671e3fb044e41883d7071150c674392c0"
+    },
+    "experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/README.md": {
+      "size": 1194,
+      "sha256": "9e746c86d652433b44e05a40d05b29e1625e6e78db5df7ebcd7eb34a667c215d"
+    },
+    "experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/rtthread-artifact-verification.json": {
+      "size": 1953,
+      "sha256": "91f159498bc2c81ec95b96be42510b9212fec01c7bcbd1e6cfbcf91f140a1427"
+    },
+    "experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/rtthread-canonical-binding-plan.json": {
+      "size": 67889,
+      "sha256": "dd379b95b9a107258313635dd638cab143dcab04a2f5c1bee723ed133e5838c6"
+    },
+    "experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/rtthread-compile-feedback.json": {
+      "size": 8176,
+      "sha256": "6b4eec3c45788c79a52ac970d5e5586f57c27a91a50e964641f16bd1c4f22624"
+    },
+    "experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/rtthread-final-10rounds.json": {
+      "size": 61682,
+      "sha256": "8f182d8095d24a727cc2d58f477ca12ee93955786b6d067fcbc5f521a690a61e"
+    },
+    "experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/rtthread-functional-bindings.json": {
+      "size": 22541,
+      "sha256": "a756f79f5fee81ecfed5fad622199b2801cab5d7d41b0c5999b2aa2ccb27eb5f"
+    },
+    "experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/zephyr-artifact-verification.json": {
+      "size": 1849,
+      "sha256": "9890cf16fa879bc5f65dacf20e7f664fee86663d4e709f63e85d6a75eba9647d"
+    },
+    "experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/zephyr-canonical-binding-plan.json": {
+      "size": 67889,
+      "sha256": "b84d582f8144f3f2f9d2bc1ed9a37ed57c79c855ad1729cd8eb66f498bcc701b"
+    },
+    "experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/zephyr-compile-feedback.json": {
+      "size": 8176,
+      "sha256": "4b2e9eaf65390e74d0adf1028fbe840ffd8ee26d668eb37ad364a9a26b50a0d7"
+    },
+    "experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/zephyr-final-10rounds-retry-aware.json": {
+      "size": 79393,
+      "sha256": "0424831671d5ab7ef2fed8c4a28520deaf0dea8f0e4b3604f727cf5712bf5651"
+    },
+    "experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/zephyr-functional-bindings.json": {
+      "size": 21220,
+      "sha256": "bce13dbce6424e9b69a8e83cb019127d259cd9673a7e985e933c13e9511cafcd"
+    },
+    "experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/zephyr-no-retry-run-1.json": {
+      "size": 56256,
+      "sha256": "d26a8ada74c48679e299244988d06683d2663d82177951eca5343136bfb600f1"
+    },
+    "experiments/hardware-results/stm32f103-operation-lambdamart-v2.5/zephyr-no-retry-run-2.json": {
+      "size": 55913,
+      "sha256": "ba1ae532db15f844af7c2d09a0a36782dfe52bf1587d762de8424676468d1584"
+    },
+    "experiments/k210-ground-truth.json": {
+      "size": 2525,
+      "sha256": "882769beb17e5e2f87fcd7bd51c3301fc1be8701565a72f1e82313e5b74b9c54"
+    },
+    "experiments/k210-zephyr-ground-truth.json": {
+      "size": 2816,
+      "sha256": "59c040bb7194bdd8f2e4ac9c7ead1601e6f6c83c46b58673e6661cd3792c8544"
+    },
+    "experiments/operation-ranking/development-split.json": {
+      "size": 315,
+      "sha256": "0ad73ecc700c4c105df3f8ab8f859257c2822a4b09f72d770c9f40dce3c060d5"
+    },
+    "experiments/operation-ranking/external-test-target-profiles.json": {
+      "size": 342,
+      "sha256": "3a36dabc0a1e7ff138c0cb5105b37969c6cbb46e6eaba956e6f090523f16f9d7"
+    },
+    "experiments/operation-ranking/external-test-truth/README.md": {
+      "size": 2316,
+      "sha256": "ed8bacc676e2d172580d8184eebbc5f3a004617c05f7fe402db870ec9adaeed7"
+    },
+    "experiments/operation-ranking/external-test-truth/registry.json": {
+      "size": 3889,
+      "sha256": "a5e7565bc03a66bd9193a6d31350da44deddd9fbd9922419df46f6f945fc8c01"
+    },
+    "experiments/operation-ranking/external-test-truth/source/SHA256SUMS.txt": {
+      "size": 1853,
+      "sha256": "d53ac06f940f77a4e47f87dd82edb2a10d34da7aefc1310048c4f55047e27008"
+    },
+    "experiments/operation-ranking/external-test-truth/source/equivalence-adjudication-20260902.json": {
+      "size": 3201,
+      "sha256": "ba087a5e108736b9a65963bf137dda69d8b1972472a7061f2ade52ab2e462dd0"
+    },
+    "experiments/operation-ranking/external-test-truth/source/evaluation-manifest.json": {
+      "size": 1645,
+      "sha256": "65d0984062bd0d6c7ddccfc144323b6b2707bc037fce52bdfd7805c86e937e13"
+    },
+    "experiments/operation-ranking/external-test-truth/source/kendryte-k210-standalone-sdk-0.5.6/truth-audit-v1-final.json": {
+      "size": 62323,
+      "sha256": "ac2c0b2c934b88881b01312ffa1db7e45abbafb4dd165eb5ff86d12db337a5fe"
+    },
+    "experiments/operation-ranking/external-test-truth/source/psoc-e84-edgi-talk-sdk/truth-audit-v1-final.json": {
+      "size": 87590,
+      "sha256": "3825add9dc934e72e77927ac1b2c4e1b457acc341e6b617eddf2a83c596db5e7"
+    },
+    "experiments/operation-ranking/external-test-truth/source/stm32cube-f1/truth-audit-v1-final.json": {
+      "size": 78129,
+      "sha256": "e3b49efd3fab69016913d8e2ccd5bcd750c8dff46e887d05b31c13991d479d91"
+    },
+    "experiments/operation-ranking/external-test-truth/source/validation.json": {
+      "size": 769,
+      "sha256": "7e934a16db416baf172737fc18b494b46917a1d3adbabf5b76d22273f0248886"
+    },
+    "experiments/operation-ranking/k210-operations.json": {
+      "size": 6390,
+      "sha256": "8dfab058f4f7733d64b2adcb92306e6f8f68a9dca30f039ff8dbef3fccad1623"
+    },
+    "experiments/operation-ranking/manifest.json": {
+      "size": 8289,
+      "sha256": "cfe0a48863672792ff76e23f37f04be857687f6738d3141d398e04aa4090bf6e"
+    },
+    "experiments/operation-ranking/psoc-e84-operations.json": {
+      "size": 6766,
+      "sha256": "63c015c68035c675fc285bae8c9aaa4068ba4aaa3100be23943a47dc85b21fd7"
+    },
+    "experiments/operation-ranking/results-cross-operation-coherence-ablations-h02-v0.4.json": {
+      "size": 1704628,
+      "sha256": "c1853047621b30164d61a8cd698263c8273af51a09728d17011d8954141dcdc1"
+    },
+    "experiments/operation-ranking/results-cross-operation-effect-contrast-h02-v0.4-errors.json": {
+      "size": 173857,
+      "sha256": "28d8392c97d4779c6ea8ca4404e1fbe4b7822711aad27f7f865d6a12150b23ba"
+    },
+    "experiments/operation-ranking/results-cross-operation-ensemble-h02-v0.4.json": {
+      "size": 848135,
+      "sha256": "4be7da91f53aebe2490862d5e6d308bef7c9034aa7b139d625684a4c9c0d8f0b"
+    },
+    "experiments/operation-ranking/results-deterministic-no-training-v1.2-all-truth-summary.json": {
+      "size": 27843,
+      "sha256": "c84f4ba754de1788dbb3bd0e6a6d9f5c00856a20678fca7a3104fb2cdf5ffe11"
+    },
+    "experiments/operation-ranking/results-deterministic-no-training-v1.2-automatic-all.json": {
+      "size": 969025,
+      "sha256": "69d363bcffbc08efbf4cbca110743f950a1ae3482283e5e4ee72b11e9653509d"
+    },
+    "experiments/operation-ranking/results-deterministic-no-training-v1.2-external-diagnostic.json": {
+      "size": 105641,
+      "sha256": "67139dea98a57d326a4e7aa05e660e2fd7afb798402bceff8c7d25f76a942351"
+    },
+    "experiments/operation-ranking/results-deterministic-no-training-v1.2-h01-all.json": {
+      "size": 699016,
+      "sha256": "c0bbede7b84bdb3e461413d0e7f6461d43fd12b6e4f5f276a05202f2b881be70"
+    },
+    "experiments/operation-ranking/results-deterministic-no-training-v1.2-h02-all.json": {
+      "size": 706096,
+      "sha256": "429e907ca82c5cf0cda24490bb3829f279b4cd46bbcf815ebdcb344a6334c4a3"
+    },
+    "experiments/operation-ranking/results-external-board-h03-frozen-lambdamart-v1.json": {
+      "size": 659836,
+      "sha256": "0ccb6677047b46e3e43f167ff4bf4d44156ea0b54c8fec4b07826ab376ae61c8"
+    },
+    "experiments/operation-ranking/results-hardware-effect-pu-h02-v0.1-errors.json": {
+      "size": 321421,
+      "sha256": "6338e4d61b7d58dd0d444a425f00731357eb5e13064acb575968edc9472d4f33"
+    },
+    "experiments/operation-ranking/results-hardware-effect-pu-h02-v0.1.json": {
+      "size": 2734220,
+      "sha256": "c4994cd4fbd5b2346e06aebf0b2f65ff0046a0455f0523e6047cb383b7fabb40"
+    },
+    "experiments/operation-ranking/results-human-truth-rerun-20260828-summary.json": {
+      "size": 8148,
+      "sha256": "0d3be7f7bf93d3602e69852ded7a8aa39e1b9169247635376d942a28a28e871e"
+    },
+    "experiments/operation-ranking/results-joint-pair-h02-v0.3.json": {
+      "size": 3041477,
+      "sha256": "34c45efd10e772ac51aa0a2df177e13a2947889f14d854286b4b333af74f4471"
+    },
+    "experiments/operation-ranking/results-joint-shortlist-h02-v0.3.json": {
+      "size": 2048,
+      "sha256": "d7ce96f1b179b88906787c3a8aea33a3e62226321db603519ba102e183d1b208"
+    },
+    "experiments/operation-ranking/results-k210-runtime-label-free-lambdamart-v2.1.json": {
+      "size": 15177,
+      "sha256": "2d4cf16c7bb8f502f33bcc468f7d8be844329eb6ace5dd0a21212515c7cd097d"
+    },
+    "experiments/operation-ranking/results-lambdamart-optimization-h03-v0.5-seed20260917.json": {
+      "size": 5299122,
+      "sha256": "633b57b854190a1b4ce7ff127eee65bd258ddaa59c4ddf5c4e4947610ab0bf1a"
+    },
+    "experiments/operation-ranking/results-lambdamart-optimization-h03-v0.5-seed20260929.json": {
+      "size": 5299124,
+      "sha256": "0316fa6f28144236d7e00b4c0ee928c3e3af50a906927a813bea7fea4c972fd3"
+    },
+    "experiments/operation-ranking/results-lambdamart-optimization-h03-v0.5-summary.json": {
+      "size": 106196,
+      "sha256": "ef4c4f4de6194d85a0babe59759942d7857073bdd38945ea803482158424eea6"
+    },
+    "experiments/operation-ranking/results-lambdamart-optimization-h03-v0.5.json": {
+      "size": 5299758,
+      "sha256": "64ad564dcf378b92b04956c2d680dea07196f682776cfde183a960bec94c0ee7"
+    },
+    "experiments/operation-ranking/results-multiview-channel-ablations-h02-v0.3.json": {
+      "size": 1707587,
+      "sha256": "26fb7b2840966711fb0b6294305d5ab5b824ed2a69f71ddb114655715a1df3fa"
+    },
+    "experiments/operation-ranking/results-multiview-coherence-lambdamart-h02-v0.4.json": {
+      "size": 3292887,
+      "sha256": "17b2ed9c2fd452889c24336a7ac101acd703235bc17564e92b33df8fda58c193"
+    },
+    "experiments/operation-ranking/results-multiview-contrast-lambdamart-h02-v0.4.json": {
+      "size": 3293926,
+      "sha256": "7c97900122a76fc80b6444aaee841080f1c5da32f357de7d4350b813e8d7065b"
+    },
+    "experiments/operation-ranking/results-multiview-effect-contrast-lambdamart-h02-v0.4.json": {
+      "size": 3292697,
+      "sha256": "56e698344d443241138ad67891f826f4c75c75a28b3a0a1b8a74b6c3d2ebaa5c"
+    },
+    "experiments/operation-ranking/results-multiview-effect-h02-v0.3.json": {
+      "size": 3581331,
+      "sha256": "dc102c52c6edb57061825a49a8e4e4f257a541f53a6ed5e15285cefec4310a0a"
+    },
+    "experiments/operation-ranking/results-multiview-lambdamart-h02-v0.3-errors.json": {
+      "size": 168425,
+      "sha256": "a4e340a89eab88c089c908643162ba8c6cc509d318c52cb5e276445ed4c06781"
+    },
+    "experiments/operation-ranking/results-multiview-lambdamart-h02-v0.3-tuned.json": {
+      "size": 3292598,
+      "sha256": "9ffd4fa05541f72c7375b91a8ccbdefb42342cad5350508db6679e2b6c144c25"
+    },
+    "experiments/operation-ranking/results-multiview-lambdamart-h02-v0.3.json": {
+      "size": 1910973,
+      "sha256": "661e5a9bc6697051714f03dea3ba367bd161e239c6160d15b1f03e13da0fe3d8"
+    },
+    "experiments/operation-ranking/results-multiview-lambdamart-h03-v0.3.json": {
+      "size": 3381685,
+      "sha256": "483c098e5f346435d7bc590a0da7b5378f329d86cb70e071c43c4653adb13ae2"
+    },
+    "experiments/operation-ranking/results-pretrained-effect-h02-v0.2-errors.json": {
+      "size": 247373,
+      "sha256": "f5d7810cdccae1a5ee25b31ab4668384aa47def9b4cee673df53ee5071686429"
+    },
+    "experiments/operation-ranking/results-pretrained-effect-h02-v0.2.json": {
+      "size": 5471305,
+      "sha256": "3027678becba2f41f651832c39126498c5c0344fca0c254d77c86c2085652123"
+    },
+    "experiments/operation-ranking/results-pretrained-effect-h03-v0.2.json": {
+      "size": 5538190,
+      "sha256": "06f70c32a3b2ec529e451d163f64b96e20bfea2f4eb7a3ac1accd6eca76f133b"
+    },
+    "experiments/operation-ranking/results-structural-prior-feasible-lambdamart-h03-eq-r1-v2.1.json": {
+      "size": 1738086,
+      "sha256": "3e84cf745595ad059d5863500b879371fa31d930f06eef5d74b2756e484af700"
+    },
+    "experiments/operation-ranking/results-structural-prior-feasible-lambdamart-h03-eq-r1-v2.json": {
+      "size": 1737849,
+      "sha256": "7b99aae8d43459dd45d2da4ee1e2e12f4f7535c357f7d8b9378c0d7843b62119"
+    },
+    "experiments/operation-ranking/results-structural-prior-lambdamart-h03-eq-r1-v1.1.json": {
+      "size": 1737380,
+      "sha256": "0990b7552a18021c5993ff035fafdeeba75b89fb794c9d9cca75f460b79623b7"
+    },
+    "experiments/operation-ranking/results-structural-prior-lambdamart-h03-v1.json": {
+      "size": 1736076,
+      "sha256": "4121bc87b28c230cde760a98c0cf31513a4085720cc775af27446582d6da8ee3"
+    },
+    "experiments/operation-ranking/results-top1-call-equivalence-h03-v0.5.json": {
+      "size": 80747,
+      "sha256": "8c747754cbd8e35efe5ca77e0266c70a5e3d8b49f52a316ed8582487cd5c1767"
+    },
+    "experiments/operation-ranking/results-v0.9-summary.json": {
+      "size": 4902,
+      "sha256": "d69f2f539d23c5cb8b6b334d1c11f03c7843cd52343f89562c7d2821b04a02d0"
+    },
+    "experiments/operation-ranking/results-v1.0-summary.json": {
+      "size": 6982,
+      "sha256": "355f957a2b643ad574567eb53c2c16bfb5a663f851d97f33ac54279bf27dd089"
+    },
+    "experiments/operation-ranking/runtime-evaluation/psoc-e84-lambdamart-v2.4.json": {
+      "size": 16620,
+      "sha256": "1ed7b2021df22555f702fb68df4f1757b2b7227696d731170c0aab6c4b231735"
+    },
+    "experiments/operation-ranking/runtime-evaluation/stm32f103-lambdamart-v2.3.json": {
+      "size": 15633,
+      "sha256": "24d432795c0b6706bd9c7e0345b3fd036b932ac29a02023d9e0e68d54e65ebcd"
+    },
+    "experiments/operation-ranking/stm32f103-operations.json": {
+      "size": 6763,
+      "sha256": "c9335e38d7ba1409f740e1d09b633639bc536b9aedd138e08a5370b8f2bc26a0"
+    },
+    "experiments/operation-ranking/truth-sets/README.md": {
+      "size": 3173,
+      "sha256": "5639f8b87aebf02ea5753e859731b95148a6561d593b6b9f95671431f387d4fc"
+    },
+    "experiments/operation-ranking/truth-sets/automatic-v0.9.json": {
+      "size": 1099732,
+      "sha256": "6e1d047916e2fdab00bd0e0728c4f5658e8f192f687898b6d7a8e480341cbe9e"
+    },
+    "experiments/operation-ranking/truth-sets/human-adjudicated-h03.json": {
+      "size": 132973,
+      "sha256": "d3345822f56abca0ed83fd8d6bca16c3738a58e25296d6b5d0af26fcdb07ba86"
+    },
+    "experiments/operation-ranking/truth-sets/human-engineer-1.json": {
+      "size": 108026,
+      "sha256": "84399e403099614d8cae7ccaba50a75d80b31a758054ebbf559ffe045c45a4ac"
+    },
+    "experiments/operation-ranking/truth-sets/human-engineer-2.json": {
+      "size": 130276,
+      "sha256": "2a8d475b05569c22e64bdc08beafdba4d43c6a318d0f440fc9e1972d610ea550"
+    },
+    "experiments/operation-ranking/truth-sets/registry.json": {
+      "size": 2392,
+      "sha256": "e7c52a4f65c38635dc949d5c81c8b09c501040d56a4c90694f27bf50402c6a00"
+    },
+    "experiments/operation-ranking/truth-sets/source-audits/human-adjudicated-h03-audit.json": {
+      "size": 2738549,
+      "sha256": "c4d3863b68d5e070a1b77f840a6a2086c2b4df269f251a51d3d58e81a5ff0260"
+    },
+    "experiments/operation-ranking/truth-sets/source-audits/human-adjudicated-h03-summary.json": {
+      "size": 23364,
+      "sha256": "81a154fe217866bbfb5aff449bce272e81a26a45189a28c75c671b632e22919e"
+    },
+    "experiments/operation-ranking/truth-sets/source-audits/human-adjudicated-h03-validation.json": {
+      "size": 295,
+      "sha256": "37b077e12e63e2bba91e80278ad55c8c8e135ade22b12110618e49d3470bf633"
+    },
+    "experiments/operation-ranking/truth-sets/source-audits/human-engineer-1-audit.json": {
+      "size": 751048,
+      "sha256": "cec165ff230c966988b18f783f1fc63ddf09adfc8a9116057ed30de5a7fef489"
+    },
+    "experiments/operation-ranking/truth-sets/source-audits/human-engineer-2-audit.json": {
+      "size": 2463477,
+      "sha256": "fd9882318e48cf66d80001b294718f0b75790f276d14fcc280760d8e9c4c7f13"
+    },
+    "experiments/semantic-ground-truth/esp-idf.json": {
+      "size": 1790,
+      "sha256": "6c78a4618fb03bbd6692801c0a23c39123993957652108e1be828370c29ef042"
+    },
+    "experiments/semantic-ground-truth/manifest.json": {
+      "size": 1344,
+      "sha256": "8690720c00e5e938003428d3f5b19b00116c384b9f1e365ccf3e3331080fd9d3"
+    },
+    "experiments/semantic-ground-truth/mcux-sdk.json": {
+      "size": 1726,
+      "sha256": "fda925521ae0733c29bc9b859fed473770e703b8d734a5cc68c2ba022f18c5de"
+    },
+    "experiments/semantic-ground-truth/nrfx.json": {
+      "size": 1879,
+      "sha256": "a166d1dfb444b2ff01a824b3984b4906787b2c1cdb0d566ebcf2ee5a6b745ad1"
+    },
+    "experiments/semantic-ground-truth/pico-sdk.json": {
+      "size": 1762,
+      "sha256": "edd3febbe2e80f3997654e1f78f6d81908bbe7214af1f9bc58e408316ce11775"
+    },
+    "experiments/semantic-ground-truth/psoc-e84.json": {
+      "size": 1957,
+      "sha256": "5720b6c89451960cba7c43078fb543580bc9b93cc5c48e60b6de7aa15245cf34"
+    },
+    "experiments/semantic-ground-truth/stm32cube-f1.json": {
+      "size": 1765,
+      "sha256": "63aa0a7c69232455709e450dcd12ba5b671494b529eb1f1311d3ffc276993fc4"
+    },
+    "models/adaptive-field-ranker-v1.pt": {
+      "size": 7035,
+      "sha256": "0bdc6104dcdc173b46dfff87f28faf100632341f795b246c67aa553266b1f3ed"
+    },
+    "models/frozen-minilm-field-v1.json": {
+      "size": 204,
+      "sha256": "e05a19018b4641b6ca44079e452b82ddf967431e342f686f7e06ca072f9429a8"
+    },
+    "models/hardware-effect-pu-h02-v0.1.pt": {
+      "size": 7893,
+      "sha256": "c6f9f647014a827b952d545ae4eefafa6796ed947f9796e6905319e59cee6b19"
+    },
+    "models/joint-pair-h02-v0.3.pt": {
+      "size": 109189,
+      "sha256": "a91afeb5f2d3970ac7fa76de77dfdf0b2c97342e02d1e98bf7cd5fc2008032d7"
+    },
+    "models/lambdamart-optimization-h03-v0.5-seed20260917.txt": {
+      "size": 220764,
+      "sha256": "290dc3556c7f62aeed44fd22091ea71bfa0315cf2f05c3f1a102e8ffd6de2cd7"
+    },
+    "models/lambdamart-optimization-h03-v0.5-seed20260929.txt": {
+      "size": 220009,
+      "sha256": "e0e11a83a3ca88304e33e4f272877daf23c28dddc710d92f9d57f23d1209cffa"
+    },
+    "models/lambdamart-optimization-h03-v0.5.txt": {
+      "size": 221577,
+      "sha256": "67737e00b96605bdde6dbfeb53c4b1d9e268babb29116391041c9f90a40f084f"
+    },
+    "models/multiview-coherence-lambdamart-h02-v0.4.txt": {
+      "size": 297275,
+      "sha256": "05843a72ca4e36d5c3ced6dd94e511b46ac7f74e2c97c73dd504b0225eef06aa"
+    },
+    "models/multiview-contrast-lambdamart-h02-v0.4.txt": {
+      "size": 297424,
+      "sha256": "398eede5a179a2565974ccc78653ee8b027bf84bf6710db7bb3488f218598ba8"
+    },
+    "models/multiview-effect-contrast-lambdamart-h02-v0.4.txt": {
+      "size": 297580,
+      "sha256": "3da12ad440ce775c944addd79207a78a489eed13ddb2cdd1ea06e1b1f539db09"
+    },
+    "models/multiview-effect-h02-v0.3.pt": {
+      "size": 109247,
+      "sha256": "4f7512ab28da7b1dacad01c33c969c7b2927bb53bb004adb03549d6e7eb73cd8"
+    },
+    "models/multiview-lambdamart-h02-v0.3-tuned.txt": {
+      "size": 297434,
+      "sha256": "98579f3ad9aec891570150f960fd5aaad93a616895fa19329ca27481ca8df9fd"
+    },
+    "models/multiview-lambdamart-h02-v0.3.txt": {
+      "size": 1360878,
+      "sha256": "89c700901fe07e45a3fd9a0bede20b4a72095fe725bd34a40e277878cc5284d8"
+    },
+    "models/multiview-lambdamart-h03-v0.3.txt": {
+      "size": 221973,
+      "sha256": "ae3bb2be511f6bc52f72638d8d3cc7c47a936cf9c514ff6dac852477bea40dc7"
+    },
+    "models/operation-query-adapter-ir-v1.pt": {
+      "size": 51605,
+      "sha256": "cc15bfe1c84482a3c0dd9c8662039a56454ed8121ba376dc25e65bf92af755d3"
+    },
+    "models/pretrained-effect-h02-v0.2.pt": {
+      "size": 56614,
+      "sha256": "1422307461a10b2cd37f4a26fdda24ed8c91518bd791fad7d583ec195b28aa14"
+    },
+    "models/pretrained-effect-h03-v0.2.pt": {
+      "size": 56614,
+      "sha256": "31ebe517e2357d63411c34ace4465bb3831a0b45e953479830c1195aba7e3908"
+    },
+    "models/runtime/k210-operation-lambdamart-h03-eq-r1-full-v2.2.json": {
+      "size": 2932168,
+      "sha256": "169ac3f102b933dc6d3dd7d15ae5396ccdde661a389f95b0c2b3614da1adb9e0"
+    },
+    "models/runtime/k210-operation-lambdamart-h03-eq-r1-v2.1.json": {
+      "size": 494684,
+      "sha256": "d1cad37db9f449d6333e4bb9eb69fac9753b9c61915c981625388258fcf63420"
+    },
+    "models/runtime/psoc-e84-operation-lambdamart-h03-eq-r1-full-v2.4.json": {
+      "size": 387049,
+      "sha256": "14f2600d6085e533c7f6d7acf98b3f3ef13c30777a08068ae846b837f41e5b8e"
+    },
+    "models/runtime/stm32f103-operation-lambdamart-h03-eq-r1-v2.3.json": {
+      "size": 501429,
+      "sha256": "c7e19064c7d920c08d427fed357d501aecae28e3252cd04d4d90f8aa29d9b4e0"
+    },
+    "models/semantic-ranker.txt": {
+      "size": 215533,
+      "sha256": "7f85020a33c578625d8f941a85ed1bdaebae1c0f0a2cd620c1e110e7530d428b"
+    },
+    "models/semantic-ranker.txt.json": {
+      "size": 1200,
+      "sha256": "bb8825642c124004cacc07554db64be83c4896cc5d19a36703876d5c718f4723"
+    },
+    "models/structural-prior-feasible-lambdamart-h03-eq-r1-v2.1.txt": {
+      "size": 221701,
+      "sha256": "564a6df34b5336c8723fab05e19fed71da2cba30e83d7f8d0a9d421b345b4c4b"
+    },
+    "models/structural-prior-feasible-lambdamart-h03-eq-r1-v2.txt": {
+      "size": 221718,
+      "sha256": "86319c8662551995da31791a60595dfc26ad71a33c96b3a45f08759d278fa296"
+    },
+    "models/structural-prior-lambdamart-h03-eq-r1-v1.1.txt": {
+      "size": 221656,
+      "sha256": "44fd93ef3e3c2f56ddbdf939ca8110789446ffd5e861f7090a618020575fee3f"
+    },
+    "models/structural-prior-lambdamart-h03-v1.txt": {
+      "size": 221656,
+      "sha256": "44fd93ef3e3c2f56ddbdf939ca8110789446ffd5e861f7090a618020575fee3f"
+    },
+    "ports/replacement-simulation/rtthread.c": {
+      "size": 7567,
+      "sha256": "69d6fe90c4882eaf485002b95e546f3d1b6f597fce610213262222ececa00f52"
+    },
+    "ports/replacement-simulation/sdk_api.h": {
+      "size": 968,
+      "sha256": "374ad857df4e1e30afe2c84f42e16f84b7e5c82a507ac756a17391bc0f33ef80"
+    },
+    "ports/replacement-simulation/validation.c": {
+      "size": 4747,
+      "sha256": "8beaf5fbeeeec9b081054768e19eeb5a75025065f0099e95a2771e5e5def006d"
+    },
+    "ports/replacement-simulation/validation.h": {
+      "size": 678,
+      "sha256": "1f468080e702fd396b8cf101f608106dfe186e75534223e957160cac4ae2d674"
+    },
+    "ports/replacement-simulation/zephyr.c": {
+      "size": 7942,
+      "sha256": "7e9d35ea9a1da096a98d532c9d88d172f497e67aca7381f3d412045ad8954b35"
+    },
+    "ports/revision-simulation/negative-uart-configure.c": {
+      "size": 121,
+      "sha256": "b59e7b66a98e894f3486ab102233887951c1f3f5b2701735157d024567729d81"
+    },
+    "ports/revision-simulation/rtthread/main.c": {
+      "size": 5787,
+      "sha256": "964854220c2585de7371f5d4e90b291a9c6558b622486ad260b16c1203c9ae24"
+    },
+    "ports/revision-simulation/rtthread/platform.c": {
+      "size": 3649,
+      "sha256": "bd2f1c753c14650aeaf87876d6c097a7e55c1f5ddfc6215636dc5682b9febe4d"
+    },
+    "ports/revision-simulation/rtthread/rtconfig.h": {
+      "size": 621,
+      "sha256": "04d6fb79a4b59b086c28f657a1fc8bad43026acf903d9e57d731010f7182f8b2"
+    },
+    "ports/revision-simulation/rtthread/startup-arm.S": {
+      "size": 742,
+      "sha256": "a9f86cf6c7f55beb011dfe55fa0a3fd34baf3969e68e909de7d5917e50109c60"
+    },
+    "ports/revision-simulation/rtthread/startup-riscv.S": {
+      "size": 836,
+      "sha256": "3f25d89902c5721bd9a0ad5cde7eaa97165a7fb862c040cae34a3fa1b536547c"
+    },
+    "ports/revision-simulation/zephyr/CMakeLists.txt": {
+      "size": 162,
+      "sha256": "26fce6bad01c4a771b3fc229f2cf1f31d220ab4e89591338a1d59aa26158d15a"
+    },
+    "ports/revision-simulation/zephyr/main.c": {
+      "size": 5435,
+      "sha256": "d80230cc2af88f9bcd401b4b448fcaa25348b452427468a6209919b017dddc95"
+    },
+    "ports/revision-simulation/zephyr/prj.conf": {
+      "size": 207,
+      "sha256": "f3bd1bbad094549d09575c1a0b862f616397615ef7c55ad44ace8f58720835b9"
+    },
+    "ports/zephyr-k210/boards/bspforge/k210/Kconfig.defconfig": {
+      "size": 149,
+      "sha256": "0be2ff816c41cd039839a448b38b1cd1cc31425ef8bf7f8daf7777b812ebf2b9"
+    },
+    "ports/zephyr-k210/boards/bspforge/k210/Kconfig.k210": {
+      "size": 44,
+      "sha256": "aebe493dec57997767605afa07c0e0e282774419c2984c309547395ad5dd5000"
+    },
+    "ports/zephyr-k210/boards/bspforge/k210/board.yml": {
+      "size": 118,
+      "sha256": "5f83b315ff70f062d3ecbc1df6704cc6a2316138a5fd7ae4a1f90927bf3c7cce"
+    },
+    "ports/zephyr-k210/boards/bspforge/k210/k210.dts": {
+      "size": 1811,
+      "sha256": "9cdedbc01ee9e2b312dc2197c9ed82531f3717df848151efd27102630c36996b"
+    },
+    "ports/zephyr-k210/boards/bspforge/k210/k210.yaml": {
+      "size": 169,
+      "sha256": "1c19c545d954ce6b288b38f0205c9a8bc3bf946e58b20bb38d15a1ef5d165823"
+    },
+    "ports/zephyr-k210/boards/bspforge/k210/k210_defconfig": {
+      "size": 118,
+      "sha256": "5f7945f06037f3f3ffaa4556d4dda8dd69284441691470a0b67c39bb298654ce"
+    },
+    "ports/zephyr-k210/soc/bspforge/k210/CMakeLists.txt": {
+      "size": 146,
+      "sha256": "7da687f48faecde6a1b43cb01e6864009cb4835b0ca2778d3c2c284acb777768"
+    },
+    "ports/zephyr-k210/soc/bspforge/k210/Kconfig": {
+      "size": 161,
+      "sha256": "69fac530cdc4f13d349e992042b771da27b0eb6dc29a65e55d0db6727e22f2ba"
+    },
+    "ports/zephyr-k210/soc/bspforge/k210/Kconfig.defconfig": {
+      "size": 307,
+      "sha256": "141e7d25e8d0a0520e3eece5d45bd9884f44267eb0cb027332496fd092bf029b"
+    },
+    "ports/zephyr-k210/soc/bspforge/k210/Kconfig.soc": {
+      "size": 172,
+      "sha256": "0ec1dd4f2b7443a9c8cf13d8a08b4c563799265a4646670698a5caeea07bfa55"
+    },
+    "ports/zephyr-k210/soc/bspforge/k210/pinctrl_soc.h": {
+      "size": 310,
+      "sha256": "9256dea96fa4bd93097cd39f8cb2350fc51dc3cee502f9644736a0f3a80c72a4"
+    },
+    "ports/zephyr-k210/soc/bspforge/k210/soc.c": {
+      "size": 1039,
+      "sha256": "0212a6490ecdb0793fe83d27ac4dbc48e9270ba0ea87f2119f924193cf32df73"
+    },
+    "ports/zephyr-k210/soc/bspforge/k210/soc.h": {
+      "size": 179,
+      "sha256": "3e4371fc5681d3d86261cea891bc8b3ebbe4cc40e4b3a17f2e67657470eb9f65"
+    },
+    "ports/zephyr-k210/soc/bspforge/k210/soc.yml": {
+      "size": 30,
+      "sha256": "140aa90229e7a897e799c6dcd30a93ff5f71028c33e900b593070a47730ee3a6"
+    },
+    "pyproject.toml": {
+      "size": 949,
+      "sha256": "0a16a6703f87bc73169f9a88de86914a4d3d387c3f7b20642e411b171abf4443"
+    },
+    "reproduction/mdpi-r1/README.md": {
+      "size": 10241,
+      "sha256": "368c3cfad9b39a7430b0f27671d0e89eddf7788a2cd252b103cf040ce8949d87"
+    },
+    "reproduction/mdpi-r1/audit_h03_evaluation.py": {
+      "size": 3393,
+      "sha256": "f374f26169b6a8f5f02ddfd74fee9bd2130ae3610784d57486d3dd5d6b1f7868"
+    },
+    "reproduction/mdpi-r1/config/revision-r1-expanded/operation-scope.json": {
+      "size": 7525,
+      "sha256": "a406e7e70403a452ded37094aa06c0b31d94279f22fbdcf38d3c49375c8b332d"
+    },
+    "reproduction/mdpi-r1/config/revision-r1-replacements/operation-scope.json": {
+      "size": 5345,
+      "sha256": "16ad4ffa5bec450283ca5b79b391a6b5ab971bbf7c521e363bd440919d7343a1"
+    },
+    "reproduction/mdpi-r1/environment.json": {
+      "size": 2075,
+      "sha256": "5264e95c9feebdbf6e1b19b904f280124945746e7960aa32f434e1b809c6e3d1"
+    },
+    "reproduction/mdpi-r1/expected-integration-results.json": {
+      "size": 4539,
+      "sha256": "92d17efb92f29c89e74997e250b55098f6d9aff7afaf1dfba8b72109065998f0"
+    },
+    "reproduction/mdpi-r1/expected-metrics.json": {
+      "size": 4122,
+      "sha256": "df52969dd9022ce9fcdee8e35af46e4f76b6fcdbc3c1ea590d1d0dfc2771d54a"
+    },
+    "reproduction/mdpi-r1/feature-schema-83.csv": {
+      "size": 15525,
+      "sha256": "79ed19d0f3fefd455833e3160ed37ca7a3a16acb8e7f6048863df9a99161839f"
+    },
+    "reproduction/mdpi-r1/model-contract.json": {
+      "size": 4514,
+      "sha256": "ebf02193daac299915bb380c36af3c69cf446ffb9099cff8fb29a667092bd0d9"
+    },
+    "reproduction/mdpi-r1/paired-source-intervals.json": {
+      "size": 3730,
+      "sha256": "5d0e0a0e1a6ac18c4445398dc43b1e3d96bff3959f1a73817d6ed580dec1c98d"
+    },
+    "reproduction/mdpi-r1/simulation-sdks.json": {
+      "size": 4771,
+      "sha256": "091c3f84f38efd3338d2d34675fb3361a16fdbf05e2b4ca34d91bd9ba3575922"
+    },
+    "reproduction/mdpi-r1/sources/asf3-sam4s.json": {
+      "size": 1175916,
+      "sha256": "a8ca7aa450d63fb11508acac27bcf60f511d099ab3a504a7876d88dc8fd12627"
+    },
+    "reproduction/mdpi-r1/sources/max32650-msdk.json": {
+      "size": 28251,
+      "sha256": "e148e478bc6d9e7d4f99545fa84fae1a67e5c8d6d3f740bf966232ebd5a7d10a"
+    },
+    "reproduction/mdpi-r1/sources/nrf5-nrf52840.json": {
+      "size": 26414,
+      "sha256": "ae16a41f2c63d00d1b81d32d689501497b8749e7cf6464a6b04e292a538fe75f"
+    },
+    "reproduction/mdpi-r1/sources/stellaris-driverlib.json": {
+      "size": 10838,
+      "sha256": "ccb6c84e2de79d1c6b6a9a8f1fb0439db908b0ce3cee02263c287e811716c131"
+    },
+    "reproduction/mdpi-r1/sources/stm32f4-stdperiph.json": {
+      "size": 21356,
+      "sha256": "da3a7c7161f267a05422bb9fd3fd0785484b95aab00fafc42f6151e250be1706"
+    },
+    "reproduction/mdpi-r1/study-cohorts-current.json": {
+      "size": 413,
+      "sha256": "9e8630f4618a20bd221a3a4a9f30373b2544526619ce43ddc4a527d5dd163524"
+    },
+    "reproduction/mdpi-r1/study-sdk-inventory-current.csv": {
+      "size": 2021,
+      "sha256": "2d47748f3a3c5ccc87476f9b79f75cc2e4fffef54c136569cab4703bab70771d"
+    },
+    "scripts/add_cached_field_late_interaction_scores.py": {
+      "size": 3599,
+      "sha256": "bf4d2c010a800f37a3df2a57635229f3c5a98699ee5d356ad065bc999f3781d9"
+    },
+    "scripts/add_code_embedding_scores.py": {
+      "size": 4047,
+      "sha256": "f57465cbef787a862f2859d07d8fc27bde1c77c52b8d904f0a6dc9bb7ec82797"
+    },
+    "scripts/add_cross_operation_coherence_features.py": {
+      "size": 1985,
+      "sha256": "ad550876c47dfcba208b65bd7d0636ccc6b809f44b79fd32cb3744a8de5404f1"
+    },
+    "scripts/add_field_late_interaction_scores.py": {
+      "size": 1676,
+      "sha256": "32fb4cfae0e8c013a8162197b77e49db748021b1f76133b4f2ba03a1048ce033"
+    },
+    "scripts/add_hardware_effect_graph_features.py": {
+      "size": 3594,
+      "sha256": "53083d5bb5a166c8a5849fb5f2cf085f1362e34e49991ecf762151c584b7e5ae"
+    },
+    "scripts/add_operation_reranker_scores.py": {
+      "size": 2729,
+      "sha256": "a94d62dff365da40b5a6c79bc16eccd6f16a222996ffc76aaa142d976e35490f"
+    },
+    "scripts/add_query_adapter_scores.py": {
+      "size": 3220,
+      "sha256": "8244bbea933419c8907122484523ea93d9658cc072d12d540f6dd3c9cf0a0d0f"
+    },
+    "scripts/add_structured_retrieval_scores.py": {
+      "size": 751,
+      "sha256": "b8d0ba2a66da7ee670d6d474ac36d522aad6d6306b3f403fd0a60e264766edf0"
+    },
+    "scripts/analyze_deterministic_confidence.py": {
+      "size": 7676,
+      "sha256": "f6cf1fcceae15e2543277b75afbb0182a4379569d5c83992658021a9c319895d"
+    },
+    "scripts/analyze_joint_shortlist.py": {
+      "size": 1540,
+      "sha256": "ea09cd4d6fd6cee02712407ac07a66af7919e44466e2676e3df6ea60bae28df4"
+    },
+    "scripts/analyze_operation_errors.py": {
+      "size": 3014,
+      "sha256": "7515d154056f6cda171594a9cc54f125184dcc82d70b6dcf5be47e8837fb44e7"
+    },
+    "scripts/analyze_top1_call_equivalence.py": {
+      "size": 5783,
+      "sha256": "b607d30b89293de9ef3b79a65c79a54ab57aa6307de3b76fa2b027c4183c3492"
+    },
+    "scripts/audit_graded_operation_truth.py": {
+      "size": 4089,
+      "sha256": "21f2ab6333c305db716096187372d524e79c1d15fa690cf39d46f2ded1c6b6cc"
+    },
+    "scripts/bootstrap_evaluation_sdks.sh": {
+      "size": 3002,
+      "sha256": "67d66198eabc1158ecbb75a52bc9ff38bcc9a288c81b5647c86f38322b772416"
+    },
+    "scripts/bootstrap_local_inputs.sh": {
+      "size": 1869,
+      "sha256": "118cb1c03ebb966a17afbd03fae1115dc8fe987c1b90a65a1fce45ff4d87de13"
+    },
+    "scripts/bootstrap_revision_r1.py": {
+      "size": 4215,
+      "sha256": "dc0443ca8b7c001887c2650ac16060e5db79f525178a5410fbd1362b072f2813"
+    },
+    "scripts/build_operation_dataset.py": {
+      "size": 1671,
+      "sha256": "839327dca62cfe518c0c3c60a96a1001a223471b8fa27ac3bf5cfd0918807903"
+    },
+    "scripts/build_runtime_operation_dataset.py": {
+      "size": 5491,
+      "sha256": "bccc03fda0bfa8c16ae51e242b9fc44091fe901c53560b76a6e23bb6dc2cad2a"
+    },
+    "scripts/build_semantic_dataset.py": {
+      "size": 1718,
+      "sha256": "47f4b5f0693b78a3528eaf19ba82b00c299924269a485718441da5fcf27e29ed"
+    },
+    "scripts/cache_joint_pair_embeddings.py": {
+      "size": 5644,
+      "sha256": "2ffa2377ad605756b160d0e663ea3141ece948f6153eb565f79d88b09c76428c"
+    },
+    "scripts/cache_multiview_effect_embeddings.py": {
+      "size": 6819,
+      "sha256": "d0b001990755975f968e320b398dae573d11c659a0272819aae9d29f51203e0d"
+    },
+    "scripts/cache_pretrained_code_embeddings.py": {
+      "size": 8682,
+      "sha256": "850c53dcb595d56e065a44780740a48ae9f44fc2d7948a131d0ce03fe0a4d5cd"
+    },
+    "scripts/compare_resolvers.py": {
+      "size": 2133,
+      "sha256": "5b91e1e7890ad9a36e2c7786092fcb86f251183482de382eefd62176fa79aee1"
+    },
+    "scripts/convert_external_board_truth.py": {
+      "size": 12807,
+      "sha256": "bf682e0ad47a67b77f23cb64ef7dcf7301a215b8bc2ef55f288fa82c22487757"
+    },
+    "scripts/convert_operation_truth_sets.py": {
+      "size": 13397,
+      "sha256": "e881546206f7be39774cb02ca678dc636356300084aacf3420dde819dba601ec"
+    },
+    "scripts/download_pretrained_code_model.py": {
+      "size": 1239,
+      "sha256": "140446d4b9c300445f6b0a8cd5fd7998d03d7be15ce7f1a473085d198bb8aacf"
+    },
+    "scripts/evaluate_adaptive_structured_ranker.py": {
+      "size": 15532,
+      "sha256": "f631172a9222b4d42178cf223e7a8a0198b4e828162bf05c9b125a736b5d3b1a"
+    },
+    "scripts/evaluate_cross_operation_coherence_ablations.py": {
+      "size": 4596,
+      "sha256": "07f4fe225cd309f3fbaddbe5587b3c98de35ef579f05c143139d2ccbc81193fb"
+    },
+    "scripts/evaluate_cross_operation_ensemble.py": {
+      "size": 7154,
+      "sha256": "4db680f14edf2af780cbfa8be376f0fd9634c9b115a082da12ac59f6169b46f6"
+    },
+    "scripts/evaluate_deterministic_ranker.py": {
+      "size": 3836,
+      "sha256": "48262e9b0c35884a9455e37cbb89a32c26b428a0acc60800312439349fa7339f"
+    },
+    "scripts/evaluate_frozen_lambdamart_external.py": {
+      "size": 5543,
+      "sha256": "616d69f8b7eddaf85d6346ed7869b9a82c1dae6b06f609b0c5a7764197326f41"
+    },
+    "scripts/evaluate_frozen_operation_bundle.py": {
+      "size": 6280,
+      "sha256": "2adf53591a599e3be3edb45bd4985aa6f9fb89a21416a2e46e09275b3d9c3cd7"
+    },
+    "scripts/evaluate_hardware_effect_pu_ranker.py": {
+      "size": 15429,
+      "sha256": "295786f4cc3dadad6c3c6830d0b5337ba337aa44f1b96d1b262303536463374d"
+    },
+    "scripts/evaluate_joint_pair_ranker.py": {
+      "size": 15115,
+      "sha256": "10e6807c0c17d794f288e43f3a00bfa539f4c68af88b5faed18ddfdb3501e4bd"
+    },
+    "scripts/evaluate_lambdamart_training_optimizations.py": {
+      "size": 15646,
+      "sha256": "83213024e88fb71302fc083bc22ad40b9aacd9f95d4ce8340dde78279efa7471"
+    },
+    "scripts/evaluate_multiview_channel_ablations.py": {
+      "size": 6667,
+      "sha256": "5069e58d578994c0b9c5a8170758ecc3028484fd26e78d01915cb98ce164e6b4"
+    },
+    "scripts/evaluate_multiview_effect_ranker.py": {
+      "size": 18381,
+      "sha256": "41da39eb1fb11d67039cb23c32c61e7f5916fc53eba520b190a99805e50439d1"
+    },
+    "scripts/evaluate_multiview_lambdamart.py": {
+      "size": 13446,
+      "sha256": "05b846502b08ea73a8501c3bce1028a2e1c5128fd5fdb03c932f0996086b6fcb"
+    },
+    "scripts/evaluate_operation_ranker.py": {
+      "size": 16393,
+      "sha256": "9d8dd7f6a231d90c41f848917b78ad7d2974a62ac1f9ad611b6c01ad7f074523"
+    },
+    "scripts/evaluate_pretrained_effect_ranker.py": {
+      "size": 15251,
+      "sha256": "71450a25f984fb96b8f5bd303c7f0706c8d9a725e7580f793bc11ad7f5ba0d3a"
+    },
+    "scripts/evaluate_ranker_cv.py": {
+      "size": 14468,
+      "sha256": "c8442132d35dc67eccec7c1662d15cfe15166960fdfb070f32c68a3b0d3fc1ad"
+    },
+    "scripts/evaluate_revision_integration_ablations.py": {
+      "size": 6865,
+      "sha256": "51e09adce632e4b7997cb4b3be29e74c88936237e7056382c0a7af6ffd07cec7"
+    },
+    "scripts/evaluate_revision_view_ablations.py": {
+      "size": 10451,
+      "sha256": "43ad06e3c5fb0699c3e68d699293b6b470153d4817c1a077174ff2b4acfc31d6"
+    },
+    "scripts/evaluate_semantic_ensemble.py": {
+      "size": 5328,
+      "sha256": "b19c2243b14ba031d155ed312ad46ceaa070eafe238dbd3087b408c53b3ea805"
+    },
+    "scripts/evaluate_structural_prior_lambdamart.py": {
+      "size": 19170,
+      "sha256": "5041469931d18cc480b4c8e3f8b687106721769d98bfc21d3d7722f96acbc50e"
+    },
+    "scripts/evaluate_structured_operation_ranker.py": {
+      "size": 9003,
+      "sha256": "d3a0fc4e298264ba41499942f6b85f3ffef153aca62deee294f13b1d3696362e"
+    },
+    "scripts/expanded_sdk_binding.py": {
+      "size": 25457,
+      "sha256": "a5f38da8bdfbf3e4c734670f621d9a40f447e87c86c525b1bd3cba60c12c70a3"
+    },
+    "scripts/export_frozen_lambdamart_bundle.py": {
+      "size": 6321,
+      "sha256": "af482cf38828e42589c8dd60daba35519ab2c49dda08737a48f4026133741fd8"
+    },
+    "scripts/export_operation_truth_review.py": {
+      "size": 2435,
+      "sha256": "7c9ac922ff864edfbf8b505160e579eb2aa24e69c461237ee7d4730a540ac7f7"
+    },
+    "scripts/generate_board_truth_comparison.py": {
+      "size": 7073,
+      "sha256": "ebf484ae71f642f454a4cc9d3f742af78f3785285a841a9fdeb7616f6c28fea6"
+    },
+    "scripts/generate_hardware_effect_error_report.py": {
+      "size": 10720,
+      "sha256": "76c93d6254108404a0095e1c295ba820f6dc771246aed55b1185d7378fb2107a"
+    },
+    "scripts/ingest_operation_corpus.py": {
+      "size": 3062,
+      "sha256": "69d95725e4f6e41b78d04ac4a9237fb5ddccc5f3dd8baa52dd6592bd3ef88bea"
+    },
+    "scripts/ingest_semantic_corpus.py": {
+      "size": 2195,
+      "sha256": "257f018973fa4eb42ea97e8936dc401ea69439de7b56970334147697ac046dff"
+    },
+    "scripts/install_python_dependencies.sh": {
+      "size": 551,
+      "sha256": "8d24621d4ca32bc88fadcba928c1a83b64d45557b936c847e7c74ca3b58c81ec"
+    },
+    "scripts/install_toolchain.sh": {
+      "size": 2760,
+      "sha256": "84ddda58fd46655ee0e834026ea229959b010c2b586717fb2920a6637e63d607"
+    },
+    "scripts/prepare_revision_expanded_sdks.py": {
+      "size": 5664,
+      "sha256": "a32f498306da5a5cfb998e96218ca21864127dda60de33f97cef6e613b11a583"
+    },
+    "scripts/prepare_revision_replacement_sdks.py": {
+      "size": 4926,
+      "sha256": "9458f1e28ebc063ddd339c0b71dabd6aaaaa92528ab00a080861af1c3f1e0f65"
+    },
+    "scripts/prepare_revision_sdk_ir.py": {
+      "size": 2121,
+      "sha256": "46cbbd39f9c25a86e9bfbba8f7692526ac001fb971f858a68f8d8919c8c27191"
+    },
+    "scripts/psoc_e84_openocd.py": {
+      "size": 2803,
+      "sha256": "ca281acbc3a820767050400877c3354052cc53b25d99fc4abf08fef1f196a742"
+    },
+    "scripts/qemu_gpio_wire.py": {
+      "size": 2063,
+      "sha256": "e5a57b1aee524a806f74ee3744e55a358d8b7032a1d50284669c93e2d9b272e6"
+    },
+    "scripts/rank_revision_sdk_matrix.py": {
+      "size": 4561,
+      "sha256": "d5462aba326dd64ecb48758fa93bd8bef7783b874bf4aac522bf1b35214cc334"
+    },
+    "scripts/record_engineering_session.py": {
+      "size": 4240,
+      "sha256": "ea49cbc0ae3eaa0319bc6a5d42de45b74ce681261ab519fec98004918c4059c3"
+    },
+    "scripts/relabel_operation_dataset.py": {
+      "size": 4181,
+      "sha256": "5b576a30f8cbdf06692287c677598a0318b2b617e25e81004ca6beb27e1811a5"
+    },
+    "scripts/replacement_sdk_binding.py": {
+      "size": 21620,
+      "sha256": "9ed42a97b0e2cb3a5c1aa93158ebab1ae4e0a92a006fb8fe25a0cc4aecb14c45"
+    },
+    "scripts/revision_profile_feedback.py": {
+      "size": 5009,
+      "sha256": "bcb52e96a9e2d016ac13d6f969a4b9fc34d841f39bd7f6337ffc893581937917"
+    },
+    "scripts/revision_sdk_binding.py": {
+      "size": 9242,
+      "sha256": "b248d69212bc67d2c69b462802fcd9c3d6436d6257080911bb7d4eff62d9a64a"
+    },
+    "scripts/revision_sdk_uart_binding.py": {
+      "size": 7722,
+      "sha256": "c467800c7601164fde4520fb77613092199e4c98ed2709a9095be40f70698732"
+    },
+    "scripts/run_k210.sh": {
+      "size": 294,
+      "sha256": "0f515ee88208d5e4a1c45d167ceeeb1f5a2e6966da015ca202623dfd3698890f"
+    },
+    "scripts/run_matrix.sh": {
+      "size": 680,
+      "sha256": "7268cdf575e8bd2e895ce291d3cc21c0d2b2969b1d41d2ee1fa2025b35ef0dbf"
+    },
+    "scripts/run_replacement_sdk_matrix.py": {
+      "size": 22081,
+      "sha256": "d64d46527e09c847f53ebb77dbbe7d5c47f6984da34d5b97937e9491cf55ef1a"
+    },
+    "scripts/run_revision_closeout_matrix.py": {
+      "size": 1580,
+      "sha256": "3e56abca664e054db4864a3b0a03cc05830183c65cb6fcb09b10f015b4f1a22b"
+    },
+    "scripts/run_revision_fault_cases.py": {
+      "size": 4172,
+      "sha256": "d4014b27713561e92aa943b8d5a26843c7f1487f0458c292e297b8060ab2c1b1"
+    },
+    "scripts/run_revision_native_controls.py": {
+      "size": 12430,
+      "sha256": "49aba35ec624f095d8ee30fa30ec5ac95bcb0cdec3b5965318547b32a64f5245"
+    },
+    "scripts/run_semantic_experiment.sh": {
+      "size": 734,
+      "sha256": "e1d315b1a4c42d04cfb650cc0450e3e07fefbe5230b118c07547a1291e8b9995"
+    },
+    "scripts/run_sifive_zephyr_simulation.py": {
+      "size": 12015,
+      "sha256": "f7860c256ea0ec04a7aa803d44651bafd12541467e344cd94c1b313cb067da26"
+    },
+    "scripts/run_zephyr_native_simulation.sh": {
+      "size": 732,
+      "sha256": "8a8bd6c0c279ea0d166dd8060ecf55c7f684f7d486743a5cb171462ebb3fb69a"
+    },
+    "scripts/stm32_jlink.py": {
+      "size": 3523,
+      "sha256": "c4edde4f72bae0b4f25b6678cf4bb1424e7c55a2c7776bf115806fe55c81e25d"
+    },
+    "scripts/summarize_adaptive_truth_rerun.py": {
+      "size": 6137,
+      "sha256": "83a3864406d50673c976905d4be71102216580c9668248ddf272c5e6b1a568e2"
+    },
+    "scripts/summarize_deterministic_truth_evaluations.py": {
+      "size": 1771,
+      "sha256": "82c1026ba3a096d289b30de52c44a4d0ce796c80af1dca42876010475246b69f"
+    },
+    "scripts/summarize_lambdamart_h03_optimization.py": {
+      "size": 3437,
+      "sha256": "86b6475d43d4694b3bf632ae7e745d6b304b0543b7c0bc2b188553b33cdfe49e"
+    },
+    "scripts/summarize_operation_v09.py": {
+      "size": 2080,
+      "sha256": "04db8df3fe0845f70ce7b525b9aa22e1c0014a888248f81a41d98f69a81e6efa"
+    },
+    "scripts/summarize_operation_v10.py": {
+      "size": 4347,
+      "sha256": "7b64605152ffb844e12d5c288a073497d0fe2bb17e93dde2a3f1fa6d6330615f"
+    },
+    "scripts/train_adaptive_field_ranker.py": {
+      "size": 7390,
+      "sha256": "e475ef44980a030696de20617e9547ef9b83418dd007092a433dd9b665cc08e1"
+    },
+    "scripts/train_operation_encoder.py": {
+      "size": 12095,
+      "sha256": "e4ef95b0296f0c99bf881f903da8f55d2baa47a63bafee99c7562b2ae5176298"
+    },
+    "scripts/train_operation_query_adapter.py": {
+      "size": 9911,
+      "sha256": "19efdfa8ff07d955da34a13f505ec11ab19150c383ab86ac272946eeaa0ccbb2"
+    },
+    "scripts/train_operation_reranker.py": {
+      "size": 9906,
+      "sha256": "969426323a68d733ac8216c16181e286e20cbf818d5247443667b767c1f963c3"
+    },
+    "scripts/train_ranker.py": {
+      "size": 2641,
+      "sha256": "f4a43e8a60baedaa29ca4a0685dacf2d26bd74dc36df91b30578c81e12be4fb5"
+    },
+    "scripts/verify_revision_publication.py": {
+      "size": 3187,
+      "sha256": "c1f190f959616c4bfa82954201426919cf27f0caa5043a00816609c672e4b163"
+    },
+    "sdk/README.md": {
+      "size": 420,
+      "sha256": "64045e48b6f3e81ab59ef26378d2b40ce4059977b14ec7cf6c0c063ab9d404d0"
+    },
+    "sdk/k210/README.md": {
+      "size": 358,
+      "sha256": "31ffd090d5c4de3b124c2e6f77ec429256e6d5a5ab6b00a3da21ca2336041161"
+    },
+    "sdk/psoc_e84-edgi-talk/README.md": {
+      "size": 530,
+      "sha256": "35774aa57102452c2d1d2e6028623ced28f103c36e1916f644e3aaf13df08546"
+    },
+    "sdk/stm32f103/README.md": {
+      "size": 444,
+      "sha256": "1317402ca2f49dd97f5a048e5ea97de1f6590adcb00e25c5aaca0329052a8d18"
+    },
+    "tests/__init__.py": {
+      "size": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    "tests/test_pipeline_modules.py": {
+      "size": 86826,
+      "sha256": "1dd0f60c3a0ecdc6a2f5c736abf825cd19f4564b67cd1013ac5054a720e56766"
+    },
+    "tests/test_revision_publication.py": {
+      "size": 4143,
+      "sha256": "ab1e805b3508f8dc41cf650292da38bbccbd55fc690bb756ef0e4bfe4e782c99"
+    },
+    "tests/test_revision_r1.py": {
+      "size": 8330,
+      "sha256": "d63d8542dec2f03db75e77b5896560c2be9b839d55d7dfdb5da14c63dd9a8fc1"
+    },
+    "tests/test_semantic_feasibility.py": {
+      "size": 3163,
+      "sha256": "882a2779872afc2ae9c996076b132ad5500100ab440d8215d8ffda1653e7b93a"
+    },
+    "third_party/README.md": {
+      "size": 444,
+      "sha256": "c0f7f26a12945bbe8b5dda76970b6b0c5b5423f6ce6f5f5c59d16c957bac0dba"
+    },
+    "toolchains/.gitkeep": {
+      "size": 1,
+      "sha256": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b"
+    },
+    "toolchains/README.md": {
+      "size": 671,
+      "sha256": "f2f111844b604d048ddd0cc9e5cfd2ba2604665b61b4a89e8cdd7c62f04cb925"
+    },
+    "toolchains/manifest.json": {
+      "size": 1244,
+      "sha256": "6c4a6e8af3f1275af0f486563a14f80fc060283a1978f0050ece9b63745c44a8"
+    }
+  }
+}

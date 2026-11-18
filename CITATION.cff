@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "Please cite this frozen software version when using the BSPForge revision implementation."
+title: "BSPForge Replication Package for Multi-View Interface Recovery and Traceable BSP Integration"
+version: "mdpi-r1-20261118"
+date-released: "2026-11-18"
+type: software
+authors:
+  - family-names: Wu
+    given-names: Haikang
+  - family-names: Liu
+    given-names: Yuan
+  - family-names: Wang
+    given-names: Yuhe
+  - family-names: Li
+    given-names: Yunchu
+  - family-names: Chen
+    given-names: Xinghuan
+  - family-names: Liu
+    given-names: Wenbo
+  - family-names: Hu
+    given-names: Jianguo
+repository-code: "https://github.com/fbsauibfinefh-lab/sdk-bsp-os"
+url: "https://github.com/fbsauibfinefh-lab/sdk-bsp-os/tree/mdpi-r1-20261118"
+license: MIT

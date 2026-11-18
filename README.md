@@ -2,6 +2,12 @@
 
 BSPForge 是一个面向芯片 SDK 语义恢复与 RTOS BSP 自动生成的研究原型。当前支持 Kendryte K210、STM32F103 和 PSoC E84 Edgi-Talk 三类 SDK，以及 RT-Thread、Zephyr 两个具有不同设备模型和构建系统的后端。
 
+## 论文返修复现版本
+
+2026年11月18日发布的正式入口为 [第一次返修复现说明](reproduction/mdpi-r1/README.md)，固定标签为 `mdpi-r1-20261118`。本版保留原83/91维LambdaMART方法与冻结模型，增加五个SDK双OS仿真绑定、通用契约与诊断规则、指标审计脚本、输入版本和文件哈希；不包含探索重训模型。
+
+当前完整性复核后的H03主指标、三组件对照及168/182条补充仿真操作结果均在该入口登记。下面的历史开发指标和旧H02/H03文件保留追溯用途，不作为本次论文的当前评价入口。新版逐查询评价、完整原始运行和工程师记录按论文Data Availability声明获取；公开代码、模型和复现说明可直接下载。
+
 ## 核心能力
 
 工程按论文方法划分为六个模块：
@@ -79,7 +85,7 @@ conda run --no-capture-output -n AIoT-v1.0 python -m bspforge.cli pipeline \
   --config examples/k210-zephyr/project.json
 ```
 
-预训练代码效果排序的模型下载、全量缓存和五折评测命令见 `docs/pretrained-code-effect-ranking-v0.2.md`。模型权重放在 `/home/whk/RTT-porting/models/`，不纳入本仓库；本次首次 CPU 缓存耗时 6,351.642 秒，缓存后完整嵌套五折评测耗时 137.650 秒，后续只训练 12,636 参数的小型排序头。
+历史预训练代码效果探索的命令见 `docs/pretrained-code-effect-ranking-v0.2.md`，其中12,636参数排序头属于早期对照。论文正式方法为冻结编码器表征加LambdaMART树模型，见返修复现入口。大体积预训练权重不纳入本仓库；运行时间取决于本机硬件、缓存和负载。
 
 所有阶段产物保存在 `workspace/runs/<run-id>/`，包括 SDK IR、语义映射、闭包、绑定与设备清单、逐轮编译日志、诊断约束、产物验证、方法指标、证据消融和最终报告。
 

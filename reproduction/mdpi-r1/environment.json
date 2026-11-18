@@ -1,0 +1,66 @@
+{
+  "date": "2026-11-18",
+  "python": "3.12.13",
+  "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-x86_64-with-glibc2.35",
+  "conda_environment": "AIoT-v1.0",
+  "packages": {
+    "numpy": "2.5.2",
+    "lightgbm": "4.7.0",
+    "scikit-learn": "1.9.0",
+    "torch": "2.13.0+cpu",
+    "transformers": "4.44.2",
+    "sentence-transformers": "3.0.1",
+    "tree-sitter": "0.25.2",
+    "tree-sitter-c": "0.24.2",
+    "pyserial": "3.5",
+    "pytest": "9.1.1",
+    "west": "1.5.0",
+    "cmake": "4.4.2",
+    "ninja": "1.13.0",
+    "scons": "4.11.0",
+    "einops": "0.8.2"
+  },
+  "original_experiment_hardware": {
+    "cpu": "AMD Ryzen 5 5600G",
+    "physical_cores": 6,
+    "logical_processors": 12,
+    "windows_physical_memory_bytes": 16487739392,
+    "WSL_visible_memory_GiB_approximately": 7.4
+  },
+  "operating_system_sources": {
+    "rt-thread": {
+      "url": "https://github.com/RT-Thread/rt-thread",
+      "base_revision": "c3da935369e110accd64686abde6bb7d9c825ee4"
+    },
+    "zephyr": {
+      "url": "https://github.com/zephyrproject-rtos/zephyr",
+      "base_revision": "684c9e8f32e4373a21098559f748f06915f950c9"
+    }
+  },
+  "encoders": {
+    "sentence-transformers/all-MiniLM-L6-v2": {
+      "upstream": "https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2",
+      "cached_revisions": [
+        "1110a243fdf4706b3f48f1d95db1a4f5529b4d41"
+      ],
+      "encoder_trainable": false
+    },
+    "jinaai/jina-embeddings-v2-base-code": {
+      "upstream": "https://huggingface.co/jinaai/jina-embeddings-v2-base-code",
+      "cached_revisions": [],
+      "encoder_trainable": false,
+      "revision": "516f4baf13dec4ddddda8631e019b5737c8bc250",
+      "remote_code_revision": "3baf9e3ac750e76e8edd3019170176884695fb94"
+    }
+  },
+  "toolchains_manifest": "toolchains/manifest.json",
+  "simulation_tools": {
+    "renode": "1.17.0",
+    "qemu-system-arm": "QEMU emulator version 6.2.0 (Debian 1:6.2+dfsg-2ubuntu6.31)"
+  },
+  "code_smoke_tests": {
+    "passed": 105,
+    "firmware_execution": false
+  },
+  "reproduction_requires_prepared_OS_and_west_modules": true
+}

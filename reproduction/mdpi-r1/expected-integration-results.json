@@ -1,0 +1,170 @@
+{
+  "configurations": [
+    {
+      "sdk": "max32650-msdk",
+      "os": "rtthread",
+      "boots": 10,
+      "rounds": 10,
+      "passed": 180,
+      "checks": 190,
+      "firmware_sha256": "e131f5bd67d38176fc7191ef35255b2ba5ab7676e790f84828185cef0f5ddf05",
+      "build_attempts": 1,
+      "automatic_compiler_feedback": false
+    },
+    {
+      "sdk": "max32650-msdk",
+      "os": "zephyr",
+      "boots": 10,
+      "rounds": 10,
+      "passed": 180,
+      "checks": 190,
+      "firmware_sha256": "7e512a03dc4238ca9e0fe5db1a16d619d9f0a7821bed15241dd9ef886c0e24ad",
+      "build_attempts": 1,
+      "automatic_compiler_feedback": false
+    },
+    {
+      "sdk": "stm32f4-stdperiph",
+      "os": "rtthread",
+      "boots": 10,
+      "rounds": 10,
+      "passed": 170,
+      "checks": 170,
+      "firmware_sha256": "6c16db66dbb7a7111aca78089b271990062422dd8ea6f59e043795a7ddf8581e",
+      "build_attempts": 1,
+      "automatic_compiler_feedback": false
+    },
+    {
+      "sdk": "stm32f4-stdperiph",
+      "os": "zephyr",
+      "boots": 10,
+      "rounds": 10,
+      "passed": 170,
+      "checks": 170,
+      "firmware_sha256": "6618a553ac4d493737487442bd0df1ad3e55f7ebc014deb86496930c2ba76305",
+      "build_attempts": 1,
+      "automatic_compiler_feedback": false
+    },
+    {
+      "sdk": "stellaris-driverlib",
+      "os": "rtthread",
+      "boots": 10,
+      "rounds": 10,
+      "passed": 190,
+      "checks": 190,
+      "firmware_sha256": "2596d618b1b3c80e540aaddc4f63f232ee098ee1ea7800cb38eca7091e95c7bf",
+      "build_attempts": 1,
+      "automatic_compiler_feedback": false
+    },
+    {
+      "sdk": "stellaris-driverlib",
+      "os": "zephyr",
+      "boots": 10,
+      "rounds": 10,
+      "passed": 190,
+      "checks": 190,
+      "firmware_sha256": "ee3d013d184e679bf91a7055c27bd7e5ce7c7e8f5fd0f8ca2dc267a200eedb97",
+      "build_attempts": 1,
+      "automatic_compiler_feedback": false
+    },
+    {
+      "sdk": "asf3-sam4s",
+      "os": "rtthread",
+      "boots": 10,
+      "rounds": 10,
+      "passed": 130,
+      "checks": 180,
+      "firmware_sha256": "8448deb920e43fec1297453497b912ede796f4cb0aaabddd4577c15df38420c0",
+      "build_attempts": 1,
+      "automatic_compiler_feedback": false
+    },
+    {
+      "sdk": "asf3-sam4s",
+      "os": "zephyr",
+      "boots": 10,
+      "rounds": 10,
+      "passed": 130,
+      "checks": 180,
+      "firmware_sha256": "67adcb67d90f48202b141491607394fc9ffa0a9b52a811b75a282c7d259149c1",
+      "build_attempts": 1,
+      "automatic_compiler_feedback": false
+    },
+    {
+      "sdk": "nrf5-nrf52840",
+      "os": "rtthread",
+      "boots": 10,
+      "rounds": 10,
+      "passed": 160,
+      "checks": 180,
+      "firmware_sha256": "35ac938cd4134213f036efa713565c92852c9b83cf8fb052420dbcf8e0336d3f",
+      "build_attempts": 1,
+      "automatic_compiler_feedback": false
+    },
+    {
+      "sdk": "nrf5-nrf52840",
+      "os": "zephyr",
+      "boots": 10,
+      "rounds": 10,
+      "passed": 170,
+      "checks": 180,
+      "firmware_sha256": "4696a80df9822525c70d9b9dbec5a1c3f7ea73e71f94265c3d9ce1902b80dc96",
+      "build_attempts": 1,
+      "automatic_compiler_feedback": false
+    }
+  ],
+  "applicable_operation_os_records": 182,
+  "operation_outcomes": {
+    "fail": 14,
+    "pass": 168
+  },
+  "strict_checks": {
+    "passed": 1670,
+    "total": 1820
+  },
+  "boots": {
+    "passed": 100,
+    "total": 100
+  },
+  "builds": {
+    "passed": 10,
+    "total": 10
+  },
+  "integration_ablations": {
+    "configurations_per_condition": 6,
+    "runs": 24,
+    "final_builds": {
+      "full": 6,
+      "without-compatibility": 4,
+      "target-components": 4,
+      "without-feedback": 4
+    }
+  },
+  "engineering_times_minutes": {
+    "type": "actual phase-level engineer records rounded to minutes",
+    "tasks_per_workflow": 2,
+    "first_build_totals": {
+      "manual": 270,
+      "assisted": 137
+    },
+    "first_build_active_totals": {
+      "manual": 250,
+      "assisted": 125
+    },
+    "testing_per_task_minutes_approximately": 45,
+    "build_plus_test_totals": {
+      "manual": 360,
+      "assisted": 227
+    },
+    "build_plus_test_per_task_means": {
+      "manual": 180,
+      "assisted": 113.5
+    },
+    "single_issue_repair": {
+      "manual_minutes_approximately": 40,
+      "assisted_minutes_approximately": 32,
+      "scope": "observed diagnosis, rebuild and targeted retest"
+    },
+    "original_source_documents_preserved": true
+  },
+  "new_runtime_measurements_in_this_publication": false,
+  "period_atomic_evidence_is_separate_from_strict_compound_assertions": true
+}

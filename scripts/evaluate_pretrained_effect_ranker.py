@@ -322,8 +322,8 @@ def main() -> int:
         "truth_set": dataset.get("truth_set_id", "human-engineer-2-H02"),
         "method": "frozen Jina code encoder, effect-aware serialization, low-rank query adapter, hardware graph fusion, nested calibration, and PU pairwise ranking",
         "training_boundary": {
-            "positive": "H02 label > 0",
-            "unlabeled": "H02 label == 0 with reduced-confidence pairwise sampling",
+            "positive": f"{dataset.get('truth_set_id', 'input-dataset')} label > 0",
+            "unlabeled": f"{dataset.get('truth_set_id', 'input-dataset')} label == 0 with reduced-confidence pairwise sampling",
             "no_public_api": "excluded by the input dataset and not modeled in v0.2",
             "encoder_frozen": True,
         },

@@ -94,7 +94,13 @@ class Pipeline:
             "sdk_profile": config.get("backend", {}).get("sdk_profile"),
             **config.get("closure", {}).get("target", {}),
         }
-        closure = ClosureSolver().solve(ir, resolution, target_context)
+        closure_config = config.get("closure", {})
+        closure = ClosureSolver().solve(
+            ir, resolution, target_context,
+            strategy=closure_config.get("strategy", "semantic"),
+            component_roots=closure_config.get("component_roots"),
+            excluded_sources=closure_config.get("excluded_sources"),
+        )
         write_json(run_root / "03-build-closure.json", closure)
         timings["closure_solver_seconds"] = round(perf_counter() - stage_started, 6)
 

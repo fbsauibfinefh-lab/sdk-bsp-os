@@ -16,7 +16,15 @@ class ClosureSolver:
         ir: dict[str, Any],
         resolution: dict[str, Any],
         target_context: dict[str, Any] | None = None,
+        *,
+        strategy: str = "semantic",
+        component_roots: list[str] | None = None,
+        excluded_sources: list[str] | None = None,
     ) -> dict[str, Any]:
+        if strategy == "target-components":
+            return self._target_components(ir, target_context or {}, component_roots or [], excluded_sources or [])
+        if strategy != "semantic":
+            raise ValueError(f"Unsupported closure strategy: {strategy}")
         adjacency: dict[str, list[tuple[str, str]]] = defaultdict(list)
         for edge in ir["edges"]:
             adjacency[edge["from"]].append((edge["to"], edge["type"]))
@@ -129,6 +137,33 @@ class ClosureSolver:
                 "startup_assets": sum(item["kind"] == "startup" for item in files),
                 "linker_assets": sum(item["kind"] == "linker" for item in files),
             },
+        }
+
+    def _target_components(
+        self, ir: dict[str, Any], target: dict[str, Any], roots: list[str], excluded: list[str]
+    ) -> dict[str, Any]:
+        """Target component baseline, without traversing semantic/call closure edges."""
+        if not roots:
+            raise ValueError("target-components needs explicit official target component roots")
+        normalized = [Path(p).as_posix().strip("/") for p in roots]
+        if any(Path(p).is_absolute() or ".." in Path(p).parts for p in roots):
+            raise ValueError("component roots must remain relative to the SDK")
+        selected = [item for item in ir["files"] if any(item["path"] == root or item["path"].startswith(root + "/") for root in normalized) and item["path"] not in excluded and item["kind"] in {"source", "header", "library"}]
+        if not selected:
+            raise ValueError("target component roots matched no SDK files")
+        return {
+            "schema_version": "1.2", "created_at": utc_now(),
+            "id": stable_id(ir["sdk"]["digest"], "target-components", *normalized, *sorted(excluded)),
+            "sdk_id": ir["sdk"]["id"], "sdk_root": ir["sdk"]["root"],
+            "strategy": "target-components", "component_roots": normalized, "excluded_sources": excluded,
+            "selected_files": sorted(selected, key=lambda x: x["path"]),
+            "selected_build_rules": [], "seed_entities": [],
+            "provenance": [{"entity_id": item["id"], "reason": "official-target-component-baseline"} for item in selected],
+            "repair_sources": sorted(item["path"] for item in selected if item["kind"] == "source"),
+            "repair_include_dirs": [], "repair_history": [], "target_context": target,
+            "firmware_asset_decisions": [], "unresolved_capabilities": [],
+            "asset_policy": "startup and linker remain owned by the unchanged native OS backend",
+            "summary": {"seed_functions": 0, "files": len(selected), "build_rules": 0, "startup_assets": 0, "linker_assets": 0},
         }
 
     @classmethod

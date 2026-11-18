@@ -1,0 +1,24 @@
+﻿sdk,url,revision_prefix,source_group,role,queries
+Raspberry Pi Pico,https://github.com/raspberrypi/pico-sdk,a1438dff1d38,raspberry-pi,Ranking,18
+Nordic nrfx,https://github.com/NordicSemiconductor/nrfx,aa83d4df8d5f,nordic,Ranking,14
+Espressif ESP-IDF,https://github.com/espressif/esp-idf,8c19b156084a,espressif,Ranking,16
+NXP MCUXpresso,https://github.com/nxp-mcuxpresso/legacy-mcux-sdk,0420001d787c,nxp,Ranking,19
+TI MSPM0,https://github.com/TexasInstruments/mspm0-sdk,20807db79aa1,ti,Ranking,14
+TI SimpleLink F2,https://github.com/TexasInstruments/simplelink-lowpower-f2-sdk,3615ad5d3f4f,ti,Ranking,15
+Renesas FSP,https://github.com/renesas/fsp,a409855a2744,renesas,Ranking,18
+Sony Spresense,https://github.com/sonydevworld/spresense,7fd61b2c03f0,sony,Ranking,6
+SiFli HAL,https://github.com/OpenSiFli/SiFli-SDK,2de33db1a969,sifli,Ranking,16
+Bouffalo LHAL,https://github.com/bouffalolab/bouffalo_sdk,5cd17516dfe8,bouffalo,Ranking,16
+WCH CH32V307,https://github.com/openwch/ch32v307,69a2eec903b4,wch,Ranking,17
+Nuclei SDK,https://github.com/Nuclei-Software/nuclei-sdk,c5d7fda3b7dd,nuclei,Ranking,18
+libopencm3,https://github.com/libopencm3/libopencm3,2da12dc96e0b,libopencm3,Ranking,14
+Arm Mbed HAL,https://github.com/ARMmbed/mbed-os,d723bf9e5541,arm-mbed,Ranking,15
+Arduino Renesas,https://github.com/arduino/ArduinoCore-renesas,424e86eff92d,renesas,Ranking,7
+Telink TLSR9,https://github.com/zephyrproject-rtos/hal_telink,4226c7fc17d5,telink,Ranking,12
+Alif Ensemble,https://github.com/alifsemi/alif_ensemble-cmsis-dfp,908f59cbd1fa,alif,Ranking,13
+Silicon Labs EMLIB,https://github.com/zephyrproject-rtos/hal_silabs,28eb6670caf3,silabs,Ranking,14
+HPMicro HPM,https://github.com/hpmicro/hpm_sdk,88b01b43900d,hpmicro,Ranking,10
+Nuvoton StdDriver,https://github.com/zephyrproject-rtos/hal_nuvoton,0f411a85da7d,nuvoton,Ranking,12
+CanMV K210 (bundle),,02576ba67e87,kendryte-board-test,Board,19
+STM32Cube F1 (bundle),,bb2016eaa000,stm32-board-test,Board,18
+PSoC E84 Edgi-Talk (bundle),,1c6964a67ffb,psoc-board-test,Board,18

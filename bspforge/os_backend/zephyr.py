@@ -71,10 +71,13 @@ class ZephyrBackend(OSBackend):
             standard_devices=validation_options.get("standard_devices"),
         )
         source = Path(protocol_manifest["source"])
+        sdk_sources = binding_manifest.get("required_sources", []) if binding_manifest else []
+        if binding_manifest and closure.get("strategy") == "target-components":
+            sdk_sources = sorted(set(sdk_sources) | set(closure.get("repair_sources", [])))
         (app / "CMakeLists.txt").write_text(
             self._cmake_source(
                 Path(ir["sdk"]["root"]),
-                binding_manifest.get("required_sources", []) if binding_manifest else [],
+                sdk_sources,
                 binding_manifest is not None,
                 device_manifest is not None,
             ),

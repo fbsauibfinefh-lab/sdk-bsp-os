@@ -1,0 +1,84 @@
+﻿column,name,block,value_type,description_zh,source,missing_or_requirement
+1,static_score,Base scalar,scalar float,候选已有静态综合分数,scripts/evaluate_multiview_lambdamart.py::candidate_row,computed by row constructor
+2,full_code_cosine,Base scalar,scalar float,查询与完整代码向量余弦,scripts/evaluate_multiview_lambdamart.py::candidate_row,required vector cache
+3,focused_code_cosine,Base scalar,scalar float,查询与操作聚焦代码余弦,scripts/evaluate_multiview_lambdamart.py::candidate_row,required vector cache
+4,full_focus_cosine,Base scalar,scalar float,完整与聚焦代码向量余弦,scripts/evaluate_multiview_lambdamart.py::candidate_row,required vector cache
+5,operation_constraint,Base scalar,scalar float,操作冲突惩罚，另用于固定得分调整,scripts/evaluate_multiview_lambdamart.py::candidate_row,computed by row constructor
+6,status_query,Base scalar,scalar float,候选符号含is/status/ready等状态词,scripts/evaluate_multiview_lambdamart.py::candidate_row,computed by row constructor
+7,api-family-support,Named candidate scalar,scalar float,同能力API家族支持分数,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+8,call-context,Named candidate scalar,scalar float,被调符号与操作别名匹配,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+9,canonical-order,Named candidate scalar,scalar float,规范能力/动作词序指示,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+10,capability-baseline,Named candidate scalar,scalar float,既有能力检索基线分数,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+11,capability-name,Named candidate scalar,scalar float,符号名的能力匹配,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+12,code-embedding,Named candidate scalar,scalar float,既有编码通道槽位；生成器初值0,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+13,controller-api,Named candidate scalar,scalar float,控制器层API指示,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+14,cross-reranker,Named candidate scalar,scalar float,既有重排通道槽位；生成器初值0,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+15,driver-path,Named candidate scalar,scalar float,路径含驱动或HAL等标记,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+16,field-calls-maxsim,Named candidate scalar,scalar float,调用字段MaxSim,bspforge/field_late_interaction.py and candidate feature record,missing candidate dictionary key -> 0.0
+17,field-file-maxsim,Named candidate scalar,scalar float,文件路径字段MaxSim,bspforge/field_late_interaction.py and candidate feature record,missing candidate dictionary key -> 0.0
+18,field-includes-maxsim,Named candidate scalar,scalar float,包含字段MaxSim,bspforge/field_late_interaction.py and candidate feature record,missing candidate dictionary key -> 0.0
+19,field-late-interaction,Named candidate scalar,scalar float,五字段的加权聚合,bspforge/field_late_interaction.py and candidate feature record,missing candidate dictionary key -> 0.0
+20,field-signature-maxsim,Named candidate scalar,scalar float,签名字段MaxSim,bspforge/field_late_interaction.py and candidate feature record,missing candidate dictionary key -> 0.0
+21,field-symbol-maxsim,Named candidate scalar,scalar float,符号字段MaxSim,bspforge/field_late_interaction.py and candidate feature record,missing candidate dictionary key -> 0.0
+22,generic-operation-fit,Named candidate scalar,scalar float,通用操作契约适合程度,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+23,graph-neighbor-support,Named candidate scalar,scalar float,调用邻接支持分数,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+24,hal-abstraction,Named candidate scalar,scalar float,HAL层抽象指示,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+25,hw-action-effect,Named candidate scalar,scalar float,实现动作与寄存器动作的匹配分数,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+26,hw-anchor-depth-score,Named candidate scalar,scalar float,锚点距离1/(1+d)，缺路径0,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+27,hw-api-boundary-depth,Named candidate scalar,scalar float,公共边界及锚点深度偏好,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+28,hw-bitwise-update,Named candidate scalar,scalar float,位运算或位更新指示,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+29,hw-callee-fanout,Named candidate scalar,scalar float,截断对数归一化调用出度,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+30,hw-caller-fanin,Named candidate scalar,scalar float,截断对数归一化调用入度,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+31,hw-capability-effect,Named candidate scalar,scalar float,实现与寄存器中的能力证据,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+32,hw-composite-likelihood,Named candidate scalar,scalar float,效果宽度/出度/中间件复合度,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+33,hw-direct-operation-effect,Named candidate scalar,scalar float,当前函数直接操作效果分数,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+34,hw-effect-breadth,Named candidate scalar,scalar float,跨能力效果宽度,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+35,hw-effect-purity,Named candidate scalar,scalar float,目标效果在能力效果中的占比,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+36,hw-example-likelihood,Named candidate scalar,scalar float,示例/演示/测试路径信号,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+37,hw-internal-callback-likelihood,Named candidate scalar,scalar float,内部回调类角色信号,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+38,hw-mmio-access,Named candidate scalar,scalar float,volatile/地址/MMIO访问指示,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+39,hw-os-adapter-likelihood,Named candidate scalar,scalar float,OS适配层路径信号,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+40,hw-public-boundary,Named candidate scalar,scalar float,公共声明或符号目录边界,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+41,hw-read-access,Named candidate scalar,scalar float,读取类访问指示,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+42,hw-register-anchor,Named candidate scalar,scalar float,寄存器标记及MMIO锚点强度,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+43,hw-signature-contract,Named candidate scalar,scalar float,签名中的能力/动作契约匹配,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+44,hw-static-internal,Named candidate scalar,scalar float,static内部链接指示,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+45,hw-transitive-operation-effect,Named candidate scalar,scalar float,至多三跳的衰减效果传播,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+46,hw-write-access,Named candidate scalar,scalar float,写入类访问指示,bspforge/hardware_effect_graph.py::candidate_features,missing candidate dictionary key -> 0.0
+47,layer-route-score,Named candidate scalar,scalar float,源码层级路由分数,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+48,multi-channel-rrf,Named candidate scalar,scalar float,多检索通道倒数秩融合值,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+49,operation-contract-retrieval,Named candidate scalar,scalar float,操作契约检索分数,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+50,operation-exact,Named candidate scalar,scalar float,动作词精确匹配,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+51,operation-substring,Named candidate scalar,scalar float,动作子串匹配,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+52,opposite-action,Named candidate scalar,scalar float,相反动作冲突,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+53,parameterized-toggle,Named candidate scalar,scalar float,参数控制启停类接口指示,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+54,parser-confidence,Named candidate scalar,scalar float,前端解析置信描述,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+55,private-api,Named candidate scalar,scalar float,私有接口信号,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+56,public-api,Named candidate scalar,scalar float,公共接口信号,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+57,reverse-os-adapter,Named candidate scalar,scalar float,反向OS适配层信号,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+58,semantic-conflict,Named candidate scalar,scalar float,语义冲突匹配分数,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+59,signature-contract-retrieval,Named candidate scalar,scalar float,签名契约检索分数,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+60,signature-hint,Named candidate scalar,scalar float,期望参数/返回角色提示匹配,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+61,source-role-prior,Named candidate scalar,scalar float,源码角色先验,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+62,symbol-lexical-retrieval,Named candidate scalar,scalar float,符号词法检索分数,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+63,symbol-specificity,Named candidate scalar,scalar float,符号名具体性描述,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+64,test-example,Named candidate scalar,scalar float,测试或示例角色信号,bspforge/operation_ranking.py; structured_retrieval.py and candidate record,missing candidate dictionary key -> 0.0
+65,operation::clock.initialize,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+66,operation::clock.enable,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+67,operation::clock.disable,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+68,operation::clock.get_frequency,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+69,operation::interrupt.initialize,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+70,operation::interrupt.enable,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+71,operation::interrupt.disable,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+72,operation::interrupt.register,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+73,operation::uart.configure,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+74,operation::uart.write,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+75,operation::uart.read,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+76,operation::gpio.configure,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+77,operation::gpio.write,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+78,operation::gpio.read,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+79,operation::gpio.attach_irq,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+80,operation::timer.initialize,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+81,operation::timer.start,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+82,operation::timer.stop,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor
+83,operation::timer.set_interval,Operation one-hot,scalar float,当前查询操作为该项时1，其余0,candidate_row; canonical OPERATIONS order,computed by row constructor

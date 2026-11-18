@@ -1,0 +1,235 @@
+{
+  "created_at": "2026-11-13T08:57:37.650550+00:00",
+  "fixed_metrics": "沿用原二值P@1、Hit@5、Recall@5、MAP、nDCG@10，不新增阈值或修改公式",
+  "policy": "事前按源码稳定调用契约确定范围；不因低排名、编译失败或运行失败排除操作",
+  "rows": [
+    {
+      "eligible": true,
+      "operation": "clock.initialize",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.enable",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.disable",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.get_frequency",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.initialize",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.enable",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.disable",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.register",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.configure",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.write",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.read",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.configure",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.write",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.read",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.attach_irq",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.initialize",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.start",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.stop",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.set_interval",
+      "reason": "",
+      "sdk": "max32650-msdk"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.initialize",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.enable",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.disable",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.get_frequency",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.initialize",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.enable",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.disable",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": false,
+      "operation": "interrupt.register",
+      "reason": "标准外设库提供中断配置和向量表基址设置，但没有单个公共函数登记指定ISR；需要启动向量表或OS分派器组合。",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.configure",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.write",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.read",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.configure",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.write",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.read",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": false,
+      "operation": "gpio.attach_irq",
+      "reason": "GPIO引脚到EXTI的映射、边沿配置、向量处理及回调登记是组合路径；该输入没有单个公共GPIO回调登记入口。",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.initialize",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.start",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.stop",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.set_interval",
+      "reason": "",
+      "sdk": "stm32f4-stdperiph"
+    }
+  ]
+}

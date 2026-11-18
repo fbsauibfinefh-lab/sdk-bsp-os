@@ -30,6 +30,26 @@ WARNING_CATEGORIES = [
 class BuildDiagnoser:
     """Map raw GCC/binutils diagnostics to feedback constraints."""
 
+    @staticmethod
+    def _compatible_files(ir: dict[str, Any], paths: set[str], closure: dict[str, Any]) -> set[str]:
+        target = closure.get("target_context", {})
+        architecture = str(target.get("architecture", "")).lower()
+        expected = "riscv" if "riscv" in architecture else "arm" if architecture == "arm" or "cortex" in architecture else ""
+        files = {item["path"]: item for item in ir["files"]}
+        output = set()
+        for path in paths:
+            metadata = files.get(path, {}).get("asset_metadata", {})
+            declared = set(metadata.get("architectures", []))
+            if expected and declared and expected not in declared:
+                continue
+            lowered = path.lower()
+            if expected == "riscv" and re.search(r"(?:^|[/_\-])(cortex|cm[0347]|arm)(?:[/_\-.]|$)", lowered):
+                continue
+            if expected == "arm" and re.search(r"(?:^|[/_\-])(riscv|rv32|rv64)(?:[/_\-.]|$)", lowered):
+                continue
+            output.add(path)
+        return output
+
     def diagnose(self, output: str, returncode: int) -> dict[str, Any]:
         diagnostics: list[dict[str, Any]] = []
         seen: set[tuple[str, str]] = set()
@@ -97,7 +117,13 @@ class BuildDiagnoser:
                 if not matches:
                     unresolved.append({"diagnostic_id": diagnostic["id"], "reason": "IR 中未找到头文件"})
                     continue
-                header = min(matches, key=lambda item: len(Path(item["path"]).parts))
+                paths = self._compatible_files(ir, {item["path"] for item in matches}, closure)
+                suffix = {path for path in paths if path == subject or path.endswith("/" + subject)}
+                paths = suffix or paths
+                if len(paths) != 1:
+                    unresolved.append({"diagnostic_id": diagnostic["id"], "reason": "missing-header requires a unique target-compatible provider", "candidates": sorted(paths), "risk": "manual"})
+                    continue
+                header = next(item for item in matches if item["path"] in paths)
                 include_dir = Path(header["path"]).parent.as_posix()
                 key = ("add-include-dir", include_dir)
                 if key not in seen:
@@ -120,7 +146,11 @@ class BuildDiagnoser:
                 if not matches:
                     unresolved.append({"diagnostic_id": diagnostic["id"], "reason": "IR 中未找到符号定义"})
                     continue
-                provider = matches[0]
+                paths = self._compatible_files(ir, {item["file"] for item in matches if not re.search(r"\bstatic\b", item.get("signature", ""))}, closure)
+                if len(paths) != 1:
+                    unresolved.append({"diagnostic_id": diagnostic["id"], "reason": "undefined-symbol requires a unique target-compatible non-static provider", "candidates": sorted(paths), "risk": "manual"})
+                    continue
+                provider = next(item for item in matches if item["file"] in paths and not re.search(r"\bstatic\b", item.get("signature", "")))
                 key = ("add-source", provider["file"])
                 if key not in seen:
                     seen.add(key)

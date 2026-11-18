@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import json
 import os
 import selectors
@@ -162,6 +163,7 @@ class HardwareTestRunner:
 
     def run(self, rounds: int = 1, commands: list[str] | None = None) -> dict[str, Any]:
         commands = commands or DEFAULT_COMMANDS
+        self._wire_trace = []
         raw_lines: list[str] = []
         round_reports: list[dict[str, Any]] = []
         for round_number in range(1, rounds + 1):
@@ -182,7 +184,9 @@ class HardwareTestRunner:
                 for attempt in range(1, self.command_retries + 2):
                     request_id = uuid.uuid4().hex[:12]
                     attempt_started = time.monotonic()
-                    self.transport.write(request_line(request_id, command))
+                    request = request_line(request_id, command)
+                    self._wire_trace.append({"direction": "tx", "monotonic_ns": time.monotonic_ns(), "bytes_base64": base64.b64encode(request).decode("ascii"), "request_id": request_id, "command": command})
+                    self.transport.write(request)
                     event = self._wait_for(
                         lambda item, request_id=request_id: (
                             item.get("request_id") == request_id
@@ -210,6 +214,8 @@ class HardwareTestRunner:
                     "host_round_trip_ms": round((time.monotonic() - started) * 1000, 3),
                     "transport_attempts": attempts,
                     "retry_count": len(attempts) - 1,
+                    "first_attempt_response_received": attempts[0]["received"],
+                    "execution_multiplicity_unknown": len(attempts) > 1,
                 })
             round_reports.append({
                 "round": round_number,
@@ -226,6 +232,8 @@ class HardwareTestRunner:
             line = self.transport.readline()
             if not line:
                 continue
+            if hasattr(self, "_wire_trace"):
+                self._wire_trace.append({"direction": "rx", "monotonic_ns": time.monotonic_ns(), "bytes_base64": base64.b64encode(line).decode("ascii")})
             raw_lines.append(line.decode("utf-8", "replace").rstrip())
             event = parse_event(line)
             if event is not None and predicate(event):
@@ -256,6 +264,8 @@ class HardwareTestRunner:
             "firmware_artifact": firmware,
             "rounds": rounds,
             "raw_log": raw_lines,
+            "wire_trace": getattr(self, "_wire_trace", []),
+            "retry_semantics": "Retries use fresh IDs without device-side deduplication; a missing response does not prove non-execution. Disable retries for strict first-attempt or edge-count tests.",
             "summary": {
                 "boot_successes": sum(item["boot_success"] for item in rounds),
                 "boot_attempts": len(rounds),
@@ -275,6 +285,8 @@ class HardwareTestRunner:
                 "failed": sum(item.get("status") == "fail" for item in commands),
                 "commands_retried": sum(item.get("retry_count", 0) > 0 for item in commands),
                 "transport_retries": sum(item.get("retry_count", 0) for item in commands),
+                "first_attempt_responses": sum(item.get("transport_attempts", [{}])[0].get("received", False) for item in commands),
+                "execution_multiplicity_unknown": sum(item.get("execution_multiplicity_unknown", False) for item in commands),
             },
         }
 
@@ -293,7 +305,7 @@ def main(argv: list[str] | None = None) -> int:
         "--command-retries",
         type=int,
         default=0,
-        help="协议回包超时时对同一幂等命令的最大重试次数",
+        help="回包超时后的最大重试次数；无设备去重保证，副作用/严格首轮测试应设0",
     )
     parser.add_argument(
         "--reset-command",

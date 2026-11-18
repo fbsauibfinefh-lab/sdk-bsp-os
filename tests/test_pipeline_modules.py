@@ -1535,7 +1535,9 @@ class ModuleTests(unittest.TestCase):
         source_dir.mkdir()
         manifest = ZephyrDeviceModelGenerator().generate(source_dir)
         source = Path(manifest["source"]).read_text(encoding="utf-8")
+        header = Path(manifest["header"]).read_text(encoding="utf-8")
         self.assertEqual(manifest["summary"]["devices"], 4)
+        self.assertIn("#define BSPFORGE_ZEPHYR_COUNTER_ALARM_TICKS 10000000U", header)
         for api in ("clock_control", "uart", "gpio", "counter"):
             self.assertIn(f"DEVICE_API({api},", source)
         for device in ("clock", "uart", "gpio", "counter"):

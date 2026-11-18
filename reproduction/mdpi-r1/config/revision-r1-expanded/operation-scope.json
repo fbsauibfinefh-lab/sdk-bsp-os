@@ -1,0 +1,348 @@
+{
+  "created_at": "2026-11-13T11:00:20.302237+00:00",
+  "policy": "事前按源码公共契约确定范围；模型与运行失败保留",
+  "rows": [
+    {
+      "eligible": true,
+      "operation": "clock.initialize",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.enable",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.disable",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.get_frequency",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.initialize",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.enable",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.disable",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.register",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.configure",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.write",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.read",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.configure",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.write",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.read",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.attach_irq",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.initialize",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.start",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.stop",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.set_interval",
+      "reason": "",
+      "sdk": "stellaris-driverlib"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.initialize",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.enable",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.disable",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.get_frequency",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.initialize",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.enable",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.disable",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": false,
+      "operation": "interrupt.register",
+      "reason": "该版SAM4S采用静态向量符号，irq_register_handler宏设置优先级与使能，不接受ISR函数指针；无单一动态登记公共函数。",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.configure",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.write",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.read",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.configure",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.write",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.read",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.attach_irq",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.initialize",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.start",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.stop",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.set_interval",
+      "reason": "",
+      "sdk": "asf3-sam4s"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.initialize",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.enable",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "clock.disable",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": false,
+      "operation": "clock.get_frequency",
+      "reason": "CPU频率由SystemCoreClock全局量与固定频率约定表达；源选择或运行状态函数不返回Hz，没有单一公共Hz读取函数。",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.initialize",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.enable",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.disable",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "interrupt.register",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.configure",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.write",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "uart.read",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.configure",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.write",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.read",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "gpio.attach_irq",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.initialize",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.start",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.stop",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    },
+    {
+      "eligible": true,
+      "operation": "timer.set_interval",
+      "reason": "",
+      "sdk": "nrf5-nrf52840"
+    }
+  ]
+}

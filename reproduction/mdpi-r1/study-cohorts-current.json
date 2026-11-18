@@ -1,0 +1,16 @@
+{
+  "date": "2026-11-17",
+  "source_sdks": 20,
+  "source_groups": 18,
+  "source_registered_operations": 380,
+  "source_callable_queries": 284,
+  "source_outside_function_scope": 96,
+  "board_sdks": 3,
+  "main_inventory_entries": 23,
+  "additional_simulated_sdks": 5,
+  "removed_zero_query_entries": [
+    "Microchip Harmony CSP",
+    "Analog Devices no-OS"
+  ],
+  "model_fits_splits_and_metrics_changed": false
+}

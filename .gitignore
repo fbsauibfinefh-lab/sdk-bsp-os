@@ -38,3 +38,12 @@ experiments/generated/deterministic-*.json
 experiments/generated/jina-code-embeddings-*.npz
 experiments/generated/jina-multiview-*.npz
 experiments/generated/jina-joint-*.npz
+
+# 返修运行资产在本机生成；公开版本和源哈希位于reproduction/mdpi-r1。
+experiments/revision-r1-*/
+experiments/revision-author-closeout/
+experiments/revision-retrain-*/
+models/internal/
+.env
+.env.*
+*.pem
